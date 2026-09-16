@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+/*
+  Bellwether design tokens.
+  Base neutrals are shared with the sibling projects (DESIGN_SYSTEM.md).
+  Brand: deep teal primary, signal amber accent. The three tiers get their
+  own semantic colors and are never the only carrier of meaning: every tier
+  is also a word on screen.
+  Light values live on :root. Dark values are defined twice: once for the
+  system preference (guarded so an explicit light choice wins) and once for
+  the explicit data-theme="dark" choice, so the manual toggle wins in both
+  directions. Every color in the app must come from these tokens.
+*/
+
+:root {
+  --bg: #fafaf8;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --text: #1a1d21;
+  --text-muted: #57606a;
+  --border: #e4e7eb;
+  --focus-ring: #1f6f68;
+
+  --primary: #1f6f68;
+  --primary-contrast: #ffffff;
+  --primary-soft: #e3f1ef;
+  --accent: #a66a0f;
+  --accent-soft: #f7ecd9;
+  --success: #2e7d5b;
+  --success-soft: #e3f1ea;
+  --watch: #a66a0f;
+  --watch-soft: #f7ecd9;
+  --discuss: #b3402e;
+  --discuss-soft: #f7e6e2;
+  --chart-1: #1f6f68;
+  --chart-2: #a66a0f;
+  --chart-3: #5b7a99;
+  --chart-4: #8a94a6;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgb(20 40 38 / 0.06), 0 1px 3px rgb(20 40 38 / 0.08);
+  --shadow-md: 0 4px 16px rgb(20 40 38 / 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1116;
+    --surface: #161b22;
+    --surface-raised: #1c232c;
+    --text: #f0f3f6;
+    --text-muted: #9aa4af;
+    --border: #2a313a;
+    --focus-ring: #5ac8bc;
+
+    --primary: #5ac8bc;
+    --primary-contrast: #0e1116;
+    --primary-soft: #14262a;
+    --accent: #e6a93c;
+    --accent-soft: #2a2417;
+    --success: #5bbd94;
+    --success-soft: #14261e;
+    --watch: #e6a93c;
+    --watch-soft: #2a2417;
+    --discuss: #e07b6a;
+    --discuss-soft: #2a1a17;
+    --chart-1: #5ac8bc;
+    --chart-2: #e6a93c;
+    --chart-3: #8fb0d6;
+    --chart-4: #7d8794;
+
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 4px 16px rgb(0 0 0 / 0.5);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0e1116;
+  --surface: #161b22;
+  --surface-raised: #1c232c;
+  --text: #f0f3f6;
+  --text-muted: #9aa4af;
+  --border: #2a313a;
+  --focus-ring: #5ac8bc;
+
+  --primary: #5ac8bc;
+  --primary-contrast: #0e1116;
+  --primary-soft: #14262a;
+  --accent: #e6a93c;
+  --accent-soft: #2a2417;
+  --success: #5bbd94;
+  --success-soft: #14261e;
+  --watch: #e6a93c;
+  --watch-soft: #2a2417;
+  --discuss: #e07b6a;
+  --discuss-soft: #2a1a17;
+  --chart-1: #5ac8bc;
+  --chart-2: #e6a93c;
+  --chart-3: #8fb0d6;
+  --chart-4: #7d8794;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 16px rgb(0 0 0 / 0.5);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-ink: var(--text);
+  --color-muted: var(--text-muted);
+  --color-line: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-contrast: var(--primary-contrast);
+  --color-primary-soft: var(--primary-soft);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-watch: var(--watch);
+  --color-watch-soft: var(--watch-soft);
+  --color-discuss: var(--discuss);
+  --color-discuss-soft: var(--discuss-soft);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+}
+
+html {
+  color-scheme: light dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-feature-settings: "cv02", "cv03", "cv04";
+  -webkit-font-smoothing: antialiased;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

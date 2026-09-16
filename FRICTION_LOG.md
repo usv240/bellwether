@@ -51,4 +51,15 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Workaround: pair with the iPhone.
 - Suggestion: state the platform and shipping constraints on the hackathon's Bee track page, not only in the FAQ, so entrants know before they plan.
 
+## Entry 6: Lambda function URL CORS plus app CORS equals two headers and a broken browser (2026-09-18)
+
+- Task: load the deployed dashboard, which fetches the deployed API from a different origin (CloudFront to a Lambda function URL).
+- Steps: configure CORS on the function URL in CDK (`allowedOrigins: ["*"]`, `exposedHeaders: ["MCP-Session-Id"]`, which the MCP transport needs), and separately add FastAPI's `CORSMiddleware` because that is what every FastAPI tutorial does.
+- Expected: one of them wins, or they agree.
+- Actual: both emit `Access-Control-Allow-Origin`, so the response carried two values, `*` and the reflected origin. Chrome refuses that: "contains multiple values, but only one is allowed". Every API call from the browser failed.
+- What made it expensive: nothing on the command line could see it. `curl` does not enforce CORS, so every manual check returned 200 with plausible headers, and eighteen server tests passed because `TestClient` does not enforce it either. The only signal was Lighthouse's console audit on the deployed site, which is not where anyone looks for a CORS bug.
+- Severity: high. On a project whose live demo is the thing judges click, this is the difference between a working dashboard and an empty one, and it is invisible to every non-browser check.
+- Workaround: CORS is handled by exactly one layer. The app adds its middleware only when `AWS_LAMBDA_FUNCTION_NAME` is absent, so the function URL owns it in Lambda and the middleware owns it locally.
+- Suggestion, for AWS: the function URL CORS configuration should either strip a conflicting `Access-Control-Allow-Origin` emitted by the handler or log a warning, because the combination is silent, common (every FastAPI and Express example adds middleware), and only reproducible in a browser. A line in the Lambda function URL CORS documentation saying "do not also set CORS headers in your handler" would have prevented it outright.
+
 <!-- Add new entries above this line as they happen. -->

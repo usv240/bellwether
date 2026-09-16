@@ -107,13 +107,21 @@ def build_app(
         seed_demo(store, default_profile)
 
     app = FastAPI(title="Bellwether", version="0.1.0", docs_url="/v1/docs", openapi_url="/v1/openapi.json")
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=["*"],
-        allow_methods=["*"],
-        allow_headers=["*"],
-        expose_headers=["MCP-Session-Id"],
-    )
+    # CORS is handled by exactly one layer. On Lambda the function URL's CORS
+    # configuration reflects the origin and exposes MCP-Session-Id; if the app
+    # also emitted Access-Control-Allow-Origin, the browser would see two
+    # different values ("*" and the origin) and refuse the response. curl
+    # never notices; only a real browser does. Found by Lighthouse's console
+    # audit on the deployed site, not by any test. Locally there is no
+    # function URL, so the middleware runs.
+    if "AWS_LAMBDA_FUNCTION_NAME" not in os.environ:
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],
+            allow_methods=["*"],
+            allow_headers=["*"],
+            expose_headers=["MCP-Session-Id"],
+        )
     app.state.store = store
     app.state.default_profile = default_profile
 
