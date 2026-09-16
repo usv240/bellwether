@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bellwether-server"
+version = "0.1.0"
+description = "Bellwether service: dashboard API, public features API, the MCP server (Alexa+ surface), and the Bedrock-phrased weekly note. Receives feature rows only, never text."
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn>=0.30",
+  "mangum>=0.17",
+  "boto3>=1.34",
+  "anthropic>=0.40",
+  "bellwether-engine>=0.1.0",
+  "speech-vitals>=0.1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "httpx>=0.27"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["bellwether_server*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
