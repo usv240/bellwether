@@ -1,0 +1,6187 @@
+[
+ {
+  "date": "2026-07-27",
+  "eligible": true,
+  "reason": null,
+  "tier": "learning",
+  "composite": null,
+  "composite_cusum": null,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.749,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.452,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.381,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3947,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.233,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.924,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.78,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.314,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 112.0,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "Learning your baseline: 6 more day(s) of speech needed."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-07-28",
+  "eligible": true,
+  "reason": null,
+  "tier": "learning",
+  "composite": null,
+  "composite_cusum": null,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7635,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.878,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.347,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4368,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.671,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.257,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.812,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.422,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 130.0,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "Learning your baseline: 5 more day(s) of speech needed."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-07-29",
+  "eligible": true,
+  "reason": null,
+  "tier": "learning",
+  "composite": null,
+  "composite_cusum": null,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7535,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.725,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.412,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4207,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.247,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.125,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.484,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.451,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 123.0,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "Learning your baseline: 4 more day(s) of speech needed."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-07-30",
+  "eligible": true,
+  "reason": null,
+  "tier": "learning",
+  "composite": null,
+  "composite_cusum": null,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7439,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 18.625,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 5.062,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3805,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.503,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.503,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.215,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.48,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 114.0,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "Learning your baseline: 3 more day(s) of speech needed."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-07-31",
+  "eligible": true,
+  "reason": null,
+  "tier": "learning",
+  "composite": null,
+  "composite_cusum": null,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.746,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.558,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.25,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.427,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.36,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.494,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.922,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.425,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 130.0,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "Learning your baseline: 2 more day(s) of speech needed."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-01",
+  "eligible": true,
+  "reason": null,
+  "tier": "learning",
+  "composite": null,
+  "composite_cusum": null,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7564,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.955,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.409,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3884,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.425,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.57,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.835,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.53,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 114.0,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "Learning your baseline: 1 more day(s) of speech needed."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-02",
+  "eligible": true,
+  "reason": null,
+  "tier": "learning",
+  "composite": null,
+  "composite_cusum": null,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7475,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 14.422,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.2,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3778,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.387,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.77,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.163,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.391,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 108.0,
+    "baseline_mean": null,
+    "baseline_sd": null,
+    "z": null,
+    "concern_z": null,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "Baseline learned. From tomorrow, days are compared with it."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-03",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -1.3669,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7355,
+    "baseline_mean": 0.7514,
+    "baseline_sd": 0.03757,
+    "z": -0.4232,
+    "concern_z": 0.4232,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 17.357,
+    "baseline_mean": 15.945,
+    "baseline_sd": 1.192101,
+    "z": 1.1845,
+    "concern_z": -1.1845,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.738,
+    "baseline_mean": 4.437286,
+    "baseline_sd": 0.265762,
+    "z": 1.1315,
+    "concern_z": -1.1315,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4139,
+    "baseline_mean": 0.4037,
+    "baseline_sd": 0.022206,
+    "z": 0.4593,
+    "concern_z": 0.4593,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.412,
+    "baseline_mean": 1.260857,
+    "baseline_sd": 0.5,
+    "z": -1.6977,
+    "concern_z": -1.6977,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.823,
+    "baseline_mean": 0.520429,
+    "baseline_sd": 0.3,
+    "z": 1.0086,
+    "concern_z": 1.0086,
+    "cusum": 0.5086,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.27,
+    "baseline_mean": 6.887286,
+    "baseline_sd": 0.5,
+    "z": 0.7654,
+    "concern_z": -0.7654,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.582,
+    "baseline_mean": 4.430429,
+    "baseline_sd": 0.221521,
+    "z": 0.6842,
+    "concern_z": -0.6842,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 124.0,
+    "baseline_mean": 118.714286,
+    "baseline_sd": 10.0,
+    "z": 0.5286,
+    "concern_z": -0.5286,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-04",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -1.7671,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7821,
+    "baseline_mean": 0.750605,
+    "baseline_sd": 0.03753,
+    "z": 0.8392,
+    "concern_z": -0.8392,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 17.841,
+    "baseline_mean": 16.0156,
+    "baseline_sd": 1.20405,
+    "z": 1.516,
+    "concern_z": -1.516,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.886,
+    "baseline_mean": 4.452321,
+    "baseline_sd": 0.267618,
+    "z": 1.6205,
+    "concern_z": -1.6205,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4075,
+    "baseline_mean": 0.40421,
+    "baseline_sd": 0.021763,
+    "z": 0.1512,
+    "concern_z": 0.1512,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.274,
+    "baseline_mean": 1.218414,
+    "baseline_sd": 0.5,
+    "z": 0.1112,
+    "concern_z": 0.1112,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.382,
+    "baseline_mean": 0.535557,
+    "baseline_sd": 0.3,
+    "z": -0.5119,
+    "concern_z": -0.5119,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.134,
+    "baseline_mean": 6.906421,
+    "baseline_sd": 0.5,
+    "z": 0.4552,
+    "concern_z": -0.4552,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.42,
+    "baseline_mean": 4.438007,
+    "baseline_sd": 0.2219,
+    "z": -0.0811,
+    "concern_z": 0.0811,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 126.0,
+    "baseline_mean": 118.978571,
+    "baseline_sd": 10.0,
+    "z": 0.7021,
+    "concern_z": -0.7021,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-05",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 3.9357,
+  "composite_cusum": 3.4357,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7614,
+    "baseline_mean": 0.75218,
+    "baseline_sd": 0.037609,
+    "z": 0.2452,
+    "concern_z": -0.2452,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 14.08,
+    "baseline_mean": 16.10687,
+    "baseline_sd": 1.242519,
+    "z": -1.6313,
+    "concern_z": 1.6313,
+    "cusum": 1.1313,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 3.76,
+    "baseline_mean": 4.474005,
+    "baseline_sd": 0.278285,
+    "z": -2.5657,
+    "concern_z": 2.5657,
+    "cusum": 2.0657,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.5,
+    "baseline_mean": 0.404374,
+    "baseline_sd": 0.021225,
+    "z": 4.5053,
+    "concern_z": 4.5053,
+    "cusum": 4.0053,
+    "tripped": true,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.568,
+    "baseline_mean": 1.221194,
+    "baseline_sd": 0.5,
+    "z": -1.3064,
+    "concern_z": -1.3064,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.284,
+    "baseline_mean": 0.527879,
+    "baseline_sd": 0.3,
+    "z": -0.8129,
+    "concern_z": -0.8129,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 5.398,
+    "baseline_mean": 6.9178,
+    "baseline_sd": 0.5,
+    "z": -3.0396,
+    "concern_z": 3.0396,
+    "cusum": 2.5396,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.46,
+    "baseline_mean": 4.437107,
+    "baseline_sd": 0.221855,
+    "z": 0.1032,
+    "concern_z": -0.1032,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 94.0,
+    "baseline_mean": 119.329643,
+    "baseline_sd": 10.0,
+    "z": -2.533,
+    "concern_z": 2.533,
+    "cusum": 2.033,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-06",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -1.9607,
+  "composite_cusum": 0.975,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7601,
+    "baseline_mean": 0.752641,
+    "baseline_sd": 0.037632,
+    "z": 0.1982,
+    "concern_z": -0.1982,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 20.286,
+    "baseline_mean": 16.005526,
+    "baseline_sd": 1.293086,
+    "z": 3.3103,
+    "concern_z": -3.3103,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 5.122,
+    "baseline_mean": 4.438305,
+    "baseline_sd": 0.314739,
+    "z": 2.1723,
+    "concern_z": -2.1723,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4043,
+    "baseline_mean": 0.409156,
+    "baseline_sd": 0.029752,
+    "z": -0.1632,
+    "concern_z": -0.1632,
+    "cusum": 3.3421,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.71,
+    "baseline_mean": 1.188534,
+    "baseline_sd": 0.5,
+    "z": 1.0429,
+    "concern_z": 1.0429,
+    "cusum": 0.5429,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.503,
+    "baseline_mean": 0.515685,
+    "baseline_sd": 0.3,
+    "z": -0.0423,
+    "concern_z": -0.0423,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.64,
+    "baseline_mean": 6.84181,
+    "baseline_sd": 0.578055,
+    "z": -0.3491,
+    "concern_z": 0.3491,
+    "cusum": 2.3887,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.437,
+    "baseline_mean": 4.438251,
+    "baseline_sd": 0.221913,
+    "z": -0.0056,
+    "concern_z": 0.0056,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 132.0,
+    "baseline_mean": 118.063161,
+    "baseline_sd": 10.0,
+    "z": 1.3937,
+    "concern_z": -1.3937,
+    "cusum": 0.1393,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-07",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.5543,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7639,
+    "baseline_mean": 0.753014,
+    "baseline_sd": 0.037651,
+    "z": 0.2891,
+    "concern_z": -0.2891,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.5,
+    "baseline_mean": 16.21955,
+    "baseline_sd": 1.58259,
+    "z": -0.4547,
+    "concern_z": 0.4547,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.444,
+    "baseline_mean": 4.47249,
+    "baseline_sd": 0.342753,
+    "z": -0.0831,
+    "concern_z": 0.0831,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4173,
+    "baseline_mean": 0.408913,
+    "baseline_sd": 0.029019,
+    "z": 0.289,
+    "concern_z": 0.289,
+    "cusum": 3.1311,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.717,
+    "baseline_mean": 1.214607,
+    "baseline_sd": 0.5,
+    "z": -0.9952,
+    "concern_z": -0.9952,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.478,
+    "baseline_mean": 0.515051,
+    "baseline_sd": 0.3,
+    "z": -0.1235,
+    "concern_z": -0.1235,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.288,
+    "baseline_mean": 6.83172,
+    "baseline_sd": 0.565222,
+    "z": 0.8073,
+    "concern_z": -0.8073,
+    "cusum": 1.0815,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.516,
+    "baseline_mean": 4.438189,
+    "baseline_sd": 0.221909,
+    "z": 0.3506,
+    "concern_z": -0.3506,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 118.0,
+    "baseline_mean": 118.760003,
+    "baseline_sd": 10.0,
+    "z": -0.076,
+    "concern_z": 0.076,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-08",
+  "eligible": false,
+  "reason": "low exposure: 38 words recorded, below 150",
+  "tier": "excluded",
+  "composite": null,
+  "composite_cusum": null,
+  "features": [],
+  "contributors": [],
+  "explanation": [
+   "Not enough speech was recorded to assess this day."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-09",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -1.2011,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7376,
+    "baseline_mean": 0.753558,
+    "baseline_sd": 0.037678,
+    "z": -0.4235,
+    "concern_z": 0.4235,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 18.466,
+    "baseline_mean": 16.183573,
+    "baseline_sd": 1.550887,
+    "z": 1.4717,
+    "concern_z": -1.4717,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.707,
+    "baseline_mean": 4.471065,
+    "baseline_sd": 0.334135,
+    "z": 0.7061,
+    "concern_z": -0.7061,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4269,
+    "baseline_mean": 0.409332,
+    "baseline_sd": 0.028346,
+    "z": 0.6198,
+    "concern_z": 0.6198,
+    "cusum": 3.2509,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 2.148,
+    "baseline_mean": 1.189727,
+    "baseline_sd": 0.5,
+    "z": 1.9165,
+    "concern_z": 1.9165,
+    "cusum": 1.4165,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.28,
+    "baseline_mean": 0.513199,
+    "baseline_sd": 0.3,
+    "z": -0.7773,
+    "concern_z": -0.7773,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 8.31,
+    "baseline_mean": 6.854534,
+    "baseline_sd": 0.560278,
+    "z": 2.5978,
+    "concern_z": -2.5978,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.416,
+    "baseline_mean": 4.442079,
+    "baseline_sd": 0.222104,
+    "z": -0.1174,
+    "concern_z": 0.1174,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 130.0,
+    "baseline_mean": 118.722003,
+    "baseline_sd": 10.0,
+    "z": 1.1278,
+    "concern_z": -1.1278,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-10",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 1.2113,
+  "composite_cusum": 0.7113,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7239,
+    "baseline_mean": 0.75276,
+    "baseline_sd": 0.037638,
+    "z": -0.7668,
+    "concern_z": 0.7668,
+    "cusum": 0.2668,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 14.652,
+    "baseline_mean": 16.297694,
+    "baseline_sd": 1.59545,
+    "z": -1.0315,
+    "concern_z": 1.0315,
+    "cusum": 0.5315,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.261,
+    "baseline_mean": 4.482862,
+    "baseline_sd": 0.32992,
+    "z": -0.6725,
+    "concern_z": 0.6725,
+    "cusum": 0.1725,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.435,
+    "baseline_mean": 0.410211,
+    "baseline_sd": 0.027906,
+    "z": 0.8883,
+    "concern_z": 0.8883,
+    "cusum": 3.6392,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.187,
+    "baseline_mean": 1.23764,
+    "baseline_sd": 0.5,
+    "z": -0.1013,
+    "concern_z": -0.1013,
+    "cusum": 0.8153,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.742,
+    "baseline_mean": 0.501539,
+    "baseline_sd": 0.3,
+    "z": 0.8015,
+    "concern_z": 0.8015,
+    "cusum": 0.3015,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.973,
+    "baseline_mean": 6.927307,
+    "baseline_sd": 0.635716,
+    "z": 0.0719,
+    "concern_z": -0.0719,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.57,
+    "baseline_mean": 4.440775,
+    "baseline_sd": 0.222039,
+    "z": 0.582,
+    "concern_z": -0.582,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 117.0,
+    "baseline_mean": 119.285902,
+    "baseline_sd": 10.0,
+    "z": -0.2286,
+    "concern_z": 0.2286,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-11",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.8756,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7845,
+    "baseline_mean": 0.751317,
+    "baseline_sd": 0.037566,
+    "z": 0.8833,
+    "concern_z": -0.8833,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 18.357,
+    "baseline_mean": 16.215409,
+    "baseline_sd": 1.598,
+    "z": 1.3402,
+    "concern_z": -1.3402,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.571,
+    "baseline_mean": 4.471769,
+    "baseline_sd": 0.32537,
+    "z": 0.305,
+    "concern_z": -0.305,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4301,
+    "baseline_mean": 0.41145,
+    "baseline_sd": 0.027759,
+    "z": 0.6718,
+    "concern_z": 0.6718,
+    "cusum": 3.811,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.816,
+    "baseline_mean": 1.235108,
+    "baseline_sd": 0.5,
+    "z": 1.1618,
+    "concern_z": 1.1618,
+    "cusum": 1.477,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.13,
+    "baseline_mean": 0.513562,
+    "baseline_sd": 0.3,
+    "z": -1.2785,
+    "concern_z": -1.2785,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.263,
+    "baseline_mean": 6.929592,
+    "baseline_sd": 0.619704,
+    "z": 0.538,
+    "concern_z": -0.538,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.41,
+    "baseline_mean": 4.447237,
+    "baseline_sd": 0.222362,
+    "z": -0.1675,
+    "concern_z": 0.1675,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 122.0,
+    "baseline_mean": 119.171607,
+    "baseline_sd": 10.0,
+    "z": 0.2828,
+    "concern_z": -0.2828,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-12",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -1.8627,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7804,
+    "baseline_mean": 0.752976,
+    "baseline_sd": 0.037649,
+    "z": 0.7284,
+    "concern_z": -0.7284,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 19.364,
+    "baseline_mean": 16.322489,
+    "baseline_sd": 1.629492,
+    "z": 1.8665,
+    "concern_z": -1.8665,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.818,
+    "baseline_mean": 4.476731,
+    "baseline_sd": 0.317907,
+    "z": 1.0735,
+    "concern_z": -1.0735,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4181,
+    "baseline_mean": 0.412383,
+    "baseline_sd": 0.027376,
+    "z": 0.2088,
+    "concern_z": 0.2088,
+    "cusum": 3.5199,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.221,
+    "baseline_mean": 1.264153,
+    "baseline_sd": 0.5,
+    "z": -0.0863,
+    "concern_z": -0.0863,
+    "cusum": 0.8907,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.282,
+    "baseline_mean": 0.494384,
+    "baseline_sd": 0.3,
+    "z": -0.7079,
+    "concern_z": -0.7079,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.948,
+    "baseline_mean": 6.946262,
+    "baseline_sd": 0.608596,
+    "z": 0.0029,
+    "concern_z": -0.0029,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.526,
+    "baseline_mean": 4.445375,
+    "baseline_sd": 0.222269,
+    "z": 0.3627,
+    "concern_z": -0.3627,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 129.0,
+    "baseline_mean": 119.313027,
+    "baseline_sd": 10.0,
+    "z": 0.9687,
+    "concern_z": -0.9687,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-13",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.9967,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7351,
+    "baseline_mean": 0.754347,
+    "baseline_sd": 0.037717,
+    "z": -0.5103,
+    "concern_z": 0.5103,
+    "cusum": 0.0103,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 16.457,
+    "baseline_mean": 16.474564,
+    "baseline_sd": 1.727721,
+    "z": -0.0102,
+    "concern_z": 0.0102,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.587,
+    "baseline_mean": 4.493794,
+    "baseline_sd": 0.319116,
+    "z": 0.2921,
+    "concern_z": -0.2921,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3826,
+    "baseline_mean": 0.412669,
+    "baseline_sd": 0.026713,
+    "z": -1.1256,
+    "concern_z": -1.1256,
+    "cusum": 1.8943,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.661,
+    "baseline_mean": 1.261995,
+    "baseline_sd": 0.5,
+    "z": -1.202,
+    "concern_z": -1.202,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.264,
+    "baseline_mean": 0.483764,
+    "baseline_sd": 0.3,
+    "z": -0.7325,
+    "concern_z": -0.7325,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.398,
+    "baseline_mean": 6.946349,
+    "baseline_sd": 0.593186,
+    "z": 0.7614,
+    "concern_z": -0.7614,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.333,
+    "baseline_mean": 4.449406,
+    "baseline_sd": 0.22247,
+    "z": -0.5232,
+    "concern_z": 0.5232,
+    "cusum": 0.0232,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 119.0,
+    "baseline_mean": 119.797376,
+    "baseline_sd": 10.0,
+    "z": -0.0797,
+    "concern_z": 0.0797,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-14",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -1.1626,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7496,
+    "baseline_mean": 0.753385,
+    "baseline_sd": 0.037669,
+    "z": -0.1005,
+    "concern_z": 0.1005,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 17.875,
+    "baseline_mean": 16.473686,
+    "baseline_sd": 1.683979,
+    "z": 0.8321,
+    "concern_z": -0.8321,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.729,
+    "baseline_mean": 4.498454,
+    "baseline_sd": 0.311733,
+    "z": 0.7396,
+    "concern_z": -0.7396,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3908,
+    "baseline_mean": 0.411165,
+    "baseline_sd": 0.026891,
+    "z": -0.7573,
+    "concern_z": -0.7573,
+    "cusum": 0.6369,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.049,
+    "baseline_mean": 1.231946,
+    "baseline_sd": 0.5,
+    "z": -0.3659,
+    "concern_z": -0.3659,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.233,
+    "baseline_mean": 0.472776,
+    "baseline_sd": 0.3,
+    "z": -0.7993,
+    "concern_z": -0.7993,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.527,
+    "baseline_mean": 6.968932,
+    "baseline_sd": 0.586921,
+    "z": -0.753,
+    "concern_z": 0.753,
+    "cusum": 0.253,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.382,
+    "baseline_mean": 4.443586,
+    "baseline_sd": 0.222179,
+    "z": -0.2772,
+    "concern_z": 0.2772,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 131.0,
+    "baseline_mean": 119.757507,
+    "baseline_sd": 10.0,
+    "z": 1.1242,
+    "concern_z": -1.1242,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-15",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.1627,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7334,
+    "baseline_mean": 0.753196,
+    "baseline_sd": 0.03766,
+    "z": -0.5256,
+    "concern_z": 0.5256,
+    "cusum": 0.0256,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.702,
+    "baseline_mean": 16.543752,
+    "baseline_sd": 1.670982,
+    "z": -0.5037,
+    "concern_z": 0.5037,
+    "cusum": 0.0037,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.351,
+    "baseline_mean": 4.509982,
+    "baseline_sd": 0.308182,
+    "z": -0.5159,
+    "concern_z": 0.5159,
+    "cusum": 0.0159,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4137,
+    "baseline_mean": 0.410147,
+    "baseline_sd": 0.026602,
+    "z": 0.1336,
+    "concern_z": 0.1336,
+    "cusum": 0.2705,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.117,
+    "baseline_mean": 1.222798,
+    "baseline_sd": 0.5,
+    "z": -0.2116,
+    "concern_z": -0.2116,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.447,
+    "baseline_mean": 0.460787,
+    "baseline_sd": 0.3,
+    "z": -0.046,
+    "concern_z": -0.046,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.374,
+    "baseline_mean": 6.946835,
+    "baseline_sd": 0.580532,
+    "z": 0.7358,
+    "concern_z": -0.7358,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.447,
+    "baseline_mean": 4.440507,
+    "baseline_sd": 0.222025,
+    "z": 0.0292,
+    "concern_z": -0.0292,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 122.0,
+    "baseline_mean": 120.319631,
+    "baseline_sd": 10.0,
+    "z": 0.168,
+    "concern_z": -0.168,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-16",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -1.7868,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7451,
+    "baseline_mean": 0.752206,
+    "baseline_sd": 0.03761,
+    "z": -0.1889,
+    "concern_z": 0.1889,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 20.24,
+    "baseline_mean": 16.501664,
+    "baseline_sd": 1.639512,
+    "z": 2.2802,
+    "concern_z": -2.2802,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 5.04,
+    "baseline_mean": 4.502033,
+    "baseline_sd": 0.302475,
+    "z": 1.7786,
+    "concern_z": -1.7786,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3929,
+    "baseline_mean": 0.410325,
+    "baseline_sd": 0.025941,
+    "z": -0.6717,
+    "concern_z": -0.6717,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.791,
+    "baseline_mean": 1.217508,
+    "baseline_sd": 0.5,
+    "z": -0.853,
+    "concern_z": -0.853,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.593,
+    "baseline_mean": 0.460098,
+    "baseline_sd": 0.3,
+    "z": 0.443,
+    "concern_z": 0.443,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.115,
+    "baseline_mean": 6.968193,
+    "baseline_sd": 0.573838,
+    "z": 0.2558,
+    "concern_z": -0.2558,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.506,
+    "baseline_mean": 4.440831,
+    "baseline_sd": 0.222042,
+    "z": 0.2935,
+    "concern_z": -0.2935,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 119.0,
+    "baseline_mean": 120.40365,
+    "baseline_sd": 10.0,
+    "z": -0.1404,
+    "concern_z": 0.1404,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range.",
+   "You noted: travel, slept badly"
+  ],
+  "annotation": "travel, slept badly"
+ },
+ {
+  "date": "2026-08-17",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.0585,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7348,
+    "baseline_mean": 0.751851,
+    "baseline_sd": 0.037593,
+    "z": -0.4536,
+    "concern_z": 0.4536,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 16.441,
+    "baseline_mean": 16.688581,
+    "baseline_sd": 1.803429,
+    "z": -0.1373,
+    "concern_z": 0.1373,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.647,
+    "baseline_mean": 4.528931,
+    "baseline_sd": 0.318413,
+    "z": 0.3708,
+    "concern_z": -0.3708,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.352,
+    "baseline_mean": 0.409453,
+    "baseline_sd": 0.025583,
+    "z": -2.2458,
+    "concern_z": -2.2458,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.716,
+    "baseline_mean": 1.196183,
+    "baseline_sd": 0.5,
+    "z": -0.9604,
+    "concern_z": -0.9604,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.716,
+    "baseline_mean": 0.466743,
+    "baseline_sd": 0.3,
+    "z": 0.8309,
+    "concern_z": 0.8309,
+    "cusum": 0.3309,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.619,
+    "baseline_mean": 6.975534,
+    "baseline_sd": 0.560271,
+    "z": -0.6364,
+    "concern_z": 0.6364,
+    "cusum": 0.1364,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.275,
+    "baseline_mean": 4.44409,
+    "baseline_sd": 0.222204,
+    "z": -0.761,
+    "concern_z": 0.761,
+    "cusum": 0.261,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 111.0,
+    "baseline_mean": 120.333467,
+    "baseline_sd": 10.0,
+    "z": -0.9333,
+    "concern_z": 0.9333,
+    "cusum": 0.4333,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-18",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -1.2037,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7459,
+    "baseline_mean": 0.750998,
+    "baseline_sd": 0.03755,
+    "z": -0.1358,
+    "concern_z": 0.1358,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 20.44,
+    "baseline_mean": 16.676202,
+    "baseline_sd": 1.758637,
+    "z": 2.1402,
+    "concern_z": -2.1402,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 5.2,
+    "baseline_mean": 4.534834,
+    "baseline_sd": 0.311472,
+    "z": 2.1356,
+    "concern_z": -2.1356,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3976,
+    "baseline_mean": 0.406581,
+    "baseline_sd": 0.02805,
+    "z": -0.3202,
+    "concern_z": -0.3202,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.37,
+    "baseline_mean": 1.172174,
+    "baseline_sd": 0.5,
+    "z": 0.3957,
+    "concern_z": 0.3957,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.196,
+    "baseline_mean": 0.479206,
+    "baseline_sd": 0.3,
+    "z": -0.944,
+    "concern_z": -0.944,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.458,
+    "baseline_mean": 6.957707,
+    "baseline_sd": 0.551873,
+    "z": -0.9055,
+    "concern_z": 0.9055,
+    "cusum": 0.5418,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.501,
+    "baseline_mean": 4.435635,
+    "baseline_sd": 0.221782,
+    "z": 0.2947,
+    "concern_z": -0.2947,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 112.0,
+    "baseline_mean": 119.866794,
+    "baseline_sd": 10.0,
+    "z": -0.7867,
+    "concern_z": 0.7867,
+    "cusum": 0.72,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-19",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 1.8043,
+  "composite_cusum": 1.3043,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7477,
+    "baseline_mean": 0.750743,
+    "baseline_sd": 0.037537,
+    "z": -0.0811,
+    "concern_z": 0.0811,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.69,
+    "baseline_mean": 16.864392,
+    "baseline_sd": 1.909574,
+    "z": -0.615,
+    "concern_z": 0.615,
+    "cusum": 0.115,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.379,
+    "baseline_mean": 4.568093,
+    "baseline_sd": 0.338062,
+    "z": -0.5593,
+    "concern_z": 0.5593,
+    "cusum": 0.0593,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4305,
+    "baseline_mean": 0.406132,
+    "baseline_sd": 0.027413,
+    "z": 0.8889,
+    "concern_z": 0.8889,
+    "cusum": 0.3889,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.879,
+    "baseline_mean": 1.182065,
+    "baseline_sd": 0.5,
+    "z": -0.6061,
+    "concern_z": -0.6061,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 1.099,
+    "baseline_mean": 0.465046,
+    "baseline_sd": 0.3,
+    "z": 2.1132,
+    "concern_z": 2.1132,
+    "cusum": 1.6132,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.593,
+    "baseline_mean": 6.932722,
+    "baseline_sd": 0.549382,
+    "z": -0.6184,
+    "concern_z": 0.6184,
+    "cusum": 0.6602,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.462,
+    "baseline_mean": 4.438903,
+    "baseline_sd": 0.221945,
+    "z": 0.1041,
+    "concern_z": -0.1041,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 107.0,
+    "baseline_mean": 119.473454,
+    "baseline_sd": 10.0,
+    "z": -1.2473,
+    "concern_z": 1.2473,
+    "cusum": 1.4674,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-20",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.0394,
+  "composite_cusum": 0.8438,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7475,
+    "baseline_mean": 0.750591,
+    "baseline_sd": 0.03753,
+    "z": -0.0824,
+    "concern_z": 0.0824,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 19.45,
+    "baseline_mean": 16.805672,
+    "baseline_sd": 1.879656,
+    "z": 1.4068,
+    "concern_z": -1.4068,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.65,
+    "baseline_mean": 4.558638,
+    "baseline_sd": 0.332204,
+    "z": 0.275,
+    "concern_z": -0.275,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4252,
+    "baseline_mean": 0.40735,
+    "baseline_sd": 0.027269,
+    "z": 0.6546,
+    "concern_z": 0.6546,
+    "cusum": 0.5435,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.928,
+    "baseline_mean": 1.166912,
+    "baseline_sd": 0.5,
+    "z": 1.5222,
+    "concern_z": 1.5222,
+    "cusum": 1.0222,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.514,
+    "baseline_mean": 0.496743,
+    "baseline_sd": 0.3,
+    "z": 0.0575,
+    "concern_z": 0.0575,
+    "cusum": 1.1707,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.326,
+    "baseline_mean": 6.915736,
+    "baseline_sd": 0.540833,
+    "z": 0.7586,
+    "concern_z": -0.7586,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.383,
+    "baseline_mean": 4.440058,
+    "baseline_sd": 0.222003,
+    "z": -0.257,
+    "concern_z": 0.257,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 119.0,
+    "baseline_mean": 118.849782,
+    "baseline_sd": 10.0,
+    "z": 0.015,
+    "concern_z": -0.015,
+    "cusum": 0.9523,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-21",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.6364,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.741,
+    "baseline_mean": 0.750437,
+    "baseline_sd": 0.037522,
+    "z": -0.2515,
+    "concern_z": 0.2515,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 18.606,
+    "baseline_mean": 16.937889,
+    "baseline_sd": 1.925117,
+    "z": 0.8665,
+    "concern_z": -0.8665,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.848,
+    "baseline_mean": 4.563206,
+    "baseline_sd": 0.324437,
+    "z": 0.8778,
+    "concern_z": -0.8778,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3541,
+    "baseline_mean": 0.408243,
+    "baseline_sd": 0.026877,
+    "z": -2.0145,
+    "concern_z": -2.0145,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.977,
+    "baseline_mean": 1.204966,
+    "baseline_sd": 0.5,
+    "z": -0.4559,
+    "concern_z": -0.4559,
+    "cusum": 0.0662,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.651,
+    "baseline_mean": 0.497606,
+    "baseline_sd": 0.3,
+    "z": 0.5113,
+    "concern_z": 0.5113,
+    "cusum": 1.182,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.678,
+    "baseline_mean": 6.936249,
+    "baseline_sd": 0.535062,
+    "z": -0.4827,
+    "concern_z": 0.4827,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.332,
+    "baseline_mean": 4.437205,
+    "baseline_sd": 0.22186,
+    "z": -0.4742,
+    "concern_z": 0.4742,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 113.0,
+    "baseline_mean": 118.857293,
+    "baseline_sd": 10.0,
+    "z": -0.5857,
+    "concern_z": 0.5857,
+    "cusum": 1.0381,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-22",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 1.0637,
+  "composite_cusum": 0.5637,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7142,
+    "baseline_mean": 0.749965,
+    "baseline_sd": 0.037498,
+    "z": -0.9538,
+    "concern_z": 0.9538,
+    "cusum": 0.4538,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 13.976,
+    "baseline_mean": 17.021294,
+    "baseline_sd": 1.913087,
+    "z": -1.5918,
+    "concern_z": 1.5918,
+    "cusum": 1.0918,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.293,
+    "baseline_mean": 4.577446,
+    "baseline_sd": 0.32257,
+    "z": -0.8818,
+    "concern_z": 0.8818,
+    "cusum": 0.3818,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3673,
+    "baseline_mean": 0.405535,
+    "baseline_sd": 0.028858,
+    "z": -1.3249,
+    "concern_z": -1.3249,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.222,
+    "baseline_mean": 1.193568,
+    "baseline_sd": 0.5,
+    "z": 0.0569,
+    "concern_z": 0.0569,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.524,
+    "baseline_mean": 0.505276,
+    "baseline_sd": 0.3,
+    "z": 0.0624,
+    "concern_z": 0.0624,
+    "cusum": 0.7444,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.679,
+    "baseline_mean": 6.923336,
+    "baseline_sd": 0.524701,
+    "z": 1.4402,
+    "concern_z": -1.4402,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.398,
+    "baseline_mean": 4.431945,
+    "baseline_sd": 0.221597,
+    "z": -0.1532,
+    "concern_z": 0.1532,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 96.0,
+    "baseline_mean": 118.564428,
+    "baseline_sd": 10.0,
+    "z": -2.2564,
+    "concern_z": 2.2564,
+    "cusum": 2.7945,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-23",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.9167,
+  "composite_cusum": 0.9804,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7457,
+    "baseline_mean": 0.748177,
+    "baseline_sd": 0.037409,
+    "z": -0.0662,
+    "concern_z": 0.0662,
+    "cusum": 0.02,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 16.019,
+    "baseline_mean": 16.86903,
+    "baseline_sd": 1.985094,
+    "z": -0.4282,
+    "concern_z": 0.4282,
+    "cusum": 1.02,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.415,
+    "baseline_mean": 4.563223,
+    "baseline_sd": 0.320772,
+    "z": -0.4621,
+    "concern_z": 0.4621,
+    "cusum": 0.3439,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4014,
+    "baseline_mean": 0.403624,
+    "baseline_sd": 0.029398,
+    "z": -0.0756,
+    "concern_z": -0.0756,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.531,
+    "baseline_mean": 1.19499,
+    "baseline_sd": 0.5,
+    "z": 0.672,
+    "concern_z": 0.672,
+    "cusum": 0.172,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.707,
+    "baseline_mean": 0.506212,
+    "baseline_sd": 0.3,
+    "z": 0.6693,
+    "concern_z": 0.6693,
+    "cusum": 0.9137,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.36,
+    "baseline_mean": 6.961119,
+    "baseline_sd": 0.538607,
+    "z": -1.1161,
+    "concern_z": 1.1161,
+    "cusum": 0.6161,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.393,
+    "baseline_mean": 4.430248,
+    "baseline_sd": 0.221512,
+    "z": -0.1682,
+    "concern_z": 0.1682,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 125.0,
+    "baseline_mean": 117.436207,
+    "baseline_sd": 10.0,
+    "z": 0.7564,
+    "concern_z": -0.7564,
+    "cusum": 1.5381,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-24",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.6291,
+  "composite_cusum": 1.1095,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7687,
+    "baseline_mean": 0.748053,
+    "baseline_sd": 0.037403,
+    "z": 0.552,
+    "concern_z": -0.552,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.96,
+    "baseline_mean": 16.826528,
+    "baseline_sd": 1.944144,
+    "z": -0.4457,
+    "concern_z": 0.4457,
+    "cusum": 0.9657,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.3,
+    "baseline_mean": 4.555812,
+    "baseline_sd": 0.314401,
+    "z": -0.8136,
+    "concern_z": 0.8136,
+    "cusum": 0.6575,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4317,
+    "baseline_mean": 0.403512,
+    "baseline_sd": 0.028658,
+    "z": 0.9836,
+    "concern_z": 0.9836,
+    "cusum": 0.4836,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.378,
+    "baseline_mean": 1.21179,
+    "baseline_sd": 0.5,
+    "z": 0.3324,
+    "concern_z": 0.3324,
+    "cusum": 0.0044,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.251,
+    "baseline_mean": 0.516251,
+    "baseline_sd": 0.3,
+    "z": -0.8842,
+    "concern_z": -0.8842,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.14,
+    "baseline_mean": 6.931064,
+    "baseline_sd": 0.541904,
+    "z": -1.4598,
+    "concern_z": 1.4598,
+    "cusum": 1.5759,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.449,
+    "baseline_mean": 4.428385,
+    "baseline_sd": 0.221419,
+    "z": 0.0931,
+    "concern_z": -0.0931,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 124.0,
+    "baseline_mean": 117.814396,
+    "baseline_sd": 10.0,
+    "z": 0.6186,
+    "concern_z": -0.6186,
+    "cusum": 0.4196,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-25",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.0815,
+  "composite_cusum": 0.528,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7422,
+    "baseline_mean": 0.749085,
+    "baseline_sd": 0.037454,
+    "z": -0.1838,
+    "concern_z": 0.1838,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 16.841,
+    "baseline_mean": 16.783202,
+    "baseline_sd": 1.904798,
+    "z": 0.0303,
+    "concern_z": -0.0303,
+    "cusum": 0.4354,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.523,
+    "baseline_mean": 4.543022,
+    "baseline_sd": 0.311733,
+    "z": -0.0642,
+    "concern_z": 0.0642,
+    "cusum": 0.2218,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3865,
+    "baseline_mean": 0.404922,
+    "baseline_sd": 0.028635,
+    "z": -0.6433,
+    "concern_z": -0.6433,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.08,
+    "baseline_mean": 1.220101,
+    "baseline_sd": 0.5,
+    "z": -0.2802,
+    "concern_z": -0.2802,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.675,
+    "baseline_mean": 0.502989,
+    "baseline_sd": 0.3,
+    "z": 0.5734,
+    "concern_z": 0.5734,
+    "cusum": 0.0734,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.748,
+    "baseline_mean": 6.89151,
+    "baseline_sd": 0.557015,
+    "z": -0.2576,
+    "concern_z": 0.2576,
+    "cusum": 1.3335,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.359,
+    "baseline_mean": 4.429416,
+    "baseline_sd": 0.221471,
+    "z": -0.3179,
+    "concern_z": 0.3179,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 125.0,
+    "baseline_mean": 118.123676,
+    "baseline_sd": 10.0,
+    "z": 0.6876,
+    "concern_z": -0.6876,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-26",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.0111,
+  "composite_cusum": 0.0169,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7576,
+    "baseline_mean": 0.748741,
+    "baseline_sd": 0.037437,
+    "z": 0.2366,
+    "concern_z": -0.2366,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.48,
+    "baseline_mean": 16.786092,
+    "baseline_sd": 1.856612,
+    "z": -0.7035,
+    "concern_z": 0.7035,
+    "cusum": 0.6389,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.4,
+    "baseline_mean": 4.542021,
+    "baseline_sd": 0.303873,
+    "z": -0.4674,
+    "concern_z": 0.4674,
+    "cusum": 0.1891,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4068,
+    "baseline_mean": 0.404001,
+    "baseline_sd": 0.028212,
+    "z": 0.0992,
+    "concern_z": 0.0992,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.904,
+    "baseline_mean": 1.213096,
+    "baseline_sd": 0.5,
+    "z": -0.6182,
+    "concern_z": -0.6182,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.646,
+    "baseline_mean": 0.511589,
+    "baseline_sd": 0.3,
+    "z": 0.448,
+    "concern_z": 0.448,
+    "cusum": 0.0214,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.848,
+    "baseline_mean": 6.884335,
+    "baseline_sd": 0.543859,
+    "z": -0.0668,
+    "concern_z": 0.0668,
+    "cusum": 0.9003,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.406,
+    "baseline_mean": 4.425895,
+    "baseline_sd": 0.221295,
+    "z": -0.0899,
+    "concern_z": 0.0899,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 129.0,
+    "baseline_mean": 118.467493,
+    "baseline_sd": 10.0,
+    "z": 1.0533,
+    "concern_z": -1.0533,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-27",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.377,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.73,
+    "baseline_mean": 0.749184,
+    "baseline_sd": 0.037459,
+    "z": -0.5121,
+    "concern_z": 0.5121,
+    "cusum": 0.0121,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 17.289,
+    "baseline_mean": 16.720787,
+    "baseline_sd": 1.833017,
+    "z": 0.31,
+    "concern_z": -0.31,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.789,
+    "baseline_mean": 4.53492,
+    "baseline_sd": 0.297877,
+    "z": 0.853,
+    "concern_z": -0.853,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3864,
+    "baseline_mean": 0.404141,
+    "baseline_sd": 0.027505,
+    "z": -0.645,
+    "concern_z": -0.645,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.522,
+    "baseline_mean": 1.197641,
+    "baseline_sd": 0.5,
+    "z": 0.6487,
+    "concern_z": 0.6487,
+    "cusum": 0.1487,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.761,
+    "baseline_mean": 0.51831,
+    "baseline_sd": 0.3,
+    "z": 0.809,
+    "concern_z": 0.809,
+    "cusum": 0.3304,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.306,
+    "baseline_mean": 6.882518,
+    "baseline_sd": 0.53015,
+    "z": 0.7988,
+    "concern_z": -0.7988,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.277,
+    "baseline_mean": 4.424901,
+    "baseline_sd": 0.221245,
+    "z": -0.6685,
+    "concern_z": 0.6685,
+    "cusum": 0.1685,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 108.0,
+    "baseline_mean": 118.994118,
+    "baseline_sd": 10.0,
+    "z": -1.0994,
+    "concern_z": 1.0994,
+    "cusum": 0.5994,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-28",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -1.5233,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.757,
+    "baseline_mean": 0.748225,
+    "baseline_sd": 0.037411,
+    "z": 0.2346,
+    "concern_z": -0.2346,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 18.356,
+    "baseline_mean": 16.749198,
+    "baseline_sd": 1.791116,
+    "z": 0.8971,
+    "concern_z": -0.8971,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.978,
+    "baseline_mean": 4.547624,
+    "baseline_sd": 0.295841,
+    "z": 1.4548,
+    "concern_z": -1.4548,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3943,
+    "baseline_mean": 0.403254,
+    "baseline_sd": 0.0271,
+    "z": -0.3304,
+    "concern_z": -0.3304,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.969,
+    "baseline_mean": 1.213859,
+    "baseline_sd": 0.5,
+    "z": -0.4897,
+    "concern_z": -0.4897,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.363,
+    "baseline_mean": 0.530444,
+    "baseline_sd": 0.3,
+    "z": -0.5581,
+    "concern_z": -0.5581,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.659,
+    "baseline_mean": 6.903692,
+    "baseline_sd": 0.525331,
+    "z": -0.4658,
+    "concern_z": 0.4658,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.443,
+    "baseline_mean": 4.417506,
+    "baseline_sd": 0.220875,
+    "z": 0.1154,
+    "concern_z": -0.1154,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 128.0,
+    "baseline_mean": 118.444412,
+    "baseline_sd": 10.0,
+    "z": 0.9556,
+    "concern_z": -0.9556,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-29",
+  "eligible": false,
+  "reason": "low exposure: 31 words recorded, below 150",
+  "tier": "excluded",
+  "composite": null,
+  "composite_cusum": null,
+  "features": [],
+  "contributors": [],
+  "explanation": [
+   "Not enough speech was recorded to assess this day."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-30",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -1.5594,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.744,
+    "baseline_mean": 0.748663,
+    "baseline_sd": 0.037433,
+    "z": -0.1246,
+    "concern_z": 0.1246,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 17.82,
+    "baseline_mean": 16.829538,
+    "baseline_sd": 1.782353,
+    "z": 0.5557,
+    "concern_z": -0.5557,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.72,
+    "baseline_mean": 4.569142,
+    "baseline_sd": 0.303985,
+    "z": 0.4963,
+    "concern_z": -0.4963,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4092,
+    "baseline_mean": 0.402806,
+    "baseline_sd": 0.02649,
+    "z": 0.2414,
+    "concern_z": 0.2414,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.673,
+    "baseline_mean": 1.201616,
+    "baseline_sd": 0.5,
+    "z": -1.0572,
+    "concern_z": -1.0572,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.224,
+    "baseline_mean": 0.522072,
+    "baseline_sd": 0.3,
+    "z": -0.9936,
+    "concern_z": -0.9936,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.846,
+    "baseline_mean": 6.891458,
+    "baseline_sd": 0.514945,
+    "z": -0.0883,
+    "concern_z": 0.0883,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.512,
+    "baseline_mean": 4.41878,
+    "baseline_sd": 0.220939,
+    "z": 0.4219,
+    "concern_z": -0.4219,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 135.0,
+    "baseline_mean": 118.922191,
+    "baseline_sd": 10.0,
+    "z": 1.6078,
+    "concern_z": -1.6078,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-08-31",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 1.4853,
+  "composite_cusum": 0.9853,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7455,
+    "baseline_mean": 0.74843,
+    "baseline_sd": 0.037422,
+    "z": -0.0783,
+    "concern_z": 0.0783,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.711,
+    "baseline_mean": 16.879061,
+    "baseline_sd": 1.751284,
+    "z": -0.667,
+    "concern_z": 0.667,
+    "cusum": 0.167,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.368,
+    "baseline_mean": 4.576685,
+    "baseline_sd": 0.298202,
+    "z": -0.6998,
+    "concern_z": 0.6998,
+    "cusum": 0.1998,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4563,
+    "baseline_mean": 0.403126,
+    "baseline_sd": 0.025859,
+    "z": 2.0563,
+    "concern_z": 2.0563,
+    "cusum": 1.5563,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.005,
+    "baseline_mean": 1.175185,
+    "baseline_sd": 0.5,
+    "z": -0.3404,
+    "concern_z": -0.3404,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.67,
+    "baseline_mean": 0.507169,
+    "baseline_sd": 0.3,
+    "z": 0.5428,
+    "concern_z": 0.5428,
+    "cusum": 0.0428,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.7,
+    "baseline_mean": 6.889185,
+    "baseline_sd": 0.502009,
+    "z": -0.3769,
+    "concern_z": 0.3769,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.489,
+    "baseline_mean": 4.423441,
+    "baseline_sd": 0.221172,
+    "z": 0.2964,
+    "concern_z": -0.2964,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 113.0,
+    "baseline_mean": 119.726082,
+    "baseline_sd": 10.016056,
+    "z": -0.6715,
+    "concern_z": 0.6715,
+    "cusum": 0.1715,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-01",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.4551,
+  "composite_cusum": 0.0302,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.732,
+    "baseline_mean": 0.748284,
+    "baseline_sd": 0.037414,
+    "z": -0.4352,
+    "concern_z": 0.4352,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 17.262,
+    "baseline_mean": 16.820658,
+    "baseline_sd": 1.726807,
+    "z": 0.2556,
+    "concern_z": -0.2556,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.857,
+    "baseline_mean": 4.566251,
+    "baseline_sd": 0.294373,
+    "z": 0.9877,
+    "concern_z": -0.9877,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3786,
+    "baseline_mean": 0.405784,
+    "baseline_sd": 0.027868,
+    "z": -0.9755,
+    "concern_z": -0.9755,
+    "cusum": 0.0809,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.241,
+    "baseline_mean": 1.166676,
+    "baseline_sd": 0.5,
+    "z": 0.1486,
+    "concern_z": 0.1486,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.414,
+    "baseline_mean": 0.51531,
+    "baseline_sd": 0.3,
+    "z": -0.3377,
+    "concern_z": -0.3377,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.586,
+    "baseline_mean": 6.879725,
+    "baseline_sd": 0.5,
+    "z": 1.4125,
+    "concern_z": -1.4125,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.276,
+    "baseline_mean": 4.426719,
+    "baseline_sd": 0.221336,
+    "z": -0.681,
+    "concern_z": 0.681,
+    "cusum": 0.181,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 106.0,
+    "baseline_mean": 119.389778,
+    "baseline_sd": 10.0,
+    "z": -1.339,
+    "concern_z": 1.339,
+    "cusum": 1.0105,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-02",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -2.6867,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7228,
+    "baseline_mean": 0.747469,
+    "baseline_sd": 0.037373,
+    "z": -0.6601,
+    "concern_z": 0.6601,
+    "cusum": 0.1601,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 16.897,
+    "baseline_mean": 16.842725,
+    "baseline_sd": 1.685974,
+    "z": 0.0322,
+    "concern_z": -0.0322,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.923,
+    "baseline_mean": 4.580788,
+    "baseline_sd": 0.294193,
+    "z": 1.1632,
+    "concern_z": -1.1632,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3333,
+    "baseline_mean": 0.404425,
+    "baseline_sd": 0.027834,
+    "z": -2.5553,
+    "concern_z": -2.5553,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.759,
+    "baseline_mean": 1.170392,
+    "baseline_sd": 0.5,
+    "z": -0.8228,
+    "concern_z": -0.8228,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.455,
+    "baseline_mean": 0.510245,
+    "baseline_sd": 0.3,
+    "z": -0.1841,
+    "concern_z": -0.1841,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 8.953,
+    "baseline_mean": 6.915039,
+    "baseline_sd": 0.504066,
+    "z": 4.043,
+    "concern_z": -4.043,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.461,
+    "baseline_mean": 4.419183,
+    "baseline_sd": 0.220959,
+    "z": 0.1893,
+    "concern_z": -0.1893,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 116.0,
+    "baseline_mean": 118.720289,
+    "baseline_sd": 10.082324,
+    "z": -0.2698,
+    "concern_z": 0.2698,
+    "cusum": 0.7803,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-03",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.0231,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7512,
+    "baseline_mean": 0.746236,
+    "baseline_sd": 0.037312,
+    "z": 0.133,
+    "concern_z": -0.133,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 16.426,
+    "baseline_mean": 16.845439,
+    "baseline_sd": 1.643329,
+    "z": -0.2552,
+    "concern_z": 0.2552,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.444,
+    "baseline_mean": 4.597899,
+    "baseline_sd": 0.296779,
+    "z": -0.5186,
+    "concern_z": 0.5186,
+    "cusum": 0.0186,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4377,
+    "baseline_mean": 0.400869,
+    "baseline_sd": 0.031447,
+    "z": 1.1712,
+    "concern_z": 1.1712,
+    "cusum": 0.6712,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.676,
+    "baseline_mean": 1.149822,
+    "baseline_sd": 0.5,
+    "z": -0.9476,
+    "concern_z": -0.9476,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.338,
+    "baseline_mean": 0.507482,
+    "baseline_sd": 0.3,
+    "z": -0.5649,
+    "concern_z": -0.5649,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.764,
+    "baseline_mean": 7.016937,
+    "baseline_sd": 0.670107,
+    "z": -0.3775,
+    "concern_z": 0.3775,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.577,
+    "baseline_mean": 4.421274,
+    "baseline_sd": 0.221064,
+    "z": 0.7044,
+    "concern_z": -0.7044,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 119.0,
+    "baseline_mean": 118.584274,
+    "baseline_sd": 10.0,
+    "z": 0.0416,
+    "concern_z": -0.0416,
+    "cusum": 0.2387,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-04",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 1.225,
+  "composite_cusum": 0.725,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7273,
+    "baseline_mean": 0.746484,
+    "baseline_sd": 0.037324,
+    "z": -0.514,
+    "concern_z": 0.514,
+    "cusum": 0.014,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.971,
+    "baseline_mean": 16.824467,
+    "baseline_sd": 1.604463,
+    "z": -0.5319,
+    "concern_z": 0.5319,
+    "cusum": 0.0319,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.353,
+    "baseline_mean": 4.590204,
+    "baseline_sd": 0.291304,
+    "z": -0.8143,
+    "concern_z": 0.8143,
+    "cusum": 0.3328,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3757,
+    "baseline_mean": 0.40271,
+    "baseline_sd": 0.031738,
+    "z": -0.851,
+    "concern_z": -0.851,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.737,
+    "baseline_mean": 1.126131,
+    "baseline_sd": 0.5,
+    "z": -0.7783,
+    "concern_z": -0.7783,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.552,
+    "baseline_mean": 0.499008,
+    "baseline_sd": 0.3,
+    "z": 0.1766,
+    "concern_z": 0.1766,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 5.157,
+    "baseline_mean": 7.00429,
+    "baseline_sd": 0.655583,
+    "z": -2.8178,
+    "concern_z": 2.8178,
+    "cusum": 2.3178,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.365,
+    "baseline_mean": 4.42906,
+    "baseline_sd": 0.221453,
+    "z": -0.2893,
+    "concern_z": 0.2893,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 117.0,
+    "baseline_mean": 118.605061,
+    "baseline_sd": 10.0,
+    "z": -0.1605,
+    "concern_z": 0.1605,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-05",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.5977,
+  "composite_cusum": 0.8227,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7605,
+    "baseline_mean": 0.745525,
+    "baseline_sd": 0.037276,
+    "z": 0.4017,
+    "concern_z": -0.4017,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 14.853,
+    "baseline_mean": 16.781793,
+    "baseline_sd": 1.575438,
+    "z": -1.2243,
+    "concern_z": 1.2243,
+    "cusum": 0.7562,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.353,
+    "baseline_mean": 4.578344,
+    "baseline_sd": 0.28884,
+    "z": -0.7802,
+    "concern_z": 0.7802,
+    "cusum": 0.613,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4229,
+    "baseline_mean": 0.40136,
+    "baseline_sd": 0.031519,
+    "z": 0.6834,
+    "concern_z": 0.6834,
+    "cusum": 0.1834,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.584,
+    "baseline_mean": 1.106675,
+    "baseline_sd": 0.5,
+    "z": 0.9547,
+    "concern_z": 0.9547,
+    "cusum": 0.4547,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.198,
+    "baseline_mean": 0.501658,
+    "baseline_sd": 0.3,
+    "z": -1.0122,
+    "concern_z": -1.0122,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.723,
+    "baseline_mean": 6.911926,
+    "baseline_sd": 0.760871,
+    "z": 1.066,
+    "concern_z": -1.066,
+    "cusum": 0.7518,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.475,
+    "baseline_mean": 4.425857,
+    "baseline_sd": 0.221293,
+    "z": 0.2221,
+    "concern_z": -0.2221,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 110.0,
+    "baseline_mean": 118.524808,
+    "baseline_sd": 10.0,
+    "z": -0.8525,
+    "concern_z": 0.8525,
+    "cusum": 0.3525,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-06",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.796,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7503,
+    "baseline_mean": 0.746274,
+    "baseline_sd": 0.037314,
+    "z": 0.1079,
+    "concern_z": -0.1079,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 18.585,
+    "baseline_mean": 16.685354,
+    "baseline_sd": 1.594966,
+    "z": 1.191,
+    "concern_z": -1.191,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.854,
+    "baseline_mean": 4.567077,
+    "baseline_sd": 0.286,
+    "z": 1.0032,
+    "concern_z": -1.0032,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3731,
+    "baseline_mean": 0.402437,
+    "baseline_sd": 0.031096,
+    "z": -0.9434,
+    "concern_z": -0.9434,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.656,
+    "baseline_mean": 1.130541,
+    "baseline_sd": 0.5,
+    "z": -0.9491,
+    "concern_z": -0.9491,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.787,
+    "baseline_mean": 0.486475,
+    "baseline_sd": 0.3,
+    "z": 1.0017,
+    "concern_z": 1.0017,
+    "cusum": 0.5017,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.955,
+    "baseline_mean": 6.95248,
+    "baseline_sd": 0.763459,
+    "z": 0.0033,
+    "concern_z": -0.0033,
+    "cusum": 0.2485,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.318,
+    "baseline_mean": 4.428314,
+    "baseline_sd": 0.221416,
+    "z": -0.4982,
+    "concern_z": 0.4982,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 115.0,
+    "baseline_mean": 118.098567,
+    "baseline_sd": 10.0,
+    "z": -0.3099,
+    "concern_z": 0.3099,
+    "cusum": 0.1623,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-07",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.6543,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7496,
+    "baseline_mean": 0.746475,
+    "baseline_sd": 0.037324,
+    "z": 0.0837,
+    "concern_z": -0.0837,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 16.476,
+    "baseline_mean": 16.780336,
+    "baseline_sd": 1.611569,
+    "z": -0.1888,
+    "concern_z": 0.1888,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.786,
+    "baseline_mean": 4.581423,
+    "baseline_sd": 0.286046,
+    "z": 0.7152,
+    "concern_z": -0.7152,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4236,
+    "baseline_mean": 0.40097,
+    "baseline_sd": 0.03101,
+    "z": 0.7298,
+    "concern_z": 0.7298,
+    "cusum": 0.2298,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.867,
+    "baseline_mean": 1.106814,
+    "baseline_sd": 0.5,
+    "z": -0.4796,
+    "concern_z": -0.4796,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.0,
+    "baseline_mean": 0.501501,
+    "baseline_sd": 0.3,
+    "z": -1.6717,
+    "concern_z": -1.6717,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.081,
+    "baseline_mean": 6.952606,
+    "baseline_sd": 0.744128,
+    "z": 0.1725,
+    "concern_z": -0.1725,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.523,
+    "baseline_mean": 4.422799,
+    "baseline_sd": 0.22114,
+    "z": 0.4531,
+    "concern_z": -0.4531,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 111.0,
+    "baseline_mean": 117.943639,
+    "baseline_sd": 10.0,
+    "z": -0.6944,
+    "concern_z": 0.6944,
+    "cusum": 0.3567,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-08",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.6377,
+  "composite_cusum": 0.1377,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7497,
+    "baseline_mean": 0.746631,
+    "baseline_sd": 0.037332,
+    "z": 0.0822,
+    "concern_z": -0.0822,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.833,
+    "baseline_mean": 16.765119,
+    "baseline_sd": 1.572237,
+    "z": -0.5929,
+    "concern_z": 0.5929,
+    "cusum": 0.0929,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.452,
+    "baseline_mean": 4.591652,
+    "baseline_sd": 0.282531,
+    "z": -0.4943,
+    "concern_z": 0.4943,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3906,
+    "baseline_mean": 0.402102,
+    "baseline_sd": 0.030646,
+    "z": -0.3753,
+    "concern_z": -0.3753,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.902,
+    "baseline_mean": 1.094823,
+    "baseline_sd": 0.5,
+    "z": -0.3856,
+    "concern_z": -0.3856,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.451,
+    "baseline_mean": 0.476426,
+    "baseline_sd": 0.3,
+    "z": -0.0848,
+    "concern_z": -0.0848,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.316,
+    "baseline_mean": 6.959025,
+    "baseline_sd": 0.725855,
+    "z": -0.8859,
+    "concern_z": 0.8859,
+    "cusum": 0.3859,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.271,
+    "baseline_mean": 4.427809,
+    "baseline_sd": 0.22139,
+    "z": -0.7083,
+    "concern_z": 0.7083,
+    "cusum": 0.2083,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 116.0,
+    "baseline_mean": 117.596457,
+    "baseline_sd": 10.0,
+    "z": -0.1596,
+    "concern_z": 0.1596,
+    "cusum": 0.0163,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-09",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -2.0629,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.764,
+    "baseline_mean": 0.746785,
+    "baseline_sd": 0.037339,
+    "z": 0.4611,
+    "concern_z": -0.4611,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 19.172,
+    "baseline_mean": 16.718513,
+    "baseline_sd": 1.546536,
+    "z": 1.5864,
+    "concern_z": -1.5864,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 5.034,
+    "baseline_mean": 4.584669,
+    "baseline_sd": 0.277142,
+    "z": 1.6213,
+    "concern_z": -1.6213,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3811,
+    "baseline_mean": 0.401527,
+    "baseline_sd": 0.02998,
+    "z": -0.6813,
+    "concern_z": -0.6813,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.809,
+    "baseline_mean": 1.085182,
+    "baseline_sd": 0.5,
+    "z": -0.5524,
+    "concern_z": -0.5524,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.45,
+    "baseline_mean": 0.475155,
+    "baseline_sd": 0.3,
+    "z": -0.0838,
+    "concern_z": -0.0838,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.565,
+    "baseline_mean": 6.926874,
+    "baseline_sd": 0.721939,
+    "z": -0.5013,
+    "concern_z": 0.5013,
+    "cusum": 0.3871,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.388,
+    "baseline_mean": 4.419968,
+    "baseline_sd": 0.220998,
+    "z": -0.1447,
+    "concern_z": 0.1447,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 136.0,
+    "baseline_mean": 117.516634,
+    "baseline_sd": 10.0,
+    "z": 1.8483,
+    "concern_z": -1.8483,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-10",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.9219,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.753,
+    "baseline_mean": 0.747646,
+    "baseline_sd": 0.037382,
+    "z": 0.1432,
+    "concern_z": -0.1432,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 17.311,
+    "baseline_mean": 16.841188,
+    "baseline_sd": 1.604109,
+    "z": 0.2929,
+    "concern_z": -0.2929,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.689,
+    "baseline_mean": 4.607136,
+    "baseline_sd": 0.288205,
+    "z": 0.284,
+    "concern_z": -0.284,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3689,
+    "baseline_mean": 0.400505,
+    "baseline_sd": 0.029576,
+    "z": -1.0686,
+    "concern_z": -1.0686,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.799,
+    "baseline_mean": 1.071373,
+    "baseline_sd": 0.5,
+    "z": 1.4553,
+    "concern_z": 1.4553,
+    "cusum": 0.9553,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.379,
+    "baseline_mean": 0.473897,
+    "baseline_sd": 0.3,
+    "z": -0.3163,
+    "concern_z": -0.3163,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.008,
+    "baseline_mean": 6.90878,
+    "baseline_sd": 0.708296,
+    "z": 0.1401,
+    "concern_z": -0.1401,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.489,
+    "baseline_mean": 4.41837,
+    "baseline_sd": 0.220918,
+    "z": 0.3197,
+    "concern_z": -0.3197,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 135.0,
+    "baseline_mean": 118.440802,
+    "baseline_sd": 10.0,
+    "z": 1.6559,
+    "concern_z": -1.6559,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-11",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 1.4082,
+  "composite_cusum": 0.9082,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7503,
+    "baseline_mean": 0.747913,
+    "baseline_sd": 0.037396,
+    "z": 0.0638,
+    "concern_z": -0.0638,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.45,
+    "baseline_mean": 16.864678,
+    "baseline_sd": 1.567017,
+    "z": -0.9028,
+    "concern_z": 0.9028,
+    "cusum": 0.4028,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.275,
+    "baseline_mean": 4.611229,
+    "baseline_sd": 0.281504,
+    "z": -1.1944,
+    "concern_z": 1.1944,
+    "cusum": 0.6944,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3762,
+    "baseline_mean": 0.398925,
+    "baseline_sd": 0.029681,
+    "z": -0.7656,
+    "concern_z": -0.7656,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.809,
+    "baseline_mean": 1.107754,
+    "baseline_sd": 0.5,
+    "z": -0.5975,
+    "concern_z": -0.5975,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.809,
+    "baseline_mean": 0.469152,
+    "baseline_sd": 0.3,
+    "z": 1.1328,
+    "concern_z": 1.1328,
+    "cusum": 0.6328,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 5.663,
+    "baseline_mean": 6.913741,
+    "baseline_sd": 0.690718,
+    "z": -1.8108,
+    "concern_z": 1.8108,
+    "cusum": 1.3108,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.337,
+    "baseline_mean": 4.421901,
+    "baseline_sd": 0.221095,
+    "z": -0.384,
+    "concern_z": 0.384,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 117.0,
+    "baseline_mean": 119.268762,
+    "baseline_sd": 10.0,
+    "z": -0.2269,
+    "concern_z": 0.2269,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-12",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.02,
+  "composite_cusum": 0.3882,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7296,
+    "baseline_mean": 0.748033,
+    "baseline_sd": 0.037402,
+    "z": -0.4928,
+    "concern_z": 0.4928,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.261,
+    "baseline_mean": 16.793944,
+    "baseline_sd": 1.559754,
+    "z": -0.9828,
+    "concern_z": 0.9828,
+    "cusum": 0.8856,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.413,
+    "baseline_mean": 4.594417,
+    "baseline_sd": 0.28449,
+    "z": -0.6377,
+    "concern_z": 0.6377,
+    "cusum": 0.8321,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3859,
+    "baseline_mean": 0.397789,
+    "baseline_sd": 0.029372,
+    "z": -0.4048,
+    "concern_z": -0.4048,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 0.427,
+    "baseline_mean": 1.092817,
+    "baseline_sd": 0.5,
+    "z": -1.3316,
+    "concern_z": -1.3316,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.285,
+    "baseline_mean": 0.486145,
+    "baseline_sd": 0.3,
+    "z": -0.6705,
+    "concern_z": -0.6705,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.41,
+    "baseline_mean": 6.851204,
+    "baseline_sd": 0.729009,
+    "z": -0.6052,
+    "concern_z": 0.6052,
+    "cusum": 1.416,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.459,
+    "baseline_mean": 4.417656,
+    "baseline_sd": 0.220883,
+    "z": 0.1872,
+    "concern_z": -0.1872,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 121.0,
+    "baseline_mean": 119.155324,
+    "baseline_sd": 10.0,
+    "z": 0.1845,
+    "concern_z": -0.1845,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-13",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.721,
+  "composite_cusum": 0.6092,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7619,
+    "baseline_mean": 0.747111,
+    "baseline_sd": 0.037356,
+    "z": 0.3959,
+    "concern_z": -0.3959,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 16.442,
+    "baseline_mean": 16.717297,
+    "baseline_sd": 1.558424,
+    "z": -0.1767,
+    "concern_z": 0.1767,
+    "cusum": 0.5622,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.326,
+    "baseline_mean": 4.585347,
+    "baseline_sd": 0.280238,
+    "z": -0.9255,
+    "concern_z": 0.9255,
+    "cusum": 1.2575,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4106,
+    "baseline_mean": 0.397194,
+    "baseline_sd": 0.028752,
+    "z": 0.4663,
+    "concern_z": 0.4663,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.556,
+    "baseline_mean": 1.059526,
+    "baseline_sd": 0.5,
+    "z": 0.9929,
+    "concern_z": 0.9929,
+    "cusum": 0.4929,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.424,
+    "baseline_mean": 0.476087,
+    "baseline_sd": 0.3,
+    "z": -0.1736,
+    "concern_z": -0.1736,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.931,
+    "baseline_mean": 6.829144,
+    "baseline_sd": 0.717367,
+    "z": 0.142,
+    "concern_z": -0.142,
+    "cusum": 0.774,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.356,
+    "baseline_mean": 4.419724,
+    "baseline_sd": 0.220986,
+    "z": -0.2884,
+    "concern_z": 0.2884,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 119.0,
+    "baseline_mean": 119.247558,
+    "baseline_sd": 10.0,
+    "z": -0.0248,
+    "concern_z": 0.0248,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-14",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.6138,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7659,
+    "baseline_mean": 0.74785,
+    "baseline_sd": 0.037393,
+    "z": 0.4827,
+    "concern_z": -0.4827,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 17.55,
+    "baseline_mean": 16.703532,
+    "baseline_sd": 1.520211,
+    "z": 0.5568,
+    "concern_z": -0.5568,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.575,
+    "baseline_mean": 4.572379,
+    "baseline_sd": 0.279231,
+    "z": 0.0094,
+    "concern_z": -0.0094,
+    "cusum": 0.7482,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4076,
+    "baseline_mean": 0.397865,
+    "baseline_sd": 0.028184,
+    "z": 0.3454,
+    "concern_z": 0.3454,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.567,
+    "baseline_mean": 1.084349,
+    "baseline_sd": 0.5,
+    "z": 0.9653,
+    "concern_z": 0.9653,
+    "cusum": 0.9582,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.0,
+    "baseline_mean": 0.473483,
+    "baseline_sd": 0.3,
+    "z": -1.5783,
+    "concern_z": -1.5783,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.553,
+    "baseline_mean": 6.834237,
+    "baseline_sd": 0.699573,
+    "z": -0.402,
+    "concern_z": 0.402,
+    "cusum": 0.676,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.516,
+    "baseline_mean": 4.416537,
+    "baseline_sd": 0.220827,
+    "z": 0.4504,
+    "concern_z": -0.4504,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 124.0,
+    "baseline_mean": 119.23518,
+    "baseline_sd": 10.0,
+    "z": 0.4765,
+    "concern_z": -0.4765,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-15",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.8437,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7573,
+    "baseline_mean": 0.748753,
+    "baseline_sd": 0.037438,
+    "z": 0.2283,
+    "concern_z": -0.2283,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 19.438,
+    "baseline_mean": 16.745856,
+    "baseline_sd": 1.493759,
+    "z": 1.8023,
+    "concern_z": -1.8023,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.938,
+    "baseline_mean": 4.57251,
+    "baseline_sd": 0.272161,
+    "z": 1.3429,
+    "concern_z": -1.3429,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3981,
+    "baseline_mean": 0.398351,
+    "baseline_sd": 0.027556,
+    "z": -0.0091,
+    "concern_z": -0.0091,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.501,
+    "baseline_mean": 1.108482,
+    "baseline_sd": 0.5,
+    "z": 0.785,
+    "concern_z": 0.785,
+    "cusum": 1.2433,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.643,
+    "baseline_mean": 0.449809,
+    "baseline_sd": 0.3,
+    "z": 0.644,
+    "concern_z": 0.644,
+    "cusum": 0.144,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.645,
+    "baseline_mean": 6.820175,
+    "baseline_sd": 0.684754,
+    "z": -0.2558,
+    "concern_z": 0.2558,
+    "cusum": 0.4318,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.373,
+    "baseline_mean": 4.421511,
+    "baseline_sd": 0.221076,
+    "z": -0.2194,
+    "concern_z": 0.2194,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 130.0,
+    "baseline_mean": 119.473421,
+    "baseline_sd": 10.0,
+    "z": 1.0527,
+    "concern_z": -1.0527,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-16",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.2656,
+  "composite_cusum": 0.0,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7472,
+    "baseline_mean": 0.74918,
+    "baseline_sd": 0.037459,
+    "z": -0.0529,
+    "concern_z": 0.0529,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 15.707,
+    "baseline_mean": 16.880463,
+    "baseline_sd": 1.575478,
+    "z": -0.7448,
+    "concern_z": 0.7448,
+    "cusum": 0.2448,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.534,
+    "baseline_mean": 4.590785,
+    "baseline_sd": 0.277574,
+    "z": -0.2046,
+    "concern_z": 0.2046,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4143,
+    "baseline_mean": 0.398339,
+    "baseline_sd": 0.026858,
+    "z": 0.5943,
+    "concern_z": 0.5943,
+    "cusum": 0.0943,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.098,
+    "baseline_mean": 1.128108,
+    "baseline_sd": 0.5,
+    "z": -0.0602,
+    "concern_z": -0.0602,
+    "cusum": 0.6831,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.549,
+    "baseline_mean": 0.459468,
+    "baseline_sd": 0.3,
+    "z": 0.2984,
+    "concern_z": 0.2984,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.355,
+    "baseline_mean": 6.811416,
+    "baseline_sd": 0.668564,
+    "z": 0.8131,
+    "concern_z": -0.8131,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.292,
+    "baseline_mean": 4.419085,
+    "baseline_sd": 0.220954,
+    "z": -0.5752,
+    "concern_z": 0.5752,
+    "cusum": 0.0752,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 128.0,
+    "baseline_mean": 119.99975,
+    "baseline_sd": 10.0,
+    "z": 0.8,
+    "concern_z": -0.8,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-17",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 2.1053,
+  "composite_cusum": 1.6053,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7275,
+    "baseline_mean": 0.749081,
+    "baseline_sd": 0.037454,
+    "z": -0.5762,
+    "concern_z": 0.5762,
+    "cusum": 0.0762,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 16.447,
+    "baseline_mean": 16.82179,
+    "baseline_sd": 1.557843,
+    "z": -0.2406,
+    "concern_z": 0.2406,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.5,
+    "baseline_mean": 4.587946,
+    "baseline_sd": 0.270843,
+    "z": -0.3247,
+    "concern_z": 0.3247,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3828,
+    "baseline_mean": 0.399137,
+    "baseline_sd": 0.02642,
+    "z": -0.6183,
+    "concern_z": -0.6183,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 2.24,
+    "baseline_mean": 1.126603,
+    "baseline_sd": 0.5,
+    "z": 2.2268,
+    "concern_z": 2.2268,
+    "cusum": 2.4099,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.64,
+    "baseline_mean": 0.463945,
+    "baseline_sd": 0.3,
+    "z": 0.5868,
+    "concern_z": 0.5868,
+    "cusum": 0.0868,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.4,
+    "baseline_mean": 6.838595,
+    "baseline_sd": 0.662875,
+    "z": -0.6617,
+    "concern_z": 0.6617,
+    "cusum": 0.1617,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.528,
+    "baseline_mean": 4.412731,
+    "baseline_sd": 0.220637,
+    "z": 0.5224,
+    "concern_z": -0.5224,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 92.0,
+    "baseline_mean": 120.399763,
+    "baseline_sd": 10.0,
+    "z": -2.84,
+    "concern_z": 2.84,
+    "cusum": 2.34,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-18",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": -0.1212,
+  "composite_cusum": 0.9842,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7661,
+    "baseline_mean": 0.748002,
+    "baseline_sd": 0.0374,
+    "z": 0.4839,
+    "concern_z": -0.4839,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 17.254,
+    "baseline_mean": 16.80305,
+    "baseline_sd": 1.520709,
+    "z": 0.2965,
+    "concern_z": -0.2965,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.429,
+    "baseline_mean": 4.583548,
+    "baseline_sd": 0.264717,
+    "z": -0.5838,
+    "concern_z": 0.5838,
+    "cusum": 0.0838,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.4196,
+    "baseline_mean": 0.39832,
+    "baseline_sd": 0.026009,
+    "z": 0.8182,
+    "concern_z": 0.8182,
+    "cusum": 0.3182,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.472,
+    "baseline_mean": 1.182272,
+    "baseline_sd": 0.5,
+    "z": 0.5795,
+    "concern_z": 0.5795,
+    "cusum": 2.4893,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.368,
+    "baseline_mean": 0.472748,
+    "baseline_sd": 0.3,
+    "z": -0.3492,
+    "concern_z": -0.3492,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.716,
+    "baseline_mean": 6.816666,
+    "baseline_sd": 0.653491,
+    "z": -0.154,
+    "concern_z": 0.154,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.397,
+    "baseline_mean": 4.418494,
+    "baseline_sd": 0.220925,
+    "z": -0.0973,
+    "concern_z": 0.0973,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 135.0,
+    "baseline_mean": 118.979774,
+    "baseline_sd": 10.923071,
+    "z": 1.4666,
+    "concern_z": -1.4666,
+    "cusum": 0.3733,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-19",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.7138,
+  "composite_cusum": 1.198,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7411,
+    "baseline_mean": 0.748907,
+    "baseline_sd": 0.037445,
+    "z": -0.2085,
+    "concern_z": 0.2085,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 16.8,
+    "baseline_mean": 16.825598,
+    "baseline_sd": 1.485629,
+    "z": -0.0172,
+    "concern_z": 0.0172,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.689,
+    "baseline_mean": 4.575821,
+    "baseline_sd": 0.260318,
+    "z": 0.4348,
+    "concern_z": -0.4348,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3916,
+    "baseline_mean": 0.399384,
+    "baseline_sd": 0.025793,
+    "z": -0.3018,
+    "concern_z": -0.3018,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.852,
+    "baseline_mean": 1.196759,
+    "baseline_sd": 0.5,
+    "z": 1.3105,
+    "concern_z": 1.3105,
+    "cusum": 3.2998,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 1.058,
+    "baseline_mean": 0.46751,
+    "baseline_sd": 0.3,
+    "z": 1.9683,
+    "concern_z": 1.9683,
+    "cusum": 1.4683,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 7.143,
+    "baseline_mean": 6.811632,
+    "baseline_sd": 0.637342,
+    "z": 0.5199,
+    "concern_z": -0.5199,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.299,
+    "baseline_mean": 4.417419,
+    "baseline_sd": 0.220871,
+    "z": -0.5361,
+    "concern_z": 0.5361,
+    "cusum": 0.0361,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 127.0,
+    "baseline_mean": 119.780786,
+    "baseline_sd": 11.232995,
+    "z": 0.6427,
+    "concern_z": -0.6427,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ },
+ {
+  "date": "2026-09-20",
+  "eligible": true,
+  "reason": null,
+  "tier": "stable",
+  "composite": 0.4678,
+  "composite_cusum": 1.1658,
+  "features": [
+   {
+    "name": "mattr",
+    "value": 0.7434,
+    "baseline_mean": 0.748517,
+    "baseline_sd": 0.037426,
+    "z": -0.1367,
+    "concern_z": 0.1367,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "mean_utt_len",
+    "value": 16.173,
+    "baseline_mean": 16.824318,
+    "baseline_sd": 1.448024,
+    "z": -0.4498,
+    "concern_z": 0.4498,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "dep_depth_mean",
+    "value": 4.673,
+    "baseline_mean": 4.58148,
+    "baseline_sd": 0.254986,
+    "z": 0.3589,
+    "concern_z": -0.3589,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "pronoun_noun_ratio",
+    "value": 0.3873,
+    "baseline_mean": 0.398995,
+    "baseline_sd": 0.0252,
+    "z": -0.4641,
+    "concern_z": -0.4641,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "filler_rate",
+    "value": 1.308,
+    "baseline_mean": 1.229521,
+    "baseline_sd": 0.5,
+    "z": 0.157,
+    "concern_z": 0.157,
+    "cusum": 2.9568,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "disfluency_rate",
+    "value": 0.832,
+    "baseline_mean": 0.497035,
+    "baseline_sd": 0.3,
+    "z": 1.1166,
+    "concern_z": 1.1166,
+    "cusum": 2.0848,
+    "tripped": false,
+    "direction": "higher_is_concerning"
+   },
+   {
+    "name": "low_freq_word_rate",
+    "value": 6.778,
+    "baseline_mean": 6.828201,
+    "baseline_sd": 0.625608,
+    "z": -0.0802,
+    "concern_z": 0.0802,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "idea_density",
+    "value": 4.411,
+    "baseline_mean": 4.411499,
+    "baseline_sd": 0.220575,
+    "z": -0.0023,
+    "concern_z": 0.0023,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   },
+   {
+    "name": "vocab_size_day",
+    "value": 117.0,
+    "baseline_mean": 120.141746,
+    "baseline_sd": 11.066934,
+    "z": -0.2839,
+    "concern_z": 0.2839,
+    "cusum": 0.0,
+    "tripped": false,
+    "direction": "lower_is_concerning"
+   }
+  ],
+  "contributors": [],
+  "explanation": [
+   "All measures are within your normal range."
+  ],
+  "annotation": null
+ }
+]

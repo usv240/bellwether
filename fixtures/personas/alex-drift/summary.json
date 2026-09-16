@@ -1,0 +1,33 @@
+{
+ "tier": "discuss",
+ "since": "2026-09-03",
+ "latest_date": "2026-09-20",
+ "eligible_days": 54,
+ "excluded_days": 2,
+ "in_warmup": false,
+ "warmup_days_remaining": 0,
+ "stable_streak_days": 0,
+ "contributors": [
+  "filler_rate",
+  "disfluency_rate",
+  "pronoun_noun_ratio",
+  "low_freq_word_rate",
+  "dep_depth_mean",
+  "vocab_size_day",
+  "mean_utt_len",
+  "idea_density",
+  "mattr"
+ ],
+ "explanation": [
+  "Today's speech differs sharply from your baseline (composite 21.0).",
+  "mattr has been lower than your baseline since 2026-09-10.",
+  "mean_utt_len has been lower than your baseline since 2026-09-06.",
+  "dep_depth_mean has been lower than your baseline since 2026-09-05.",
+  "pronoun_noun_ratio has been higher than your baseline since 2026-09-05.",
+  "filler_rate has been higher than your baseline since 2026-09-02.",
+  "disfluency_rate has been higher than your baseline since 2026-09-02.",
+  "low_freq_word_rate has been lower than your baseline since 2026-09-05.",
+  "idea_density has been lower than your baseline since 2026-09-08.",
+  "vocab_size_day has been lower than your baseline since 2026-09-10."
+ ]
+}

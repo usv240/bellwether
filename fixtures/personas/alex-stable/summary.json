@@ -1,0 +1,14 @@
+{
+ "tier": "stable",
+ "since": "2026-08-03",
+ "latest_date": "2026-09-20",
+ "eligible_days": 54,
+ "excluded_days": 2,
+ "in_warmup": false,
+ "warmup_days_remaining": 0,
+ "stable_streak_days": 47,
+ "contributors": [],
+ "explanation": [
+  "All measures are within your normal range."
+ ]
+}

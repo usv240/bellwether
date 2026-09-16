@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bellwether-engine"
+version = "0.1.0"
+description = "Personal n-of-1 baseline and drift detection over speech-vitals day features. Deterministic, explainable, no model in the loop."
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = ["speech-vitals>=0.1.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "numpy>=1.26"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["bellwether_engine*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
