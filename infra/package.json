@@ -1,0 +1,22 @@
+{
+  "name": "bellwether-infra",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Bellwether stack: DynamoDB, a Python Lambda behind a function URL for the API and MCP server, and the static site on S3 and CloudFront.",
+  "license": "MIT",
+  "scripts": {
+    "build-lambda": "node build-lambda.mjs",
+    "synth": "cdk synth",
+    "deploy": "npm run build-lambda && cdk deploy --require-approval never"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.170.0",
+    "constructs": "^10.4.2"
+  },
+  "devDependencies": {
+    "aws-cdk": "^2.170.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3"
+  }
+}

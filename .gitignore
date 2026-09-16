@@ -16,3 +16,4 @@ bee-sync/
 .bee-cursor
 *.tsbuildinfo
 .DS_Store
+build/
