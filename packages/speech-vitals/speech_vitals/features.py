@@ -26,10 +26,16 @@ from collections import Counter
 from functools import lru_cache
 from statistics import mean
 
-import spacy
-from wordfreq import zipf_frequency
-
 from .types import DayFeatures, Utterance, UtteranceFeatures
+
+# spaCy and wordfreq are imported lazily, inside the functions that need
+# them, so that the base package (schema, MATTR, feature registry) imports
+# anywhere without them. Extraction needs the nlp extra:
+#     pip install "speech-vitals[nlp]" && python -m spacy download en_core_web_sm
+_NLP_EXTRA_HINT = (
+    "speech-vitals extraction needs the nlp extra: "
+    "pip install \"speech-vitals[nlp]\" and python -m spacy download en_core_web_sm"
+)
 
 # Filled pauses. Matched lexically after lowercasing, so the tagger's
 # treatment of interjections does not matter.
@@ -62,8 +68,21 @@ MATTR_WINDOW: int = 50
 
 @lru_cache(maxsize=1)
 def _nlp():
+    try:
+        import spacy
+    except ImportError as err:
+        raise ImportError(_NLP_EXTRA_HINT) from err
     # NER is not needed and is the slowest component.
     return spacy.load("en_core_web_sm", disable=["ner"])
+
+
+@lru_cache(maxsize=1)
+def _zipf():
+    try:
+        from wordfreq import zipf_frequency
+    except ImportError as err:
+        raise ImportError(_NLP_EXTRA_HINT) from err
+    return zipf_frequency
 
 
 def _depth(token) -> int:
@@ -107,11 +126,12 @@ def extract_utterance(text: str) -> UtteranceFeatures:
     ]
     pronouns = sum(1 for t in words if t.pos_ == "PRON")
     nouns = sum(1 for t in words if t.pos_ in ("NOUN", "PROPN"))
+    zipf = _zipf()
     low_freq = sum(
         1
         for t in content
         if t.pos_ in LOW_FREQ_POS
-        and zipf_frequency(t.text.lower(), "en") < LOW_FREQ_ZIPF
+        and zipf(t.text.lower(), "en") < LOW_FREQ_ZIPF
     )
     propositions = sum(1 for t in words if t.pos_ in PROPOSITION_POS)
     depth = max((_depth(t) for t in doc if not t.is_space), default=0)
