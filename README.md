@@ -25,14 +25,14 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 | Piece | What it is | Tests |
 |---|---|---|
 | [`packages/speech-vitals`](packages/speech-vitals) | The open-source feature package (MIT, dependency-free core). Nine language features per day, each with its literature basis and concerning direction. Features only, never words. | 25 |
-| [`apps/engine`](apps/engine) | The personal baseline: warmup, EWMA baseline, concern-signed composite, CUSUM drift detection, explainable tiers, low-exposure exclusion, and a freeze so the baseline cannot learn its way out of a signal. No model in the loop. | 13 |
+| [`apps/engine`](apps/engine) | The personal baseline: warmup, EWMA baseline, concern-signed composite, CUSUM drift detection, explainable tiers, low-exposure exclusion, and a freeze so the baseline cannot learn its way out of a signal. No model in the loop. Includes the claims suite: every figure this repository states in public, re-derived from the committed personas. | 30 |
 | [`apps/ingest`](apps/ingest) | The Bee integration, called in code: `bee conversations`, `bee now`, `bee changed` with exactly-once cursors, `bee stream --json`, `bee sync` markdown, owner isolation. | 30 |
 | [`apps/server`](apps/server) | FastAPI: dashboard API, public features API, the MCP server, the Bedrock weekly note, the doctor report. Receives feature rows, never text. | 18 |
 | [`apps/web`](apps/web) | Landing page, dashboard, printable doctor report. Light and dark, 22 info buttons, 100 on accessibility. | |
 | [`apps/agent`](apps/agent) | Two Strands agents on Bedrock. One consumes Bellwether's MCP server as an outside client. The other holds **two** MCP servers at once, Bellwether's and Bee's own, to find the ordinary explanation for a change, behind an audited allowlist that withholds every Bee tool returning verbatim speech. | 9 |
-| [`fixtures/personas`](fixtures/personas) | Two synthetic personas through the real extractor and engine, labelled SIMULATED. | |
+| [`fixtures/personas`](fixtures/personas) | Two synthetic personas through the real extractor and engine, labelled SIMULATED. They share a seed and differ only in whether a change is injected from day 35, which is asserted, so the comparison is controlled. | |
 
-**95 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
+**112 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
 
 ## The properties worth arguing with
 
@@ -49,7 +49,7 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 python -m venv .venv && .venv/Scripts/activate      # or source .venv/bin/activate
 pip install -e "packages/speech-vitals[nlp,dev]" -e "apps/engine[dev]" -e "apps/ingest[dev]" -e "apps/server[dev]"
 python -m spacy download en_core_web_sm
-pytest packages/speech-vitals apps/engine apps/ingest apps/server
+pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent
 
 python fixtures/personas/generate.py                # regenerate the personas
 uvicorn bellwether_server.main:app --port 8789      # API + MCP on :8789
@@ -63,6 +63,14 @@ bellwether-ingest status
 bellwether-ingest pull --owner speaker_1 --out days.json
 curl -X POST $API/v1/profiles/me/days -H "content-type: application/json" -d @days.json
 ```
+
+## Every number here is a test
+
+[`apps/engine/tests/test_claims.py`](apps/engine/tests/test_claims.py) re-derives every published figure from the committed personas and checks it against the documents that state it. Two of its seventeen assertions do more than bookkeeping.
+
+The personas share a seed, and the test asserts their feature values are identical up to the exact day the change is injected. Without that, the drift persona would not be evidence that the engine detects drift; it would be evidence that the engine can tell two people apart.
+
+And the freeze is asserted against twenty days of real output: from the first non-stable day, every feature's baseline stops moving and never moves again. An adaptive baseline that keeps learning while it is signalling will absorb the change it was built to report and return to "stable" with nothing resolved. That failure is invisible in ordinary operation, which is exactly why it needs a test.
 
 ## Documentation
 
