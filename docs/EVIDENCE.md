@@ -30,7 +30,9 @@ Luz S, Haider F, de la Fuente S, Fromm D, MacWhinney B. Alzheimer's Dementia Rec
 
 Stated precisely, because the distinction is the product: those systems classify a person against other people, from a scripted picture-description task, in a clinic. Bellwether does not classify anyone against anyone. It compares one person with their own past, from everyday speech, at home. The ADReSS literature is evidence that language features carry the signal; the n-of-1 design is what makes it usable outside a study.
 
-**Access, honestly.** The ADReSS data is held in DementiaBank, whose access is restricted to verified academic researchers by application. The benchmark harness in this repository is written and runnable by anyone with that access; the numbers it produces are published here only if that access is obtained. Until then the validation is what section 6 describes.
+**Access, honestly.** The ADReSS data is held in DementiaBank, whose access is restricted to verified academic researchers by application. We do not have that access, there is no ADReSS harness in this repository, and no number in this document comes from that benchmark. It is cited here as the field's evidence that language features carry the signal, and for nothing else.
+
+An earlier version of this page said a harness was written and runnable. That was not true, and it is recorded here rather than quietly deleted, because a project that asks to be judged on its evidence has to be judged on this too.
 
 ## 5. The features have a literature, feature by feature
 

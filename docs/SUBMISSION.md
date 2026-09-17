@@ -92,6 +92,6 @@ Eight, each from something we actually hit, each cross-referenced to the frictio
 ## Honest limits
 
 - **The Bee device is on order.** Everything here runs and is tested without it, and the two synthetic personas exercise the production extractor and engine end to end. Real operation on the operator's own Bee data, and the demo video that shows it, wait on the hardware. The week-one gate questions are written and ready.
-- **ADReSS validation is not published.** The benchmark harness is written and runnable, but the data is restricted to verified academic researchers by application. Numbers will be published only if that access is obtained. Saying so is better than a table nobody can reproduce.
+- **No ADReSS validation, and no harness for it.** The benchmark's data is restricted to verified academic researchers by application, we do not have that access, and nothing here is validated against it. ADReSS is cited as the field's evidence that language features carry the signal, and for nothing else.
 - **No user testing.** Every design decision is reasoned from literature, not observed in a room with an older adult or a clinician.
 - **English only**, stated in the FAQ rather than hidden.
