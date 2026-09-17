@@ -74,6 +74,23 @@ The personas share a seed, and the test asserts their feature values are identic
 
 And the freeze is asserted against twenty days of real output: from the first non-stable day, every feature's baseline stops moving and never moves again. An adaptive baseline that keeps learning while it is signalling will absorb the change it was built to report and return to "stable" with nothing resolved. That failure is invisible in ordinary operation, which is exactly why it needs a test.
 
+## Verify the live MCP server yourself
+
+Opening an MCP URL in a browser shows an error, because the protocol is a POST with a session handshake. So there is a probe:
+
+```
+node scripts/mcp-conform.mjs            # this project's deployed server
+node scripts/mcp-conform.mjs --all      # all three servers built for this hackathon
+```
+
+No install and no MCP client library: one dependency-free Node script against the deployed Lambda. It checks nineteen rules from spec revision 2025-11-25 over real HTTP, including the two shapes that in-process tests never produce: a DELETE carrying a JSON content-type and an empty body, and a body the server cannot parse.
+
+The same file runs in all three repositories, which is the point of `--all`: this server is FastAPI on Python and the other two are Fastify on Node, and a conformance claim that has only ever met one implementation is a claim about that implementation. This one passes all nineteen on every run, including both shapes that the Node servers failed.
+
+It grades what it checks. A MUST failure is a spec violation and exits non-zero; a SHOULD failure is reported and does not. Where the spec allows more than one answer, such as GET opening a stream or declining with 405, the probe accepts either and says which it saw. A conformance tool that grades its own preferences as violations teaches people to ignore it.
+
+It has already paid for itself. Its first run across the three deployed Lambdas found that a malformed request body came back as an HTTP 500 carrying the framework's own error envelope, where JSON-RPC calls for a -32700 Parse error. Bellwether was already correct; the two Node servers were not, and every in-process test in both passed while the live servers were wrong. That is the whole argument for probing over real HTTP.
+
 ## Documentation
 
 [SUBMISSION.md](docs/SUBMISSION.md) · [EVIDENCE.md](docs/EVIDENCE.md) (every claim with its source) · [DESIGN.md](docs/DESIGN.md) · [AWS.md](docs/AWS.md) · [ACCESSIBILITY.md](docs/ACCESSIBILITY.md) · [FEATURE_REQUESTS.md](docs/FEATURE_REQUESTS.md) · [FRICTION_LOG.md](FRICTION_LOG.md) · [PRODUCT_FEEDBACK.md](PRODUCT_FEEDBACK.md)

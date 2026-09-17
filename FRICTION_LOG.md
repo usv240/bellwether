@@ -83,4 +83,13 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Workaround: clone to a short path. Documented in the README next to the setup block rather than buried here, because the person who needs it is reading the README.
 - Suggestion: spaCy could name the real cause on Windows when an extension import fails and the resolved path is near the limit, and `spacy download` should not print a success line after an import error. This is the second MAX_PATH failure across our three projects this hackathon; the other took most of a day in a React Native TV build.
 
+## Entry 9: this server was already right, and we only know because we probed all three (2026-09-17, positive, and a method note)
+
+- Task: prove the claim "the MCP server is live and spec correct" in a way a reviewer can check. An MCP URL opened in a browser shows an error, because the protocol is a POST with a session handshake, so there is nothing to click.
+- Steps: run `node scripts/mcp-conform.mjs --all`, a dependency-free probe that speaks the Streamable HTTP transport over real HTTP and grades each check as MUST or SHOULD against spec revision 2025-11-25, against this server and the two sibling projects.
+- Expected: three passes, since all three have conformance suites that pass.
+- Actual: this server, nineteen of nineteen. The two Node servers, eighteen of nineteen each: both answered an unparseable body with an HTTP 500 carrying the framework's error envelope, where JSON-RPC calls for -32700. FastAPI's request parsing raises where the app can catch it and turn it into a protocol error; Fastify's content-type parser callback defaults to a 500 unless the error carries a status code.
+- Severity: none here, and it is logged as a positive for that reason. The note worth keeping is about method rather than about this bug.
+- Why it is in this log: we would not have trusted a green result from a probe that had only ever met one implementation. Running the same file against two frameworks is what made the pass meaningful, and it is also what found the other two servers' defect. A conformance check against your own server tells you your server agrees with itself.
+
 <!-- Add new entries above this line as they happen. -->

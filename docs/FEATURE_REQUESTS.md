@@ -58,6 +58,20 @@ One sentence in the session-termination section would have prevented both bugs. 
 
 ---
 
+### 5b. Ship a transport conformance suite, or at least a status-code table
+
+**Important, and it is the highest-leverage thing the project could publish.**
+
+Every server author writes the same tests, guesses at the same ambiguities, and learns which guesses were wrong only when a real client arrives.
+
+Two asks, in order of value.
+
+First, publish the HTTP status mapping. The transport section is precise about sessions and about `Accept`, and silent about what status accompanies a JSON-RPC error. We reasoned it out: a request needing a session and carrying none is 400, an unknown or expired session is 404 so the client starts a new one rather than fixing its request, an unparseable body is -32700 at 400 rather than a 500, and a tool that rejects its arguments is a 200 carrying a JSON-RPC error because the transport succeeded. All defensible, none written down, so implementations will differ and clients will paper over it.
+
+Second, ship the suite. A runner any author can point at a URL would make the specification executable. We built a small one (`scripts/mcp-conform.mjs`, nineteen graded checks, no dependencies) and ran it against three deployed servers on two frameworks. This one passed all nineteen; the two Fastify servers each failed the parse-error rule while their own test suites were green. Grading matters: it separates MUST from SHOULD and accepts either legal answer where the spec permits two, because a conformance tool that grades its own preferences as violations gets ignored.
+
+Friction log entry 9.
+
 ## AWS
 
 ### 6. Warn when a Lambda function URL's CORS configuration collides with the handler's own
