@@ -44,3 +44,58 @@ bring this report to your next appointment.
 Every fact there came from a tool call, the simulated label was stated first, and the only suggestion was one the person can act on.
 
 Model: Claude on Amazon Bedrock (`us.anthropic.claude-sonnet-4-5-20250929-v1:0`).
+
+---
+
+# The Context Check-in agent: one agent, two MCP servers
+
+`context_check_in.py` answers the question the dashboard cannot:
+
+> *"Your speech was flagged starting the 3rd. That week you were at the hospital twice and had four late nights logged. That is the most likely explanation, and it is worth noting on those days."*
+
+Bellwether's MCP server knows **that** something changed and which measures moved. It cannot know **why**, because it holds nine numbers a day and nothing else. Bee's own MCP server (`bee mcp serve-http`) knows the shape of the day: daily summaries, todos, places, activity. Neither server can answer the question alone. An agent holding both can.
+
+## Why this is the point, not a demo
+
+The most important panel in the product is `What else could explain this`, which puts the ordinary causes of a change in front of a worried person before the frightening one. Today it asks them to remember and annotate their own week. That is work, at exactly the moment someone is least able to do it. This agent does that work instead, from data the person already has.
+
+## The privacy boundary, enforced rather than promised
+
+Bee's MCP catalogue exposes **verbatim speech** alongside derived context: `bee_get_conversation_transcript`, `bee_get_conversation`, `bee_search` and the voice-note tools all return what was actually said.
+
+Bellwether's whole architecture rests on the opposite. An agent that could read transcripts would break that guarantee at the one seam where nobody was looking.
+
+So the agent takes an **allowlist**, not a denylist. Nine derived-context tools are handed to the model; everything else is withheld, including every speech tool, named explicitly so the exclusion is auditable. A tool Bee adds tomorrow, or renames, is withheld by default rather than admitted by accident.
+
+**Nine tests pin that boundary** (`tests/test_allowlist.py`), including that the two sets never overlap and that an unknown tool is excluded by default. It is a safety claim, so it has a test.
+
+## Run it
+
+```
+# terminal 1: Bellwether
+uvicorn bellwether_server.main:app --port 8789
+
+# terminal 2: Bee's own MCP server, localhost-bound, bearer token, 32 chars minimum
+export BEE_MCP_HTTP_TOKEN=$(python -c "import secrets;print(secrets.token_urlsafe(32))")
+bee mcp serve-http --port 9779
+
+# terminal 3
+python apps/agent/context_check_in.py --profile alex-drift
+```
+
+Without a paired Bee device the second server serves no data. The agent degrades to Bellwether's tools alone and says so:
+
+```
+Bellwether MCP: https://.../mcp
+  tools: add_annotation, generate_doctor_report, get_speech_vitals, get_trend,
+         list_days, log_check_result, run_check_instructions
+Bee MCP: not running
+
+Your speech has changed sharply from your baseline beginning September 2nd,
+reaching discuss tier on September 3rd and remaining there since. This data is
+simulated. I cannot look for an explanation in your daily activities because
+the Bee context tools are not available in this session. I recommend bringing
+this to your clinician or using the doctor report feature to prepare.
+```
+
+It states the simulated label first, reports only tool facts, says plainly what it could not check, and suggests only what the person can act on. That degradation is the behaviour, not a fallback.

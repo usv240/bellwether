@@ -25,6 +25,10 @@ The rules cap winnings rather than entries: "each project can only win one track
 
 **Bee** is the primary track. The repository calls the Bee developer tooling in code, not in a README: `apps/ingest/bellwether_ingest/bee.py` invokes `bee conversations list/get/transcript`, `bee now`, `bee changed` with persisted cursors for exactly-once ingestion, parses `bee stream --json` events, and parses `bee sync` markdown. Thirty tests pin the exact argv of every invocation through an injected runner.
 
+**The Bee integration goes further than the CLI.** Bee ships its own MCP server (`bee mcp serve-http`), and `apps/agent/context_check_in.py` consumes it alongside Bellwether's, so one agent holds both: Bellwether knows *that* speech changed and which measures moved, Bee knows the shape of those days. Neither can answer "is there an ordinary explanation for this?" alone. That agent turns the product's most important panel, the ordinary causes of a change, from something the worried person has to remember into something the system finds for them.
+
+It is also where the privacy guarantee is most at risk, so it is enforced rather than promised. Bee's catalogue exposes verbatim speech (`bee_get_conversation_transcript`, `bee_search`, the voice-note tools) alongside derived context. The agent takes an **allowlist** of nine context tools and withholds everything else, with every speech tool named explicitly so the exclusion is auditable and an unknown tool excluded by default. Nine tests pin that boundary.
+
 **Alexa+** is not a stretch. The track asks for a self-hosted MCP server implementing spec 2025-11-25 over Streamable HTTP, and `apps/server/bellwether_server/mcp.py` is exactly that, deployed and live, with seven tools and eighteen conformance and behaviour tests. The question a person actually asks about this product is spoken and casual ("how have I been sounding lately, and is it worth mentioning to the doctor?"), and answering it needs dependent reads and a judgement about whether to say anything, which is an agent's job. A Strands agent on Bedrock consumes the same server as an independent outside client with no data access of its own.
 
 ## Live

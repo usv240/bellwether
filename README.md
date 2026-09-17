@@ -29,10 +29,10 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 | [`apps/ingest`](apps/ingest) | The Bee integration, called in code: `bee conversations`, `bee now`, `bee changed` with exactly-once cursors, `bee stream --json`, `bee sync` markdown, owner isolation. | 30 |
 | [`apps/server`](apps/server) | FastAPI: dashboard API, public features API, the MCP server, the Bedrock weekly note, the doctor report. Receives feature rows, never text. | 18 |
 | [`apps/web`](apps/web) | Landing page, dashboard, printable doctor report. Light and dark, 22 info buttons, 100 on accessibility. | |
-| [`apps/agent`](apps/agent) | A Strands agent on Bedrock consuming the MCP server as an outside client. | |
+| [`apps/agent`](apps/agent) | Two Strands agents on Bedrock. One consumes Bellwether's MCP server as an outside client. The other holds **two** MCP servers at once, Bellwether's and Bee's own, to find the ordinary explanation for a change, behind an audited allowlist that withholds every Bee tool returning verbatim speech. | 9 |
 | [`fixtures/personas`](fixtures/personas) | Two synthetic personas through the real extractor and engine, labelled SIMULATED. | |
 
-**86 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server`
+**95 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
 
 ## The properties worth arguing with
 
