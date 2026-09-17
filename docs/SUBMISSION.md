@@ -57,11 +57,15 @@ The person shown live is simulated and labelled as such on every surface that to
 
 The design is grounded in the risk-communication literature, because this product shows health-adjacent numbers to people who may be frightened by them. Spiegelhalter's distinction governs it: **"we need to be clear about whether we are seeking to persuade, or fulfilling a duty to inform."** Bellwether informs, which rules out streak pressure, nudges, gamification and urgency language, and which produced the panel that matters most, `What else could explain this`, placed above the chart and giving the ordinary causes of a change the same visual weight as the change itself. Full reasoning in [DESIGN.md](DESIGN.md).
 
-## Potential impact
+## Potential impact (the economics)
 
-The gap is measured in years, the treatment window sits inside it, and the appointment that decides everything is twelve minutes long and mostly forgotten. Bellwether does not close that gap; it puts evidence in the patient's hand at the start of it.
+**The interval itself is the largest modifiable cost in this disease's early course.** A health-economic cohort model found that **net benefit falls by around 17 percent for every year intervention is delayed** (Barnett et al., *BMC Neurology*, 2014). The mean delay from first symptoms to diagnosis is **3.5 years**. Not the treatment, not the scan: the years before anyone looked.
 
-The addressable population is not niche. Dementia prevalence rises with an ageing population, and the second use is broader still: medication fog, sleep, illness and recovery all show in speech, which means a healthy person has a reason to build a baseline long before anyone needs it. Every figure is sourced in [EVIDENCE.md](EVIDENCE.md), including the ones that did not survive checking.
+The denominator: US dementia care costs $409 billion in 2026 before the 6.8 billion hours of unpaid family care worth $237 billion, with a lifetime cost of $405,262 per person, about 70 percent borne by families (Alzheimer's Association, 2026). The treatment window sits precisely inside the delay, since lecanemab and donanemab are approved **only** for mild cognitive impairment or mild dementia.
+
+Bellwether costs **pennies per person per month** to run, on a $49.99 wristband people are buying anyway. Every existing speech-cognition tool is a scripted assessment delivered by a professional in a room, which is why none of them can run daily for two years. That is the whole reason this can exist.
+
+Three things are true and separable, and we keep them separate: the delay costs about 17 percent a year (measured, by others); language features separate Alzheimer's from control speech at 85 to 89.6 percent on the field's benchmark (measured, by others); those features come out of ordinary wearable transcripts at pennies with no clinic (measured, by us, on synthetic personas through the production pipeline). **What connects them into a shortened delay is a trial nobody has run**, and saying so is more useful than a number we invented. [EVIDENCE.md](EVIDENCE.md) section 7.
 
 ## Quality of the idea
 

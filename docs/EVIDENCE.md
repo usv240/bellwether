@@ -55,6 +55,46 @@ The fixtures found two real engine bugs before any device existed: attribution o
 
 What this does not show: sensitivity on real people. The personas are generated text with a designed change. Real operation on the operator's own Bee data is the next stage, and every number from it will be reported with the same labels.
 
-## 7. What Bellwether is not
+## 7. The economics, and what 3.5 years costs
+
+"This would help people" is not an argument until someone puts a number on it. Every figure below is sourced, and the line between measured and inferred is marked.
+
+### What the delay costs, per year of it
+
+**"The net benefit was reduced by around 17 percent for every year that intervention was delayed."** Over ten years, timely detection and treatment produced savings of £3,600 (about $5,500) in direct costs per patient. Cohort model over ten years using natural-history data from the Paquid population cohort.
+Barnett JH, Lewis L, Blackwell AD, Taylor M. Early intervention in Alzheimer's disease: a health economic study of the effects of diagnostic timing. *BMC Neurology*. 2014;14:101. [PMC4032565](https://pmc.ncbi.nlm.nih.gov/articles/PMC4032565/)
+
+Put that beside section 1. The mean time from first symptoms to diagnosis is **3.5 years** (Orgeta et al., 2025). At roughly 17 percent of net benefit lost per year of delay, **the interval Bellwether exists to shorten is itself the largest modifiable cost in this disease's early course.** Not the treatment, not the scan: the years before anyone looked.
+
+### What the disease costs, so the interval has a denominator
+
+**US health and long-term care costs for dementia are projected at $409 billion in 2026**, before unpaid care. Families and friends provide **6.8 billion hours of unpaid care worth $237 billion**. Lifetime cost per person is **$405,262**, about **70 percent borne by families**.
+Alzheimer's Association. 2026 Alzheimer's Disease Facts and Figures. *Alzheimer's & Dementia*. 2026. [DOI](https://alz-journals.onlinelibrary.wiley.com/doi/10.1002/alz.71345)
+
+For context on what the alternative to home costs: a semi-private nursing home room runs **$315 a day** (CareScout Cost of Care Survey, 2025).
+
+### What Bellwether costs to run
+
+Measured from AWS Cost Explorer on the live deployment: **pennies per person per month**. Nine numbers a day into DynamoDB, one Bedrock call a week for the note, Lambda inside the free tier. The wristband is $49.99 once, and it is a device people are buying anyway for reasons that have nothing to do with this.
+
+There is no clinic visit, no scan, no trained administrator, and no appointment. That is the entire argument for why this can exist at all: **every existing speech-cognition tool is a scripted assessment delivered by a professional in a room**, which is why none of them can be run daily for two years.
+
+### The honest boundary
+
+**We are not claiming Bellwether shortens anyone's diagnostic delay.** It has never been used with a real cohort, and the effect size is unmeasured. Three things are true and separable:
+
+1. The diagnostic delay is 3.5 years, and each year of it costs roughly 17 percent of the available net benefit. **Measured, by others.**
+2. Language features from spontaneous speech carry a signal strong enough to separate Alzheimer's from control speech at 85 to 89.6 percent on the field's benchmark. **Measured, by others.**
+3. Those features can be extracted from ordinary wearable transcripts, at pennies, daily, with no clinic. **Measured, by us, on synthetic personas through the production pipeline.**
+
+What connects them into a shortened delay is a clinical trial nobody has run. Saying so is more useful than a number we invented, and a judge can check every step above independently.
+
+### Why a payer would care
+
+The savings land in three places: families, who carry 70 percent of the lifetime cost; Medicaid, which pays for much of long-term care; and the treatment window itself, since lecanemab and donanemab are approved **only** for the earliest stage (section 2). A product that moves people from "diagnosed at moderate" to "diagnosed at mild" changes which treatments are even legal to offer them.
+
+That is the case for funding it. It is not a case for believing it works yet.
+
+## 8. What Bellwether is not
 
 Not a diagnostic instrument, not a screening tool, not a medical device. It describes change over time in one person against their own baseline, lists the features behind any change, and produces a page to bring to a clinician. Speech changes with sleep, stress, mood, medication, illness, and who you are talking to. The disclaimer appears on every surface where a health inference could be drawn, including inside the MCP tool descriptions and the agent's system prompt, because a judge, a user, or an agent should never have to look for it.
