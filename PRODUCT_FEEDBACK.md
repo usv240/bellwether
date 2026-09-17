@@ -32,6 +32,14 @@ Draft of the submission's product-feedback answer, maintained as we build so it 
 - Needs work: current-generation Claude models remain allowlist-gated on this account tier (see the Nightlight friction log, entry 5), which is why the ladder starts at Sonnet 4.5 rather than a current model.
 - Build again: yes.
 
+## Amazon S3 and Amazon CloudFront
+
+- Used for: hosting the statically exported site (landing page, dashboard, printable doctor report). Private bucket with Origin Access Control; a CloudFront function rewrites extensionless paths to their directory index.
+- Worked well: the OAC pattern is clean and needs no bucket policy juggling, and the CloudFront function is the right size of tool for a rewrite, with no Lambda@Edge cold start.
+- Needs work: an invalidation on every deploy is the default advice, and on a small static site it is both slow and the largest part of the deploy time. A documented "this site is small, just invalidate everything and here is what it costs" note would settle a decision most people make by guessing.
+- Onboarding: straightforward from the CDK constructs.
+- Build again: yes.
+
 ## Amazon DynamoDB, AWS Lambda, AWS CDK
 
 - Used for: the feature-row store (raw rows only, tiers derived on read), the FastAPI service behind a function URL, and the stack as TypeScript.
@@ -39,12 +47,31 @@ Draft of the submission's product-feedback answer, maintained as we build so it 
 - Needs work: CDK's Python Lambda construct wants Docker for bundling. We built the asset without it by resolving manylinux wheels for CPython 3.12 with pip's `--platform` and `--only-binary` flags (`infra/build-lambda.mjs`), which works well and is under-documented. A first-class Docker-free option for pure-Python-plus-wheels services would remove a real obstacle on Windows.
 - Build again: yes.
 
+## FastAPI, Mangum, Next.js, Tailwind and Recharts (third-party, the surfaces)
+
+- Used for: FastAPI serves the dashboard API, the public features API and the MCP transport; Mangum adapts it for Lambda; Next.js 15 with a static export builds the three pages; Tailwind v4 carries the design tokens; Recharts draws the trend.
+- Worked well: FastAPI plus Mangum meant the same app runs locally under uvicorn and in Lambda with no code change, which kept the demo honest. Next.js static export onto S3 is a two-command deploy. Recharts let the chart use CSS custom properties directly, so it themes with the rest of the page rather than needing a second palette.
+- Needs work: two sharp edges worth naming. FastAPI's `CORSMiddleware` is what every tutorial adds, and in Lambda behind a function URL that produces duplicate `Access-Control-Allow-Origin` headers that only a browser rejects (FRICTION_LOG entry 6). And Recharts' custom `dot` render prop is typed loosely enough that returning the wrong shape fails silently at runtime rather than at compile time.
+- Build again: yes to all five.
+
 ## spaCy and wordfreq (third-party, the feature extractor)
 
 - Used for: part-of-speech tags, dependency parses and lemmas; Zipf word-frequency norms for the word-finding proxy.
 - Worked well: the small English pipeline is fast enough to process 56 days of speech in seconds, and wordfreq's Zipf scale separates "the" (7.7) from "perambulate" (1.3) exactly as the feature needs.
 - Needs work: a spaCy gotcha cost a hang and a killed process: `token.head` returns a fresh wrapper on every access, so an identity comparison at the root never terminates. Compare indices. Recorded here because it will bite the next person too.
 - Build again: yes, in an isolated environment; installing spaCy into an Anaconda base environment on Windows disturbed an unrelated compiled package there.
+
+## AWS services used, and how (for the AWS Builder mini challenge)
+
+Stated here as well as in docs/AWS.md, because the rules ask for it in the feedback answer itself.
+
+- **Amazon Bedrock**: phrases the weekly note from facts the engine computed, through a three-model Claude ladder that falls back to a deterministic template. The model may not add, alter, diagnose or predict; provenance is returned with every note.
+- **Strands Agents SDK**: the Speech Check-in agent, an independent outside client of our own MCP server with no data access of its own.
+- **Amazon DynamoDB**: the feature-row store. Raw rows only; tiers, trends and reports are derived on every read, never stored.
+- **AWS Lambda**: the FastAPI service and MCP server behind a function URL, built without Docker from manylinux wheels.
+- **Amazon S3 and CloudFront**: the static site behind Origin Access Control.
+- **AWS CDK**: the whole stack as reviewable TypeScript, one command to deploy.
+- **Deliberately not used**: SageMaker (nothing here trains a model; the benchmark harness is a scripted evaluation of a deterministic feature set) and Transcribe or Polly (Bee already transcribes, and Bellwether consumes features rather than audio). Reasons in docs/AWS.md rather than a checkbox.
 
 ## Still to record
 

@@ -77,6 +77,10 @@ Amazon Bedrock (weekly note through a three-model ladder with a deterministic fl
 
 Six entries with task, steps, expected against actual, severity, workaround and an actionable suggestion. The ones we would most want read: Bee publishes no full JSON example for any command, so the ingestion normaliser had to guess shapes (entry 1); speakers are labelled but not identified, with no `is_user` flag, so isolating the wearer's own speech is a heuristic (entry 2); and a Lambda function URL with CORS plus FastAPI CORS middleware emits two `Access-Control-Allow-Origin` headers, which no command-line check can see and which broke every browser call on the deployed site (entry 6). There is also a deliberately positive entry for the Bee CLI running on Windows unannounced.
 
+## Feature requests (optional)
+
+Eight, each from something we actually hit, each cross-referenced to the friction entry that produced it, and each rated critical, important or nice-to-have. The three we would most want read: Bee should expose an `is_user` flag on every utterance, because without it any analysis *of the wearer* rests on a heuristic (critical); AWS should warn when a Lambda function URL's CORS collides with the handler's own, because the resulting duplicate header is invisible to every non-browser check and breaks live demos (critical); and the MCP spec should state that real clients send `DELETE` with a JSON content-type and an empty body, which cost two of our three projects a 500 each. Full list with reasoning in [FEATURE_REQUESTS.md](FEATURE_REQUESTS.md).
+
 ## Honest limits
 
 - **The Bee device is on order.** Everything here runs and is tested without it, and the two synthetic personas exercise the production extractor and engine end to end. Real operation on the operator's own Bee data, and the demo video that shows it, wait on the hardware. The week-one gate questions are written and ready.
