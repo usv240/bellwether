@@ -33,7 +33,7 @@ The rules cap winnings rather than entries: "each project can only win one track
 - API: https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws ([docs](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1/docs), [resilience](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/api/resilience))
 - MCP server: `https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/mcp`
 - Repository (MIT): https://github.com/usv240/bellwether
-- Demo video (under 3 minutes): YouTube link, add when published
+- Demo video (under 3 minutes): YouTube link, add when published. Shot list with pre-flight commands, and what to do if the device does not arrive in time: [VIDEO_SCRIPT.md](VIDEO_SCRIPT.md)
 
 The person shown live is simulated and labelled as such on every surface that touches them. The extractor, engine, store, tiers, report and MCP server are the product.
 
