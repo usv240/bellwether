@@ -1,0 +1,130 @@
+{
+ "what": "Bellwether's accumulating decision rule against the two a reasonable engineer builds first",
+ "method": "Every detector is scored on the same committed persona assessments, so all of them see identical features, an identical per-person EWMA baseline, identical concern signing and identical low-exposure exclusions. Only the decision rule differs.",
+ "personas": {
+  "stable": "no injected change; every flag is a false alarm",
+  "drift": "identical until 2026-08-31, then a gradual two-week change",
+  "rampStart": "2026-08-31"
+ },
+ "bellwether": {
+  "rule": "one-sided CUSUM on the concern-signed composite, k 0.5, h 5.0",
+  "falseAlarmsOnStable": 0,
+  "daysIntoChangeBeforeFirstFlag": 2
+ },
+ "alternatives": {
+  "shewhartComposite": {
+   "rule": "flag the day the composite exceeds a fixed threshold",
+   "sweep": [
+    {
+     "threshold": 1,
+     "falseAlarmsOnStable": 8,
+     "daysIntoChangeBeforeFirstFlag": 1
+    },
+    {
+     "threshold": 2,
+     "falseAlarmsOnStable": 2,
+     "daysIntoChangeBeforeFirstFlag": 1
+    },
+    {
+     "threshold": 3,
+     "falseAlarmsOnStable": 1,
+     "daysIntoChangeBeforeFirstFlag": 1
+    },
+    {
+     "threshold": 4,
+     "falseAlarmsOnStable": 0,
+     "daysIntoChangeBeforeFirstFlag": 4
+    },
+    {
+     "threshold": 5,
+     "falseAlarmsOnStable": 0,
+     "daysIntoChangeBeforeFirstFlag": 4
+    },
+    {
+     "threshold": 6,
+     "falseAlarmsOnStable": 0,
+     "daysIntoChangeBeforeFirstFlag": 6
+    },
+    {
+     "threshold": 8,
+     "falseAlarmsOnStable": 0,
+     "daysIntoChangeBeforeFirstFlag": 6
+    },
+    {
+     "threshold": 10,
+     "falseAlarmsOnStable": 0,
+     "daysIntoChangeBeforeFirstFlag": 8
+    },
+    {
+     "threshold": 12,
+     "falseAlarmsOnStable": 0,
+     "daysIntoChangeBeforeFirstFlag": 9
+    },
+    {
+     "threshold": 15,
+     "falseAlarmsOnStable": 0,
+     "daysIntoChangeBeforeFirstFlag": 11
+    },
+    {
+     "threshold": 20,
+     "falseAlarmsOnStable": 0,
+     "daysIntoChangeBeforeFirstFlag": 12
+    },
+    {
+     "threshold": 25,
+     "falseAlarmsOnStable": 0,
+     "daysIntoChangeBeforeFirstFlag": 15
+    }
+   ]
+  },
+  "shewhartFeature": {
+   "rule": "flag the day any single feature's concern-signed z exceeds a threshold",
+   "sweep": [
+    {
+     "z": 1.5,
+     "falseAlarmsOnStable": 10,
+     "daysIntoChangeBeforeFirstFlag": 1
+    },
+    {
+     "z": 2.0,
+     "falseAlarmsOnStable": 6,
+     "daysIntoChangeBeforeFirstFlag": 1
+    },
+    {
+     "z": 2.5,
+     "falseAlarmsOnStable": 3,
+     "daysIntoChangeBeforeFirstFlag": 1
+    },
+    {
+     "z": 3.0,
+     "falseAlarmsOnStable": 1,
+     "daysIntoChangeBeforeFirstFlag": 2
+    },
+    {
+     "z": 3.5,
+     "falseAlarmsOnStable": 1,
+     "daysIntoChangeBeforeFirstFlag": 3
+    },
+    {
+     "z": 4.0,
+     "falseAlarmsOnStable": 1,
+     "daysIntoChangeBeforeFirstFlag": 3
+    }
+   ]
+  }
+ },
+ "result": {
+  "settingsBeatingBellwetherOnBothAxes": 0,
+  "bestAlternativeWithZeroFalseAlarms": {
+   "threshold": 4,
+   "falseAlarmsOnStable": 0,
+   "daysIntoChangeBeforeFirstFlag": 4
+  },
+  "cheapestAlternativeMatchingOurDetectionSpeed": {
+   "threshold": 3,
+   "falseAlarmsOnStable": 1,
+   "daysIntoChangeBeforeFirstFlag": 1
+  }
+ },
+ "limit": "Both personas are synthetic and authored by this project. This measures that the decision rule matters and by how much on a change of known shape and timing. It is not evidence that the detector works on a real person, and it is not offered as any."
+}

@@ -1,6 +1,10 @@
 # Bellwether
 
+Bellwether reads the transcripts your wearable already makes, keeps nine language numbers and throws every word away, learns how you normally speak, and tells you when that changes against your own past.
+
 Your watch knows when your heart skips a beat. Nothing knows when your brain does. Bellwether makes speech a vital sign.
+
+**Measured against the detector a reasonable engineer builds instead:** on two personas that are identical until the day a change is injected, Bellwether flags it two days in, with zero false alarms across 47 quiet days. The simplest rule that is equally quiet is two days later. The simplest rule that is equally fast costs a false alarm on someone whose speech never changed. None of eighteen settings of two simpler rules beats it on both axes ([fixtures/detector-comparison.json](fixtures/detector-comparison.json)). Both personas are synthetic and ours, which the file says in those words: this measures that the decision rule earns its complexity, not that the detector works on a real person.
 
 Built for the Build, Ship, Shape: Amazon Developer Hackathon. Track: Bee (Wearable AI), with the MCP server as a genuine Alexa+ surface. Mini challenges: AWS Builder, Open Source.
 
@@ -25,14 +29,32 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 | Piece | What it is | Tests |
 |---|---|---|
 | [`packages/speech-vitals`](packages/speech-vitals) | The open-source feature package (MIT, dependency-free core). Nine language features per day, each with its literature basis and concerning direction. Features only, never words. | 25 |
-| [`apps/engine`](apps/engine) | The personal baseline: warmup, EWMA baseline, concern-signed composite, CUSUM drift detection, explainable tiers, low-exposure exclusion, and a freeze so the baseline cannot learn its way out of a signal. No model in the loop. Includes the claims suite: every figure this repository states in public, re-derived from the committed personas. | 30 |
+| [`apps/engine`](apps/engine) | The personal baseline: warmup, EWMA baseline, concern-signed composite, CUSUM drift detection, explainable tiers, low-exposure exclusion, and a freeze so the baseline cannot learn its way out of a signal. No model in the loop. Includes the claims suite (every published figure re-derived from the committed personas) and the detector comparison against the two simpler rules it replaced. | 48 |
 | [`apps/ingest`](apps/ingest) | The Bee integration, called in code: `bee conversations`, `bee now`, `bee changed` with exactly-once cursors, `bee stream --json`, `bee sync` markdown, owner isolation. | 30 |
 | [`apps/server`](apps/server) | FastAPI: dashboard API, public features API, the MCP server, the Bedrock weekly note, the doctor report. Receives feature rows, never text. | 18 |
 | [`apps/web`](apps/web) | Landing page, dashboard, printable doctor report. Light and dark, 22 info buttons, 100 on accessibility. | |
 | [`apps/agent`](apps/agent) | Two Strands agents on Bedrock. One consumes Bellwether's MCP server as an outside client. The other holds **two** MCP servers at once, Bellwether's and Bee's own, to find the ordinary explanation for a change, behind an audited allowlist that withholds every Bee tool returning verbatim speech. | 9 |
 | [`fixtures/personas`](fixtures/personas) | Two synthetic personas through the real extractor and engine, labelled SIMULATED. They share a seed and differ only in whether a change is injected from day 35, which is asserted, so the comparison is controlled. | |
 
-**112 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
+**130 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
+
+## The detector it replaced
+
+Accumulating is a design choice, and a design choice is worth nothing unless the obvious alternative was measured and lost. Two were, and they are not strawmen: they are what most people build first, they need no state, and they are trivially explainable.
+
+Every detector below sees the same nine features, the same per-person EWMA baseline, the same concern signing and the same low-exposure exclusions. Only the decision rule differs, which is what makes the comparison about the rule rather than about feature engineering.
+
+| Rule | False alarms on the unchanged person | Days into the change before it fires |
+|---|---|---|
+| **Bellwether** (one-sided CUSUM on the composite, k 0.5, h 5.0) | **0** | **2** |
+| Composite over a fixed threshold, best quiet setting (4) | 0 | 4 |
+| Composite over a fixed threshold, fastest setting (3) | 1 | 1 |
+| Any single feature's z over a threshold, best setting (4.0) | 1 | 3 |
+| Any single feature's z over a threshold, at z 2.0 | 6 | 1 |
+
+The two axes trade against each other, which is the whole point: a detector that buys silence with lateness has not won anything, and neither has one that buys speed with false alarms. Every false alarm costs a family a frightened week; every day of delay is a day nobody acted on.
+
+Reproduce the sweep: `python fixtures/compare_detectors.py`. Eighteen settings, both directions, written to `fixtures/detector-comparison.json` and pinned by tests.
 
 ## The properties worth arguing with
 

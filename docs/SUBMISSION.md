@@ -89,6 +89,19 @@ Six entries with task, steps, expected against actual, severity, workaround and 
 
 Eight, each from something we actually hit, each cross-referenced to the friction entry that produced it, and each rated critical, important or nice-to-have. The three we would most want read: Bee should expose an `is_user` flag on every utterance, because without it any analysis *of the wearer* rests on a heuristic (critical); AWS should warn when a Lambda function URL's CORS collides with the handler's own, because the resulting duplicate header is invisible to every non-browser check and breaks live demos (critical); and the MCP spec should state that real clients send `DELETE` with a JSON content-type and an empty body, which cost two of our three projects a 500 each. Full list with reasoning in [FEATURE_REQUESTS.md](FEATURE_REQUESTS.md).
 
+## The alternative, measured
+
+Bellwether accumulates: a one-sided CUSUM on a concern-signed composite fires when deviation persists, not when a single day looks bad. Against the two rules a reasonable engineer writes instead, swept across eighteen settings, with every detector seeing identical features and an identical baseline so only the rule differs:
+
+| Rule | False alarms on the unchanged person | Days into the change before it fires |
+|---|---|---|
+| **Bellwether** | **0** | **2** |
+| Fixed composite threshold, quietest setting | 0 | 4 |
+| Fixed composite threshold, fastest setting | 1 | 1 |
+| Single-feature z threshold, best setting | 1 | 3 |
+
+None of the eighteen beats it on both axes. Both personas are synthetic and ours, so this shows the decision rule earns its complexity, not that the detector works on a real person. `fixtures/detector-comparison.json`.
+
 ## Honest limits
 
 - **The Bee device is on order.** Everything here runs and is tested without it, and the two synthetic personas exercise the production extractor and engine end to end. Real operation on the operator's own Bee data, and the demo video that shows it, wait on the hardware. The week-one gate questions are written and ready.
