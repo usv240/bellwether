@@ -56,6 +56,8 @@ uvicorn bellwether_server.main:app --port 8789      # API + MCP on :8789
 cd apps/web && npm install && npm run dev           # the site on :3000
 ```
 
+On Windows, clone to a short path such as `C:/dev/bellwether`. spaCy's compiled parser fails to load from a deep directory and reports it as `DLL load failed ... The filename or extension is too long`, which names the wrong cause. FRICTION_LOG.md entry 8.
+
 Bee: `npm install -g @beeai/cli`, enable Developer Mode in the Bee app (tap the version five times in Settings), then `bee login`. Everything above runs without it.
 
 ```

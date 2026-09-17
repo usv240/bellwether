@@ -72,4 +72,15 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Workaround: the panel renders unconditionally and takes a nullable summary, adapting only the tier word once data arrives. Verified in the deployed HTML.
 - Why it is in this log: it is our bug, not a platform's, and it is the second time in this hackathon that client-gated content silently removed the case for a project from the page. Recorded so the pattern is named: anything that explains, reassures or qualifies should render before anything that fetches.
 
+## Entry 8: spaCy fails to import from a deep Windows path, and the error names the wrong thing (2026-09-17)
+
+- Task: verify the README's own setup from a clean clone, on the theory that a reviewer will do exactly that and nothing else.
+- Steps: clone into a nested working directory, `python -m venv .venv`, install the four packages, `python -m spacy download en_core_web_sm`, run the suite.
+- Expected: the 112 tests that pass in development.
+- Actual: sixteen failures, every one of them a spaCy import, with `ImportError: DLL load failed while importing transition_system: The filename or extension is too long.` The model download reported the same error and still printed a success line.
+- What made it expensive: the message points at spaCy's compiled parser, so the obvious readings are a broken wheel, a Python version mismatch, or a corrupt model. The actual cause is Windows MAX_PATH: the venv's `site-packages` path plus spaCy's own nesting crosses 260 characters and the loader gives up. The same clone at `C:/tmp/bwx` installs and passes all 112. Nothing about the failure suggests the parent directory is the variable.
+- Severity: medium for us, high for anyone judging on Windows. A reviewer who clones into a deep folder sees a sixth of the suite fail and reasonably concludes the project does not run.
+- Workaround: clone to a short path. Documented in the README next to the setup block rather than buried here, because the person who needs it is reading the README.
+- Suggestion: spaCy could name the real cause on Windows when an extension import fails and the resolved path is near the limit, and `spacy download` should not print a success line after an import error. This is the second MAX_PATH failure across our three projects this hackathon; the other took most of a day in a React Native TV build.
+
 <!-- Add new entries above this line as they happen. -->
