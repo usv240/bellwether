@@ -62,4 +62,14 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Workaround: CORS is handled by exactly one layer. The app adds its middleware only when `AWS_LAMBDA_FUNCTION_NAME` is absent, so the function URL owns it in Lambda and the middleware owns it locally.
 - Suggestion, for AWS: the function URL CORS configuration should either strip a conflicting `Access-Control-Allow-Origin` emitted by the handler or log a warning, because the combination is silent, common (every FastAPI and Express example adds middleware), and only reproducible in a browser. A line in the Lambda function URL CORS documentation saying "do not also set CORS headers in your handler" would have prevented it outright.
 
+## Entry 7: our own dashboard hid its most important panel behind a fetch (2026-09-18, ours not theirs)
+
+- Task: check that the "What else could explain this" panel, which gives the ordinary explanations for a flagged change, actually reaches a reader.
+- Steps: curl the deployed dashboard and grep the prerendered HTML for the panel's text.
+- Expected: present. It is static content; nothing in it depends on the API.
+- Actual: absent. The whole dashboard body sat inside a `{summary && (...)}` branch, so every word of it, including the panel whose entire purpose is to reach a worried person before the frightening interpretation does, existed only after a successful API call. A judge on a slow connection, or anyone hitting a failed fetch, would have seen a nav bar and a simulated-data badge.
+- Severity: high, and higher for this panel than for any other. The risk-communication literature is explicit that the ordinary explanations must accompany the result; making them conditional on a network call inverts the design.
+- Workaround: the panel renders unconditionally and takes a nullable summary, adapting only the tier word once data arrives. Verified in the deployed HTML.
+- Why it is in this log: it is our bug, not a platform's, and it is the second time in this hackathon that client-gated content silently removed the case for a project from the page. Recorded so the pattern is named: anything that explains, reassures or qualifies should render before anything that fetches.
+
 <!-- Add new entries above this line as they happen. -->

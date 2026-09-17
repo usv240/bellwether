@@ -6,10 +6,21 @@ A transcript goes in. Nine numbers per day come out. None of them can reconstruc
 
 ## Install
 
+Not yet on PyPI. Install from the repository:
+
 ```
-pip install speech-vitals
+pip install "git+https://github.com/usv240/bellwether.git#subdirectory=packages/speech-vitals&egg=speech-vitals[nlp]"
 python -m spacy download en_core_web_sm
 ```
+
+Or from a clone:
+
+```
+pip install -e "packages/speech-vitals[nlp]"
+python -m spacy download en_core_web_sm
+```
+
+The core (schema, MATTR, the feature registry) has no dependencies and imports anywhere. The `nlp` extra adds spaCy and wordfreq, which extraction needs.
 
 ## Use
 

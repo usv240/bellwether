@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { InfoButton } from "../../components/InfoButton";
+import { Confounders } from "../../components/Confounders";
 import { Nav } from "../../components/Nav";
 import { TrendChart, type TrendRow } from "../../components/TrendChart";
 import {
@@ -114,6 +115,13 @@ export default function Dashboard() {
         </div>
 
         {error && <p className="mt-6 rounded-[var(--radius-md)] border border-line bg-surface p-4 text-sm text-muted">The service did not answer: {error}</p>}
+
+        {/* What else could explain this. Rendered before and independently of
+            the API, because the ordinary explanations for a change are the
+            last thing that should depend on a network call succeeding. */}
+        <section className="mt-6">
+          <Confounders summary={summary} />
+        </section>
 
         {summary && (
           <>

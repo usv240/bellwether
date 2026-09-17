@@ -209,6 +209,26 @@ export const INFO: Record<string, InfoEntry> = {
     technical:
       "Claude on Amazon Bedrock through a three-model ladder; if every model fails, a deterministic template ships, so the note degrades in warmth and never in accuracy. Every note reports which model wrote it.",
   },
+  confounders: {
+    id: "confounders",
+    term: "What else could explain this",
+    plain:
+      "Speech moves for ordinary reasons all the time: a bad night, a cold, a new medication, a stressful week, or simply talking to fewer people. Those explain far more changes than anything worrying does, so they are shown first, at the same size as the result.",
+    technical:
+      "Guidance on communicating uncertainty is explicit that a tool like this should admit what it does not know rather than present a single confident number. Bellwether shows the ordinary explanations beside every flag, and lets you annotate days so a change can be read in context later.",
+    sourceUrl: "https://www.annualreviews.org/content/journals/10.1146/annurev-statistics-010814-020148",
+    sourceLabel: "Spiegelhalter, Annual Review of Statistics and Its Application, 2017",
+  },
+  "duty-to-inform": {
+    id: "duty-to-inform",
+    term: "Informing, not persuading",
+    plain:
+      "Bellwether is not trying to get you to do anything. It shows you what changed, what might explain it, and what it cannot tell you, and then it stops. What you do with that is yours.",
+    technical:
+      "The risk-communication literature draws a sharp line between persuading an audience and fulfilling a duty to inform. Bellwether takes the second: no nudges, no streak pressure, no gamification, no urgency language, and the ordinary explanations for a change are given the same prominence as the change itself.",
+    sourceUrl: "https://www.annualreviews.org/content/journals/10.1146/annurev-statistics-010814-020148",
+    sourceLabel: "Spiegelhalter, 2017",
+  },
   "general-wellness": {
     id: "general-wellness",
     term: "Not a diagnosis",
