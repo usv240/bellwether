@@ -64,7 +64,7 @@ The zero row is in the table on purpose. It is the same real series with nothing
 
 **What it is not.** There is no labelled cognitive change anywhere in this corpus, so nothing here is evidence about dementia and none of it is offered as any. A session is one argument, not a day of a life. Court reporters strip "um" and "uh", so two of the nine features are near-constant here and the corpus exercises seven of them honestly. Appellate argument is a formal register, not kitchen-table conversation. All four limits are in the result file.
 
-Reproduce: `pip install convokit`, then `python harness/scotus/run.py`. Result at `harness/scotus/results.json`, pinned by tests in `apps/engine/tests/test_scotus_harness.py` which skip when the corpus is absent, so a fresh clone never fails over a download it was not asked to make.
+Reproduce: `pip install convokit`, then `python harness/scotus/run.py`. That exact command downloads the 2019 term (7 MB) and reproduces the committed `harness/scotus/results.json` byte for byte. One term is the right unit rather than a shortcut: spanning decades would confound restraint with ordinary ageing. Pinned by tests in `apps/engine/tests/test_scotus_harness.py` which skip when the corpus is absent, so a fresh clone never fails over a download it was not asked to make.
 
 ## The detector it replaced
 

@@ -1,7 +1,15 @@
 """Run Bellwether's engine over real human speech that nobody here authored.
 
     pip install convokit
-    python harness/scotus/run.py --out harness/scotus/results.json
+    python harness/scotus/run.py
+
+That is the exact command that produced the committed `results.json`. It
+downloads the 2019 term (7 MB) if no corpus path is given. One term is the
+right unit rather than a limitation: a justice does not undergo a systematic
+language change inside a single nine-month term, which is what makes a flag
+inside a series a false alarm. Spanning decades would confound restraint
+with ordinary ageing. Point `--corpus` at the full 1.3 GB archive to run
+wider.
 
 Why this corpus
 ---------------
@@ -209,8 +217,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Bellwether on real speech")
     parser.add_argument(
         "--corpus",
-        default="C:/tmp/convokit/supreme-corpus",
-        help="path to a downloaded ConvoKit supreme corpus",
+        default="",
+        help="path to a downloaded ConvoKit supreme corpus; blank downloads supreme-2019",
     )
     parser.add_argument("--out", default=str(REPO / "harness" / "scotus" / "results.json"))
     parser.add_argument("--min-assessed", type=int, default=MIN_ASSESSED)
@@ -218,7 +226,17 @@ def main() -> int:
     args = parser.parse_args()
 
     wanted = {t.strip() for t in args.terms.split(",") if t.strip()} or None
-    grouped = load_sessions(args.corpus, wanted)
+    corpus_path = args.corpus
+    if not corpus_path:
+        # supreme-2019 is 7 MB against 1.3 GB for the whole archive, and one
+        # term is the right unit anyway: a justice does not undergo a
+        # systematic language change inside a single term, which is what
+        # makes a flag inside a series a false alarm. Spanning decades would
+        # confound the restraint measurement with ordinary ageing.
+        from convokit import download
+
+        corpus_path = download("supreme-2019")
+    grouped = load_sessions(corpus_path, wanted)
     series = series_for(grouped)
     print(f"{len(series)} justice-term series from {len(grouped)} justice-case sessions")
 
