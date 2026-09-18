@@ -1,0 +1,210 @@
+{
+ "corpus": {
+  "name": "Supreme Court oral arguments (ConvoKit supreme-corpus, from the Oyez Project)",
+  "authoredByUs": false,
+  "unit": "one oral argument by one justice, treated as one day",
+  "termsCovered": [
+   "2019"
+  ]
+ },
+ "whyOwnBaseline": {
+  "question": "How far apart are two different people, in units of one person's own session-to-session variability? If the answer is below one, comparing a person against a population asks a detector to resolve a difference smaller than the noise it has to tolerate anyway.",
+  "perFeature": [
+   {
+    "feature": "mattr",
+    "withinSpeakerSd": 0.0296,
+    "betweenSpeakerSd": 0.0087,
+    "betweenOverWithin": 0.29
+   },
+   {
+    "feature": "mean_utt_len",
+    "withinSpeakerSd": 27.8916,
+    "betweenSpeakerSd": 11.7937,
+    "betweenOverWithin": 0.42
+   },
+   {
+    "feature": "dep_depth_mean",
+    "withinSpeakerSd": 1.2539,
+    "betweenSpeakerSd": 0.7014,
+    "betweenOverWithin": 0.56
+   },
+   {
+    "feature": "pronoun_noun_ratio",
+    "withinSpeakerSd": 0.0623,
+    "betweenSpeakerSd": 0.0392,
+    "betweenOverWithin": 0.63
+   },
+   {
+    "feature": "filler_rate",
+    "withinSpeakerSd": 0.0529,
+    "betweenSpeakerSd": 0.0083,
+    "betweenOverWithin": 0.16
+   },
+   {
+    "feature": "disfluency_rate",
+    "withinSpeakerSd": 0.7416,
+    "betweenSpeakerSd": 0.5629,
+    "betweenOverWithin": 0.76
+   },
+   {
+    "feature": "low_freq_word_rate",
+    "withinSpeakerSd": 1.7332,
+    "betweenSpeakerSd": 0.8903,
+    "betweenOverWithin": 0.51
+   },
+   {
+    "feature": "idea_density",
+    "withinSpeakerSd": 0.2467,
+    "betweenSpeakerSd": 0.1608,
+    "betweenOverWithin": 0.65
+   },
+   {
+    "feature": "vocab_size_day",
+    "withinSpeakerSd": 38.6993,
+    "betweenSpeakerSd": 17.5291,
+    "betweenOverWithin": 0.45
+   }
+  ],
+  "allBelowOne": true
+ },
+ "restraint": {
+  "question": "How often does the engine flag a change in someone whose speech has no reason to have changed? One series is one justice in one term.",
+  "series": 8,
+  "distinctSpeakers": 8,
+  "sessionsAssessed": 349,
+  "sessionsFlagged": 0,
+  "flaggedPercent": 0.0,
+  "seriesWithNoFlagAtAll": 8
+ },
+ "sensitivity": {
+  "what": "A real justice's real sessions, with every feature shifted in its concerning direction by a known multiple of that justice's own standard deviation, ramped over fourteen sessions exactly as the synthetic persona ramps.",
+  "whyNotASpliceOfTwoSpeakers": "That was the first attempt and it mostly did not fire. The separation table is why: two different justices sit closer together than one justice's own range on every feature, so the splice asked the engine to resolve a change smaller than the noise it is built to ignore. Its failure said nothing about the engine. It is recorded because the wrong control nearly became the published result.",
+  "sweep": [
+   {
+    "shiftInWithinPersonSd": 0.0,
+    "subjectsDetected": 0,
+    "ofSubjects": 5,
+    "medianSessionsToDetect": null
+   },
+   {
+    "shiftInWithinPersonSd": 0.5,
+    "subjectsDetected": 1,
+    "ofSubjects": 5,
+    "medianSessionsToDetect": 1
+   },
+   {
+    "shiftInWithinPersonSd": 1.0,
+    "subjectsDetected": 4,
+    "ofSubjects": 5,
+    "medianSessionsToDetect": 6.5
+   },
+   {
+    "shiftInWithinPersonSd": 1.5,
+    "subjectsDetected": 5,
+    "ofSubjects": 5,
+    "medianSessionsToDetect": 2
+   },
+   {
+    "shiftInWithinPersonSd": 2.0,
+    "subjectsDetected": 5,
+    "ofSubjects": 5,
+    "medianSessionsToDetect": 1
+   },
+   {
+    "shiftInWithinPersonSd": 3.0,
+    "subjectsDetected": 5,
+    "ofSubjects": 5,
+    "medianSessionsToDetect": 1
+   }
+  ]
+ },
+ "limits": [
+  "A session is one oral argument, not a day of a person's life.",
+  "Professional transcription strips um and uh, so filler rate and disfluency rate are near-constant here and this corpus exercises seven of the nine features honestly.",
+  "Appellate argument is a formal register, not kitchen-table conversation.",
+  "There is no labelled cognitive change in this corpus. Nothing here is evidence about dementia, and none of it is offered as any.",
+  "The injected change is applied to feature rows rather than to speech, so it tests the baseline and the decision rule, not the extractor."
+ ],
+ "seriesDetail": [
+  {
+   "speaker": "j__brett_m_kavanaugh",
+   "term": "2019",
+   "sessions": 54,
+   "assessed": 41,
+   "excludedLowExposure": 6,
+   "flagged": 0,
+   "maxComposite": 1.294,
+   "medianComposite": -0.088
+  },
+  {
+   "speaker": "j__elena_kagan",
+   "term": "2019",
+   "sessions": 57,
+   "assessed": 49,
+   "excludedLowExposure": 1,
+   "flagged": 0,
+   "maxComposite": 2.235,
+   "medianComposite": -0.103
+  },
+  {
+   "speaker": "j__john_g_roberts_jr",
+   "term": "2019",
+   "sessions": 58,
+   "assessed": 40,
+   "excludedLowExposure": 11,
+   "flagged": 0,
+   "maxComposite": 2.833,
+   "medianComposite": 0.317
+  },
+  {
+   "speaker": "j__neil_gorsuch",
+   "term": "2019",
+   "sessions": 48,
+   "assessed": 40,
+   "excludedLowExposure": 1,
+   "flagged": 0,
+   "maxComposite": 2.708,
+   "medianComposite": -0.539
+  },
+  {
+   "speaker": "j__ruth_bader_ginsburg",
+   "term": "2019",
+   "sessions": 56,
+   "assessed": 39,
+   "excludedLowExposure": 10,
+   "flagged": 0,
+   "maxComposite": 2.078,
+   "medianComposite": -0.272
+  },
+  {
+   "speaker": "j__samuel_a_alito_jr",
+   "term": "2019",
+   "sessions": 57,
+   "assessed": 43,
+   "excludedLowExposure": 7,
+   "flagged": 0,
+   "maxComposite": 3.142,
+   "medianComposite": -0.105
+  },
+  {
+   "speaker": "j__sonia_sotomayor",
+   "term": "2019",
+   "sessions": 57,
+   "assessed": 50,
+   "excludedLowExposure": 0,
+   "flagged": 0,
+   "maxComposite": 2.648,
+   "medianComposite": -0.398
+  },
+  {
+   "speaker": "j__stephen_g_breyer",
+   "term": "2019",
+   "sessions": 56,
+   "assessed": 47,
+   "excludedLowExposure": 2,
+   "flagged": 0,
+   "maxComposite": 2.614,
+   "medianComposite": -0.317
+  }
+ ]
+}

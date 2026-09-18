@@ -4,6 +4,8 @@ Bellwether reads the transcripts your wearable already makes, keeps nine languag
 
 Your watch knows when your heart skips a beat. Nothing knows when your brain does. Bellwether makes speech a vital sign.
 
+**On real speech nobody here wrote:** across 349 Supreme Court oral arguments by 8 justices, the engine flagged zero, and on all nine features two different justices sit closer together than one justice's own session-to-session range, which is the measured case for comparing a person with their own past rather than with a population ([harness/scotus](harness/scotus)).
+
 **Measured against the detector a reasonable engineer builds instead:** on two personas that are identical until the day a change is injected, Bellwether flags it two days in, with zero false alarms across 47 quiet days. The simplest rule that is equally quiet is two days later. The simplest rule that is equally fast costs a false alarm on someone whose speech never changed. None of eighteen settings of two simpler rules beats it on both axes ([fixtures/detector-comparison.json](fixtures/detector-comparison.json)). Both personas are synthetic and ours, which the file says in those words: this measures that the decision rule earns its complexity, not that the detector works on a real person.
 
 Built for the Build, Ship, Shape: Amazon Developer Hackathon. Track: Bee (Wearable AI), with the MCP server as a genuine Alexa+ surface. Mini challenges: AWS Builder, Open Source.
@@ -29,14 +31,40 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 | Piece | What it is | Tests |
 |---|---|---|
 | [`packages/speech-vitals`](packages/speech-vitals) | The open-source feature package (MIT, dependency-free core). Nine language features per day, each with its literature basis and concerning direction. Features only, never words. | 25 |
-| [`apps/engine`](apps/engine) | The personal baseline: warmup, EWMA baseline, concern-signed composite, CUSUM drift detection, explainable tiers, low-exposure exclusion, and a freeze so the baseline cannot learn its way out of a signal. No model in the loop. Includes the claims suite (every published figure re-derived from the committed personas) and the detector comparison against the two simpler rules it replaced. | 48 |
+| [`apps/engine`](apps/engine) | The personal baseline: warmup, EWMA baseline, concern-signed composite, CUSUM drift detection, explainable tiers, low-exposure exclusion, and a freeze so the baseline cannot learn its way out of a signal. No model in the loop. Includes the claims suite (every published figure re-derived from the committed personas) the detector comparison against the two simpler rules it replaced, and the external harness that runs the engine over real speech. | 63 |
 | [`apps/ingest`](apps/ingest) | The Bee integration, called in code: `bee conversations`, `bee now`, `bee changed` with exactly-once cursors, `bee stream --json`, `bee sync` markdown, owner isolation. | 30 |
 | [`apps/server`](apps/server) | FastAPI: dashboard API, public features API, the MCP server, the Bedrock weekly note, the doctor report. Receives feature rows, never text. | 18 |
 | [`apps/web`](apps/web) | Landing page, dashboard, printable doctor report. Light and dark, 22 info buttons, 100 on accessibility. | |
 | [`apps/agent`](apps/agent) | Two Strands agents on Bedrock. One consumes Bellwether's MCP server as an outside client. The other holds **two** MCP servers at once, Bellwether's and Bee's own, to find the ordinary explanation for a change, behind an audited allowlist that withholds every Bee tool returning verbatim speech. | 9 |
+| [`harness/scotus`](harness/scotus) | The engine over real spontaneous speech nobody here wrote: 349 Supreme Court oral arguments by 8 justices. Restraint, sensitivity at a known effect size, and the measured case for an own baseline. | |
 | [`fixtures/personas`](fixtures/personas) | Two synthetic personas through the real extractor and engine, labelled SIMULATED. They share a seed and differ only in whether a change is injected from day 35, which is asserted, so the comparison is controlled. | |
 
-**130 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
+**145 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
+
+## Real speech, not ours
+
+Everything above is measured on two personas we wrote, and a person we invented cannot surprise us. So the engine was run over the Supreme Court oral argument corpus (ConvoKit, from the Oyez Project): the same named people speaking spontaneously and unscripted across dozens of separate sittings in one term, transcribed by court reporters, published by the Court, and authored by nobody here.
+
+**Restraint.** Across **349 arguments by 8 justices** in the 2019 term, the engine flagged **zero**. Every one of the eight series ran clean. A justice does not undergo a systematic language change over a single nine-month term, so a flag inside a series would be a false alarm, and there were none.
+
+**Sensitivity, so the zero means something.** A detector that never fires also scores zero. Real sessions from real justices were shifted in the concerning direction by a known multiple of that person's own standard deviation, ramped over fourteen sessions exactly as the persona ramps:
+
+| Shift, in that person's own SD | Detected | Median sessions to detect |
+|---|---|---|
+| 0.0 (nothing done) | 0 of 5 | n/a |
+| 0.5 | 1 of 5 | 1 |
+| 1.0 | 4 of 5 | 6.5 |
+| 1.5 | **5 of 5** | 2 |
+| 2.0 | 5 of 5 | 1 |
+| 3.0 | 5 of 5 | 1 |
+
+The zero row is in the table on purpose. It is the same real series with nothing done to it, and if it ever detects anyone then every other row is measuring the engine tripping over its own tail.
+
+**And the reason for an own baseline, measured rather than asserted.** On all nine features, the spread between different justices is *smaller* than the spread within a single justice's own sessions: ratios from 0.16 to 0.76, none above 1. Comparing a person against a population would be asking a detector to resolve a difference smaller than the noise it has to tolerate anyway. This is the clearest evidence in the repository for the n-of-1 design, and it comes from speech we did not write.
+
+**What it is not.** There is no labelled cognitive change anywhere in this corpus, so nothing here is evidence about dementia and none of it is offered as any. A session is one argument, not a day of a life. Court reporters strip "um" and "uh", so two of the nine features are near-constant here and the corpus exercises seven of them honestly. Appellate argument is a formal register, not kitchen-table conversation. All four limits are in the result file.
+
+Reproduce: `pip install convokit`, then `python harness/scotus/run.py`. Result at `harness/scotus/results.json`, pinned by tests in `apps/engine/tests/test_scotus_harness.py` which skip when the corpus is absent, so a fresh clone never fails over a download it was not asked to make.
 
 ## The detector it replaced
 

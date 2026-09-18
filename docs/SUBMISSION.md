@@ -89,6 +89,14 @@ Six entries with task, steps, expected against actual, severity, workaround and 
 
 Eight, each from something we actually hit, each cross-referenced to the friction entry that produced it, and each rated critical, important or nice-to-have. The three we would most want read: Bee should expose an `is_user` flag on every utterance, because without it any analysis *of the wearer* rests on a heuristic (critical); AWS should warn when a Lambda function URL's CORS collides with the handler's own, because the resulting duplicate header is invisible to every non-browser check and breaks live demos (critical); and the MCP spec should state that real clients send `DELETE` with a JSON content-type and an empty body, which cost two of our three projects a 500 each. Full list with reasoning in [FEATURE_REQUESTS.md](FEATURE_REQUESTS.md).
 
+## Real speech, not ours
+
+Across **349 Supreme Court oral arguments by 8 justices** (ConvoKit, from the Oyez Project), speech nobody here wrote, Bellwether flagged **zero**. Paired with sensitivity so the zero means something: a sustained shift of 1.5 of a person's own standard deviations, injected into their real sessions, was caught in 5 of 5 subjects at a median of 2 sessions, and the do-nothing control at 0.0 caught nobody.
+
+And the measured case for the design: on all nine features the gap between two different justices is smaller than one justice's own session-to-session range. Comparing a person with a population asks a detector to resolve a difference smaller than the noise it has to tolerate anyway.
+
+No labelled cognitive change exists in that corpus, so none of this is evidence about dementia and none of it is offered as any. `harness/scotus/results.json`.
+
 ## The alternative, measured
 
 Bellwether accumulates: a one-sided CUSUM on a concern-signed composite fires when deviation persists, not when a single day looks bad. Against the two rules a reasonable engineer writes instead, swept across eighteen settings, with every detector seeing identical features and an identical baseline so only the rule differs:

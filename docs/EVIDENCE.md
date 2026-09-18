@@ -44,6 +44,24 @@ Two alternatives, both of them what most people build first: flag the day the co
 
 **What this is not.** Both personas are synthetic and authored by this project. This is evidence that the accumulating rule earns its complexity against the simpler ones on a change of known shape and timing. It is not evidence that the detector works on a real person, and it is not offered as any. That gap is the honest limit of everything in section 6.
 
+## 4c. The engine, run over real speech that nobody here wrote
+
+Sections 4 and 4b rest on literature and on two personas we authored. This one does not.
+
+The Supreme Court oral argument corpus (ConvoKit, from the Oyez Project) gives the same named individuals speaking spontaneously across dozens of separate sittings in a single term, transcribed by court reporters and published by the Court.
+
+**Across 349 arguments by 8 justices in the 2019 term, Bellwether flagged zero.** All eight series ran clean.
+
+That zero is only worth something paired with sensitivity, so real sessions were shifted in the concerning direction by a known multiple of each person's own standard deviation and the magnitude swept. A sustained shift of 1.5 within-person standard deviations was caught in 5 of 5 subjects at a median of 2 sessions; 1.0 SD in 4 of 5; and the do-nothing control at 0.0 SD caught nobody, which is what makes the rest of the row readable.
+
+**The measured case for an own baseline.** On every one of the nine features, the spread between different justices is smaller than the spread within one justice's own sessions, from 0.16 to 0.76 of it. A population comparison would be asking a detector to resolve a difference smaller than the noise it must tolerate anyway. Bellwether's central design choice is n-of-1, and this is the evidence for it rather than the argument.
+
+**Limits, all four in the result file.** No labelled cognitive change exists in this corpus, so nothing here is evidence about dementia. A session is one argument, not a day of a life. Court reporters strip "um" and "uh", so filler and disfluency rate are near-constant and the corpus exercises seven of the nine features honestly. Appellate argument is a register, not kitchen-table speech.
+
+**A control that failed, on the record.** The first positive control spliced one justice's sessions onto another's, and it mostly did not fire. The separation table above is why: two different justices are closer together than one justice's own range, so the splice asked the engine to resolve a change smaller than the noise it is built to ignore, and its failure said nothing about the engine. It is recorded because the wrong control nearly became the published result.
+
+Reproduce: `pip install convokit`, then `python harness/scotus/run.py`. `harness/scotus/results.json`.
+
 ## 5. The features have a literature, feature by feature
 
 Each feature in `speech-vitals` carries its basis in code (`speech_vitals/types.py`), and `speech-vitals schema` prints the table. The load-bearing references:
