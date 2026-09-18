@@ -39,7 +39,7 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 | [`harness/scotus`](harness/scotus) | The engine over real spontaneous speech nobody here wrote: 349 Supreme Court oral arguments by 8 justices. Restraint, sensitivity at a known effect size, and the measured case for an own baseline. | |
 | [`fixtures/personas`](fixtures/personas) | Two synthetic personas through the real extractor and engine, labelled SIMULATED. They share a seed and differ only in whether a change is injected from day 35, which is asserted, so the comparison is controlled. | |
 
-**145 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
+**165 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
 
 ## Real speech, not ours
 
@@ -109,6 +109,17 @@ cd apps/web && npm install && npm run dev           # the site on :3000
 On Windows, clone to a short path such as `C:/dev/bellwether`. spaCy's compiled parser fails to load from a deep directory and reports it as `DLL load failed ... The filename or extension is too long`, which names the wrong cause. FRICTION_LOG.md entry 8.
 
 Bee: `npm install -g @beeai/cli`, enable Developer Mode in the Bee app (tap the version five times in Settings), then `bee login`. Everything above runs without it.
+
+The day a device arrives, one command rehearses the whole chain and stops at the first thing genuinely wrong:
+
+```
+bellwether-ingest firstrun          # read only, safe to run twice
+bellwether-ingest evidence          # writes docs/BEE_LIVE.md, no speech in it
+```
+
+`firstrun` checks the CLI, the login, whether anything has been recorded yet, whether a real day reduces to the nine features, and whether that day has enough speech to assess at all. Every one of those failures is reproduced in tests with an injected runner, so the path is rehearsed before the hardware is unboxed.
+
+`evidence` writes a record that live Bee data flowed, containing counts, shapes and the nine numbers and not one word of speech. A test feeds it a transcript full of names, a doctor, a family member and an account number, and asserts none of them survive. It is designed to be committed to a public repository even though its input never could be.
 
 ```
 bellwether-ingest status

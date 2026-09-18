@@ -17,6 +17,48 @@ Four steps, and the words never leave the wearer's machine.
 3. **Learn.** Seven days of warmup establish a personal baseline. After that, each day is standardised against the baseline **as it stood before that day**, so no day is compared with itself. A one-sided CUSUM on a signed composite detects persistent drift while ignoring noisy days.
 4. **Show.** A tier with its reasons and dates, a weekly note, and a one-page report.
 
+## The Bee track requirement, answered directly
+
+The rule is specific: the video and the code have to show the project
+actually using live Bee data to do something for a person, and mentioning
+Bee is not enough. Taking each half of that separately.
+
+**In code.** `apps/ingest` is a real client of the Bee CLI, not a wrapper
+around a mention of one. It builds and runs the argv for `bee me`,
+`bee now`, `bee changed --cursor`, `bee conversations list`,
+`bee stream --json` and `bee sync`, handles the npm shim that Windows
+needs, turns "not logged in" back into the instruction the Bee app uses,
+and reduces what comes back to the nine features while discarding every
+word. Thirty tests pin the exact argv through an injected runner, so the
+integration is asserted rather than described. A second agent in
+`apps/agent` holds Bee's own MCP server alongside ours, behind an
+allowlist that withholds every Bee tool returning verbatim speech.
+
+**On live data.** A Bee was bought for this. Everything upstream of the
+device is finished and rehearsed: `bellwether-ingest firstrun` walks the
+entire chain, stops at the first thing genuinely wrong, and says what to
+do about it in the words the Bee app uses. Every failure that first
+session can hit is reproduced in tests with an injected runner, including
+a device with nothing recorded yet and a day too quiet to assess, so the
+only untested step on the day is the one that needs the hardware.
+
+Until that device is in hand there is no live Bee data in this repository,
+and none is claimed. The personas are synthetic and say so, in the
+fixtures, in the API responses and on every page that shows them. The
+external validation in `harness/scotus` is real human speech, but it is
+Supreme Court audio rather than Bee audio, and it is offered as evidence
+about the engine rather than about the device.
+
+## Built during the hackathon
+
+This project did not exist before the submission window. The first commit
+is 2026-09-16 and the whole repository is public history: every file, every
+number and every correction was written for this hackathon.
+
+Nothing here was adapted from earlier work, so the rules' question about
+what changed during the window has the simplest possible answer, which is
+all of it.
+
 ## Tracks and mini challenges
 
 **Bee (primary) and Alexa+.** AWS Builder and Open Source mini challenges.

@@ -54,6 +54,17 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("status", help="is bee installed and logged in?")
 
+    sub.add_parser(
+        "firstrun",
+        help="rehearse the whole chain the day the device arrives, read only",
+    )
+
+    ev = sub.add_parser(
+        "evidence",
+        help="write a publishable record that live Bee data flowed, no speech in it",
+    )
+    ev.add_argument("--out", default="docs/BEE_LIVE.md")
+
     pull = sub.add_parser("pull", help="fetch what changed since last run and reduce it to day features")
     pull.add_argument("--owner", help="the wearer's speaker label; defaults to the most frequent speaker")
     pull.add_argument("--cursor-file", default=".bee-cursor")
@@ -66,6 +77,25 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
     cli = BeeCli()
+
+    if args.command == "evidence":
+        from .evidence import capture, to_markdown
+
+        data = capture(cli)
+        text = to_markdown(data)
+        with open(args.out, "w", encoding="utf8", newline="\n") as fh:
+            fh.write(text)
+        print(f"Wrote {args.out}: {data['totals']['wordsSeen']} words read, "
+              f"{data['totals']['wordsPublished']} published.")
+        return 0 if any(c["ok"] for c in data["calls"]) else 1
+
+    if args.command == "firstrun":
+        # Read only, so it is safe to run twice and safe to run on camera.
+        from .firstrun import report, run
+
+        steps = run(cli)
+        print(report(steps))
+        return 0 if all(step.ok for step in steps) else 1
 
     if args.command == "status":
         if not cli.installed():
