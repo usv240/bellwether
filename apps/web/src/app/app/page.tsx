@@ -9,6 +9,7 @@ import { TrendChart, type TrendRow } from "../../components/TrendChart";
 import {
   FEATURE_INFO,
   FEATURE_LABEL,
+  humaniseExplanation,
   PROFILE,
   TIER_CLASS,
   TIER_LABEL,
@@ -116,12 +117,17 @@ export default function Dashboard() {
 
         {error && <p className="mt-6 rounded-[var(--radius-md)] border border-line bg-surface p-4 text-sm text-muted">The service did not answer: {error}</p>}
 
-        {/* What else could explain this. Rendered before and independently of
-            the API, because the ordinary explanations for a change are the
-            last thing that should depend on a network call succeeding. */}
-        <section className="mt-6">
-          <Confounders summary={summary} />
-        </section>
+        {!summary && !error && (
+          <section
+            className="mt-6 rounded-[var(--radius-lg)] border border-line bg-surface p-5"
+            aria-busy="true"
+          >
+            <p className="text-xs font-semibold uppercase tracking-wider text-muted">
+              Right now
+            </p>
+            <p className="mt-2 text-sm text-muted">Reading the baseline...</p>
+          </section>
+        )}
 
         {summary && (
           <>
@@ -138,7 +144,7 @@ export default function Dashboard() {
                 </div>
                 <ul className="mt-3 space-y-1 text-sm leading-relaxed text-muted">
                   {summary.explanation.map((line) => (
-                    <li key={line}>{line}</li>
+                    <li key={line}>{humaniseExplanation(line)}</li>
                   ))}
                 </ul>
                 {summary.contributors.length > 0 && (
@@ -163,7 +169,7 @@ export default function Dashboard() {
                   <div className="flex justify-between"><dt className="text-muted">Stable streak</dt><dd className="font-medium">{summary.stable_streak_days} days</dd></div>
                   <div className="flex justify-between"><dt className="text-muted">Latest day</dt><dd className="font-medium">{fmtDate(summary.latest_date)}</dd></div>
                 </dl>
-                <Link href="/report" className="mt-4 inline-block rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
+                <Link prefetch={false} href="/report" className="mt-4 inline-block rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
                   Open the doctor report
                 </Link>
               </div>
@@ -198,6 +204,23 @@ export default function Dashboard() {
                 <TrendChart rows={rows} height={240} />
               </div>
               <p className="mt-2 text-xs text-muted">Zero is your baseline. Higher is further from it in the direction the literature associates with decline. Hollow marks are quiet days, excluded. A ringed dot has a note. <InfoButton id="freeze" /></p>
+            </section>
+
+            {/*
+              What, then why, then so what.
+
+              This panel used to sit at the top of the page, above any data,
+              which put a wall of caveats in front of a reader who did not
+              yet know what they were being cautioned about. It reads as the
+              answer to "should I worry" only once the tier and the trend
+              have been seen, so it lives here now.
+
+              It still takes a nullable summary and renders whatever the API
+              does, because the ordinary explanations for a change are the
+              last thing that should depend on a network call.
+            */}
+            <section className="mt-4">
+              <Confounders summary={summary} />
             </section>
 
             {/* Recent days + annotate */}

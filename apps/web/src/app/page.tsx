@@ -2,6 +2,7 @@ import Link from "next/link";
 import { DemoStrip } from "../components/DemoStrip";
 import { InfoButton } from "../components/InfoButton";
 import { Nav } from "../components/Nav";
+import { BaselineBand } from "../components/BaselineBand";
 import { API } from "../lib/api";
 
 const STATS = [
@@ -43,31 +44,66 @@ export default function Home() {
     <div className="min-h-screen bg-bg text-ink">
       <Nav />
       <main id="main">
-        {/* Hero */}
-        <section className="mx-auto max-w-[1120px] px-4 pb-16 pt-16 sm:px-6 sm:pt-24">
-          <div className="max-w-[720px]">
+        {/*
+          The hero leads with the measurement, not with a claim about it.
+          Bellwether's whole argument is that a person should be compared
+          with their own past rather than with a population, and a band with
+          dots in it says that faster than any sentence can.
+        */}
+        <section className="mx-auto max-w-[1120px] px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
+          <div className="max-w-[760px]">
             <p className="mb-4 inline-block rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium text-muted">
               Built on Bee. Not a diagnosis.
             </p>
-            <h1 className="text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
+            <h1 className="text-4xl font-semibold leading-tight tracking-tight text-balance sm:text-5xl">
               Speech is a vital sign.{" "}
               <span className="text-[var(--primary)]">Start measuring yours.</span>
             </h1>
-            <p className="mt-6 max-w-[640px] text-lg leading-relaxed text-muted">
-              Bellwether uses the Bee wristband you already wear to learn how you normally speak, and shows you, in numbers you own, when that changes. Evidence for a better conversation with your doctor.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <a href="#demo" className="rounded-[var(--radius-sm)] bg-[var(--primary)] px-5 py-3 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
-                See a live baseline
-              </a>
-              <a href="#evidence" className="rounded-[var(--radius-sm)] border border-line bg-surface px-5 py-3 text-sm font-medium text-ink hover:bg-surface-raised">
-                Read the evidence
-              </a>
-            </div>
-            <p className="mt-8 text-xs text-muted">
-              Bee, Amazon Bedrock, AWS, and the Model Context Protocol. Open source under MIT.
+            <p className="mt-6 max-w-[660px] text-lg leading-relaxed text-muted">
+              Bellwether reads the transcripts your wearable already makes,
+              keeps nine language numbers and throws every word away, learns
+              how you normally speak, and tells you when that changes against
+              your own past.
             </p>
           </div>
+
+          <figure className="mt-10 rounded-[var(--radius-lg)] border border-line bg-surface p-6 sm:p-8">
+            <figcaption className="flex flex-wrap items-baseline justify-between gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted">
+                One person, forty-seven assessed days
+                <InfoButton id="baseline-band" />
+              </span>
+              <span className="text-xs text-muted">
+                Real output from the committed demonstration person
+              </span>
+            </figcaption>
+            <div className="mt-5">
+              <BaselineBand />
+            </div>
+            <p className="mt-5 max-w-[720px] text-sm leading-relaxed text-muted">
+              The band is this person&apos;s own ordinary range, learned from
+              their own earlier days. Nothing here is compared with anyone
+              else. That is not a preference: measured on 349 real recorded
+              conversations
+              <InfoButton id="real-speech" />, the gap between two different people is{" "}
+              <span className="font-medium text-ink">smaller</span> than one
+              person&apos;s own day-to-day range on all nine measures, so
+              comparing you with a population would be asking a detector to
+              resolve a difference smaller than the noise.
+            </p>
+          </figure>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <a href="#demo" className="rounded-[var(--radius-sm)] bg-[var(--primary)] px-5 py-3 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
+              See a live baseline
+            </a>
+            <a href="#evidence" className="rounded-[var(--radius-sm)] border border-line bg-surface px-5 py-3 text-sm font-medium text-ink hover:bg-surface-raised">
+              Read the evidence
+            </a>
+          </div>
+          <p className="mt-6 text-xs text-muted">
+            Bee, Amazon Bedrock, AWS, and the Model Context Protocol. Open source under MIT.
+          </p>
         </section>
 
         {/* The problem */}
@@ -242,7 +278,7 @@ curl -X POST ${API}/v1/profiles/me/days \\
               {" · "}
               <a className="text-[var(--primary)] underline underline-offset-2" href="https://github.com/usv240/bellwether/blob/main/docs/EVIDENCE.md" target="_blank" rel="noopener noreferrer">Evidence</a>
               {" · "}
-              <Link className="text-[var(--primary)] underline underline-offset-2" href="/report">Doctor report</Link>
+              <Link prefetch={false} className="text-[var(--primary)] underline underline-offset-2" href="/report">Doctor report</Link>
             </p>
           </div>
         </section>

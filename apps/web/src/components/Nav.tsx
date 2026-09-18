@@ -19,7 +19,7 @@ export function Nav() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-[color-mix(in_srgb,var(--bg)_85%,transparent)] backdrop-blur">
       <div className="mx-auto flex h-16 max-w-[1120px] items-center justify-between px-4 sm:px-6">
-        <Link href="/" className="text-lg font-semibold tracking-tight text-ink">
+        <Link prefetch={false} href="/" className="text-lg font-semibold tracking-tight text-ink">
           Bell<span className="text-[var(--accent)]">wether</span>
         </Link>
         <nav className="hidden items-center gap-5 md:flex" aria-label="Main">
@@ -39,7 +39,7 @@ export function Nav() {
           >
             GitHub
           </a>
-          <Link
+          <Link prefetch={false}
             href="/app"
             className="rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] transition-opacity hover:opacity-90"
           >
@@ -64,7 +64,7 @@ export function Nav() {
                 {l.label}
               </a>
             ))}
-            <Link href="/app" className="text-sm font-medium text-[var(--primary)]">
+            <Link prefetch={false} href="/app" className="text-sm font-medium text-[var(--primary)]">
               See a live baseline
             </Link>
             <a href="https://github.com/usv240/bellwether" className="text-sm text-muted">

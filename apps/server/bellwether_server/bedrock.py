@@ -21,6 +21,7 @@ prepended to the defaults rather than replacing them.
 from __future__ import annotations
 
 import os
+import re
 
 DEFAULT_LADDER = [
     "us.anthropic.claude-sonnet-4-5-20250929-v1:0",
@@ -108,6 +109,40 @@ def template_note(summary: dict) -> str:
     )
 
 
+def sanitise(text: str) -> str:
+    """Enforce the house style instead of asking for it.
+
+    The system prompt tells the model to use no dashes as punctuation and
+    no emoji. The model agrees and then does it anyway, which is the
+    normal outcome of putting a formatting rule in a prompt: it is a
+    preference expressed to a sampler, not a constraint on the output.
+
+    A dash is not a cosmetic issue here. This note is read by someone who
+    has just been told something about their own speech, and an em dash
+    sets up an aside in a sentence that should be plain. So the rule is
+    applied deterministically after the fact, where it cannot be ignored.
+
+    Em and en dashes become commas when they are doing the work of a
+    parenthetical and disappear when they are not, which leaves a sentence
+    that still reads naturally rather than one with a gap in it.
+    """
+    out = text
+    # A dash between two digits is a range, not an aside. Turning it into a
+    # comma would change "3 to 5 days" into "3, 5 days", which means
+    # something else. Caught by a test rather than by reading the output.
+    out = re.sub(r"(?<=\d)\s*[\u2013\u2014]\s*(?=\d)", " to ", out)
+    for dash in ("\u2014", "\u2013"):
+        # Spaced: a parenthetical or a break. A comma carries the same pause.
+        out = out.replace(f" {dash} ", ", ")
+        # Unspaced between words: the same aside, written tight.
+        out = out.replace(dash, ", ")
+    # A double comma is the tell that two dashes bracketed one aside.
+    while ", ," in out:
+        out = out.replace(", ,", ",")
+    out = out.replace(" ,", ",").replace(",,", ",")
+    return " ".join(out.split()).strip()
+
+
 def _bedrock_create_text(system: str, user: str, model: str) -> str:
     from anthropic import AnthropicBedrock  # lazy: tests inject a fake
 
@@ -141,7 +176,7 @@ def phrase_weekly_note(summary: dict, trend: list[dict], deps: dict | None = Non
 
     for model in models:
         try:
-            text = create(SYSTEM, prompt, model)
+            text = sanitise(create(SYSTEM, prompt, model))
             # A rambling answer is the cheapest sign the note lost the plot;
             # it fails this rung, not the ladder.
             if len(text) > 600:

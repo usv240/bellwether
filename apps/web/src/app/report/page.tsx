@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { InfoButton } from "../../components/InfoButton";
 import { Nav } from "../../components/Nav";
-import { FEATURE_LABEL, PROFILE, TIER_CLASS, TIER_LABEL, fmtDate, getJSON, type Report, type Tier } from "../../lib/api";
+import { FEATURE_LABEL, PROFILE, humaniseExplanation, TIER_CLASS, TIER_LABEL, fmtDate, getJSON, type Report, type Tier } from "../../lib/api";
 
 /**
  * The doctor report: one page, designed for a twelve-minute appointment.
@@ -96,7 +96,7 @@ export default function ReportPage() {
                         <td className="py-2 pr-3 whitespace-nowrap">{fmtDate(n.date)}</td>
                         <td className="py-2 pr-3"><span className={`rounded-full px-2 py-0.5 text-xs font-medium ${TIER_CLASS[n.tier]}`}>{TIER_LABEL[n.tier]}</span> <span className="text-xs text-muted">{n.days}d</span></td>
                         <td className="py-2 pr-3 text-muted">
-                          {n.features.length > 0 ? n.features.map((f) => `${FEATURE_LABEL[f.feature] ?? f.feature} ${f.direction}`).join("; ") : n.explanation[0]}
+                          {n.features.length > 0 ? n.features.map((f) => `${FEATURE_LABEL[f.feature] ?? f.feature} ${f.direction}`).join("; ") : humaniseExplanation(n.explanation[0] ?? "")}
                         </td>
                       </tr>
                     ))}

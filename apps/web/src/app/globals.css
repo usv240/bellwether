@@ -160,3 +160,38 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/*
+  The baseline band.
+
+  Bellwether's page used to look like the sibling projects with a different
+  accent colour. Its subject is not a consumer app, it is a measurement
+  someone takes to a clinician, so it reads as an instrument: greyscale
+  everywhere, and the single reserved colour means a day left the person's
+  own ordinary range. The health dashboard literature is unambiguous that
+  colour must be a signal rather than decoration, and this page keeps to
+  exactly one signal.
+*/
+
+:root {
+  --band-fill: #e8ebef;
+  --band-edge: #b9c2cc;
+  --band-in: #7c8894;
+  --band-out: var(--accent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --band-fill: #222a34;
+    --band-edge: #3b4654;
+    --band-in: #8a97a5;
+    --band-out: var(--accent);
+  }
+}
+
+:root[data-theme="dark"] {
+  --band-fill: #222a34;
+  --band-edge: #3b4654;
+  --band-in: #8a97a5;
+  --band-out: var(--accent);
+}

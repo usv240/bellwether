@@ -130,6 +130,30 @@ export const FEATURE_LABEL: Record<string, string> = {
   vocab_size_day: "words used that day",
 };
 
+/**
+ * The engine names its features the way code does: mean_utt_len,
+ * dep_depth_mean, low_freq_word_rate. Those names are correct and they
+ * are meaningless to the person the product is for, who is reading this
+ * because something about their speech was flagged.
+ *
+ * The chips on the dashboard already used plain names while the sentences
+ * beside them said dep_depth_mean, so the same measure appeared twice on
+ * one screen under two names, one of which a reader could not decode.
+ * This rewrites the engine's own explanation lines into the same plain
+ * vocabulary, so the page speaks one language.
+ *
+ * Done on the client rather than in the API on purpose: the engine's
+ * output stays exact and reproducible, and the presentation layer is the
+ * one that owes the reader plain words.
+ */
+export function humaniseExplanation(line: string): string {
+  let out = line;
+  for (const [key, label] of Object.entries(FEATURE_LABEL)) {
+    out = out.replaceAll(key, label);
+  }
+  return out;
+}
+
 export const FEATURE_INFO: Record<string, string> = {
   mattr: "mattr",
   mean_utt_len: "dep-depth",

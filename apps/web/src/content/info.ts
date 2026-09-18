@@ -15,6 +15,25 @@ export interface InfoEntry {
 }
 
 export const INFO: Record<string, InfoEntry> = {
+  "baseline-band": {
+    id: "baseline-band",
+    term: "What this chart shows",
+    plain:
+      "Each dot is one day of one person's speech. The shaded band is that same person's ordinary range, learned from their own earlier days. A dot outside the band is only unusual compared with the band it left, never compared with anybody else.",
+    technical:
+      "The dots are real composite scores from the committed demonstration person, the same file the engine tests assert against. The band is the range their own quiet days occupied before any change was injected. Everything is greyscale except days outside the band, so the one colour on the chart carries exactly one meaning.",
+  },
+  "real-speech": {
+    id: "real-speech",
+    term: "349 real recorded conversations",
+    plain:
+      "To check the engine does not cry wolf on real people, it was run over 349 Supreme Court oral arguments by 8 justices, speech nobody here wrote. It flagged nothing. It also found that two different people sit closer together than one person's own day-to-day range, which is the reason this compares you only with yourself.",
+    technical:
+      "ConvoKit's Supreme Court corpus, from the Oyez Project. Paired with a sensitivity sweep so the zero means something: a sustained shift of 1.5 of a person's own standard deviations, injected into their real sessions, was caught in 5 of 5 subjects at a median of 2 sessions, and a do-nothing control at 0.0 caught nobody. There is no labelled cognitive change in that corpus, so none of this is evidence about dementia.",
+    sourceUrl:
+      "https://github.com/usv240/bellwether/blob/main/harness/scotus/results.json",
+    sourceLabel: "The full result, including its four limits",
+  },
   "speech-as-signal": {
     id: "speech-as-signal",
     term: "Speech as a vital sign",

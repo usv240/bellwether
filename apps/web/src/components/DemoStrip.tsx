@@ -80,10 +80,10 @@ export function DemoStrip() {
             </span>
           </div>
           <div className="mt-5 flex flex-wrap gap-3">
-            <Link href="/app" className="rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
+            <Link prefetch={false} href="/app" className="rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
               Open the dashboard
             </Link>
-            <Link href="/report" className="rounded-[var(--radius-sm)] border border-line px-4 py-2 text-sm font-medium text-ink hover:bg-surface-raised">
+            <Link prefetch={false} href="/report" className="rounded-[var(--radius-sm)] border border-line px-4 py-2 text-sm font-medium text-ink hover:bg-surface-raised">
               See the doctor report
             </Link>
           </div>
