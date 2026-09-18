@@ -10,11 +10,19 @@ readme = "README.md"
 license = { text = "MIT" }
 requires-python = ">=3.10"
 authors = [{ name = "Bellwether" }]
+urls = { Homepage = "https://github.com/usv240/bellwether/tree/main/packages/speech-vitals", Repository = "https://github.com/usv240/bellwether", Issues = "https://github.com/usv240/bellwether/issues" }
 keywords = ["speech", "language", "nlp", "cognition", "baseline", "wellness"]
 classifiers = [
   "License :: OSI Approved :: MIT License",
   "Programming Language :: Python :: 3",
   "Topic :: Scientific/Engineering",
+  "Topic :: Text Processing :: Linguistic",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Typing :: Typed",
 ]
 # The base package is dependency-free: the schema, MATTR, and the feature
 # registry import anywhere, including a Lambda that only ever sees feature
