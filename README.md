@@ -30,7 +30,7 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 
 | Piece | What it is | Tests |
 |---|---|---|
-| [`packages/speech-vitals`](packages/speech-vitals) | The open-source feature package (MIT, dependency-free core). Nine language features per day, each with its literature basis and concerning direction. Features only, never words. | 25 |
+| [`packages/speech-vitals`](packages/speech-vitals) | The open-source feature package, on PyPI as [`speech-vitals`](https://pypi.org/project/speech-vitals/) (`pip install speech-vitals`). MIT, dependency-free core. Nine language features per day, each with its literature basis and concerning direction. Features only, never words. | 25 |
 | [`apps/engine`](apps/engine) | The personal baseline: warmup, EWMA baseline, concern-signed composite, CUSUM drift detection, explainable tiers, low-exposure exclusion, and a freeze so the baseline cannot learn its way out of a signal. No model in the loop. Includes the claims suite (every published figure re-derived from the committed personas) the detector comparison against the two simpler rules it replaced, and the external harness that runs the engine over real speech. | 63 |
 | [`apps/ingest`](apps/ingest) | The Bee integration, called in code: `bee conversations`, `bee now`, `bee changed` with exactly-once cursors, `bee stream --json`, `bee sync` markdown, owner isolation. | 30 |
 | [`apps/server`](apps/server) | FastAPI: dashboard API, public features API, the MCP server, the Bedrock weekly note, the doctor report. Receives feature rows, never text. | 18 |
