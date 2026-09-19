@@ -39,7 +39,7 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 | [`harness/scotus`](harness/scotus) | The engine over real spontaneous speech nobody here wrote: 349 Supreme Court oral arguments by 8 justices. Restraint, sensitivity at a known effect size, and the measured case for an own baseline. | |
 | [`fixtures/personas`](fixtures/personas) | Two synthetic personas through the real extractor and engine, labelled SIMULATED. They share a seed and differ only in whether a change is injected from day 35, which is asserted, so the comparison is controlled. | |
 
-**165 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
+**167 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
 
 ## Real speech, not ours
 
