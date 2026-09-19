@@ -1,3 +1,5 @@
+import { BeeConnect } from "../components/BeeConnect";
+import { PrivacyProof } from "../components/PrivacyProof";
 import Link from "next/link";
 import { DemoStrip } from "../components/DemoStrip";
 import { InfoButton } from "../components/InfoButton";
@@ -221,6 +223,7 @@ export default function Home() {
                 </ul>
               </div>
             </div>
+            <PrivacyProof />
             <p className="mt-8 max-w-[720px] text-sm leading-relaxed text-muted">
               Bellwether is a general wellness tool. It does not diagnose, treat, cure, or prevent any disease, and it is not a medical device. Changes in speech have many everyday causes, including sleep, stress, medication, and mood. Share the report with a clinician you trust.
               <InfoButton id="general-wellness" />
@@ -229,6 +232,21 @@ export default function Home() {
         </section>
 
         {/* For developers */}
+        <section id="connect" className="border-t border-line">
+          <div className="mx-auto max-w-[1120px] px-4 py-16 sm:px-6">
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Use it with your own Bee
+            </h2>
+            <p className="mt-3 max-w-[720px] leading-relaxed text-muted">
+              The person above is simulated so you can see a year at once.
+              This is how you would run the same thing on your own speech.
+            </p>
+            <div className="mt-8">
+              <BeeConnect />
+            </div>
+          </div>
+        </section>
+
         <section id="api" className="border-t border-line">
           <div className="mx-auto max-w-[1120px] px-4 py-16 sm:px-6">
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">For developers</h2>

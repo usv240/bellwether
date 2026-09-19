@@ -83,9 +83,17 @@ It is also where the privacy guarantee is most at risk, so it is enforced rather
 
 The person shown live is simulated and labelled as such on every surface that touches them. The extractor, engine, store, tiers, report and MCP server are the product.
 
+## Shown on the site, not only claimed
+
+Two things a visitor can press, both new, both mirroring a pattern proven in the sibling Nightlight project.
+
+**The privacy claim, checked live.** Bellwether's premise is that it never holds what a person said. The privacy section now sends one day to the real intake route with an ordinary morning's transcript attached, full of a name, a doctor, a family member, an address, an account number and a medication, then reads back what the store kept and searches it for each one. Three text fields are dropped at the door, twelve fields are kept, the only string left is the date, and none of the six survive. It runs against a fresh in-memory store per press, so no visitor can write into the deployed table, and the page says so. `apps/server/tests/test_privacy_check.py` includes a test that deliberately makes the intake leak and asserts the check notices, because a check that always reports "absent" would prove nothing.
+
+**Using it with your own Bee.** Five steps, each checked against the real CLI, and each badged by where the person's words are at that point: the first four on their own computer, only the fifth crossing the network, carrying nine numbers a day. The section says plainly that the device is on order and no real Bee day has been through the pipeline yet.
+
 ## Tech implementation
 
-**167 tests**, passing from a clean clone with the documented install.
+**175 tests**, passing from a clean clone with the documented install.
 
 - **`speech-vitals` (MIT, the open-source deliverable).** Nine features, each carrying its literature citation and the direction the dementia-speech literature associates with decline, in code rather than in a paper. Deterministic: same text, same numbers, so any figure in a doctor report is reproducible from the day's transcript. The base package is dependency-free and imports anywhere, including a Lambda that only ever sees feature rows; extraction lives behind an `nlp` extra. A test asserts that a stored record holds no string but the date.
 - **The engine.** Warmup, EWMA baseline, concern-signed z-scores, a standardised composite, one-sided CUSUM (k 0.5, h 5.0, expected false-alarm interval on the order of nine hundred days), per-feature CUSUMs for attribution only, low-exposure exclusion, and a **freeze** so the baseline cannot learn its way out of a signal. Nothing that decides a tier calls a model.

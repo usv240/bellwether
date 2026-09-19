@@ -231,6 +231,17 @@ def build_app(
         note = phrase_weekly_note(view["summary"].to_dict(), trend, note_deps)
         return {"profile_id": profile_id, "simulated": view["simulated"], **note, "disclaimer": DISCLAIMER}
 
+    # The privacy claim, pressable. A day is sent with a transcript full of
+    # names attached; the store keeps what it keeps; the stored row is
+    # searched for every one of them. Sandboxed: a fresh MemoryStore per
+    # request, so no visitor can write into the deployed table. See
+    # privacy_check.py for what is real here and what is not.
+    @app.post("/v1/privacy-check")
+    def privacy_check():
+        from .privacy_check import run_privacy_check
+
+        return run_privacy_check()
+
     @app.post("/v1/profiles/{profile_id}/reset")
     def reset(profile_id: str):
         if profile_id != default_profile:
