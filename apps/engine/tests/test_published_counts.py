@@ -83,3 +83,71 @@ def test_public_documents_agree_with_the_suite() -> None:
         assert abs(actual - stated) <= 2, (
             f"{name} says {stated} tests, the suite collects {actual}"
         )
+
+
+# --------------------------------------------------------------------------
+# The two judged deliverables whose size is quoted in prose.
+#
+# The submission said "Six entries" while FRICTION_LOG.md had nine, and the
+# three it left out were entries 7, 8 and 9: two written against ourselves
+# and one recording that this server was already correct on the transport
+# shape that broke the other two projects. All three sibling projects had
+# this same drift found on the same day, all three undercounting, and all
+# three omitting the entries least flattering to themselves.
+#
+# The friction log is worth up to a ten percent judging bonus, so the count
+# is a claim like any other and is derived here rather than remembered.
+# --------------------------------------------------------------------------
+
+WORDS = {
+    3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight",
+    9: "nine", 10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen",
+}
+
+
+def _spelled(actual: int, label: str) -> str:
+    word = WORDS.get(actual)
+    assert word, f"no spelling for {actual} {label}; add it to WORDS"
+    return word
+
+
+def test_the_friction_log_count_is_the_number_of_entries() -> None:
+    log = (REPO / "FRICTION_LOG.md").read_text(encoding="utf8")
+    actual = len(re.findall(r"^## Entry \d+:", log, re.M))
+    assert actual > 0, "FRICTION_LOG.md has no entries"
+    word = _spelled(actual, "friction log entries")
+    for name in PUBLIC_TEXT:
+        text = (REPO / name).read_text(encoding="utf8")
+        # Key on the filename, not on the prose around it. The first
+        # version of this matched "entries with task, steps" and then the
+        # sentence was reworded to link the file, so the pattern stopped
+        # matching and the test passed by finding nothing. A guard that
+        # goes quiet when the text it guards changes is worse than none.
+        m = re.search(r"(\w+) entries in \[?FRICTION_LOG", text)
+        if m:
+            assert m.group(1).lower() == word, (
+                f"{name} says {m.group(1)!r} friction entries, "
+                f"FRICTION_LOG.md has {actual}"
+            )
+
+
+def test_the_feature_request_count_is_the_number_of_requests() -> None:
+    """Numbered `### n.` headings, including the one numbered 5b.
+
+    The list runs 1 to 8 but carries a 5b, which is a real request with
+    its own reasoning and its own severity, so there are nine of them.
+    Quoting the highest number rather than counting the headings is how
+    the ninth went unmentioned.
+    """
+    reqs = (REPO / "docs/FEATURE_REQUESTS.md").read_text(encoding="utf8")
+    actual = len(re.findall(r"^### \d+[a-z]?\. ", reqs, re.M))
+    assert actual > 0, "FEATURE_REQUESTS.md has no numbered requests"
+    word = _spelled(actual, "feature requests")
+    for name in PUBLIC_TEXT:
+        text = (REPO / name).read_text(encoding="utf8")
+        m = re.search(r"(\w+), each from something we actually hit", text)
+        if m:
+            assert m.group(1).lower() == word, (
+                f"{name} says {m.group(1)!r} feature requests, "
+                f"FEATURE_REQUESTS.md has {actual}"
+            )
