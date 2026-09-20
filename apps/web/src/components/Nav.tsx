@@ -11,6 +11,7 @@ const LINKS = [
   { href: "/#evidence", label: "Evidence" },
   { href: "/#privacy", label: "Privacy" },
   { href: "/#connect", label: "Your own Bee" },
+  { href: "/#alexa", label: "Alexa+" },
   { href: "/#api", label: "API" },
   { href: "/#faq", label: "FAQ" },
 ];
@@ -24,11 +25,12 @@ export function Nav() {
           Bell<span className="text-[var(--accent)]">wether</span>
         </Link>
         {/*
-          Eight links, a theme toggle, GitHub and a call to action do not
+          Nine links, a theme toggle, GitHub and a call to action do not
           fit on one line below about 1280px, and with md:flex they tried
           anyway: every two-word label broke onto two lines. Adding one
           more link ("Your own Bee") took it from one wrapped label to
-          five. So labels never break, and the full row appears only where
+          five, and a ninth ("Alexa+") was measured rather than
+          guessed at before it went in. So labels never break, and the full row appears only where
           it fits; below that the links live in the Menu.
         */}
         <nav className="hidden items-center gap-4 xl:flex" aria-label="Main">

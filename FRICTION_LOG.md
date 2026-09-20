@@ -92,4 +92,14 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Severity: none here, and it is logged as a positive for that reason. The note worth keeping is about method rather than about this bug.
 - Why it is in this log: we would not have trusted a green result from a probe that had only ever met one implementation. Running the same file against two frameworks is what made the pass meaningful, and it is also what found the other two servers' defect. A conformance check against your own server tells you your server agrees with itself.
 
+## Entry 10: the spec says to validate Origin and does not say to allow your own site (2026-09-20, ours, and a spec-docs gap)
+
+- Task: let a visitor press a button on the Bellwether website and watch a complete MCP session run against the deployed server, because the Alexa+ track asks for the server to be shown in action rather than described.
+- Steps: build the panel, deploy it, open the live site in a real browser and press the button.
+- Expected: the same five steps that `scripts/mcp-conform.mjs` had already passed nineteen of nineteen against this exact server.
+- Actual: HTTP 403 on `initialize`, from our own front page. The transport section of spec revision 2025-11-25 tells implementers to validate the `Origin` header to defend against DNS rebinding. The natural reading of that, and the one we took, is an allowlist of loopback addresses, which is correct for a server whose only clients are local. It silently makes the product's own website a forbidden caller.
+- Severity: medium. It cost no data and broke nothing that existed, but it would have been high had we shipped the panel without opening it in a browser, since the track requirement it answers is the one that would have failed on camera.
+- Workaround: allow loopback plus the site's own origin plus anything named in an environment variable, and test that a correct caller is admitted rather than only that an incorrect one is refused.
+- Suggestion: the transport section could add one sentence, that a server which also serves a browser client must include that client's origin in the allowlist, and ideally a two-line example. The guidance as written describes what to keep out and leaves what to let in to be inferred. Worth noting how it hid: every conformance test passed, every `curl` succeeded, and the nineteen-check live probe was green, because none of them sends an `Origin` header the way a browser always does. A rule only wrong callers can trip is indistinguishable from a correct rule until a right caller turns up.
+
 <!-- Add new entries above this line as they happen. -->

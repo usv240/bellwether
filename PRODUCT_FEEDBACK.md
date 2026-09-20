@@ -14,8 +14,8 @@ Draft of the submission's product-feedback answer, maintained as we build so it 
 ## Model Context Protocol (spec 2025-11-25, Streamable HTTP)
 
 - Used for: the Alexa+ surface (`apps/server/bellwether_server/mcp.py`), a faithful port of the transport already proven in our two sibling projects.
-- Worked well: the spec is precise about the things that are easy to get wrong (session issuance, 400 versus 404, the 405 allowance for GET, origin validation), so eighteen conformance and tool tests came almost directly from reading it.
-- Needs work: the one thing that bit both sibling projects is not in the spec text: a real client sends DELETE with a JSON content-type and an empty body, and a naive body parser answers 500. Ported here as "DELETE never reads a body". A sentence in the transport section would have saved two bugs.
+- Worked well: the spec is precise about the things that are easy to get wrong (session issuance, 400 versus 404, the 405 allowance for GET, origin validation), so thirty-one conformance and behaviour tests came almost directly from reading it.
+- Needs work: the origin guidance says to validate `Origin` against DNS rebinding but does not say that a server whose own website is a client must allow that site, and a loopback-only reading of it is the natural one. Ours answered its own front page with a 403. Also, the one thing that bit both sibling projects is not in the spec text: a real client sends DELETE with a JSON content-type and an empty body, and a naive body parser answers 500. Ported here as "DELETE never reads a body". A sentence in the transport section would have saved two bugs.
 - Build again: yes, three times now.
 
 ## Strands Agents SDK

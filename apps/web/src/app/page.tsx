@@ -1,5 +1,6 @@
 import { BeeConnect } from "../components/BeeConnect";
 import { PrivacyProof } from "../components/PrivacyProof";
+import { McpProof } from "../components/McpProof";
 import Link from "next/link";
 import { DemoStrip } from "../components/DemoStrip";
 import { InfoButton } from "../components/InfoButton";
@@ -243,6 +244,23 @@ export default function Home() {
             </p>
             <div className="mt-8">
               <BeeConnect />
+            </div>
+          </div>
+        </section>
+
+        <section id="alexa" className="border-t border-line bg-surface">
+          <div className="mx-auto max-w-[1120px] px-4 py-16 sm:px-6">
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
+              Ask Alexa+ how you have been sounding
+            </h2>
+            <p className="mt-3 max-w-[720px] leading-relaxed text-muted">
+              Nobody opens a dashboard to ask this. They ask it out loud,
+              in the kitchen, after wondering for a while. So the spoken
+              surface is a real one: a self-hosted MCP server an assistant
+              can hold a session with. Press it and watch.
+            </p>
+            <div className="mt-8">
+              <McpProof />
             </div>
           </div>
         </section>

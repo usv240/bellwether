@@ -21,12 +21,14 @@ Transport behaviour, per the spec:
   DELETE /mcp  terminates the session (204), unknown session 404
   MCP-Session-Id issued on initialize and required after: missing 400,
   unknown or terminated 404. MCP-Protocol-Version validated when present.
-  Origin, when present, must be loopback (DNS-rebinding guidance).
+  Origin, when present, must be loopback or an allowed site origin
+  (DNS-rebinding guidance).
 """
 
 from __future__ import annotations
 
 import json
+import os
 import re
 import uuid
 from datetime import datetime, timezone
@@ -38,6 +40,39 @@ from bellwether_engine import assess, summarize
 from speech_vitals import FEATURE_NAMES, FEATURES
 
 from .store import Store
+
+SITE_ORIGIN = "https://d1xfuyog8wiuvf.cloudfront.net"
+
+_LOOPBACK = re.compile(r"^https?://(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$")
+
+
+def is_allowed_origin(origin: str) -> bool:
+    """Loopback, this product's own site, or anything named in the env.
+
+    The spec's DNS-rebinding guidance says to validate Origin, and the
+    first reading of that produced a loopback-only check. That is correct
+    for a server nothing but a local client talks to, and wrong the moment
+    the product's own website holds a session: the deployed server
+    answered its own front page with 403.
+
+    Both sibling projects hit this and fixed it. This one did not, because
+    until the Alexa+ panel existed nothing here had ever called the server
+    from a browser, so every test and every curl agreed it was fine. A
+    rule that only wrong callers could trip looks identical to a correct
+    rule until a right caller turns up.
+
+    BELLWETHER_ALLOWED_ORIGINS is a comma-separated list, for a fork
+    deployed somewhere else.
+    """
+    if _LOOPBACK.match(origin):
+        return True
+    named = {
+        o.strip().rstrip("/")
+        for o in [SITE_ORIGIN, *os.environ.get("BELLWETHER_ALLOWED_ORIGINS", "").split(",")]
+        if o.strip()
+    }
+    return origin.rstrip("/") in named
+
 
 MCP_PROTOCOL_VERSION = "2025-11-25"
 FALLBACK_PROTOCOL_VERSION = "2025-03-26"
@@ -292,7 +327,6 @@ def build_report(view: dict, weeks: int = 8) -> dict:
 
 def register_mcp(app: FastAPI, store: Store, default_profile: str) -> None:
     sessions: set[str] = set()
-    loopback = re.compile(r"^https?://(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$")
 
     def resolve_profile(args: dict) -> str:
         pid = args.get("profile_id")
@@ -386,7 +420,7 @@ def register_mcp(app: FastAPI, store: Store, default_profile: str) -> None:
     @app.post("/mcp")
     async def mcp_post(request: Request):
         origin = request.headers.get("origin")
-        if origin and not loopback.match(origin):
+        if origin and not is_allowed_origin(origin):
             return JSONResponse(_error(None, -32600, "Origin not allowed"), status_code=403)
 
         raw = await request.body()

@@ -33,13 +33,13 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 | [`packages/speech-vitals`](packages/speech-vitals) | The open-source feature package, on PyPI as [`speech-vitals`](https://pypi.org/project/speech-vitals/) (`pip install speech-vitals`). MIT, dependency-free core. Nine language features per day, each with its literature basis and concerning direction. Features only, never words. | 25 |
 | [`apps/engine`](apps/engine) | The personal baseline: warmup, EWMA baseline, concern-signed composite, CUSUM drift detection, explainable tiers, low-exposure exclusion, and a freeze so the baseline cannot learn its way out of a signal. No model in the loop. Includes the claims suite (every published figure re-derived from the committed personas) the detector comparison against the two simpler rules it replaced, and the external harness that runs the engine over real speech. | 69 |
 | [`apps/ingest`](apps/ingest) | The Bee integration, called in code: `bee conversations`, `bee now`, `bee changed` with exactly-once cursors, `bee stream --json`, `bee sync` markdown, owner isolation. | 43 |
-| [`apps/server`](apps/server) | FastAPI: dashboard API, public features API, the MCP server, the Bedrock weekly note, the doctor report. Receives feature rows, never text. | 33 |
+| [`apps/server`](apps/server) | FastAPI: dashboard API, public features API, the MCP server, the Bedrock weekly note, the doctor report. Receives feature rows, never text. | 46 |
 | [`apps/web`](apps/web) | Landing page, dashboard, printable doctor report. Light and dark, 22 info buttons, 100 on accessibility. | |
 | [`apps/agent`](apps/agent) | Two Strands agents on Bedrock. One consumes Bellwether's MCP server as an outside client. The other holds **two** MCP servers at once, Bellwether's and Bee's own, to find the ordinary explanation for a change, behind an audited allowlist that withholds every Bee tool returning verbatim speech. | 9 |
 | [`harness/scotus`](harness/scotus) | The engine over real spontaneous speech nobody here wrote: 349 Supreme Court oral arguments by 8 justices. Restraint, sensitivity at a known effect size, and the measured case for an own baseline. | |
 | [`fixtures/personas`](fixtures/personas) | Two synthetic personas through the real extractor and engine, labelled SIMULATED. They share a seed and differ only in whether a change is injected from day 35, which is asserted, so the comparison is controlled. | |
 
-**179 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
+**192 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
 
 ## Real speech, not ours
 
