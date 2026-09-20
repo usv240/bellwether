@@ -56,9 +56,12 @@ def stated_counts() -> list[tuple[str, int]]:
         # it missed the README entirely and the two documents "agreed"
         # while contradicting each other by seventy-nine.
         #
-        # The per-package counts in the repository table are deliberately
-        # not matched here: they are smaller numbers with their own
-        # meaning, and sweeping them in would make this test unreadable.
+        # The per-package counts in the repository table have their own
+        # test below. An earlier version of this comment said they were
+        # deliberately left unchecked because sweeping them in would make
+        # this test unreadable, and by the time anyone looked again the
+        # table summed to 145 beside a headline of 177. "Unreadable" was
+        # the wrong tradeoff against a table that contradicts itself.
         m = re.search(r"\*\*(\d+) tests[.,;:]?\*\*", text)
         if m:
             out.append((name, int(m.group(1))))
@@ -151,3 +154,52 @@ def test_the_feature_request_count_is_the_number_of_requests() -> None:
                 f"{name} says {m.group(1)!r} feature requests, "
                 f"FEATURE_REQUESTS.md has {actual}"
             )
+
+
+def _collected(target: str) -> int:
+    proc = subprocess.run(
+        [sys.executable, "-m", "pytest", "--collect-only", "-q", target],
+        cwd=REPO, capture_output=True, text=True,
+    )
+    m = re.search(r"(\d+) tests? collected", proc.stdout)
+    if not m:
+        pytest.skip(f"could not collect {target}: {proc.stdout[-200:]}")
+    return int(m.group(1))
+
+
+def test_the_readme_table_agrees_with_each_package() -> None:
+    """Every row of the repository table, against its own directory.
+
+    These drifted furthest of anything in the project, because nothing
+    read them: apps/ingest said 30 against 43 and apps/server said 18
+    against 33, so the table summed to 145 under a headline claiming
+    177. Each row is small and looks harmless, which is exactly why the
+    total of the errors got large without anyone noticing.
+    """
+    readme = (REPO / "README.md").read_text(encoding="utf8")
+    rows = re.findall(r"^\| \[`([^`]+)`\].*\| (\d+) \|\s*$", readme, re.M)
+    assert rows, "no per-package rows found in the README table"
+    stated = {pkg: int(n) for pkg, n in rows if pkg in TARGETS}
+    assert set(stated) == set(TARGETS), (
+        f"README table covers {sorted(stated)}, the suite runs {sorted(TARGETS)}"
+    )
+    for pkg, n in sorted(stated.items()):
+        actual = _collected(pkg)
+        assert n == actual, f"README says {pkg} has {n} tests, it collects {actual}"
+
+
+def test_the_table_sums_to_the_published_total() -> None:
+    """The two figures in the same README must agree with each other.
+
+    This is the cheap check that would have caught the drift with no
+    subprocess at all: 25 + 63 + 30 + 18 + 9 is 145, and the sentence
+    directly beneath said 177.
+    """
+    readme = (REPO / "README.md").read_text(encoding="utf8")
+    rows = re.findall(r"^\| \[`([^`]+)`\].*\| (\d+) \|\s*$", readme, re.M)
+    table = sum(int(n) for pkg, n in rows if pkg in TARGETS)
+    m = re.search(r"\*\*(\d+) tests[.,;:]?\*\*", readme)
+    assert m, "README states no headline test total"
+    assert table == int(m.group(1)), (
+        f"the README table sums to {table} but its headline says {m.group(1)}"
+    )
