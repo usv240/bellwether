@@ -27,7 +27,7 @@ from datetime import datetime, timezone
 
 from speech_vitals import FEATURE_NAMES, aggregate_day
 
-from .bee import BeeCli, BeeCliError, normalize_conversation
+from .bee import BeeCli, BeeCliError, normalize_conversation, with_utterances
 
 # Anything that could carry speech. The rule is an allowlist of shapes we
 # understand rather than a blocklist of fields we happen to have seen,
@@ -101,7 +101,8 @@ def capture(cli: BeeCli | None = None) -> dict:
         rows = convos.get("conversations") or convos.get("data") or []
 
     utterances = []
-    for raw in rows:
+    # The list carries counts, not words; each conversation is fetched.
+    for raw in with_utterances(cli, rows):
         utterances.extend(normalize_conversation(raw))
 
     by_day: dict[str, list] = {}

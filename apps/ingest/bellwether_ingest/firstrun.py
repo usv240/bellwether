@@ -42,7 +42,7 @@ from dataclasses import dataclass
 
 from speech_vitals import aggregate_day
 
-from .bee import BeeCli, BeeCliError, BeeNotAuthenticated, normalize_conversation
+from .bee import BeeCli, BeeCliError, BeeNotAuthenticated, normalize_conversation, with_utterances
 
 
 @dataclass
@@ -123,7 +123,8 @@ def run(cli: BeeCli | None = None) -> list[Step]:
     #    plumbing and everything after it is arithmetic.
     try:
         utterances = []
-        for raw in rows:
+        # The list carries counts, not words; each conversation is fetched.
+        for raw in with_utterances(cli, rows):
             utterances.extend(normalize_conversation(raw))
         by_day: dict[str, list] = {}
         for u in utterances:

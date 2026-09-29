@@ -32,7 +32,13 @@ from typing import Callable, Iterable
 from speech_vitals import Utterance
 
 TEXT_KEYS = ("text", "content", "transcript", "utterance")
-TIME_KEYS = ("start_time", "created_at", "timestamp", "ts", "start", "time")
+# spoken_at first: on the real device (bee-cli 0.7.3) each utterance
+# carries spoken_at and created_at as epoch milliseconds, and start and
+# end as seconds into the conversation. The relative pair must never be
+# read as a time of day; see _looks_absolute.
+TIME_KEYS = ("spoken_at", "start_time", "created_at", "timestamp", "ts", "start", "time")
+# Below this an integer is a duration or an offset, not an instant.
+_EPOCH_FLOOR = 10_000_000_000  # ms in 1970-04; seconds in 2286
 CONVERSATION_ID_KEYS = ("id", "uuid", "conversation_uuid", "conversation_id")
 UTTERANCE_LIST_KEYS = ("utterances", "transcript", "segments")
 
@@ -92,6 +98,33 @@ def speaker_label(raw) -> str | None:
     return re.sub(r"[^a-z0-9]+", "_", s).strip("_")
 
 
+def _looks_absolute(value) -> bool:
+    """True for ISO strings and epoch numbers; false for the small integers
+    the device uses as offsets into a conversation, which would otherwise
+    parse as the first seconds of 1970 and put every utterance on one day."""
+    if isinstance(value, str):
+        return not value.strip().isdigit() or int(value) >= _EPOCH_FLOOR / 1000
+    if isinstance(value, (int, float)):
+        return value >= _EPOCH_FLOOR / 1000
+    return False
+
+
+def unwrap_conversation(raw) -> dict | None:
+    """``bee conversations get`` answers ``{"conversation": {...}, "timezone": ...}``;
+    ``now`` and ``changed`` list bare conversations. Both become the bare record."""
+    if isinstance(raw, dict) and isinstance(raw.get("conversation"), dict):
+        return raw["conversation"]
+    return raw if isinstance(raw, dict) else None
+
+
+def has_utterances(raw: dict) -> bool:
+    """Whether a conversation record carries its utterances at all. The
+    ``list`` command carries only ``utterances_count``; the words come from
+    ``get``, ``now`` or ``changed``."""
+    raw = unwrap_conversation(raw) or {}
+    return any(True for _ in _find_utterance_lists(raw))
+
+
 def normalize_utterance(
     raw: dict, conversation_id: str | None = None, fallback_ts: str | None = None
 ) -> Utterance | None:
@@ -102,7 +135,10 @@ def normalize_utterance(
     text = next((str(raw[k]).strip() for k in TEXT_KEYS if raw.get(k)), "")
     if not text:
         return None
-    ts = next((to_iso(raw[k]) for k in TIME_KEYS if raw.get(k) not in (None, "")), None)
+    ts = next(
+        (to_iso(raw[k]) for k in TIME_KEYS if raw.get(k) not in (None, "") and _looks_absolute(raw[k])),
+        None,
+    )
     ts = ts or fallback_ts
     if not ts:
         return None
@@ -127,6 +163,7 @@ def _find_utterance_lists(raw: dict) -> Iterable[list]:
 
 def normalize_conversation(raw: dict) -> list[Utterance]:
     """Every utterance in a conversation record, in time order."""
+    raw = unwrap_conversation(raw)
     if not isinstance(raw, dict):
         return []
     cid = next((str(raw[k]) for k in CONVERSATION_ID_KEYS if raw.get(k) not in (None, "")), None)
@@ -372,6 +409,35 @@ def ingest_changed(
         elif isinstance(transcript, list):
             utterances.extend(normalize_conversation({"id": cid, "utterances": transcript}))
     return owner.apply(utterances), _next_cursor(payload)
+
+
+def with_utterances(cli: "BeeCli", rows: list, limit: int = 30) -> list[dict]:
+    """Conversation records that carry their words.
+
+    On the real device ``bee conversations list`` answers with summaries
+    and an ``utterances_count`` and nothing anybody said; the first run
+    against the hardware reduced two recorded conversations to zero
+    utterances this way. Rows that lack utterances are fetched one by one
+    with ``conversations get``, bounded, and unwrapped. Rows that already
+    carry them (``now``, ``changed``) pass through untouched.
+    """
+    out: list[dict] = []
+    fetched = 0
+    for raw in rows or []:
+        record = unwrap_conversation(raw)
+        if record is None:
+            continue
+        if has_utterances(record):
+            out.append(record)
+            continue
+        cid = next((record[k] for k in CONVERSATION_ID_KEYS if record.get(k) not in (None, "")), None)
+        if cid is None or fetched >= limit:
+            out.append(record)
+            continue
+        fetched += 1
+        got = unwrap_conversation(cli.conversation_get(str(cid)))
+        out.append(got if got is not None else record)
+    return out
 
 
 def ingest_now(cli: BeeCli, owner: OwnerFilter) -> list[Utterance]:

@@ -34,20 +34,26 @@ integration is asserted rather than described. A second agent in
 `apps/agent` holds Bee's own MCP server alongside ours, behind an
 allowlist that withholds every Bee tool returning verbatim speech.
 
-**On live data.** A Bee was bought for this. Everything upstream of the
-device is finished and rehearsed: `bellwether-ingest firstrun` walks the
-entire chain, stops at the first thing genuinely wrong, and says what to
-do about it in the words the Bee app uses. Every failure that first
-session can hit is reproduced in tests with an injected runner, including
-a device with nothing recorded yet and a day too quiet to assess, so the
-only untested step on the day is the one that needs the hardware.
+**On live data.** A Bee was bought for this and arrived on 2026-09-29.
+`bellwether-ingest firstrun` walked the entire chain against it the same
+day and stopped, honestly, at the first thing wrong: the CLI's shapes
+differed from every fixture in three ways nobody had guessed (the list
+carries counts and no words, `get` wraps its record, and utterance times
+come as `spoken_at` beside offsets that parse as 1970). The parser was
+fixed against the device, the shapes are pinned in
+`apps/ingest/tests/test_device_shapes.py`, and the rehearsal then passed
+every step: two conversations, one day, 393 words, nine numbers, no
+words. [BEE_LIVE.md](BEE_LIVE.md) is the record, written by
+`bellwether-ingest evidence`: counts, shapes and the nine features from a
+real day of the operator's own speech, and not one word of it.
 
-Until that device is in hand there is no live Bee data in this repository,
-and none is claimed. The personas are synthetic and say so, in the
-fixtures, in the API responses and on every page that shows them. The
-external validation in `harness/scotus` is real human speech, but it is
-Supreme Court audio rather than Bee audio, and it is offered as evidence
-about the engine rather than about the device.
+What the device has not yet given is time. The engine needs seven days
+of warmup before it compares a day with anything, and the video's live
+shots need at least ten days worn. Until then the personas are still
+synthetic and say so, in the fixtures, in the API responses and on every
+page that shows them. The external validation in `harness/scotus` is real
+human speech, but it is Supreme Court audio rather than Bee audio, and it
+is offered as evidence about the engine rather than about the device.
 
 ## Built during the hackathon
 
@@ -93,7 +99,7 @@ Two things a visitor can press, both new, both mirroring a pattern proven in the
 
 ## Tech implementation
 
-**192 tests**, passing from a clean clone with the documented install.
+**198 tests**, passing from a clean clone with the documented install.
 
 - **`speech-vitals` (MIT, the open-source deliverable).** Nine features, each carrying its literature citation and the direction the dementia-speech literature associates with decline, in code rather than in a paper. Deterministic: same text, same numbers, so any figure in a doctor report is reproducible from the day's transcript. The base package is dependency-free and imports anywhere, including a Lambda that only ever sees feature rows; extraction lives behind an `nlp` extra. A test asserts that a stored record holds no string but the date.
 - **The engine.** Warmup, EWMA baseline, concern-signed z-scores, a standardised composite, one-sided CUSUM (k 0.5, h 5.0, expected false-alarm interval on the order of nine hundred days), per-feature CUSUMs for attribution only, low-exposure exclusion, and a **freeze** so the baseline cannot learn its way out of a signal. Nothing that decides a tier calls a model.
@@ -143,7 +149,7 @@ On AWS we used **Bedrock** (the weekly note through a three-model Claude ladder 
 
 ## Friction log
 
-Ten entries in [FRICTION_LOG.md](../FRICTION_LOG.md), each with task, steps, expected against actual, severity, workaround and an actionable suggestion. The ones we would most want read: Bee publishes no full JSON example for any command, so the ingestion normaliser had to guess shapes (entry 1); speakers are labelled but not identified, with no `is_user` flag, so isolating the wearer's own speech is a heuristic (entry 2); and a Lambda function URL with CORS plus FastAPI CORS middleware emits two `Access-Control-Allow-Origin` headers, which no command-line check can see and which broke every browser call on the deployed site (entry 6). There is also a deliberately positive entry for the Bee CLI running on Windows unannounced. Three of the nine are not about anyone else's product: entry 7 is our own dashboard hiding its most important panel behind a fetch, entry 8 is spaCy failing to import from a deep Windows path with an error that names the wrong cause, and entry 9 records that this server was already correct on the transport shape that broke the other two, which we only know because we probed all three. Entry 10 is the newest and also ours: the spec's DNS-rebinding guidance says to validate `Origin` and does not say that a server which serves its own browser client must allow that client in, so ours answered its own front page with a 403 the first time anyone opened it in a browser.
+Eleven entries in [FRICTION_LOG.md](../FRICTION_LOG.md), each with task, steps, expected against actual, severity, workaround and an actionable suggestion. The ones we would most want read: Bee publishes no full JSON example for any command, so the ingestion normaliser had to guess shapes (entry 1); speakers are labelled but not identified, with no `is_user` flag, so isolating the wearer's own speech is a heuristic (entry 2); and a Lambda function URL with CORS plus FastAPI CORS middleware emits two `Access-Control-Allow-Origin` headers, which no command-line check can see and which broke every browser call on the deployed site (entry 6). There is also a deliberately positive entry for the Bee CLI running on Windows unannounced. Three of the nine are not about anyone else's product: entry 7 is our own dashboard hiding its most important panel behind a fetch, entry 8 is spaCy failing to import from a deep Windows path with an error that names the wrong cause, and entry 9 records that this server was already correct on the transport shape that broke the other two, which we only know because we probed all three. Entry 10 is the newest and also ours: the spec's DNS-rebinding guidance says to validate `Origin` and does not say that a server which serves its own browser client must allow that client in, so ours answered its own front page with a 403 the first time anyone opened it in a browser.
 
 ## Feature requests (optional)
 
@@ -172,7 +178,7 @@ None of the eighteen beats it on both axes. Both personas are synthetic and ours
 
 ## Honest limits
 
-- **The Bee device is on order.** Everything here runs and is tested without it, and the two synthetic personas exercise the production extractor and engine end to end. Real operation on the operator's own Bee data, and the demo video that shows it, wait on the hardware. The week-one gate questions are written and ready.
+- **The Bee device arrived on 2026-09-29 and has one day on it.** The chain runs on it end to end ([BEE_LIVE.md](BEE_LIVE.md)), and the two synthetic personas still carry the demonstration, because a personal baseline needs seven days of warmup and the video's live shots need at least ten days worn. Real operation on the operator's own history, and the footage of it, wait on the calendar rather than the hardware now.
 - **No ADReSS validation, and no harness for it.** The benchmark's data is restricted to verified academic researchers by application, we do not have that access, and nothing here is validated against it. ADReSS is cited as the field's evidence that language features carry the signal, and for nothing else.
 - **No user testing.** Every design decision is reasoned from literature, not observed in a room with an older adult or a clinician.
 - **English only**, stated in the FAQ rather than hidden.
