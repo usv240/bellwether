@@ -12,11 +12,11 @@ Urgency uses the hackathon's scale: **critical**, **important**, **nice-to-have*
 
 **Critical.**
 
-Bee labels speakers generically (`Speaker 1`, `Speaker 2`) with no documented way to know which one is the person wearing the device. For any analysis *of the wearer* rather than of the room, that is the whole ballgame: it is the difference between measuring a person and measuring their kitchen.
+There is no documented way to know which speech is the person wearing the device. For any analysis *of the wearer* rather than of the room, that is the whole ballgame: it is the difference between measuring a person and measuring their kitchen.
 
-We work around it by assuming the most frequent speaker across the corpus is the wearer, which is a reasonable guess and still a guess. One boolean, resolved by the app from the voice training it already performs during onboarding, removes an entire class of silent error from every project built on Bee data.
+On a real device it is worse than generic labels. After nine days worn, every one of 15,578 utterances on our account was labelled "Unknown", and we found no voice enrolment or speaker naming step in the app. We work around it by leaving out sessions longer than an hour and anything Bee's own summary calls media, which is a filter and not an identification. One boolean, set from a one-minute voice enrolment in the app, would remove an entire class of silent error from every project built on Bee data.
 
-Friction log entry 2.
+Friction log entries 2 and 12.
 
 ### 2. One verbatim JSON example per data command
 

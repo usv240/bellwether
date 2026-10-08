@@ -43,8 +43,8 @@ const STEPS: { title: string; body: string; code: string; where: "device" | "you
   },
   {
     title: "Turn your days into numbers",
-    body: "Each day of your speech becomes nine numbers. The words are read, measured and discarded here. Only your own voice is kept, not the people you talked to.",
-    code: "bellwether-ingest pull --owner speaker_1 --out days.json",
+    body: "Each day of your speech becomes nine numbers. The words are read, measured and discarded here. If Bee labels your voice, pass that label as --owner and only your speech is kept. If every speaker reads Unknown, as on our band, sessions over an hour and anything Bee calls media are left out instead, which is a filter rather than your voice alone.",
+    code: "bellwether-ingest pull --backfill --max-minutes 60 --out days.json",
     where: "yours",
   },
   {
