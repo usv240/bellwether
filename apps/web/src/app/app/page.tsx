@@ -11,6 +11,7 @@ import {
   FEATURE_LABEL,
   humaniseExplanation,
   PROFILE,
+  PROFILES,
   TIER_CLASS,
   TIER_LABEL,
   fmtDate,
@@ -110,9 +111,12 @@ export default function Dashboard() {
       <Nav />
       <main id="main" className="mx-auto max-w-[1120px] px-4 py-10 sm:px-6">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="rounded-full border border-line bg-accent-soft px-2.5 py-0.5 text-xs font-medium text-[var(--accent)]">Simulated person</span>
-          <InfoButton id="simulated" />
-          <span className="text-xs text-muted">Alex, eight weeks. Real engine, generated speech.</span>
+          <span className={`rounded-full border border-line px-2.5 py-0.5 text-xs font-medium ${PROFILES[PROFILE].simulated ? "bg-accent-soft text-[var(--accent)]" : "bg-success-soft text-[var(--success)]"}`}>{PROFILES[PROFILE].label}</span>
+          {PROFILES[PROFILE].simulated && <InfoButton id="simulated" />}
+          <span className="text-xs text-muted">{PROFILES[PROFILE].note}</span>
+          <Link href={PROFILES[PROFILE].simulated ? "/app?profile=me" : "/app"} className="text-xs text-[var(--primary)] underline underline-offset-2">
+            {PROFILES[PROFILE].simulated ? "See real Bee data" : "See the simulated person"}
+          </Link>
         </div>
 
         {error && <p className="mt-6 rounded-[var(--radius-md)] border border-line bg-surface p-4 text-sm text-muted">The service did not answer: {error}</p>}
@@ -169,7 +173,7 @@ export default function Dashboard() {
                   <div className="flex justify-between"><dt className="text-muted">Stable streak</dt><dd className="font-medium">{summary.stable_streak_days} days</dd></div>
                   <div className="flex justify-between"><dt className="text-muted">Latest day</dt><dd className="font-medium">{fmtDate(summary.latest_date)}</dd></div>
                 </dl>
-                <Link prefetch={false} href="/report" className="mt-4 inline-block rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
+                <Link prefetch={false} href={PROFILE === "me" ? "/report?profile=me" : "/report"} className="mt-4 inline-block rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
                   Open the doctor report
                 </Link>
               </div>

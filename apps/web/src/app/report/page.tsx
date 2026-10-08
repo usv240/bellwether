@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { InfoButton } from "../../components/InfoButton";
 import { Nav } from "../../components/Nav";
-import { FEATURE_LABEL, PROFILE, humaniseExplanation, TIER_CLASS, TIER_LABEL, fmtDate, getJSON, type Report, type Tier } from "../../lib/api";
+import { FEATURE_LABEL, PROFILE, PROFILES, humaniseExplanation, TIER_CLASS, TIER_LABEL, fmtDate, getJSON, type Report, type Tier } from "../../lib/api";
 
 /**
  * The doctor report: one page, designed for a twelve-minute appointment.
@@ -27,8 +27,8 @@ export default function ReportPage() {
       <main id="main" className="mx-auto max-w-[860px] px-4 py-10 sm:px-6">
         <div className="no-print flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <span className="rounded-full border border-line bg-accent-soft px-2.5 py-0.5 text-xs font-medium text-[var(--accent)]">Simulated person</span>
-            <InfoButton id="simulated" />
+            <span className={`rounded-full border border-line px-2.5 py-0.5 text-xs font-medium ${PROFILES[PROFILE].simulated ? "bg-accent-soft text-[var(--accent)]" : "bg-success-soft text-[var(--success)]"}`}>{PROFILES[PROFILE].label}</span>
+            {PROFILES[PROFILE].simulated && <InfoButton id="simulated" />}
           </div>
           <button type="button" onClick={() => window.print()} className="rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
             Print or save as PDF

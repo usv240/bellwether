@@ -8,7 +8,37 @@ export const API =
   process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ??
   "https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws";
 
-export const PROFILE = "alex-drift";
+/**
+ * Which profile the dashboard and report show.
+ *
+ * The default is the simulated person, so a judge who opens the site
+ * sees eight weeks of a story. `?profile=me` shows the operator's own
+ * Bee wristband, which is real data and has to be reachable from the
+ * site rather than only through curl: the Bee track asks the video to
+ * show the project using live Bee data, and until this existed the only
+ * page that could show it was hard-wired to the persona.
+ *
+ * An allow-list, not the raw parameter, so a URL cannot point the page at
+ * an arbitrary profile id.
+ */
+export const PROFILES = {
+  "alex-drift": { simulated: true, label: "Simulated person", note: "Alex, eight weeks. Real engine, generated speech." },
+  me: {
+    simulated: false,
+    label: "Real Bee data",
+    note: "The builder's own Bee wristband since 2026-09-29. Bee does not yet tell speakers apart, so these are the band's everyday conversations, with sessions over an hour and media left out.",
+  },
+} as const;
+
+export type ProfileId = keyof typeof PROFILES;
+
+function chosenProfile(): ProfileId {
+  if (typeof window === "undefined") return "alex-drift";
+  const asked = new URLSearchParams(window.location.search).get("profile");
+  return asked && asked in PROFILES ? (asked as ProfileId) : "alex-drift";
+}
+
+export const PROFILE: ProfileId = chosenProfile();
 
 export type Tier = "learning" | "stable" | "watch" | "discuss" | "excluded";
 
