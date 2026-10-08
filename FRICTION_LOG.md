@@ -112,4 +112,24 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Workaround: rows without utterances are fetched one by one with `get`, bounded, and unwrapped; `spoken_at` is read first; integers too small to be an instant are never read as one. Pinned in `apps/ingest/tests/test_device_shapes.py` with the device's field names and placeholder words.
 - Suggestion: say in the readme which commands return utterances and which return counts, give one example response per command with its wrapper, and name the unit of every time field. Or make `list` accept `--with-utterances`, which is what everybody who lists conversations wants next.
 
+## Entry 12: every speaker is "Unknown", so a product about the wearer's own speech cannot find the wearer (2026-10-08, nine days worn)
+
+- Task: reduce nine days on the wrist to the wearer's own daily speech features, which is the whole premise of a personal baseline.
+- Steps: paired the band 2026-09-29, wore it daily, pulled 133 conversations and 15,578 utterances on 2026-10-08, counted the `speaker` values; looked for a voice enrolment or speaker naming option in the Bee app and in the CLI.
+- Expected: either a label that identifies the wearer, an `is_user` flag on each utterance (entry 2 asked for this before the device arrived), or a way to tell the app which voice is yours.
+- Actual: all 15,578 utterances say "Unknown". The app has no enrolment or naming step we could find, the CLI has no flag, and the readme does not say whether labels ever split. The band picks up everyone nearby, so a day's text is the wearer, the people they talk to and any training or film playing, with nothing to tell them apart: two days on this account had about 44,000 words each because the band sat through five- and six-hour group trainings.
+- Severity: high, and the most important entry here. A Bee product for a person, which is the track's own framing, needs to know which speech is that person's.
+- Workaround: `bellwether-ingest pull --backfill --max-minutes 60` leaves out sessions longer than an hour and any Bee's own summary names as media (read locally, never stored). The days fall to between 1,500 and 12,000 words, which looks like everyday conversation, and the site and video say plainly that speakers are not told apart. It is a filter, not an identification.
+- Suggestion: a wearer flag on each utterance, set from a one-minute voice enrolment in the app, would make every personal product on Bee possible. Short of that, a documented field saying whether diarization ran and how many distinct speakers it found per conversation.
+
+## Entry 13: `bee changed` with no cursor answers with recent changes only, so the first pull of a history returns two days of nine (2026-10-08)
+
+- Task: the first full pull after nine days worn.
+- Steps: `bellwether-ingest pull --out days.json`, which starts from `bee changed` with no cursor and keeps the returned cursor for next time.
+- Expected: no cursor means from the beginning, as for most change feeds.
+- Actual: two days of features from 133 conversations across nine. Nothing errored; it looked like a quiet week.
+- Severity: medium. Silent, and it lands on the first run, which is the one a new developer judges the platform by.
+- Workaround: `pull --backfill` pages `bee conversations list` to the end and fetches every row with `get` (about three minutes for 133 conversations). The evidence capture does the same.
+- Suggestion: document the window `changed` covers without a cursor, or accept `--since <date>`; and add `--all` to `conversations list` so paging is not every client's job.
+
 <!-- Add new entries above this line as they happen. -->
