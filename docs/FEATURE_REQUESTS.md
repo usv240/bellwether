@@ -14,7 +14,7 @@ Urgency uses the hackathon's scale: **critical**, **important**, **nice-to-have*
 
 There is no documented way to know which speech is the person wearing the device. For any analysis *of the wearer* rather than of the room, that is the whole ballgame: it is the difference between measuring a person and measuring their kitchen.
 
-On a real device it is worse than generic labels. After nine days worn, every one of 15,578 utterances on our account was labelled "Unknown", and we found no voice enrolment or speaker naming step in the app. We work around it by leaving out sessions longer than an hour and anything Bee's own summary calls media, which is a filter and not an identification. One boolean, set from a one-minute voice enrolment in the app, would remove an entire class of silent error from every project built on Bee data.
+On a real device it is worse than generic labels. After nine days worn, every one of 15,578 utterances on our account was labelled "Unknown", including every utterance recorded after the app confirmed the wearer's voice was enrolled: the app knows the voice and the developer data never uses it. We work around it by leaving out sessions longer than an hour and anything Bee's own summary calls media, which is a filter and not an identification. One boolean, carried through from the voice enrolment the app already has, would remove an entire class of silent error from every project built on Bee data.
 
 Friction log entries 2 and 12.
 
