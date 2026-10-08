@@ -130,6 +130,6 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Actual: two days of features from 133 conversations across nine. Nothing errored; it looked like a quiet week.
 - Severity: medium. Silent, and it lands on the first run, which is the one a new developer judges the platform by.
 - Workaround: `pull --backfill` pages `bee conversations list` to the end and fetches every row with `get` (about three minutes for 133 conversations). The evidence capture does the same.
-- Suggestion: document the window `changed` covers without a cursor, or accept `--since <date>`; and add `--all` to `conversations list` so paging is not every client's job. We wrote the second one: [bee-cli PR #20](https://github.com/bee-computer/bee-cli/pull/20) adds `bee conversations list --all`, with three tests; on this account it returns all 143 conversations where `list` alone returns 20.
+- Suggestion: document the window `changed` covers without a cursor, or accept `--since <date>`; and add `--all` to `conversations list` so paging is not every client's job. We wrote the second one: [bee-cli PR #20](https://github.com/bee-computer/bee-cli/pull/20) adds `bee conversations list --all`, with four tests and one round of review feedback addressed; on this account it returns all 143 conversations where `list` alone returns 20.
 
 <!-- Add new entries above this line as they happen. -->

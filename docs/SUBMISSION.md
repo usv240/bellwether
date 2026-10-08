@@ -132,7 +132,7 @@ It reframes a fifty dollar note-taking gadget as a health instrument, using a si
 - Repository: https://github.com/usv240/bellwether (MIT, visible in About)
 - GitHub username: usv240
 - New open-source package: **`speech-vitals`**, a standalone MIT library with no dependency on this repository, [published on PyPI](https://pypi.org/project/speech-vitals/) (`pip install speech-vitals`). Nine language features per day from everyday speech transcripts, each documented with its literature basis, a dependency-free core, a CLI, and 25 tests. It is what the benchmark harness and the service both consume, which is what proves the library is real rather than extracted for show.
-- Contribution to Bee's own CLI: [bee-computer/bee-cli PR #20](https://github.com/bee-computer/bee-cli/pull/20) adds `bee conversations list --all`, which follows `next_cursor` to the end and returns a whole history in one command, with three tests and the existing suite passing (314 pass). Written after a first pull of nine days returned two. The companion [issue #19](https://github.com/bee-computer/bee-cli/issues/19) reports that every speaker comes back `Unknown` and proposes a backwards-compatible fix.
+- Contribution to Bee's own CLI: [bee-computer/bee-cli PR #20](https://github.com/bee-computer/bee-cli/pull/20) adds `bee conversations list --all`, which follows `next_cursor` to the end and returns a whole history in one command, with four tests and the existing suite passing (315 pass), and one round of review feedback addressed. Written after a first pull of nine days returned two. The companion [issue #19](https://github.com/bee-computer/bee-cli/issues/19) reports that every speaker comes back `Unknown` and proposes a backwards-compatible fix.
 
 ## AWS Builder
 
