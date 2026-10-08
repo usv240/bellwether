@@ -158,3 +158,17 @@ def test_backfill_pages_the_whole_history_and_fetches_every_row():
     utts = ingest_backfill(BeeCli(runner=runner), OwnerFilter())
     assert sorted(gets) == ["10824219", "2", "3"]
     assert len(utts) == 12
+
+
+def test_long_sessions_and_media_are_not_taken_for_the_wearer():
+    """Every speaker on the account is Unknown, so the backfill can only
+    drop what is plainly not the wearer: a six-hour training, a film."""
+    from bellwether_ingest.bee import keep_conversation
+
+    hour = 3_600_000
+    talk = {**LIST_ROW, "end_time": LIST_ROW["start_time"] + 20 * 60_000, "short_summary": "Planning a birthday"}
+    training = {**talk, "end_time": talk["start_time"] + 6 * hour, "short_summary": "Leadership training"}
+    film = {**talk, "short_summary": "Watching a movie with friends"}
+    assert keep_conversation(talk, 60) is True
+    assert keep_conversation(training, 60) is False
+    assert keep_conversation(film, 60) is False

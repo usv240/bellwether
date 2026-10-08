@@ -440,7 +440,39 @@ def with_utterances(cli: "BeeCli", rows: list, limit: int = 30) -> list[dict]:
     return out
 
 
-def ingest_backfill(cli: BeeCli, owner: OwnerFilter, page: int = 100, max_pages: int = 100) -> list[Utterance]:
+MEDIA_WORDS = re.compile(
+    r"\b(movie|film|video|show|episode|podcast|tv|television|trailer|lecture|webinar|livestream)\b",
+    re.IGNORECASE,
+)
+
+
+def keep_conversation(row: dict, max_minutes: float | None) -> bool:
+    """Whether a conversation is likely to be the wearer talking.
+
+    Bee labels every speaker "Unknown" on this account, so speech cannot be
+    split by voice. What can be removed is what is plainly not the wearer:
+    sessions longer than ``max_minutes`` (trainings, films and group events,
+    where the wearer is a small share of the talking; on 2026-10-08 the two
+    largest were five- and six-hour trainings), and anything Bee's own
+    summary names as media. The summary is read on this machine to decide,
+    and never stored or published.
+    """
+    if max_minutes is not None:
+        start, end = row.get("start_time"), row.get("end_time")
+        if isinstance(start, (int, float)) and isinstance(end, (int, float)):
+            if (end - start) / 60000.0 > max_minutes:
+                return False
+    summary = f"{row.get('short_summary') or ''}"
+    return not MEDIA_WORDS.search(summary)
+
+
+def ingest_backfill(
+    cli: BeeCli,
+    owner: OwnerFilter,
+    page: int = 100,
+    max_pages: int = 100,
+    max_minutes: float | None = None,
+) -> list[Utterance]:
     """Every conversation the account holds, as the owner's utterances.
 
     ``bee changed`` with no cursor answers with recent changes only, so the
@@ -459,6 +491,8 @@ def ingest_backfill(cli: BeeCli, owner: OwnerFilter, page: int = 100, max_pages:
         cursor = _next_cursor(payload)
         if not cursor or not items:
             break
+    if max_minutes is not None:
+        rows = [r for r in rows if not isinstance(r, dict) or keep_conversation(r, max_minutes)]
     utterances: list[Utterance] = []
     for record in with_utterances(cli, rows, limit=len(rows)):
         utterances.extend(normalize_conversation(record))

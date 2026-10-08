@@ -72,6 +72,9 @@ def main(argv: list[str] | None = None) -> int:
     pull.add_argument("--now", action="store_true", help="use bee now (recent hours) instead of bee changed")
     pull.add_argument("--backfill", action="store_true",
                       help="every conversation on the account, not just recent changes")
+    pull.add_argument("--max-minutes", type=float, default=None,
+                      help="with --backfill, skip conversations longer than this and any Bee "
+                           "summarises as media; for accounts whose speakers are all Unknown")
     pull.add_argument("--out", help="write day features JSON here")
 
     stream = sub.add_parser("stream", help="reduce bee stream --json events from stdin")
@@ -115,7 +118,7 @@ def main(argv: list[str] | None = None) -> int:
             if args.now:
                 utterances, new_cursor = ingest_now(cli, owner), None
             elif args.backfill:
-                utterances, new_cursor = ingest_backfill(cli, owner), None
+                utterances, new_cursor = ingest_backfill(cli, owner, max_minutes=args.max_minutes), None
             else:
                 utterances, new_cursor = ingest_changed(cli, cursors, owner)
             days = reduce_to_days(utterances)
