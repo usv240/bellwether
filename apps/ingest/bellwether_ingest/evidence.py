@@ -99,10 +99,25 @@ def capture(cli: BeeCli | None = None) -> dict:
         rows = convos
     elif isinstance(convos, dict):
         rows = convos.get("conversations") or convos.get("data") or []
+        # The whole history, not the first page: on 2026-10-08 the first
+        # page held 50 of 132 conversations and three of nine days.
+        cursor = convos.get("next_cursor")
+        for _ in range(100):
+            if not cursor:
+                break
+            try:
+                more = cli.conversations_list(limit=50, cursor=cursor)
+            except BeeCliError:
+                break
+            page = (more.get("conversations") or more.get("data") or []) if isinstance(more, dict) else (more or [])
+            rows.extend(page)
+            cursor = more.get("next_cursor") if isinstance(more, dict) else None
+            if not page:
+                break
 
     utterances = []
     # The list carries counts, not words; each conversation is fetched.
-    for raw in with_utterances(cli, rows):
+    for raw in with_utterances(cli, rows, limit=len(rows)):
         utterances.extend(normalize_conversation(raw))
 
     by_day: dict[str, list] = {}

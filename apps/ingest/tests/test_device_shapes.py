@@ -131,3 +131,30 @@ def test_firstrun_reaches_a_real_day_from_the_device_shapes(monkeypatch):
     assert by_name["conversations recorded"].ok is True
     assert by_name["a real day reduces to nine features"].ok is True
     assert "1 day(s) extracted, 1 with speech" in by_name["a real day reduces to nine features"].detail
+
+
+def test_backfill_pages_the_whole_history_and_fetches_every_row():
+    """``bee changed`` with no cursor answers with recent changes only: the
+    first pull after ten days on the wrist, 2026-10-08, came back with two
+    days of 132 conversations. The backfill pages ``conversations list``
+    to the end and fetches each row for its words."""
+    from bellwether_ingest.bee import OwnerFilter, ingest_backfill
+
+    pages = {
+        None: {"conversations": [LIST_ROW, {**LIST_ROW, "id": 2}], "next_cursor": "p2"},
+        "p2": {"conversations": [{**LIST_ROW, "id": 3}], "next_cursor": None},
+    }
+    gets: list[str] = []
+
+    def runner(argv: list[str]):
+        if "list" in argv:
+            cursor = argv[argv.index("--cursor") + 1] if "--cursor" in argv else None
+            return (0, json.dumps(pages[cursor]), "")
+        if "get" in argv:
+            gets.append(argv[argv.index("get") + 1])
+            return (0, json.dumps(get_response(4)), "")
+        return (1, "", "unexpected")
+
+    utts = ingest_backfill(BeeCli(runner=runner), OwnerFilter())
+    assert sorted(gets) == ["10824219", "2", "3"]
+    assert len(utts) == 12

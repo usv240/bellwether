@@ -1,7 +1,7 @@
 """Command line for ingestion.
 
     bellwether-ingest status
-    bellwether-ingest pull  --out days.json [--owner speaker_1] [--cursor-file .bee-cursor] [--now]
+    bellwether-ingest pull  --out days.json [--owner speaker_1] [--cursor-file .bee-cursor] [--now | --backfill]
     bee stream --json --types new-utterance | bellwether-ingest stream --out days.json
 
 Every command ends the same way: utterances are reduced with
@@ -25,6 +25,7 @@ from .bee import (
     BeeNotAuthenticated,
     CursorStore,
     OwnerFilter,
+    ingest_backfill,
     ingest_changed,
     ingest_now,
     parse_stream_line,
@@ -69,6 +70,8 @@ def main(argv: list[str] | None = None) -> int:
     pull.add_argument("--owner", help="the wearer's speaker label; defaults to the most frequent speaker")
     pull.add_argument("--cursor-file", default=".bee-cursor")
     pull.add_argument("--now", action="store_true", help="use bee now (recent hours) instead of bee changed")
+    pull.add_argument("--backfill", action="store_true",
+                      help="every conversation on the account, not just recent changes")
     pull.add_argument("--out", help="write day features JSON here")
 
     stream = sub.add_parser("stream", help="reduce bee stream --json events from stdin")
@@ -111,6 +114,8 @@ def main(argv: list[str] | None = None) -> int:
             cursors = CursorStore(args.cursor_file)
             if args.now:
                 utterances, new_cursor = ingest_now(cli, owner), None
+            elif args.backfill:
+                utterances, new_cursor = ingest_backfill(cli, owner), None
             else:
                 utterances, new_cursor = ingest_changed(cli, cursors, owner)
             days = reduce_to_days(utterances)

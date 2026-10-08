@@ -440,6 +440,31 @@ def with_utterances(cli: "BeeCli", rows: list, limit: int = 30) -> list[dict]:
     return out
 
 
+def ingest_backfill(cli: BeeCli, owner: OwnerFilter, page: int = 100, max_pages: int = 100) -> list[Utterance]:
+    """Every conversation the account holds, as the owner's utterances.
+
+    ``bee changed`` with no cursor answers with recent changes only, so the
+    first pull after ten days on the wrist came back with two days. The
+    baseline needs the whole history, which only ``conversations list``
+    pages through; each row is then fetched for its words.
+    """
+    rows: list = []
+    cursor: str | None = None
+    for _ in range(max_pages):
+        payload = cli.conversations_list(limit=page, cursor=cursor)
+        items = payload
+        if isinstance(payload, dict):
+            items = payload.get("conversations") or payload.get("items") or payload.get("data") or []
+        rows.extend(items or [])
+        cursor = _next_cursor(payload)
+        if not cursor or not items:
+            break
+    utterances: list[Utterance] = []
+    for record in with_utterances(cli, rows, limit=len(rows)):
+        utterances.extend(normalize_conversation(record))
+    return owner.apply(utterances)
+
+
 def ingest_now(cli: BeeCli, owner: OwnerFilter) -> list[Utterance]:
     """The last several hours, for a live today view."""
     payload = cli.now()

@@ -3,7 +3,7 @@
 Evidence that this project reads a real Bee device, captured by
 `bellwether-ingest evidence`.
 
-Captured: 2026-09-29T21:02:33+00:00. Commands answering: 3 of 3.
+Captured: 2026-10-08T05:07:37+00:00. Commands answering: 3 of 3.
 
 Counts, shapes and the nine features only. No transcript text, no conversation titles, no names, no locations. The input is a real person's day and the output is designed to be publishable.
 
@@ -17,10 +17,10 @@ Counts, shapes and the nine features only. No transcript text, no conversation t
 
 ## What the device returned
 
-- Conversations: 2
-- Utterances: 45
-- Days with speech: 1
-- Words read on this machine: 446
+- Conversations: 133
+- Utterances: 15578
+- Days with speech: 9
+- Words read on this machine: 130229
 - Words written to this file: 0
 
 That last pair is the product in one line. The words were read, counted
@@ -32,17 +32,45 @@ and thrown away, and only the numbers left the machine.
 [
  {
   "date": "2026-09-29",
-  "utterances": 45,
-  "token_count_day": 446,
-  "mattr": 0.8262,
-  "mean_utt_len": 9.911,
-  "dep_depth_mean": 3.467,
-  "pronoun_noun_ratio": 0.4637,
-  "filler_rate": 0.673,
-  "disfluency_rate": 0.224,
-  "low_freq_word_rate": 4.036,
-  "idea_density": 4.283,
-  "vocab_size_day": 157
+  "utterances": 454,
+  "token_count_day": 3276,
+  "mattr": 0.7723,
+  "mean_utt_len": 7.216,
+  "dep_depth_mean": 2.604,
+  "pronoun_noun_ratio": 0.5182,
+  "filler_rate": 0.336,
+  "disfluency_rate": 0.366,
+  "low_freq_word_rate": 4.335,
+  "idea_density": 3.816,
+  "vocab_size_day": 681
+ },
+ {
+  "date": "2026-09-30",
+  "utterances": 1164,
+  "token_count_day": 8090,
+  "mattr": 0.7411,
+  "mean_utt_len": 6.95,
+  "dep_depth_mean": 2.546,
+  "pronoun_noun_ratio": 0.4871,
+  "filler_rate": 0.099,
+  "disfluency_rate": 0.729,
+  "low_freq_word_rate": 4.648,
+  "idea_density": 3.888,
+  "vocab_size_day": 1287
+ },
+ {
+  "date": "2026-10-01",
+  "utterances": 939,
+  "token_count_day": 6902,
+  "mattr": 0.7617,
+  "mean_utt_len": 7.35,
+  "dep_depth_mean": 2.655,
+  "pronoun_noun_ratio": 0.5219,
+  "filler_rate": 0.101,
+  "disfluency_rate": 0.478,
+  "low_freq_word_rate": 3.231,
+  "idea_density": 4.068,
+  "vocab_size_day": 1117
  }
 ]
 ```
@@ -58,22 +86,22 @@ publishing any content.
   "id": 53269,
   "first_name": "<string, 5 chars>",
   "last_name": "<string, 7 chars>",
-  "timezone": "<string, 16 chars>"
+  "timezone": "<string, 15 chars>"
  },
  {
-  "since": 1790679754238,
-  "until": 1790715754238,
-  "timezone": "<string, 16 chars>",
+  "since": 1791400059048,
+  "until": 1791436059048,
+  "timezone": "<string, 15 chars>",
   "conversations": [
-   "list of 2"
+   "list of 13"
   ]
  },
  {
   "conversations": [
-   "list of 2"
+   "list of 50"
   ],
-  "next_cursor": null,
-  "timezone": "<string, 16 chars>"
+  "next_cursor": "<string, 25 chars>",
+  "timezone": "<string, 15 chars>"
  }
 ]
 ```
