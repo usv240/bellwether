@@ -49,14 +49,12 @@ only thing left on the 13th is the two live shots.
 - Then the URL into `docs/SUBMISSION.md` under Live, and the friction
   log's "Still to record" section in `PRODUCT_FEEDBACK.md` closed.
 
-## The wearer's first day (to build while the band accumulates)
+## The wearer's first day
 
-Day one for a real wearer is a command line. A judge who asks "what
-does my mother do with this" should get one command that pairs, pulls,
-and opens the dashboard on the wearer's own profile, with the same
-words the Bee app uses when something is missing. This is the missing
-point on Design and it does not need the device to build; it needs
-the device to prove, which the 13th provides.
+Built 2026-10-13: `bellwether-ingest mine` (and `--remind`, a todo on
+the wearer's own Bee when the day is short). The dashboard's first
+week is a card with seven slots and today's words against the floor.
+Run `mine --remind` daily until the take.
 
 ## Still yours
 
