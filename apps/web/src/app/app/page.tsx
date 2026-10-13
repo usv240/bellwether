@@ -44,6 +44,12 @@ export default function Dashboard() {
   const [days, setDays] = useState<DayRow[]>([]);
   const [note, setNote] = useState<Note | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // The profile is read from the URL, which the static prerender cannot
+  // see, so anything that names it waits for the client. Otherwise the
+  // server's "Simulated person" and the client's "Real Bee" disagree and
+  // React reports a hydration mismatch on every real-data page.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   const [annDate, setAnnDate] = useState("");
   const [annText, setAnnText] = useState("");
@@ -113,6 +119,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-bg text-ink">
       <Nav />
       <main id="main" className="mx-auto max-w-[1120px] px-4 py-10 sm:px-6">
+        {mounted && (<>
         <div className="flex flex-wrap items-center gap-3">
           <span className={`rounded-full border border-line px-2.5 py-0.5 text-xs font-medium ${PROFILES[PROFILE].simulated ? "bg-accent-soft text-[var(--accent)]" : "bg-success-soft text-[var(--success)]"}`}>{PROFILES[PROFILE].label}</span>
           {PROFILES[PROFILE].simulated && <InfoButton id="simulated" />}
@@ -131,6 +138,7 @@ export default function Dashboard() {
             </a>
           ))}
         </nav>
+        </>)}
 
         {error && <p className="mt-6 rounded-[var(--radius-md)] border border-line bg-surface p-4 text-sm text-muted">The service did not answer: {error}</p>}
 

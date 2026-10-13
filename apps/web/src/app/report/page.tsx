@@ -19,6 +19,10 @@ export default function ReportPage() {
   }, []);
 
   const total = report?.tier_history?.reduce((n, r) => n + r.days, 0) ?? 0;
+  // See the dashboard: the profile badge names something the prerender
+  // cannot know, so it waits for the client.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   return (
     <div className="min-h-screen bg-bg text-ink">
@@ -26,9 +30,11 @@ export default function ReportPage() {
       <Nav />
       <main id="main" className="mx-auto max-w-[860px] px-4 py-10 sm:px-6">
         <div className="no-print flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex min-h-[26px] items-center gap-2">
+            {mounted && (<>
             <span className={`rounded-full border border-line px-2.5 py-0.5 text-xs font-medium ${PROFILES[PROFILE].simulated ? "bg-accent-soft text-[var(--accent)]" : "bg-success-soft text-[var(--success)]"}`}>{PROFILES[PROFILE].label}</span>
             {PROFILES[PROFILE].simulated && <InfoButton id="simulated" />}
+            </>)}
           </div>
           <button type="button" onClick={() => window.print()} className="rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
             Print or save as PDF
