@@ -299,6 +299,15 @@ class BeeCli:
             parts += ["--cursor", cursor]
         return self._run(*parts, "--json")
 
+    def todos_list(self, limit: int = 50):
+        return self._run("todos", "list", "--limit", str(limit), "--json")
+
+    def todos_create(self, text: str, alarm_at: str | None = None):
+        parts = ["todos", "create", "--text", text]
+        if alarm_at:
+            parts += ["--alarm-at", alarm_at]
+        return self._run(*parts, "--json")
+
     def journals_list(self, limit: int = 50, cursor: str | None = None):
         parts = ["journals", "list", "--limit", str(limit)]
         if cursor:

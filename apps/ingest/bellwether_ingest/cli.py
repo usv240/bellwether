@@ -79,6 +79,8 @@ def main(argv: list[str] | None = None) -> int:
     mine = sub.add_parser("mine", help="your first day: read your Bee, send the numbers, open your page")
     mine.add_argument("--max-minutes", type=float, default=60)
     mine.add_argument("--api", default=os.environ.get("BELLWETHER_API", DEFAULT_API))
+    mine.add_argument("--remind", action="store_true",
+                      help="if today's voice notes are short, add a todo on your Bee asking for the note")
 
     sub.add_parser(
         "firstrun",
@@ -117,7 +119,7 @@ def main(argv: list[str] | None = None) -> int:
         from .mine import first_day
 
         return first_day(cli, post=lambda days, profile: post_days(days, profile, args.api), reduce=reduce_to_days,
-                         max_minutes=args.max_minutes)
+                         max_minutes=args.max_minutes, remind=args.remind)
 
     if args.command == "evidence":
         from .evidence import capture, to_markdown

@@ -84,3 +84,44 @@ def test_not_logged_in_uses_the_apps_words():
     finally:
         m.ingest_journals = orig
     assert code == 3 and "bee login" in "\n".join(lines)
+
+
+def test_a_short_day_puts_one_reminder_on_the_bee_and_never_two():
+    """The ask goes where the wearer will see it, their own Bee's todos,
+    only when the day is short, and an open reminder is not repeated."""
+    created, todos = [], []
+
+    def runner(argv: list[str]) -> tuple[int, str, str]:
+        if "todos" in argv and "list" in argv:
+            return (0, json.dumps({"todos": todos, "next_cursor": None}), "")
+        if "todos" in argv and "create" in argv:
+            created.append(argv[argv.index("--text") + 1])
+            return (0, json.dumps({"todo": {"id": "t1"}}), "")
+        return runner_with("Just testing, one two three.")(argv)
+
+    cli = BeeCli(runner=runner)
+    cli.installed = lambda: True  # type: ignore[method-assign]
+    lines = []
+    assert first_day(cli, post=lambda d, p: {"stored": 1}, reduce=reduce_to_days, log=lines.append, remind=True) == 0
+    assert len(created) == 1 and created[0].startswith("Bellwether:") and "145 more words" in created[0]
+    assert "testing" not in created[0]
+    assert "reminder was added" in "\n".join(lines)
+
+    todos.append({"id": "t1", "text": created[0], "completed": False})
+    first_day(cli, post=lambda d, p: {"stored": 1}, reduce=reduce_to_days, log=lines.append, remind=True)
+    assert len(created) == 1
+
+
+def test_a_full_day_adds_no_reminder():
+    created = []
+
+    def runner(argv: list[str]) -> tuple[int, str, str]:
+        if "todos" in argv:
+            created.append(argv)
+            return (0, json.dumps({"todos": []}), "")
+        return runner_with(NOTE)(argv)
+
+    cli = BeeCli(runner=runner)
+    cli.installed = lambda: True  # type: ignore[method-assign]
+    first_day(cli, post=lambda d, p: {"stored": 1}, reduce=reduce_to_days, log=lambda s: None, remind=True)
+    assert not [a for a in created if "create" in a]

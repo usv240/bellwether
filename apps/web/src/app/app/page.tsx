@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { InfoButton } from "../../components/InfoButton";
 import { Confounders } from "../../components/Confounders";
+import { FirstWeek } from "../../components/FirstWeek";
 import { Nav } from "../../components/Nav";
 import { TrendChart, type TrendRow } from "../../components/TrendChart";
 import {
@@ -190,6 +191,8 @@ export default function Dashboard() {
                 </Link>
               </div>
             </section>
+
+            {summary.in_warmup && <FirstWeek days={days} assessments={assessments} eligibleDays={summary.eligible_days} />}
 
             {/* Weekly note */}
             <section className="mt-4 rounded-[var(--radius-lg)] border border-line bg-surface p-5">

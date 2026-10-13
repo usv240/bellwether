@@ -18,6 +18,8 @@ What it does, in order
     4. Reduce both to nine numbers a day, here; the words go no further
     5. Send the numbers to the wearer's two profiles
     6. Print the page to open, and how many days count so far
+    7. With --remind, and only if today is short: a todo on the wearer's
+       own Bee asking for the two-minute note, which the app shows
 
 Only step 5 uses the network, and only the day rows travel. Nothing is
 printed that could carry a word of speech: counts, dates and a URL.
@@ -49,12 +51,37 @@ class Stream:
         return sum(1 for d in self.days if d["token_count_day"] >= MIN_WORDS)
 
 
+REMINDER_PREFIX = "Bellwether:"
+
+
+def remind_on_the_bee(cli: BeeCli, words_today: int, log) -> bool:
+    """Put the day's ask where the wearer will see it: a todo on their
+    own Bee, which the app shows and can alarm. Only when the day is
+    short, and never twice; an open Bellwether todo is left alone. The
+    text carries a number and no words of speech."""
+    if words_today >= MIN_WORDS:
+        return False
+    try:
+        payload = cli.todos_list(limit=50)
+    except BeeCliError:
+        payload = {}
+    items = payload.get("todos") if isinstance(payload, dict) else payload
+    for raw in items or []:
+        if isinstance(raw, dict) and str(raw.get("text", "")).startswith(REMINDER_PREFIX) and not raw.get("completed"):
+            return False
+    need = MIN_WORDS - words_today
+    cli.todos_create(f"{REMINDER_PREFIX} record a two-minute voice note ({need} more words for today to count)")
+    log("A reminder was added to your Bee's todos.")
+    return True
+
+
 def first_day(
     cli: BeeCli,
     post,
     reduce,
     max_minutes: float = 60,
     log=lambda s: print(s, file=sys.stderr),
+    remind: bool = False,
 ) -> int:
     """Run the whole first day. ``post(days, profile)`` sends rows and
     returns the service's answer; ``reduce(utterances)`` makes day rows.
@@ -95,5 +122,8 @@ def first_day(
         log(f"Your voice notes need {need} more day(s) of at least {MIN_WORDS} words before Bellwether compares anything. About two minutes of talking a day.")
     else:
         log("Your voice-note baseline is set. Every new day is compared with it.")
+    if remind:
+        today = voice.days[-1]["token_count_day"] if voice.days else 0
+        remind_on_the_bee(cli, today, log)
     log("The words were read here and discarded. Only the day rows were sent.")
     return 0

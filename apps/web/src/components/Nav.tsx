@@ -7,8 +7,10 @@ import { ThemeToggle } from "./ThemeToggle";
 const LINKS = [
   { href: "/#problem", label: "The problem" },
   { href: "/#how", label: "How it works" },
+  { href: "/#week", label: "A week" },
   { href: "/#demo", label: "Live baseline" },
   { href: "/#evidence", label: "Evidence" },
+  { href: "/#impact", label: "Impact" },
   { href: "/#privacy", label: "Privacy" },
   { href: "/#connect", label: "Your own Bee" },
   { href: "/#alexa", label: "Alexa+" },

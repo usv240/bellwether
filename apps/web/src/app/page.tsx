@@ -22,6 +22,30 @@ const STEPS = [
   { n: 4, title: "Show", info: "tiers", text: "Stable, watch, or discuss, with the reasons and the dates, and a one-page report for the appointment." },
 ];
 
+// The interaction model, for the device it runs on: a band on a wrist and
+// an app with a record button. The wearer's whole job is two minutes a day.
+const WEEK = [
+  { when: "Day one", title: "One command", text: "bellwether-ingest mine reads your Bee, turns each day into nine numbers on your own computer, sends only those, and opens your page." },
+  { when: "Every day", title: "Two minutes of talking", text: "A voice note in the Bee app, any topic. If the day is short, a reminder appears in your Bee's own todos. The band does the rest." },
+  { when: "Day eight", title: "The first comparison", text: "Seven days taught it your normal. From here, each day is read against them, and the weekly note starts." },
+  { when: "Any day", title: "Ask out loud", text: "How have I been sounding? Through Alexa+ or any assistant that speaks MCP, answered from the same seven tools." },
+  { when: "Appointment day", title: "Print one page", text: "What changed, when, which measures moved, the notes you added, and in full: this is not a diagnosis." },
+];
+
+// Who it is for, in their own situations, and what each one gets.
+const PEOPLE = [
+  { who: "Someone who has started to wonder", text: "Sixty or older, wearing a Bee anyway. Wants a record, not a verdict. Gets a baseline that is only theirs, compared with nobody, and one page when they are ready to ask." },
+  { who: "The family member who notices first", text: "Lives far away and hears it on the phone, with no way to say it. Gets a shared record of change with dates on it, instead of an argument about memory." },
+  { who: "The clinician with twelve minutes", text: "Hears a patient for a few minutes a year. Gets nine measures across months, which way each moved, and the ordinary explanations already listed." },
+];
+
+const ECONOMICS = [
+  { value: "17%", label: "of net benefit lost for every year a diagnosis is delayed", source: "Barnett et al., BMC Neurology, 2014" },
+  { value: "$405,262", label: "lifetime cost per person with dementia, about 70% borne by families", source: "Alzheimer's Association, 2026" },
+  { value: "$49.99", label: "once, for a wristband people are buying anyway", source: "Bee" },
+  { value: "Pennies", label: "per person per month to run, measured on the live deployment", source: "AWS Cost Explorer" },
+];
+
 const EVIDENCE = [
   { title: "Time to diagnosis in dementia: systematic review with meta-analysis", source: "Orgeta et al., Int J Geriatr Psychiatry, 2025", finding: "3.5 years on average from symptom onset to diagnosis across 13 studies and 30,257 participants; 4.1 years for young-onset.", url: "https://onlinelibrary.wiley.com/doi/10.1002/gps.70129" },
   { title: "Lecanemab and donanemab indications", source: "U.S. FDA, 2023 and 2024", finding: "Both approved only for mild cognitive impairment or mild dementia due to Alzheimer's disease, with no data on starting later.", url: "https://www.fda.gov/news-events/press-announcements/fda-converts-novel-alzheimers-disease-treatment-traditional-approval" },
@@ -36,7 +60,7 @@ const FAQ = [
   { q: "Who can see my data?", a: "You. Nothing that could reconstruct a sentence is stored anywhere: transcripts are turned into nine numbers a day on your own machine and discarded. The service receives only the numbers, and a test proves that any field carrying text is dropped at the door." },
   { q: "What if I have an accent, or speak two languages?", a: "Your baseline is you. Bellwether never compares you with a population, so an accent or a quiet manner is simply what normal looks like for you. Cross-language support is on the roadmap; the feature extractor is English-only today." },
   { q: "Why should a healthy thirty-year-old care?", a: "Medication fog, poor sleep, illness and recovery all show in speech, and a long baseline is the most valuable thing this can give you. The earlier the baseline starts, the more a change later in life has to be compared with." },
-  { q: "What does Bee record?", a: "Bee transcribes conversations near the wearer. Bellwether analyses only the wearer's own utterances and drops everyone else's at ingest. No audio reaches Bellwether at all." },
+  { q: "What does Bee record?", a: "Bee transcribes conversations near the wearer, and today it labels every speaker Unknown, so it cannot say which words were yours. Bellwether therefore keeps two streams and labels them: your voice notes, which are certainly you, and the band's conversations, which are the room. No audio reaches Bellwether at all." },
   { q: "Can it detect a stroke?", a: "No. It is not an emergency product and reacts on the scale of days, not minutes. If speech changes suddenly, call emergency services." },
   { q: "Why does it say the person is simulated?", a: "Because they are. The live baseline on this page is generated speech for one invented person, run through the real extractor and the real engine, so you can see eight weeks including a change from week six. Everything after the words is the product." },
   { q: "Can an assistant ask it for me?", a: "Yes. Bellwether is a Model Context Protocol server, so a voice assistant or AI agent can ask how you have been sounding, read the report, or run the spoken check with you by voice. The assistant gets the same seven numbers-only tools and nothing else." },
@@ -162,6 +186,23 @@ export default function Home() {
           </div>
         </section>
 
+        {/* The week */}
+        <section id="week" className="border-t border-line bg-surface">
+          <div className="mx-auto max-w-[1120px] px-4 py-16 sm:px-6">
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">A week with Bellwether</h2>
+            <p className="mt-3 max-w-[640px] text-muted">What the wearer actually does. Almost nothing, on purpose: a measurement you have to work at is one you will stop taking.</p>
+            <ol className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-5">
+              {WEEK.map((w) => (
+                <li key={w.when} className="rounded-[var(--radius-lg)] border border-line bg-bg p-5">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-[var(--primary)]">{w.when}</p>
+                  <h3 className="mt-1 text-base font-semibold">{w.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{w.text}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
         {/* Live baseline */}
         <section id="demo" className="border-t border-line bg-surface">
           <div className="mx-auto max-w-[1120px] px-4 py-16 sm:px-6">
@@ -197,8 +238,51 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Impact */}
+        <section id="impact" className="border-t border-line bg-surface">
+          <div className="mx-auto max-w-[1120px] px-4 py-16 sm:px-6">
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Who it is for, and what it would change</h2>
+            <p className="mt-3 max-w-[720px] leading-relaxed text-muted">
+              Three people meet the same three and a half years from different sides. None of them has had a record of the one thing that was changing all along.
+            </p>
+            <div className="mt-8 grid gap-4 md:grid-cols-3">
+              {PEOPLE.map((p) => (
+                <div key={p.who} className="rounded-[var(--radius-lg)] border border-line bg-bg p-5">
+                  <h3 className="text-base font-semibold">{p.who}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{p.text}</p>
+                </div>
+              ))}
+            </div>
+
+            <h3 className="mt-12 text-lg font-semibold tracking-tight">The economics, in four numbers</h3>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {ECONOMICS.map((e) => (
+                <div key={e.value} className="rounded-[var(--radius-lg)] border border-line bg-bg p-5">
+                  <p className="text-3xl font-semibold tracking-tight text-[var(--primary)]">{e.value}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{e.label}</p>
+                  <p className="mt-2 text-xs text-muted">{e.source}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
+              <div className="rounded-[var(--radius-lg)] border border-line bg-bg p-5 text-sm leading-relaxed text-muted">
+                <p className="font-semibold text-ink">What is measured, and by whom</p>
+                <p className="mt-2">The delay costs about 17 percent a year: measured, by others. Language features separate Alzheimer&apos;s from control speech at 85 to 89.6 percent on the field&apos;s benchmark: measured, by others. Those features come out of ordinary wearable transcripts at pennies, daily, with no clinic: measured, by us, on the production pipeline.</p>
+                <p className="mt-2">What connects them into a shorter delay is a trial nobody has run. We would rather say so than invent a number. <a className="text-[var(--primary)] underline underline-offset-2" href="https://github.com/usv240/bellwether/blob/main/docs/PILOT.md" target="_blank" rel="noopener noreferrer">The study to run</a> is written, with its endpoints fixed before any data.</p>
+              </div>
+              <div className="rounded-[var(--radius-lg)] border border-line bg-bg p-5 text-sm leading-relaxed text-muted">
+                <p className="font-semibold text-ink">Beyond this hackathon</p>
+                <p className="mt-2"><span className="font-medium text-ink">A family at home:</span> one command, a two-minute note a day, a page for the appointment.</p>
+                <p className="mt-2"><span className="font-medium text-ink">A memory clinic between annual visits:</span> the whole stack deploys from one CDK command into the clinic&apos;s own account, and only nine numbers a day ever reach it.</p>
+                <p className="mt-2"><span className="font-medium text-ink">Any transcript, not only Bee:</span> the open-source speech-vitals package reads any speaker-labelled transcript, so the engine is not tied to one device. English only today, and the FAQ says so.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Privacy */}
-        <section id="privacy" className="border-t border-line bg-surface">
+        <section id="privacy" className="border-t border-line">
           <div className="mx-auto max-w-[1120px] px-4 py-16 sm:px-6">
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
               What we store, and what we never do
