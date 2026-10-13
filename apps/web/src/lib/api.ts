@@ -18,6 +18,10 @@ export const API =
  * show the project using live Bee data, and until this existed the only
  * page that could show it was hard-wired to the persona.
  *
+ * `?profile=me-voice` is the same wristband's voice notes alone. Bee
+ * labels every ambient speaker Unknown, so the conversation stream cannot
+ * be narrowed to the wearer; a voice note is the wearer by construction.
+ *
  * An allow-list, not the raw parameter, so a URL cannot point the page at
  * an arbitrary profile id.
  */
@@ -25,10 +29,27 @@ export const PROFILES = {
   "alex-drift": { simulated: true, label: "Simulated person", note: "Alex, eight weeks. Real engine, generated speech." },
   me: {
     simulated: false,
-    label: "Real Bee data",
+    label: "Real Bee: conversations",
     note: "The builder's own Bee wristband since 2026-09-29. Bee does not yet tell speakers apart, so these are the band's everyday conversations, with sessions over an hour and media left out.",
   },
+  "me-voice": {
+    simulated: false,
+    label: "Real Bee: voice notes",
+    note: "The builder's own Bee voice notes: speech that is certainly the wearer's, with no one else in it. A day counts once it holds 150 words.",
+  },
 } as const;
+
+/** The switcher's order and short names: story first, then the two real streams. */
+export const PROFILE_TABS: { id: ProfileId; short: string }[] = [
+  { id: "alex-drift", short: "Simulated person" },
+  { id: "me", short: "My conversations" },
+  { id: "me-voice", short: "My voice notes" },
+];
+
+/** A page path for a profile, with no parameter for the default. */
+export function withProfile(path: string, id: ProfileId = PROFILE): string {
+  return id === "alex-drift" ? path : `${path}?profile=${id}`;
+}
 
 export type ProfileId = keyof typeof PROFILES;
 

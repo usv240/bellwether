@@ -2,6 +2,7 @@
 
     bellwether-ingest status
     bellwether-ingest pull  --out days.json [--owner speaker_1] [--cursor-file .bee-cursor] [--now | --backfill | --journals]
+    bellwether-ingest pull  --journals --post me-voice      # features straight to the service
     bee stream --json --types new-utterance | bellwether-ingest stream --out days.json
 
 Every command ends the same way: utterances are reduced with
@@ -14,7 +15,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
+import urllib.request
 from collections import defaultdict
 
 from speech_vitals import Utterance, aggregate_day
@@ -50,6 +53,22 @@ def _write_days(days: list[dict], out: str | None) -> None:
         print(payload)
 
 
+DEFAULT_API = "https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws"
+
+
+def post_days(days: list[dict], profile: str, api: str) -> dict:
+    """Send day feature rows to the service. Only the rows travel: the
+    same nine numbers, count and date that --out writes, never text."""
+    req = urllib.request.Request(
+        f"{api.rstrip('/')}/v1/profiles/{profile}/days",
+        data=json.dumps(days).encode("utf-8"),
+        headers={"content-type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=30) as res:
+        return json.loads(res.read())
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="bellwether-ingest", description=__doc__.split("\n\n")[0])
     sub = parser.add_subparsers(dest="command", required=True)
@@ -79,6 +98,8 @@ def main(argv: list[str] | None = None) -> int:
                       help="with --backfill, skip conversations longer than this and any Bee "
                            "summarises as media; for accounts whose speakers are all Unknown")
     pull.add_argument("--out", help="write day features JSON here")
+    pull.add_argument("--post", metavar="PROFILE", help="also send the day features to this profile on the service")
+    pull.add_argument("--api", default=os.environ.get("BELLWETHER_API", DEFAULT_API))
 
     stream = sub.add_parser("stream", help="reduce bee stream --json events from stdin")
     stream.add_argument("--owner")
@@ -128,6 +149,10 @@ def main(argv: list[str] | None = None) -> int:
                 utterances, new_cursor = ingest_changed(cli, cursors, owner)
             days = reduce_to_days(utterances)
             _write_days(days, args.out)
+            if args.post and days:
+                res = post_days(days, args.post, args.api)
+                print(f"posted {res['stored']} day(s) to {args.post}: {res['tier']}, "
+                      f"{res['eligible_days']} day(s) count", file=sys.stderr)
             if new_cursor:
                 cursors.save(new_cursor)
             return 0

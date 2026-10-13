@@ -12,6 +12,8 @@ import {
   humaniseExplanation,
   PROFILE,
   PROFILES,
+  PROFILE_TABS,
+  withProfile,
   TIER_CLASS,
   TIER_LABEL,
   fmtDate,
@@ -114,10 +116,20 @@ export default function Dashboard() {
           <span className={`rounded-full border border-line px-2.5 py-0.5 text-xs font-medium ${PROFILES[PROFILE].simulated ? "bg-accent-soft text-[var(--accent)]" : "bg-success-soft text-[var(--success)]"}`}>{PROFILES[PROFILE].label}</span>
           {PROFILES[PROFILE].simulated && <InfoButton id="simulated" />}
           <span className="text-xs text-muted">{PROFILES[PROFILE].note}</span>
-          <Link href={PROFILES[PROFILE].simulated ? "/app?profile=me" : "/app"} className="text-xs text-[var(--primary)] underline underline-offset-2">
-            {PROFILES[PROFILE].simulated ? "See real Bee data" : "See the simulated person"}
-          </Link>
         </div>
+        {/* Plain links, not next/link: PROFILE is read once when the page loads. */}
+        <nav aria-label="Whose data" className="mt-3 grid grid-cols-3 rounded-[var(--radius-sm)] border border-line bg-surface p-0.5 text-xs sm:inline-grid">
+          {PROFILE_TABS.map((t) => (
+            <a
+              key={t.id}
+              href={withProfile("/app", t.id)}
+              aria-current={t.id === PROFILE ? "page" : undefined}
+              className={`rounded-[calc(var(--radius-sm)-2px)] px-1.5 py-1.5 text-center font-medium sm:px-3 ${t.id === PROFILE ? "bg-[var(--primary)] text-[var(--primary-contrast)]" : "text-muted hover:text-ink"}`}
+            >
+              {t.short}
+            </a>
+          ))}
+        </nav>
 
         {error && <p className="mt-6 rounded-[var(--radius-md)] border border-line bg-surface p-4 text-sm text-muted">The service did not answer: {error}</p>}
 
@@ -173,7 +185,7 @@ export default function Dashboard() {
                   <div className="flex justify-between"><dt className="text-muted">Stable streak</dt><dd className="font-medium">{summary.stable_streak_days} days</dd></div>
                   <div className="flex justify-between"><dt className="text-muted">Latest day</dt><dd className="font-medium">{fmtDate(summary.latest_date)}</dd></div>
                 </dl>
-                <Link prefetch={false} href={PROFILE === "me" ? "/report?profile=me" : "/report"} className="mt-4 inline-block rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
+                <Link prefetch={false} href={withProfile("/report")} className="mt-4 inline-block rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
                   Open the doctor report
                 </Link>
               </div>

@@ -203,3 +203,34 @@ def test_voice_notes_are_the_wearers_own_speech_and_stamped_when_made():
     assert [u.conversation_id for u in utts] == ["journal-j1", "journal-j3"]
     assert all(u.speaker == WEARER for u in utts)
     assert utts[0].ts.startswith("2026-10-07") and utts[1].ts.startswith("2026-10-08")
+
+
+def test_post_sends_only_the_day_rows(monkeypatch):
+    """--post carries exactly what --out would write: feature rows with a
+    date and a count, and no field that could hold the words."""
+    import urllib.request
+
+    from bellwether_ingest.cli import post_days
+
+    sent = {}
+
+    class Res:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *a):
+            return False
+
+        def read(self):
+            return b'{"stored": 1, "profile_id": "me-voice", "tier": "learning", "eligible_days": 1}'
+
+    def fake_urlopen(req, timeout):
+        sent["url"], sent["body"] = req.full_url, json.loads(req.data)
+        return Res()
+
+    monkeypatch.setattr(urllib.request, "urlopen", fake_urlopen)
+    row = {"date": "2026-10-13", "utterances": 3, "token_count_day": 180, "mattr": 0.7}
+    res = post_days([row], "me-voice", "https://api.example/")
+    assert sent["url"] == "https://api.example/v1/profiles/me-voice/days"
+    assert sent["body"] == [row]
+    assert res["tier"] == "learning"
