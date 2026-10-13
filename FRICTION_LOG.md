@@ -142,4 +142,14 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Workaround: `bellwether-ingest pull --journals --out voice.json`, then post to a profile of its own, so neither stream is mistaken for the other.
 - Suggestion: say in the journals reference that notes are the wearer's own speech, and give the resource a word count or duration field so a client can tell a ten-second note from a two-minute one without reading the text.
 
+## Entry 15: a static prerender cannot see the URL, so every real-data page hydrated with a mismatch nobody noticed (2026-10-13, ours)
+
+- Task: show the wearer's two real profiles on the same dashboard as the simulated person, chosen by `?profile=` on a statically exported Next.js site.
+- Steps: read the profile from `window.location.search` at module load; render the badge, note and switcher from it; export the site; open `/app?profile=me-voice`; later, re-run Lighthouse on the deployed page after adding the first-week card.
+- Expected: the page shows the real profile, which it did, and every audit stays at 100, which the landing page and report did.
+- Actual: the dashboard's best-practices score fell to 96 on one audit, errors in console, carrying React error #418: the prerendered HTML said "Simulated person" and the client's first render said "Real Bee". React patched the text and the page looked right, so no screenshot, test or human saw it. Only the console did.
+- Severity: low for a visitor, medium for the project: a hydration mismatch on every real-data page is the kind of thing a reviewer opens DevTools and finds, and the dashboard is where the Bee track's live data is shown.
+- Workaround: anything that names the profile waits for the client (`mounted` state set in an effect) and the prerender carries a neutral header. All three pages are back to 100 on accessibility, best practices and SEO.
+- Suggestion: for ourselves, run Lighthouse on the pages that take parameters and not only on the landing page; a static export with URL-driven state is a hydration mismatch waiting to happen, and the framework's error page says so only after it has happened.
+
 <!-- Add new entries above this line as they happen. -->

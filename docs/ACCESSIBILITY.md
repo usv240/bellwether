@@ -10,6 +10,8 @@ Measured, not asserted. Lighthouse 13.4.1 against the deployed site, headless Ch
 | Dashboard (`/app`) | 100 | 100 | 100 | 83 |
 | Doctor report (`/report`) | 100 | 100 | 100 | 93 |
 
+Re-run 2026-10-13 after the first-week card, the week and impact sections and the three-way profile switcher: landing, dashboard on the real voice-note profile (`/app?profile=me-voice`) and report all at 100 on accessibility, best practices and SEO. The dashboard had dropped to 96 on best practices for a hydration mismatch (friction log entry 15), fixed the same day.
+
 Reproduce:
 
 ```
