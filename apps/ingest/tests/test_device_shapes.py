@@ -172,3 +172,34 @@ def test_long_sessions_and_media_are_not_taken_for_the_wearer():
     assert keep_conversation(talk, 60) is True
     assert keep_conversation(training, 60) is False
     assert keep_conversation(film, 60) is False
+
+
+def test_voice_notes_are_the_wearers_own_speech_and_stamped_when_made():
+    """Bee voice notes are recorded by the wearer on purpose, so they are
+    the one stream whose speaker is certain while every conversation
+    utterance reads Unknown. Shape from bee-cli 0.7.3's journals resource:
+    id, text, created_at in epoch milliseconds."""
+    from bellwether_ingest.bee import WEARER, ingest_journals
+
+    pages = {
+        None: {"journals": [
+            {"id": "j1", "text": "Today I walked to the market and talked with my sister.",
+             "state": "processed", "created_at": 1791400000000, "updated_at": 1791400000000},
+            {"id": "j2", "text": None, "state": "processing", "created_at": 1791401000000},
+        ], "next_cursor": "n2"},
+        "n2": {"journals": [
+            {"id": "j3", "text": "A quieter day, mostly reading.", "state": "processed",
+             "created_at": 1791486400000, "updated_at": 1791486400000},
+        ], "next_cursor": None},
+    }
+
+    def runner(argv: list[str]):
+        if "journals" in argv:
+            cursor = argv[argv.index("--cursor") + 1] if "--cursor" in argv else None
+            return (0, json.dumps(pages[cursor]), "")
+        return (1, "", "unexpected")
+
+    utts = ingest_journals(BeeCli(runner=runner))
+    assert [u.conversation_id for u in utts] == ["journal-j1", "journal-j3"]
+    assert all(u.speaker == WEARER for u in utts)
+    assert utts[0].ts.startswith("2026-10-07") and utts[1].ts.startswith("2026-10-08")

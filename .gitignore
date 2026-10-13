@@ -20,3 +20,4 @@ build/
 
 # The wearer's own day features: numbers only, but personal. Posted to the API, never committed.
 days.json
+journals.json

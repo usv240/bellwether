@@ -1,7 +1,7 @@
 """Command line for ingestion.
 
     bellwether-ingest status
-    bellwether-ingest pull  --out days.json [--owner speaker_1] [--cursor-file .bee-cursor] [--now | --backfill]
+    bellwether-ingest pull  --out days.json [--owner speaker_1] [--cursor-file .bee-cursor] [--now | --backfill | --journals]
     bee stream --json --types new-utterance | bellwether-ingest stream --out days.json
 
 Every command ends the same way: utterances are reduced with
@@ -27,6 +27,7 @@ from .bee import (
     OwnerFilter,
     ingest_backfill,
     ingest_changed,
+    ingest_journals,
     ingest_now,
     parse_stream_line,
 )
@@ -72,6 +73,8 @@ def main(argv: list[str] | None = None) -> int:
     pull.add_argument("--now", action="store_true", help="use bee now (recent hours) instead of bee changed")
     pull.add_argument("--backfill", action="store_true",
                       help="every conversation on the account, not just recent changes")
+    pull.add_argument("--journals", action="store_true",
+                      help="the wearer's Bee voice notes only: certain to be their own speech")
     pull.add_argument("--max-minutes", type=float, default=None,
                       help="with --backfill, skip conversations longer than this and any Bee "
                            "summarises as media; for accounts whose speakers are all Unknown")
@@ -117,6 +120,8 @@ def main(argv: list[str] | None = None) -> int:
             cursors = CursorStore(args.cursor_file)
             if args.now:
                 utterances, new_cursor = ingest_now(cli, owner), None
+            elif args.journals:
+                utterances, new_cursor = ingest_journals(cli), None
             elif args.backfill:
                 utterances, new_cursor = ingest_backfill(cli, owner, max_minutes=args.max_minutes), None
             else:

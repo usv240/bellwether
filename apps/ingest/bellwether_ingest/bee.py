@@ -299,6 +299,12 @@ class BeeCli:
             parts += ["--cursor", cursor]
         return self._run(*parts, "--json")
 
+    def journals_list(self, limit: int = 50, cursor: str | None = None):
+        parts = ["journals", "list", "--limit", str(limit)]
+        if cursor:
+            parts += ["--cursor", cursor]
+        return self._run(*parts, "--json")
+
     def conversation_get(self, conversation_id: str):
         return self._run("conversations", "get", str(conversation_id), "--json")
 
@@ -497,6 +503,44 @@ def ingest_backfill(
     for record in with_utterances(cli, rows, limit=len(rows)):
         utterances.extend(normalize_conversation(record))
     return owner.apply(utterances)
+
+
+WEARER = "wearer"
+
+
+def ingest_journals(cli: BeeCli, max_pages: int = 100) -> list[Utterance]:
+    """Every Bee voice note on the account, as the wearer's own speech.
+
+    A voice note is recorded by the person wearing the band, on purpose, so
+    there is no question of whose words they are. That is what ambient
+    conversation cannot offer on an account where every speaker reads
+    "Unknown" (friction log entry 12). It is also the stronger measurement:
+    a short daily spoken check-in is the same shape as the elicited speech
+    tasks the research uses, rather than whatever the room happened to say.
+
+    Each note becomes one utterance stamped with when it was made and
+    labelled ``wearer``. Notes still being processed, or with no text,
+    are skipped rather than guessed at.
+    """
+    out: list[Utterance] = []
+    cursor: str | None = None
+    for _ in range(max_pages):
+        payload = cli.journals_list(limit=50, cursor=cursor)
+        items = payload.get("journals") if isinstance(payload, dict) else payload
+        for raw in items or []:
+            if not isinstance(raw, dict):
+                continue
+            text = str(raw.get("text") or "").strip()
+            ts = to_iso(raw.get("created_at"))
+            if not text or not ts:
+                continue
+            out.append(Utterance(ts=ts, text=text, speaker=WEARER,
+                                 conversation_id=f"journal-{raw.get('id')}"))
+        cursor = _next_cursor(payload)
+        if not cursor or not items:
+            break
+    out.sort(key=lambda u: u.ts)
+    return out
 
 
 def ingest_now(cli: BeeCli, owner: OwnerFilter) -> list[Utterance]:
