@@ -1,6 +1,7 @@
 """Command line for ingestion.
 
     bellwether-ingest status
+    bellwether-ingest mine                                  # a wearer's first day, in one command
     bellwether-ingest pull  --out days.json [--owner speaker_1] [--cursor-file .bee-cursor] [--now | --backfill | --journals]
     bellwether-ingest pull  --journals --post me-voice      # features straight to the service
     bee stream --json --types new-utterance | bellwether-ingest stream --out days.json
@@ -75,6 +76,10 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("status", help="is bee installed and logged in?")
 
+    mine = sub.add_parser("mine", help="your first day: read your Bee, send the numbers, open your page")
+    mine.add_argument("--max-minutes", type=float, default=60)
+    mine.add_argument("--api", default=os.environ.get("BELLWETHER_API", DEFAULT_API))
+
     sub.add_parser(
         "firstrun",
         help="rehearse the whole chain the day the device arrives, read only",
@@ -107,6 +112,12 @@ def main(argv: list[str] | None = None) -> int:
 
     args = parser.parse_args(argv)
     cli = BeeCli()
+
+    if args.command == "mine":
+        from .mine import first_day
+
+        return first_day(cli, post=lambda days, profile: post_days(days, profile, args.api), reduce=reduce_to_days,
+                         max_minutes=args.max_minutes)
 
     if args.command == "evidence":
         from .evidence import capture, to_markdown

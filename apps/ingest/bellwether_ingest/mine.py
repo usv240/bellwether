@@ -1,0 +1,99 @@
+"""A wearer's first day, in one command.
+
+    bellwether-ingest mine
+
+Why this exists
+---------------
+Every other command here is a tool: pull this, post that, with a flag for
+each thing Bee does and does not give. A person whose mother has just
+put the band on does not want tools. They want one command that reads
+her Bee, sends the numbers and nothing else, and opens her own page, and
+that says what is missing in the words the Bee app uses.
+
+What it does, in order
+----------------------
+    1. Is the CLI installed and logged in (the words from the Bee app if not)
+    2. Read the voice notes: the wearer's own speech, certain by construction
+    3. Read the everyday conversations, sessions over an hour and media left out
+    4. Reduce both to nine numbers a day, here; the words go no further
+    5. Send the numbers to the wearer's two profiles
+    6. Print the page to open, and how many days count so far
+
+Only step 5 uses the network, and only the day rows travel. Nothing is
+printed that could carry a word of speech: counts, dates and a URL.
+"""
+
+from __future__ import annotations
+
+import sys
+from dataclasses import dataclass, field
+
+from .bee import BeeCli, BeeCliError, BeeNotAuthenticated, OwnerFilter, ingest_backfill, ingest_journals
+
+SITE = "https://d1xfuyog8wiuvf.cloudfront.net"
+MIN_WORDS = 150  # the engine's floor for a day to count; speech_vitals min_tokens
+
+VOICE_PROFILE = "me-voice"
+TALK_PROFILE = "me"
+
+
+@dataclass
+class Stream:
+    profile: str
+    label: str
+    days: list[dict] = field(default_factory=list)
+    posted: dict | None = None
+
+    @property
+    def counted(self) -> int:
+        return sum(1 for d in self.days if d["token_count_day"] >= MIN_WORDS)
+
+
+def first_day(
+    cli: BeeCli,
+    post,
+    reduce,
+    max_minutes: float = 60,
+    log=lambda s: print(s, file=sys.stderr),
+) -> int:
+    """Run the whole first day. ``post(days, profile)`` sends rows and
+    returns the service's answer; ``reduce(utterances)`` makes day rows.
+    Both are injected so the path is testable without a network or a
+    device. Returns the exit code."""
+    if not cli.installed():
+        log("The Bee CLI is not installed. Run: npm install -g @beeai/cli")
+        return 2
+
+    voice = Stream(VOICE_PROFILE, "voice notes")
+    talk = Stream(TALK_PROFILE, "everyday conversations")
+
+    try:
+        log("Reading your voice notes...")
+        voice.days = reduce(ingest_journals(cli))
+        log("Reading the band's conversations (this can take a few minutes)...")
+        talk.days = reduce(ingest_backfill(cli, OwnerFilter(None), max_minutes=max_minutes))
+    except BeeNotAuthenticated:
+        log("Bee is not logged in. Open the Bee app, then run: bee login")
+        return 3
+    except BeeCliError as err:
+        log(f"Bee did not answer: {err}")
+        return 1
+
+    if not voice.days and not talk.days:
+        log("Nothing recorded yet. Wear the band through a day, and record one voice note in the Bee app, then run this again.")
+        return 4
+
+    for s in (voice, talk):
+        if s.days:
+            s.posted = post(s.days, s.profile)
+            log(f"{s.label}: {len(s.days)} day(s) read, {s.counted} count toward your baseline")
+
+    log("")
+    log(f"Your page: {SITE}/app/?profile={VOICE_PROFILE}")
+    if voice.counted < 7:
+        need = 7 - voice.counted
+        log(f"Your voice notes need {need} more day(s) of at least {MIN_WORDS} words before Bellwether compares anything. About two minutes of talking a day.")
+    else:
+        log("Your voice-note baseline is set. Every new day is compared with it.")
+    log("The words were read here and discarded. Only the day rows were sent.")
+    return 0

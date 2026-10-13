@@ -75,7 +75,29 @@ export function BeeConnect() {
         the network, and it carries nine numbers a day.
       </p>
 
-      <ol className="mt-6 space-y-3">
+      {/*
+        The one command. A family does not want five tools; they want
+        the band read, the numbers sent and their page opened, with the
+        Bee app's own words if something is missing. The five steps below
+        are what that command does, so a careful reader can check it.
+      */}
+      <div className="mt-6 rounded-[var(--radius-md)] border border-[var(--primary)] bg-surface p-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <p className="font-medium text-ink">Or the whole thing, in one command</p>
+          <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${WHERE.yours.cls}`}>Steps 1 and 2 first, then this</span>
+        </div>
+        <p className="mt-2 text-sm leading-relaxed text-muted">
+          Reads your voice notes and the band&apos;s conversations, turns each day into nine numbers here, sends only those,
+          and prints the link to your own page. If Bee is not logged in it says so in the words the Bee app uses.
+          Rehearsed in tests for every way it can stop, and for the one thing it must never do: print a word you said.
+        </p>
+        <pre className="mt-3 overflow-x-auto rounded-[var(--radius-sm)] border border-line bg-bg p-3 font-mono text-[12px] leading-relaxed text-ink">
+          <code>bellwether-ingest mine</code>
+        </pre>
+      </div>
+
+      <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-muted">What that command does, step by step</p>
+      <ol className="mt-3 space-y-3">
         {STEPS.map((s, i) => (
           <li
             key={s.title}
