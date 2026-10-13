@@ -12,10 +12,10 @@
  * nine numbers a day. The badge on each step says which side of that line
  * it is on.
  *
- * The status note is the honest part. The pipeline is built and every
- * failure of the first run is rehearsed in tests with an injected runner,
- * but the device is on order, so no real Bee day has been through it yet.
- * The page says that rather than letting the steps imply otherwise.
+ * The status note is the honest part. The pipeline has run on the
+ * builder's own band since 2026-09-29, and the one thing Bee does not
+ * give is who was speaking, so the note says what the two streams are
+ * rather than letting the steps imply more than they do.
  */
 
 import { API } from "../lib/api";
@@ -105,12 +105,13 @@ export function BeeConnect() {
       */}
       <p className="mt-6 max-w-[720px] text-sm leading-relaxed text-muted">
         <span className="font-medium text-ink">Where this actually stands: </span>
-        every step is built, and every way the first run can fail is
-        rehearsed in tests before the hardware exists. The device is on
-        order, so no real Bee day has been through the pipeline yet. The day
-        one does, <code className="font-mono text-[12px]">bellwether-ingest evidence</code>{" "}
-        writes a public record that it happened, containing counts and the
-        nine numbers and not one word of speech.
+        every step above has run on the builder's own band since
+        2026-09-29, and <code className="font-mono text-[12px]">bellwether-ingest evidence</code>{" "}
+        writes the public record of it, counts and the nine numbers and not
+        one word of speech. What Bee does not yet give is who was speaking:
+        every ambient utterance is labelled Unknown, so the wearer's own
+        speech comes from voice notes, and the conversation stream is shown
+        as the room's, not the wearer's. Both are on the dashboard, labelled.
       </p>
     </div>
   );

@@ -76,4 +76,4 @@ Stated here as well as in docs/AWS.md, because the rules ask for it in the feedb
 
 ## Still to record
 
-- The Bee device itself: pairing, Developer Mode, first real `bee now --json` payload (which becomes a test fixture), speaker-label behaviour, sync latency, and rate limits. The week-one gate in TECHNICAL_DESIGN.md lists the questions.
+- Rate limits on the Bee CLI: a backfill of 182 conversations has never been throttled, so there is nothing to report yet. Pairing, Developer Mode, the real payload shapes, speaker labels and sync latency are all recorded above and in the friction log (entries 11 to 14).
