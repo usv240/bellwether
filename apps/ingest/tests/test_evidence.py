@@ -157,3 +157,24 @@ def test_a_failed_command_is_recorded_rather_than_hidden():
     data = capture(BeeCli(runner=broken))
     assert all(c["ok"] is False for c in data["calls"])
     assert "failed" in to_markdown(data)
+
+
+def test_a_voice_note_is_counted_and_its_words_are_not_published():
+    """Voice notes are the wearer's own speech and the most private thing
+    on the account. They are counted in the record and reduced like any
+    other day, and not one of their words reaches the file."""
+    note = "I renewed the prescription at Hillcrest pharmacy and phoned Marguerite about the deposit."
+
+    def with_notes(argv: list[str]) -> tuple[int, str, str]:
+        if "journals" in argv:
+            return (0, json.dumps({"journals": [{"id": "j9", "text": note, "state": "processed",
+                                                  "created_at": 1791400000000}], "next_cursor": None}), "")
+        return runner(argv)
+
+    data = capture(BeeCli(runner=with_notes))
+    text = to_markdown(data)
+    assert data["totals"]["voiceNotes"] == 1 and data["totals"]["voiceNoteDays"] == 1
+    assert [c["ok"] for c in data["calls"] if c["call"] == "voice notes"] == [True]
+    assert "Voice notes, the wearer's own speech: 1 across 1 day(s)" in text
+    leaked = words_of(note) & words_of(text)
+    assert not leaked, leaked

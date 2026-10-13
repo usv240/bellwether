@@ -47,11 +47,20 @@ words. [BEE_LIVE.md](BEE_LIVE.md) is the record, written by
 `bellwether-ingest evidence`: counts, shapes and the nine features from a
 real day of the operator's own speech, and not one word of it.
 
-What the device has not yet given is time. The engine needs seven days
-of warmup before it compares a day with anything, and the video's live
-shots need at least ten days worn. Until then the personas are still
-synthetic and say so, in the fixtures, in the API responses and on every
-page that shows them. The external validation in `harness/scotus` is real
+**Two streams of real data, labelled.** Fourteen days in, the device
+had given 143 conversations and not one utterance with a speaker other
+than "Unknown", even after the app enrolled the wearer's voice (friction
+log entry 12, [bee-cli issue #19](https://github.com/bee-computer/bee-cli/issues/19)).
+A personal baseline built on everyone within earshot is not a personal
+baseline, so the live site now shows the wearer's Bee as two profiles
+and says which is which. *My voice notes* is `bee journals`: notes the
+wearer records on purpose, so the speaker is certain by construction,
+read by `bellwether-ingest pull --journals` and posted to a profile of
+their own. *My conversations* is the band's everyday ambient speech with
+sessions over an hour and anything Bee calls media left out, which is a
+filter and is described as one. The simulated person stays, labelled,
+because a baseline that has never moved cannot show what moving looks
+like. The dashboard switches between the three in one row. The external validation in `harness/scotus` is real
 human speech, but it is Supreme Court audio rather than Bee audio, and it
 is offered as evidence about the engine rather than about the device.
 
@@ -87,7 +96,7 @@ It is also where the privacy guarantee is most at risk, so it is enforced rather
 - Repository (MIT): https://github.com/usv240/bellwether
 - Demo video (under 3 minutes): YouTube link, add when published. Shot list with pre-flight commands, and what to do if the device does not arrive in time: [VIDEO_SCRIPT.md](VIDEO_SCRIPT.md)
 
-The person shown live is simulated and labelled as such on every surface that touches them. The extractor, engine, store, tiers, report and MCP server are the product.
+The dashboard opens on a simulated person, labelled as such on every surface that touches them, and switches in one row to two profiles of real Bee data from the builder's own band: voice notes, whose speaker is certain, and everyday conversations, whose speaker is not. The extractor, engine, store, tiers, report and MCP server are the product.
 
 ## Shown on the site, not only claimed
 
@@ -95,15 +104,15 @@ Two things a visitor can press, both new, both mirroring a pattern proven in the
 
 **The privacy claim, checked live.** Bellwether's premise is that it never holds what a person said. The privacy section now sends one day to the real intake route with an ordinary morning's transcript attached, full of a name, a doctor, a family member, an address, an account number and a medication, then reads back what the store kept and searches it for each one. Three text fields are dropped at the door, twelve fields are kept, the only string left is the date, and none of the six survive. It runs against a fresh in-memory store per press, so no visitor can write into the deployed table, and the page says so. `apps/server/tests/test_privacy_check.py` includes a test that deliberately makes the intake leak and asserts the check notices, because a check that always reports "absent" would prove nothing.
 
-**Using it with your own Bee.** Five steps, each checked against the real CLI, and each badged by where the person's words are at that point: the first four on their own computer, only the fifth crossing the network, carrying nine numbers a day. The section says plainly that the device is on order and no real Bee day has been through the pipeline yet.
+**Using it with your own Bee.** Five steps, each checked against the real CLI, and each badged by where the person's words are at that point: the first four on their own computer, only the fifth crossing the network, carrying nine numbers a day. The section says plainly that Bee does not yet tell speakers apart, and gives the two commands that follow from it: voice notes for the wearer's own speech, and the filtered conversation stream for everything else.
 
 ## Tech implementation
 
-**202 tests**, passing from a clean clone with the documented install.
+**203 tests**, passing from a clean clone with the documented install.
 
 - **`speech-vitals` (MIT, the open-source deliverable).** Nine features, each carrying its literature citation and the direction the dementia-speech literature associates with decline, in code rather than in a paper. Deterministic: same text, same numbers, so any figure in a doctor report is reproducible from the day's transcript. The base package is dependency-free and imports anywhere, including a Lambda that only ever sees feature rows; extraction lives behind an `nlp` extra. A test asserts that a stored record holds no string but the date.
 - **The engine.** Warmup, EWMA baseline, concern-signed z-scores, a standardised composite, one-sided CUSUM (k 0.5, h 5.0, expected false-alarm interval on the order of nine hundred days), per-feature CUSUMs for attribution only, low-exposure exclusion, and a **freeze** so the baseline cannot learn its way out of a signal. Nothing that decides a tier calls a model.
-- **The Bee adapter.** Four ingestion paths, tolerant normalisation because the Bee docs name the fields but publish no full JSON example, owner isolation when Bee labels the wearer (on our band every speaker reads Unknown, so long sessions and media are filtered instead; friction log entry 12), a full-history backfill, and cursors saved only after features persist so processing is exactly-once.
+- **The Bee adapter.** Four ingestion paths, tolerant normalisation because the Bee docs name the fields but publish no full JSON example, owner isolation when Bee labels the wearer (on our band every speaker reads Unknown, so long sessions and media are filtered instead; friction log entry 12), a full-history backfill, and cursors saved only after features persist so processing is exactly-once. Since 2026-10-13 the wearer's voice notes (`bee journals`) are a stream of their own, the one whose speaker is certain, posted straight from `pull --journals --post`.
 - **The service.** FastAPI on Lambda behind a function URL. The public API accepts feature rows and **drops any field the schema does not know at the door**; a test posts a row containing a transcript and proves it never lands. Tiers, trends and reports are derived from stored rows on every read, never stored, so a summary cannot drift from the days that produced it.
 - **Nothing fails into silence.** A three-model Bedrock ladder falls to a deterministic template that is the engine's own summary, so the weekly note degrades in warmth and never in accuracy, and every note reports which model wrote it. `/api/resilience` reports every degradation path.
 
@@ -150,7 +159,7 @@ On AWS we used **Bedrock** (the weekly note through a three-model Claude ladder 
 
 ## Friction log
 
-Thirteen entries in [FRICTION_LOG.md](../FRICTION_LOG.md), each with task, steps, expected against actual, severity, workaround and an actionable suggestion. The one we would most want read is entry 12, written after nine days on the wrist: every one of 15,578 utterances is labelled "Unknown", so a product about the wearer's own speech cannot find the wearer, even after the app confirmed the wearer's voice was enrolled, and the fix Bee could ship is carrying that enrolment through to the developer data as a wearer flag. Entry 13 is its quieter companion: `bee changed` without a cursor returns recent changes only, so the first pull of a nine-day history came back with two days. Before the device: Bee publishes no full JSON example for any command, so the ingestion normaliser had to guess shapes (entry 1); speakers are labelled but not identified, with no `is_user` flag, so isolating the wearer's own speech is a heuristic (entry 2); and a Lambda function URL with CORS plus FastAPI CORS middleware emits two `Access-Control-Allow-Origin` headers, which no command-line check can see and which broke every browser call on the deployed site (entry 6). There is also a deliberately positive entry for the Bee CLI running on Windows unannounced. Three of the nine are not about anyone else's product: entry 7 is our own dashboard hiding its most important panel behind a fetch, entry 8 is spaCy failing to import from a deep Windows path with an error that names the wrong cause, and entry 9 records that this server was already correct on the transport shape that broke the other two, which we only know because we probed all three. Entry 10 is the newest and also ours: the spec's DNS-rebinding guidance says to validate `Origin` and does not say that a server which serves its own browser client must allow that client in, so ours answered its own front page with a 403 the first time anyone opened it in a browser.
+Fourteen entries in [FRICTION_LOG.md](../FRICTION_LOG.md), each with task, steps, expected against actual, severity, workaround and an actionable suggestion. The one we would most want read is entry 12, written after nine days on the wrist: every one of 15,578 utterances is labelled "Unknown", so a product about the wearer's own speech cannot find the wearer, even after the app confirmed the wearer's voice was enrolled, and the fix Bee could ship is carrying that enrolment through to the developer data as a wearer flag. Entry 13 is its quieter companion: `bee changed` without a cursor returns recent changes only, so the first pull of a nine-day history came back with two days. Entry 14 is the answer we found ourselves: a Bee voice note is the wearer's own speech by construction, which the docs never say, and it now carries the wearer's profile at the price of two minutes of deliberate talking a day. Before the device: Bee publishes no full JSON example for any command, so the ingestion normaliser had to guess shapes (entry 1); speakers are labelled but not identified, with no `is_user` flag, so isolating the wearer's own speech is a heuristic (entry 2); and a Lambda function URL with CORS plus FastAPI CORS middleware emits two `Access-Control-Allow-Origin` headers, which no command-line check can see and which broke every browser call on the deployed site (entry 6). There is also a deliberately positive entry for the Bee CLI running on Windows unannounced. Three of the nine are not about anyone else's product: entry 7 is our own dashboard hiding its most important panel behind a fetch, entry 8 is spaCy failing to import from a deep Windows path with an error that names the wrong cause, and entry 9 records that this server was already correct on the transport shape that broke the other two, which we only know because we probed all three. Entry 10 is the newest and also ours: the spec's DNS-rebinding guidance says to validate `Origin` and does not say that a server which serves its own browser client must allow that client in, so ours answered its own front page with a 403 the first time anyone opened it in a browser.
 
 ## Feature requests (optional)
 
@@ -179,7 +188,8 @@ None of the eighteen beats it on both axes. Both personas are synthetic and ours
 
 ## Honest limits
 
-- **The Bee device arrived on 2026-09-29 and has one day on it.** The chain runs on it end to end ([BEE_LIVE.md](BEE_LIVE.md)), and the two synthetic personas still carry the demonstration, because a personal baseline needs seven days of warmup and the video's live shots need at least ten days worn. Real operation on the operator's own history, and the footage of it, wait on the calendar rather than the hardware now.
+- **Bee does not yet say who was speaking.** Every utterance from fourteen days on the wrist is labelled "Unknown" (friction log entry 12, reported upstream). The conversation profile is therefore the band's surroundings with long sessions and media filtered out, not the wearer alone, and the site says so beside it. The wearer's own speech comes from voice notes recorded on purpose, which are certain but cost about two minutes of talking a day, so that profile has fewer days than the band has been worn.
+- **The simulated person still carries the demonstration of change.** The real profiles are stable, which is the expected and honest result for a healthy wearer over three weeks, and a baseline that has not moved cannot show what the watch and discuss tiers look like.
 - **No ADReSS validation, and no harness for it.** The benchmark's data is restricted to verified academic researchers by application, we do not have that access, and nothing here is validated against it. ADReSS is cited as the field's evidence that language features carry the signal, and for nothing else.
 - **No user testing.** Every design decision is reasoned from literature, not observed in a room with an older adult or a clinician.
 - **English only**, stated in the FAQ rather than hidden.

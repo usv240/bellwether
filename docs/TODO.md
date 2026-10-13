@@ -19,8 +19,14 @@ two live shots need at least ten days worn.
   week of days and no words. Look at the baseline forming on `/app`.
   Speaker labels were "Unknown" on day one; the pull takes whatever
   label Bee has settled on by then.
-- 2026-10-13: fourteen days. Record the two live shots (below), cut,
-  upload, done with a week to spare.
+- 2026-10-13: fourteen days, every speaker still "Unknown". From today
+  the wearer's own stream is voice notes: record about two minutes a
+  day in the Bee app (150 words is the floor; one note or several),
+  then `./.venv/Scripts/bellwether-ingest pull --journals --post me-voice`
+  and `pull --backfill --max-minutes 60 --post me` to refresh both live
+  profiles. Seven days of notes are warmup, so 2026-10-21 is the first
+  day the voice-note profile compares anything; record the live shots
+  on the 21st or 22nd.
 
 ## The video (not started; the script is written)
 

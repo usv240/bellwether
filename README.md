@@ -32,14 +32,14 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 |---|---|---|
 | [`packages/speech-vitals`](packages/speech-vitals) | The open-source feature package, on PyPI as [`speech-vitals`](https://pypi.org/project/speech-vitals/) (`pip install speech-vitals`). MIT, dependency-free core. Nine language features per day, each with its literature basis and concerning direction. Features only, never words. | 25 |
 | [`apps/engine`](apps/engine) | The personal baseline: warmup, EWMA baseline, concern-signed composite, CUSUM drift detection, explainable tiers, low-exposure exclusion, and a freeze so the baseline cannot learn its way out of a signal. No model in the loop. Includes the claims suite (every published figure re-derived from the committed personas) the detector comparison against the two simpler rules it replaced, and the external harness that runs the engine over real speech. | 69 |
-| [`apps/ingest`](apps/ingest) | The Bee integration, called in code: `bee conversations`, `bee now`, `bee changed` with exactly-once cursors, a full-history backfill that skips sessions too long or too media-like to be the wearer, `bee stream --json`, `bee sync` markdown, owner isolation when Bee labels the wearer, and the wearer's own voice notes as a stream whose speaker is certain, posted straight to the service with `--post`. | 53 |
+| [`apps/ingest`](apps/ingest) | The Bee integration, called in code: `bee conversations`, `bee now`, `bee changed` with exactly-once cursors, a full-history backfill that skips sessions too long or too media-like to be the wearer, `bee stream --json`, `bee sync` markdown, owner isolation when Bee labels the wearer, and the wearer's own voice notes as a stream whose speaker is certain, posted straight to the service with `--post`. | 54 |
 | [`apps/server`](apps/server) | FastAPI: dashboard API, public features API, the MCP server, the Bedrock weekly note, the doctor report. Receives feature rows, never text. | 46 |
 | [`apps/web`](apps/web) | Landing page, dashboard, printable doctor report. Light and dark, 22 info buttons, 100 on accessibility. | |
 | [`apps/agent`](apps/agent) | Two Strands agents on Bedrock. One consumes Bellwether's MCP server as an outside client. The other holds **two** MCP servers at once, Bellwether's and Bee's own, to find the ordinary explanation for a change, behind an audited allowlist that withholds every Bee tool returning verbatim speech. | 9 |
 | [`harness/scotus`](harness/scotus) | The engine over real spontaneous speech nobody here wrote: 349 Supreme Court oral arguments by 8 justices. Restraint, sensitivity at a known effect size, and the measured case for an own baseline. | |
 | [`fixtures/personas`](fixtures/personas) | Two synthetic personas through the real extractor and engine, labelled SIMULATED. They share a seed and differ only in whether a change is injected from day 35, which is asserted, so the comparison is controlled. | |
 
-**202 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
+**203 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
 
 ## Real speech, not ours
 
@@ -158,7 +158,7 @@ It has already paid for itself. Its first run across the three deployed Lambdas 
 
 ## Status
 
-The device arrived on 2026-09-29 and the chain ran end to end on it the same day: [docs/BEE_LIVE.md](docs/BEE_LIVE.md) is the record, counts and the nine numbers from a real day and not one word. The first session also found that the CLI's shapes differed from every fixture in three ways, now pinned in `apps/ingest/tests/test_device_shapes.py`. The wristband still gates the video: the engine needs seven days of warmup, and the live shots need at least ten days worn.
+The device arrived on 2026-09-29 and the chain ran end to end on it the same day: [docs/BEE_LIVE.md](docs/BEE_LIVE.md) is the record, counts and the nine numbers from a real day and not one word. The first session also found that the CLI's shapes differed from every fixture in three ways, now pinned in `apps/ingest/tests/test_device_shapes.py`. Fourteen days in, every speaker Bee returns is "Unknown" (FRICTION_LOG entry 12, [bee-cli issue #19](https://github.com/bee-computer/bee-cli/issues/19)), so the live site shows the wearer's band as two labelled profiles: voice notes, the wearer's own speech by construction, and everyday conversations with long sessions and media filtered out. Both are real; the site says which is which.
 
 ## License
 

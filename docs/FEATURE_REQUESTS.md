@@ -16,7 +16,7 @@ There is no documented way to know which speech is the person wearing the device
 
 On a real device it is worse than generic labels. After nine days worn, every one of 15,578 utterances on our account was labelled "Unknown", including every utterance recorded after the app confirmed the wearer's voice was enrolled: the app knows the voice and the developer data never uses it. We work around it by leaving out sessions longer than an hour and anything Bee's own summary calls media, which is a filter and not an identification. One boolean, carried through from the voice enrolment the app already has, would remove an entire class of silent error from every project built on Bee data.
 
-Friction log entries 2 and 12.
+Since then we found that Bee voice notes (`bee journals`) are the wearer's speech by construction, because the wearer records them on purpose, and Bellwether now runs them as a stream of their own. It is a real answer at a real price, about two minutes of deliberate talking a day, where the flag would make every ambient word count. Friction log entries 2, 12 and 14.
 
 ### 2. One verbatim JSON example per data command
 

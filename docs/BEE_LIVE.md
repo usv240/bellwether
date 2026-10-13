@@ -3,7 +3,7 @@
 Evidence that this project reads a real Bee device, captured by
 `bellwether-ingest evidence`.
 
-Captured: 2026-10-08T05:07:37+00:00. Commands answering: 3 of 3.
+Captured: 2026-10-13T18:04:23+00:00. Commands answering: 3 of 3.
 
 Counts, shapes and the nine features only. No transcript text, no conversation titles, no names, no locations. The input is a real person's day and the output is designed to be publishable.
 
@@ -17,10 +17,10 @@ Counts, shapes and the nine features only. No transcript text, no conversation t
 
 ## What the device returned
 
-- Conversations: 133
-- Utterances: 15578
-- Days with speech: 9
-- Words read on this machine: 130229
+- Conversations: 182
+- Utterances: 22842
+- Days with speech: 14
+- Words read on this machine: 186048
 - Words written to this file: 0
 
 That last pair is the product in one line. The words were read, counted
@@ -86,14 +86,14 @@ publishing any content.
   "id": 53269,
   "first_name": "<string, 5 chars>",
   "last_name": "<string, 7 chars>",
-  "timezone": "<string, 15 chars>"
+  "timezone": "<string, 16 chars>"
  },
  {
-  "since": 1791400059048,
-  "until": 1791436059048,
-  "timezone": "<string, 15 chars>",
+  "since": 1791878665944,
+  "until": 1791914665944,
+  "timezone": "<string, 16 chars>",
   "conversations": [
-   "list of 13"
+   "list of 2"
   ]
  },
  {
@@ -101,7 +101,7 @@ publishing any content.
    "list of 50"
   ],
   "next_cursor": "<string, 25 chars>",
-  "timezone": "<string, 15 chars>"
+  "timezone": "<string, 16 chars>"
  }
 ]
 ```

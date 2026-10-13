@@ -132,4 +132,14 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Workaround: `pull --backfill` pages `bee conversations list` to the end and fetches every row with `get` (about three minutes for 133 conversations). The evidence capture does the same.
 - Suggestion: document the window `changed` covers without a cursor, or accept `--since <date>`; and add `--all` to `conversations list` so paging is not every client's job. We wrote the second one: [bee-cli PR #20](https://github.com/bee-computer/bee-cli/pull/20) adds `bee conversations list --all`, with four tests and one round of review feedback addressed; on this account it returns all 143 conversations where `list` alone returns 20.
 
+## Entry 14: the one Bee stream whose speaker is certain is the voice note, and nothing in the docs says so (2026-10-13, fourteen days worn, partly positive)
+
+- Task: with every conversation utterance labelled "Unknown" (entry 12), find any Bee data that is the wearer's own speech by construction rather than by filter.
+- Steps: read the CLI's resource list, tried `bee journals list --json`, `get` and `search`; recorded two voice notes in the Bee app and pulled them; built `bellwether-ingest pull --journals`, which reads only that resource and labels every utterance as the wearer.
+- Expected: nothing. The readme describes journals as notes, with no mention that they are recorded on purpose by the person wearing the band.
+- Actual: they are exactly that. A voice note is the wearer pressing record and speaking, so its `text` is the wearer's speech with nobody else in it, and the CLI returns it with an `id`, `state` and `created_at` in epoch milliseconds, the same conventions as conversations. Two notes recorded at 17:37 UTC came back processed within the minute. Bellwether now runs two streams of real data side by side: the wearer's voice notes, whose speaker is certain, and the band's everyday conversations, whose speaker is not; the site labels which is which.
+- Severity: low as a defect, high as a finding. It costs the wearer about two minutes of talking a day (the engine excludes any day under 150 words), which is a real price, and the docs could have saved a week of waiting for labels by saying this is the stream for the wearer's own voice.
+- Workaround: `bellwether-ingest pull --journals --out voice.json`, then post to a profile of its own, so neither stream is mistaken for the other.
+- Suggestion: say in the journals reference that notes are the wearer's own speech, and give the resource a word count or duration field so a client can tell a ten-second note from a two-minute one without reading the text.
+
 <!-- Add new entries above this line as they happen. -->

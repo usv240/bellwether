@@ -43,8 +43,8 @@ const STEPS: { title: string; body: string; code: string; where: "device" | "you
   },
   {
     title: "Turn your days into numbers",
-    body: "Each day of your speech becomes nine numbers. The words are read, measured and discarded here. If Bee labels your voice, pass that label as --owner and only your speech is kept. If every speaker reads Unknown, as on our band, sessions over an hour and anything Bee calls media are left out instead, which is a filter rather than your voice alone.",
-    code: "bellwether-ingest pull --backfill --max-minutes 60 --out days.json",
+    body: "Each day of your speech becomes nine numbers. The words are read, measured and discarded here. Bee does not yet say which speaker is you, so there are two streams. Your voice notes are certainly you: record about two minutes a day in the Bee app, and the first command reads only those. The second is the band's everyday conversations with sessions over an hour and anything Bee calls media left out, which is a filter rather than your voice alone.",
+    code: "bellwether-ingest pull --journals --out voice.json\nbellwether-ingest pull --backfill --max-minutes 60 --out days.json",
     where: "yours",
   },
   {
@@ -52,7 +52,7 @@ const STEPS: { title: string; body: string; code: string; where: "device" | "you
     body: "This is the only step that leaves your computer, and by now there is nothing in it that could reconstruct a sentence. Open the file first if you want to see for yourself.",
     // The real URL, not a placeholder. "$API" read fine to anyone who had
     // seen this repository and meant nothing to anyone who had not.
-    code: `curl -X POST ${API}/v1/profiles/me/days \\\n  -H "content-type: application/json" -d @days.json`,
+    code: `curl -X POST ${API}/v1/profiles/me-voice/days \\\n  -H "content-type: application/json" -d @voice.json\ncurl -X POST ${API}/v1/profiles/me/days \\\n  -H "content-type: application/json" -d @days.json`,
     where: "network",
   },
 ];
