@@ -174,7 +174,7 @@ def test_a_voice_note_is_counted_and_its_words_are_not_published():
     data = capture(BeeCli(runner=with_notes))
     text = to_markdown(data)
     assert data["totals"]["voiceNotes"] == 1 and data["totals"]["voiceNoteDays"] == 1
-    assert [c["ok"] for c in data["calls"] if c["call"] == "voice notes"] == [True]
-    assert "Voice notes, the wearer's own speech: 1 across 1 day(s)" in text
+    assert [c["ok"] for c in data["calls"] if c["call"] == "check-ins"] == [True]
+    assert "Check-in utterances, the wearer talking to the band on purpose: 1 across 1 day(s)" in text
     leaked = words_of(note) & words_of(text)
     assert not leaked, leaked

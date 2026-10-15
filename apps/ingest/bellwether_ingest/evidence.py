@@ -27,7 +27,7 @@ from datetime import datetime, timezone
 
 from speech_vitals import FEATURE_NAMES, aggregate_day
 
-from .bee import BeeCli, BeeCliError, ingest_journals, normalize_conversation, with_utterances
+from .bee import BeeCli, BeeCliError, ingest_checkins, normalize_conversation, with_utterances
 
 # Anything that could carry speech. The rule is an allowlist of shapes we
 # understand rather than a blocklist of fields we happen to have seen,
@@ -140,7 +140,7 @@ def capture(cli: BeeCli | None = None) -> dict:
 
     # The wearer's voice notes: the one stream whose speaker is certain.
     # Counted and reduced the same way; the words meet the same fate.
-    notes = attempt("voice notes", "bee journals list --json", lambda: ingest_journals(cli)) or []
+    notes = attempt("check-ins", "bee journals list --json, then the anchored conversations get", lambda: ingest_checkins(cli)) or []
     note_days: dict[str, list] = {}
     for u in notes:
         note_days.setdefault(u.ts[:10], []).append(u)
@@ -191,7 +191,7 @@ def to_markdown(data: dict) -> str:
         f"- Conversations: {totals.get('conversations', 0)}",
         f"- Utterances: {totals.get('utterances', 0)}",
         f"- Days with speech: {totals.get('days', 0)}",
-        f"- Voice notes, the wearer's own speech: {totals.get('voiceNotes', 0)} "
+        f"- Check-in utterances, the wearer talking to the band on purpose: {totals.get('voiceNotes', 0)} "
         f"across {totals.get('voiceNoteDays', 0)} day(s)",
         f"- Words read on this machine: {totals.get('wordsSeen', 0)}",
         f"- Words written to this file: {totals.get('wordsPublished', 0)}",

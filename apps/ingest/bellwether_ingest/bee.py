@@ -552,6 +552,122 @@ def ingest_journals(cli: BeeCli, max_pages: int = 100) -> list[Utterance]:
     return out
 
 
+# ---- check-ins -------------------------------------------------------------
+#
+# On the device, a Bee voice note ends after a sentence: five notes on this
+# account ran 1 to 15 words, each marked READY three seconds after it was
+# made, while the band captured the same minute as a conversation of 100 to
+# 150 words. A note alone cannot carry a day. But it can prove who started
+# one: the band's session that begins within a couple of minutes of the
+# note and opens with the note's own words is the wearer talking, on
+# purpose, to the band. That is a check-in, and it is the stream whose
+# speaker is as certain as the device allows.
+
+CHECKIN_BEFORE_S = 60          # the band may have opened the session just before the note
+CHECKIN_START_WINDOW_S = 180   # or a little after; beyond that it is a different session
+CHECKIN_KEEP_MIN = 10          # how much of the session after the note is the check-in
+CHECKIN_MIN_NOTE_WORDS = 3     # fewer words cannot anchor anything
+
+_WORD = re.compile(r"[a-z']+")
+
+
+def _words(text) -> list[str]:
+    return _WORD.findall(str(text or "").lower())
+
+
+def note_anchors(note_words: list[str], session_words: list[str]) -> bool:
+    """Does the session open with the note? Either half of the note's word
+    pairs appear in order in the session's first hundred words, or seven
+    in ten of its distinct words do. The second rule is for the device's
+    habit of transcribing the same minute twice with small differences:
+    on 2026-10-15 a nine-word note shared 7 of 9 words with the session
+    that followed it and only 3 of 8 pairs."""
+    if len(note_words) < CHECKIN_MIN_NOTE_WORDS:
+        return False
+    head_words = session_words[:100]
+    head = " ".join(head_words)
+    pairs = [f"{a} {b}" for a, b in zip(note_words, note_words[1:])]
+    hits = sum(1 for p in pairs if p in head)
+    if hits * 2 >= len(pairs):
+        return True
+    distinct = set(note_words)
+    return sum(1 for w in distinct if w in set(head_words)) * 10 >= len(distinct) * 7
+
+
+def _ms(value) -> int | None:
+    iso = to_iso(value)
+    if not iso:
+        return None
+    from datetime import datetime
+
+    return int(datetime.fromisoformat(iso.replace("Z", "+00:00")).timestamp() * 1000)
+
+
+def ingest_checkins(cli: BeeCli, max_pages: int = 100, keep_minutes: float = CHECKIN_KEEP_MIN) -> list[Utterance]:
+    """Every check-in on the account: the wearer's voice note, plus the
+    band's session it anchors, up to ``keep_minutes`` after the note.
+
+    A session anchors to a note when it starts within a minute before or
+    three minutes after the note and opens with the note's words. A note
+    with no such session still counts for its own words, which is what
+    ``ingest_journals`` returns. Nothing a session says before the note or
+    after the window is kept, and no session is used twice.
+    """
+    notes: list[dict] = []
+    cursor: str | None = None
+    for _ in range(max_pages):
+        payload = cli.journals_list(limit=50, cursor=cursor)
+        items = payload.get("journals") if isinstance(payload, dict) else payload
+        notes.extend(r for r in items or [] if isinstance(r, dict) and str(r.get("text") or "").strip())
+        cursor = _next_cursor(payload)
+        if not cursor or not items:
+            break
+    if not notes:
+        return []
+    oldest = min(_ms(n.get("created_at")) or 0 for n in notes)
+
+    rows: list[dict] = []
+    cursor = None
+    for _ in range(max_pages):
+        payload = cli.conversations_list(limit=100, cursor=cursor)
+        items = payload
+        if isinstance(payload, dict):
+            items = payload.get("conversations") or payload.get("items") or payload.get("data") or []
+        rows.extend(r for r in items or [] if isinstance(r, dict))
+        cursor = _next_cursor(payload)
+        last = _ms(items[-1].get("start_time")) if items and isinstance(items[-1], dict) else None
+        if not cursor or not items or (last is not None and last < oldest - CHECKIN_START_WINDOW_S * 1000):
+            break
+
+    out: list[Utterance] = []
+    used: set[str] = set()
+    for note in sorted(notes, key=lambda n: _ms(n.get("created_at")) or 0):
+        at = _ms(note.get("created_at"))
+        text = str(note.get("text") or "").strip()
+        if at is None:
+            continue
+        out.append(Utterance(ts=to_iso(at), text=text, speaker=WEARER, conversation_id=f"journal-{note.get('id')}"))
+        nw = _words(text)
+        for row in rows:
+            start = _ms(row.get("start_time"))
+            cid = str(row.get("id"))
+            if start is None or cid in used or not (at - CHECKIN_BEFORE_S * 1000 <= start <= at + CHECKIN_START_WINDOW_S * 1000):
+                continue
+            fetched = with_utterances(cli, [row], limit=1)
+            session = normalize_conversation(fetched[0]) if fetched else []
+            if not session or not note_anchors(nw, _words(" ".join(u.text for u in session))):
+                continue
+            used.add(cid)
+            until = at + int(keep_minutes * 60000)
+            for u in session:
+                t = _ms(u.ts)
+                if t is not None and at - CHECKIN_BEFORE_S * 1000 <= t <= until:
+                    out.append(Utterance(ts=u.ts, text=u.text, speaker=WEARER, conversation_id=f"checkin-{cid}"))
+            break
+    out.sort(key=lambda u: u.ts)
+    return out
+
+
 def ingest_now(cli: BeeCli, owner: OwnerFilter) -> list[Utterance]:
     """The last several hours, for a live today view."""
     payload = cli.now()

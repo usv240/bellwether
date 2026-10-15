@@ -43,8 +43,8 @@ const STEPS: { title: string; body: string; code: string; where: "device" | "you
   },
   {
     title: "Turn your days into numbers",
-    body: "Each day of your speech becomes nine numbers. The words are read, measured and discarded here. Bee does not yet say which speaker is you, so there are two streams. Your voice notes are certainly you: record about two minutes a day in the Bee app, and the first command reads only those. The second is the band's everyday conversations with sessions over an hour and anything Bee calls media left out, which is a filter rather than your voice alone.",
-    code: "bellwether-ingest pull --journals --out voice.json\nbellwether-ingest pull --backfill --max-minutes 60 --out days.json",
+    body: "Each day of your speech becomes nine numbers. The words are read, measured and discarded here. Bee does not yet say which speaker is you, so there are two streams. A check-in is you: a short voice note in the Bee app proves who started it, and the band's session that opens with the note's words is the two minutes you then talk alone. The first command reads only those. The second is the band's everyday conversations with sessions over an hour and anything Bee calls media left out, which is a filter rather than your voice alone.",
+    code: "bellwether-ingest pull --checkins --out voice.json\nbellwether-ingest pull --backfill --max-minutes 60 --out days.json",
     where: "yours",
   },
   {
@@ -87,7 +87,7 @@ export function BeeConnect() {
           <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${WHERE.yours.cls}`}>Steps 1 and 2 first, then this</span>
         </div>
         <p className="mt-2 text-sm leading-relaxed text-muted">
-          Reads your voice notes and the band&apos;s conversations, turns each day into nine numbers here, sends only those,
+          Reads your check-ins and the band&apos;s conversations, turns each day into nine numbers here, sends only those,
           and prints the link to your own page. If Bee is not logged in it says so in the words the Bee app uses.
           Rehearsed in tests for every way it can stop, and for the one thing it must never do: print a word you said.
         </p>
@@ -132,8 +132,9 @@ export function BeeConnect() {
         writes the public record of it, counts and the nine numbers and not
         one word of speech. What Bee does not yet give is who was speaking:
         every ambient utterance is labelled Unknown, so the wearer's own
-        speech comes from voice notes, and the conversation stream is shown
-        as the room's, not the wearer's. Both are on the dashboard, labelled.
+        speech comes from check-ins they start on purpose, and the
+        conversation stream is shown as the room's, not the wearer's. Both
+        are on the dashboard, labelled.
       </p>
     </div>
   );

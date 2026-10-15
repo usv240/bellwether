@@ -72,7 +72,7 @@ export function FirstWeek({ days, assessments, eligibleDays }: { days: DayRow[];
           </div>
           <p className="mt-2 text-sm leading-relaxed text-muted">
             {voice
-              ? `About ${Math.max(1, Math.ceil((MIN_WORDS - latest.token_count_day) / 130))} more minute${MIN_WORDS - latest.token_count_day > 130 ? "s" : ""} of talking today, as one voice note or several in the Bee app, and this day counts. Any topic: what you did, what is on your mind, plans for tomorrow.`
+              ? `About ${Math.max(1, Math.ceil((MIN_WORDS - latest.token_count_day) / 130))} more minute${MIN_WORDS - latest.token_count_day > 130 ? "s" : ""} of talking today and this day counts. Check in: a short voice note in the Bee app, then keep talking to the band on your own. Any topic: what you did, what is on your mind, plans for tomorrow.`
               : "A day needs 150 words of speech to count. Quiet days are left out rather than misread as change."}
           </p>
         </div>

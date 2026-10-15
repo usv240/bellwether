@@ -18,9 +18,11 @@ export const API =
  * show the project using live Bee data, and until this existed the only
  * page that could show it was hard-wired to the persona.
  *
- * `?profile=me-voice` is the same wristband's voice notes alone. Bee
- * labels every ambient speaker Unknown, so the conversation stream cannot
- * be narrowed to the wearer; a voice note is the wearer by construction.
+ * `?profile=me-voice` is the same wristband's check-ins. Bee labels every
+ * ambient speaker Unknown, so the conversation stream cannot be narrowed
+ * to the wearer. A voice note is the wearer by construction, but on the
+ * device a note ends after a sentence, so a check-in is the note plus the
+ * band's session it anchors: the wearer started it, on purpose, alone.
  *
  * An allow-list, not the raw parameter, so a URL cannot point the page at
  * an arbitrary profile id.
@@ -34,8 +36,8 @@ export const PROFILES = {
   },
   "me-voice": {
     simulated: false,
-    label: "Real Bee: voice notes",
-    note: "The builder's own Bee voice notes: speech that is certainly the wearer's, with no one else in it. A day counts once it holds 150 words.",
+    label: "Real Bee: check-ins",
+    note: "The builder's own check-ins: a short voice note, then two minutes of talking to the band alone. The note proves who started it; the session it anchors is the rest. A day counts once it holds 150 words.",
   },
 } as const;
 
@@ -43,7 +45,7 @@ export const PROFILES = {
 export const PROFILE_TABS: { id: ProfileId; short: string }[] = [
   { id: "alex-drift", short: "Simulated person" },
   { id: "me", short: "My conversations" },
-  { id: "me-voice", short: "My voice notes" },
+  { id: "me-voice", short: "My check-ins" },
 ];
 
 /** A page path for a profile, with no parameter for the default. */

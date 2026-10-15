@@ -152,4 +152,14 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Workaround: anything that names the profile waits for the client (`mounted` state set in an effect) and the prerender carries a neutral header. All three pages are back to 100 on accessibility, best practices and SEO.
 - Suggestion: for ourselves, run Lighthouse on the pages that take parameters and not only on the landing page; a static export with URL-driven state is a hydration mismatch waiting to happen, and the framework's error page says so only after it has happened.
 
+## Entry 16: a Bee voice note ends after a sentence, so the one certain stream cannot carry a day on its own (2026-10-15)
+
+- Task: build the wearer's own baseline from voice notes, two minutes a day (entry 14).
+- Steps: recorded notes in the Bee app on 2026-10-13 and 2026-10-15 while speaking for about a minute each time; read them back with `bee journals list --json`; compared with `bee conversations list` for the same minutes.
+- Expected: a note the length of the speech, or a documented maximum.
+- Actual: five notes of 1, 6, 9, 12 and 15 words, each marked READY three seconds after it was created, two of them ten seconds apart. In the same minutes the band captured the same speech as conversations of 101 and 151 words. The note records a sentence and stops; nothing in the app or the docs says so, and `text` is the whole record.
+- Severity: medium. The one stream whose speaker is certain holds about ten seconds a day, which is below any floor a language measure can use.
+- Workaround: a check-in. The note proves who started it; the band's session that begins within a minute before or three minutes after the note and opens with the note's words is the wearer talking to the band on purpose, and `bellwether-ingest pull --checkins` keeps the next ten minutes of it. On 2026-10-15 that turned 16 words of notes into 265 words of check-in, and the day counted. The rule is pinned by five tests, including the session that started fourteen minutes before a note (a meeting, not a check-in) and a session in the same minute with different words.
+- Suggestion: let a note run until the wearer stops it, or document the limit; and the `is_wearer` flag of entry 12 would make all of this unnecessary.
+
 <!-- Add new entries above this line as they happen. -->

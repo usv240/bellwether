@@ -234,3 +234,73 @@ def test_post_sends_only_the_day_rows(monkeypatch):
     assert sent["url"] == "https://api.example/v1/profiles/me-voice/days"
     assert sent["body"] == [row]
     assert res["tier"] == "learning"
+
+
+def _checkin_runner(conv_start_ms: int, session_text: str, note_text: str = "Today is Wednesday and I am recording my note", note_ms: int = 1792090293000):
+    """A note, and one conversation whose words may or may not open with it."""
+    def runner(argv: list[str]):
+        if "journals" in argv:
+            return (0, json.dumps({"journals": [{"id": "n1", "text": note_text, "state": "READY", "created_at": note_ms}], "next_cursor": None}), "")
+        if "conversations" in argv and "list" in argv:
+            return (0, json.dumps({"conversations": [{"id": 77, "start_time": conv_start_ms, "end_time": conv_start_ms + 120000, "utterances_count": 3}], "next_cursor": None}), "")
+        if "conversations" in argv and "get" in argv:
+            words = session_text.split()
+            utts = [{"text": " ".join(words[i:i + 6]), "speaker": "Unknown", "spoken_at": conv_start_ms + i * 4000} for i in range(0, len(words), 6)]
+            return (0, json.dumps({"conversation": {"id": 77, "start_time": conv_start_ms, "transcriptions": [{"utterances": utts}]}}), "")
+        return (1, "", "unexpected")
+    return runner
+
+
+def test_a_check_in_is_the_note_plus_the_session_it_anchors():
+    """The band opened a session 18 seconds after the note and its first
+    words are the note's words: that session is the wearer's check-in."""
+    from bellwether_ingest.bee import WEARER, ingest_checkins
+
+    note_ms = 1792090293000
+    session = "today is wednesday and i am recording my note the morning was quiet and I walked to the market and then worked on the project until lunch"
+    utts = ingest_checkins(BeeCli(runner=_checkin_runner(note_ms + 18000, session)))
+    assert [u.conversation_id for u in utts][:2] == ["journal-n1", "checkin-77"]
+    assert all(u.speaker == WEARER for u in utts)
+    assert sum(len(u.text.split()) for u in utts) > 20
+
+
+def test_a_session_that_does_not_open_with_the_note_is_not_a_check_in():
+    """Same minute, different words: a conversation that happened to start
+    near the note, not the wearer's check-in."""
+    from bellwether_ingest.bee import ingest_checkins
+
+    note_ms = 1792090293000
+    utts = ingest_checkins(BeeCli(runner=_checkin_runner(note_ms + 18000, "could you pass the salt the eggs are bland and the train was late again this morning")))
+    assert [u.conversation_id for u in utts] == ["journal-n1"]
+
+
+def test_a_session_that_started_long_before_the_note_is_not_a_check_in():
+    """On 2026-10-13 the two notes matched a 596-utterance session that had
+    started fourteen minutes earlier: a meeting the wearer spoke in, not a
+    check-in. The start window keeps it out."""
+    from bellwether_ingest.bee import ingest_checkins
+
+    note_ms = 1792090293000
+    session = "today is wednesday and i am recording my note and then a long meeting continues"
+    utts = ingest_checkins(BeeCli(runner=_checkin_runner(note_ms - 14 * 60000, session)))
+    assert [u.conversation_id for u in utts] == ["journal-n1"]
+
+
+def test_a_check_in_keeps_ten_minutes_and_not_the_rest_of_the_day():
+    from bellwether_ingest.bee import ingest_checkins
+
+    note_ms = 1792090293000
+    session = "today is wednesday and i am recording my note " + "and more words follow for a long time " * 60
+    utts = ingest_checkins(BeeCli(runner=_checkin_runner(note_ms + 5000, session)))
+    kept = [u for u in utts if u.conversation_id == "checkin-77"]
+    from bellwether_ingest.bee import _ms
+    assert kept and max(_ms(u.ts) for u in kept) <= note_ms + 10 * 60000
+    assert len(kept) < 70  # the session ran about 7 minutes of utterances; most are inside the window
+
+
+def test_a_one_word_note_anchors_nothing():
+    from bellwether_ingest.bee import ingest_checkins
+
+    note_ms = 1792090293000
+    utts = ingest_checkins(BeeCli(runner=_checkin_runner(note_ms + 5000, "okay so the morning was quiet", note_text="okay")))
+    assert [u.conversation_id for u in utts] == ["journal-n1"]

@@ -20,8 +20,9 @@ two live shots need at least ten days worn.
   Speaker labels were "Unknown" on day one; the pull takes whatever
   label Bee has settled on by then.
 - 2026-10-13: fourteen days, every speaker still "Unknown". From today
-  the wearer's own stream is voice notes: record about two minutes a
-  day in the Bee app (150 words is the floor; one note or several),
+  the wearer's own stream is check-ins: a short voice note in the Bee
+  app, then about two minutes of talking to the band alone (150 words
+  is the floor; a note alone holds a sentence, friction entry 16),
   then `./.venv/Scripts/bellwether-ingest pull --journals --post me-voice`
   and `pull --backfill --max-minutes 60 --post me` to refresh both live
   profiles. Seven days of notes are warmup, so 2026-10-21 is the first

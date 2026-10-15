@@ -45,7 +45,7 @@ def test_both_streams_are_posted_to_their_own_profiles():
     code, sent, out = harness(NOTE)
     assert code == 0
     assert [p for p, _ in sent] == ["me-voice", "me"]
-    assert "voice notes: 1 day(s) read, 1 count" in out
+    assert "check-ins: 1 day(s) read, 1 count" in out
     assert "/app/?profile=me-voice" in out
 
 
@@ -59,14 +59,14 @@ def test_not_one_word_of_speech_is_printed():
 def test_a_short_note_is_read_but_does_not_count():
     code, sent, out = harness("Just testing, one two three.")
     assert code == 0
-    assert "voice notes: 1 day(s) read, 0 count" in out
+    assert "check-ins: 1 day(s) read, 0 count" in out
     assert f"at least {MIN_WORDS} words" in out
 
 
 def test_nothing_recorded_says_what_to_do_and_sends_nothing():
     code, sent, out = harness(None, conversations=False)
     assert code == 4 and sent == []
-    assert "record one voice note" in out
+    assert "check in once" in out
 
 
 def test_not_logged_in_uses_the_apps_words():
@@ -78,11 +78,11 @@ def test_not_logged_in_uses_the_apps_words():
     def boom(*a, **k):
         raise BeeNotAuthenticated("x")
     import bellwether_ingest.mine as m
-    orig = m.ingest_journals; m.ingest_journals = boom
+    orig = m.ingest_checkins; m.ingest_checkins = boom
     try:
         code = first_day(cli, post=lambda d, p: None, reduce=reduce_to_days, log=lines.append)
     finally:
-        m.ingest_journals = orig
+        m.ingest_checkins = orig
     assert code == 3 and "bee login" in "\n".join(lines)
 
 
