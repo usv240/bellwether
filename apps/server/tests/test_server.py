@@ -286,3 +286,16 @@ def test_first_claim_wins_and_the_demo_profile_stays_open(client):
 def test_an_unclaimed_profile_is_open_as_before(client):
     assert client.post("/v1/profiles/fresh/days", json=synthetic_days(n=2)).status_code == 200
     assert client.get("/v1/profiles/fresh/claimed").json()["claimed"] is False
+
+
+def test_a_key_from_v1_keys_claims_and_writes_as_a_bearer_token(client):
+    res = client.post("/v1/keys")
+    assert res.status_code == 201
+    key = res.json()["key"]
+    assert key.startswith("bw_") and len(key) >= 16
+    assert client.post("/v1/profiles/judge/claim", json={"key": key}).status_code == 200
+    rows = synthetic_days(n=2)
+    assert client.post("/v1/profiles/judge/days", json=rows).status_code == 403
+    ok = client.post("/v1/profiles/judge/days", json=rows, headers={"authorization": f"Bearer {key}"})
+    assert ok.status_code == 200
+    assert client.get("/v1/profiles/judge/summary").status_code == 200

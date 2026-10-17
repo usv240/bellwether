@@ -8,7 +8,9 @@ Routes:
   GET  /v1/profiles/{id}/assessments?weeks=  day by day, derived on read
   GET  /v1/profiles/{id}/days                the stored feature rows (all that is stored)
   POST /v1/profiles/{id}/days                feature rows in (the public API and the ingest target)
-  POST /v1/profiles/{id}/claim               {key}: make the profile yours; writes then need X-Bellwether-Key
+  POST /v1/keys                              a free API key, no account (the same on all four sibling servers)
+  POST /v1/profiles/{id}/claim               {key}: make the profile yours; writes then need the key,
+                                             as Authorization: Bearer <key> or X-Bellwether-Key
   POST /v1/profiles/{id}/annotations         {date, note}
   POST /v1/profiles/{id}/checks              {kind, score, detail?}
   GET  /v1/profiles/{id}/report?weeks=       the doctor report as data
@@ -105,8 +107,11 @@ def require_key(store, profile_id: str, request: Request) -> None:
     if not expected:
         return
     given = request.headers.get(KEY_HEADER, "")
+    auth = request.headers.get("authorization", "")
+    if not given and auth.lower().startswith("bearer "):
+        given = auth[7:].strip()
     if not given or not hmac.compare_digest(_key_hash(given), expected):
-        raise HTTPException(403, f"profile {profile_id} is claimed; send its key in {KEY_HEADER}")
+        raise HTTPException(403, f"profile {profile_id} is claimed; send its key as Authorization: Bearer <key>")
 
 
 def validate_day(row) -> dict:
@@ -222,6 +227,21 @@ def build_app(
             store.put_day(profile_id, r)
         view = profile_view(store, profile_id)
         return {"stored": len(clean), "profile_id": profile_id, "tier": view["summary"].tier, "eligible_days": view["summary"].eligible_days}
+
+    @app.post("/v1/keys", status_code=201)
+    def new_key():
+        """A free API key, no account. It means nothing until it claims a
+        profile; then that profile's writes need it, and its reads stay
+        open, because a stored row is nine numbers and a date."""
+        import secrets
+
+        key = "bw_" + secrets.token_urlsafe(24)
+        return {
+            "key": key,
+            "next": "POST /v1/profiles/<your-name>/claim with {\"key\": \"<key>\"}, or run bellwether-ingest mine --profile <your-name>, which makes and claims its own.",
+            "use": "Send it as 'Authorization: Bearer <key>' on writes to your profile.",
+            "keepIt": "Only its hash is stored once it claims a profile. It cannot be recovered if lost.",
+        }
 
     @app.post("/v1/profiles/{profile_id}/claim")
     async def claim(profile_id: str, request: Request):
