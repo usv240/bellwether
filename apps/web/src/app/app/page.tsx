@@ -19,7 +19,9 @@ import {
   TIER_LABEL,
   fmtDate,
   getJSON,
+  ownerKey,
   postJSON,
+  setOwnerKey,
   type Assessment,
   type Note,
   type Summary,
@@ -54,6 +56,13 @@ export default function Dashboard() {
   const [annDate, setAnnDate] = useState("");
   const [annText, setAnnText] = useState("");
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [claimed, setClaimed] = useState(false);
+  const [keyDraft, setKeyDraft] = useState("");
+  useEffect(() => {
+    getJSON<{ claimed: boolean }>(`/v1/profiles/${PROFILE}/claimed`).then((r) => setClaimed(r.claimed)).catch(() => setClaimed(false));
+    setKeyDraft(ownerKey());
+  }, []);
 
   const [fluencyRunning, setFluencyRunning] = useState(false);
   const [fluencyLeft, setFluencyLeft] = useState(60);
@@ -101,10 +110,13 @@ export default function Dashboard() {
     e.preventDefault();
     if (!annDate || !annText.trim()) return;
     setSaving(true);
+    setSaveError(null);
     try {
       await postJSON(`/v1/profiles/${PROFILE}/annotations`, { date: annDate, note: annText.trim() });
       setAnnText("");
       await load();
+    } catch (e) {
+      setSaveError((e as Error).message);
     } finally {
       setSaving(false);
     }
@@ -284,6 +296,20 @@ export default function Dashboard() {
                 <button type="submit" disabled={saving} className="mt-4 rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90 disabled:opacity-60">
                   {saving ? "Saving..." : "Save note"}
                 </button>
+                {saveError && <p className="mt-3 text-sm text-[var(--discuss)]">{saveError}</p>}
+                {claimed && (
+                  <label className="mt-4 block text-xs text-muted">
+                    This profile is claimed by its wearer. Their key, to write here (kept in this browser only)
+                    <input
+                      type="password"
+                      autoComplete="off"
+                      value={keyDraft}
+                      onChange={(e) => { setKeyDraft(e.target.value); setOwnerKey(PROFILE, e.target.value.trim()); }}
+                      placeholder="from .bellwether-key on the wearer's computer"
+                      className="mt-1 w-full rounded-[var(--radius-sm)] border border-line bg-bg px-3 py-2 text-sm text-ink"
+                    />
+                  </label>
+                )}
               </form>
             </section>
 

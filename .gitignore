@@ -22,3 +22,5 @@ build/
 days.json
 journals.json
 checkins.json
+# The wearer's profile key. Made by `bellwether-ingest mine`; only its hash leaves this machine.
+.bellwether-key

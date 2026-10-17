@@ -304,3 +304,42 @@ def test_a_one_word_note_anchors_nothing():
     note_ms = 1792090293000
     utts = ingest_checkins(BeeCli(runner=_checkin_runner(note_ms + 5000, "okay so the morning was quiet", note_text="okay")))
     assert [u.conversation_id for u in utts] == ["journal-n1"]
+
+
+def test_a_session_the_wearer_opens_by_declaring_it_is_a_check_in():
+    """No voice note at all. The session's first words say what it is,
+    which is what the wearer on this account does naturally: "vlog for
+    October 17", "today's vlog", "log voice note for October 16"."""
+    from bellwether_ingest.bee import WEARER, checkins_from
+
+    def rec(cid, start_ms, text):
+        words = text.split()
+        utts = [{"text": " ".join(words[i:i + 6]), "speaker": "Unknown", "spoken_at": start_ms + i * 4000} for i in range(0, len(words), 6)]
+        return {"id": cid, "start_time": start_ms, "transcriptions": [{"utterances": utts}]}
+
+    records = [
+        rec(1, 1792300000000, "vlog for october seventeenth around nine pm continuing my last voice note i woke up late and worked through the afternoon"),
+        rec(2, 1792310000000, "could you pass the salt the eggs are bland and the train was late again"),
+        rec(3, 1792320000000, "so anyway as i was saying yesterday in my vlog the meeting ran long"),
+    ]
+    utts = checkins_from([], records)
+    assert {u.conversation_id for u in utts} == {"checkin-1"}
+    assert all(u.speaker == WEARER for u in utts)
+
+
+def test_mine_reads_the_device_once_and_finds_check_ins_in_the_same_records():
+    from bellwether_ingest.bee import ingest_checkins
+
+    calls = []
+
+    def runner(argv):
+        calls.append(argv)
+        if "journals" in argv:
+            return (0, json.dumps({"journals": [], "next_cursor": None}), "")
+        return (1, "", "unexpected")
+
+    records = [{"id": 9, "start_time": 1792300000000, "transcriptions": [{"utterances": [
+        {"text": "bellwether check in for friday i walked to the shops", "speaker": "Unknown", "spoken_at": 1792300001000}]}]}]
+    utts = ingest_checkins(BeeCli(runner=runner), records=records)
+    assert [u.conversation_id for u in utts] == ["checkin-9"]
+    assert not [a for a in calls if "conversations" in a]

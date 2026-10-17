@@ -125,3 +125,32 @@ def test_a_full_day_adds_no_reminder():
     cli.installed = lambda: True  # type: ignore[method-assign]
     first_day(cli, post=lambda d, p: {"stored": 1}, reduce=reduce_to_days, log=lambda s: None, remind=True)
     assert not [a for a in created if "create" in a]
+
+
+def test_mine_claims_both_profiles_on_the_first_run_and_stops_if_one_is_someone_elses():
+    import urllib.error
+
+    claimed, lines = [], []
+    code = first_day(_cli(NOTE), post=lambda d, p: {"stored": 1}, reduce=reduce_to_days, log=lines.append,
+                     claim=lambda p: claimed.append(p) or "claimed")
+    assert code == 0 and claimed == ["me-voice", "me"]
+    assert "now your profile" in "\n".join(lines)
+
+    def refused(days, profile):
+        raise urllib.error.HTTPError("u", 403, "claimed", {}, None)
+
+    lines.clear()
+    code = first_day(_cli(NOTE), post=refused, reduce=reduce_to_days, log=lines.append, claim=lambda p: "already")
+    assert code == 5 and "--profile <name>" in "\n".join(lines)
+
+
+def test_mine_sends_a_named_profile_and_its_voice_twin():
+    sent = []
+    first_day(_cli(NOTE), post=lambda d, p: sent.append(p) or {"stored": 1}, reduce=reduce_to_days, log=lambda s: None, profile="grandma")
+    assert sent == ["grandma-voice", "grandma"]
+
+
+def _cli(note_text):
+    cli = BeeCli(runner=runner_with(note_text))
+    cli.installed = lambda: True  # type: ignore[method-assign]
+    return cli

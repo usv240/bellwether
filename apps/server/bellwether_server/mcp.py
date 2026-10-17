@@ -387,6 +387,8 @@ def register_mcp(app: FastAPI, store: Store, default_profile: str) -> None:
                 raise ToolError("date must be YYYY-MM-DD")
             if not isinstance(note, str) or not note.strip() or len(note) > 200:
                 raise ToolError("note is required, at most 200 characters")
+            if store.get_meta(pid, "key_sha256"):
+                raise ToolError(f"profile {pid} is claimed by its wearer; notes are added from their own computer")
             store.put_annotation(pid, date, note.strip())
             return _text({"recorded": True, "profile_id": pid, "date": date, "note": note.strip()})
 

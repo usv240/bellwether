@@ -261,3 +261,28 @@ def test_rambling_answer_fails_the_rung_not_the_ladder():
     note = c.get("/v1/profiles/t/weekly-note").json()
     assert note["model"] == "concise"
     assert note["attempts"][0]["reason"] == "response too long"
+
+
+def test_a_claimed_profile_refuses_writes_without_its_key(client):
+    key = "a-key-the-wearer-chose-on-their-own-machine"
+    assert client.post("/v1/profiles/mine/claim", json={"key": key}).status_code == 200
+    assert client.get("/v1/profiles/mine/claimed").json()["claimed"] is True
+    rows = synthetic_days(n=3)
+    assert client.post("/v1/profiles/mine/days", json=rows).status_code == 403
+    assert client.post("/v1/profiles/mine/annotations", json={"date": rows[0]["date"], "note": "x"}).status_code == 403
+    ok = client.post("/v1/profiles/mine/days", json=rows, headers={"x-bellwether-key": key})
+    assert ok.status_code == 200 and ok.json()["stored"] == 3
+    assert client.post("/v1/profiles/mine/days", json=rows, headers={"x-bellwether-key": "wrong-key-of-the-right-length"}).status_code == 403
+
+
+def test_first_claim_wins_and_the_demo_profile_stays_open(client):
+    assert client.post("/v1/profiles/mine/claim", json={"key": "first-claim-wins-every-time"}).status_code == 200
+    assert client.post("/v1/profiles/mine/claim", json={"key": "second-claim-is-refused-ok"}).status_code == 409
+    assert client.post("/v1/profiles/mine/claim", json={"key": "short"}).status_code == 400
+    assert client.post("/v1/profiles/test/claim", json={"key": "the-demo-profile-stays-open"}).status_code == 403
+    assert client.post("/v1/profiles/test/days", json=synthetic_days(n=1)).status_code == 200
+
+
+def test_an_unclaimed_profile_is_open_as_before(client):
+    assert client.post("/v1/profiles/fresh/days", json=synthetic_days(n=2)).status_code == 200
+    assert client.get("/v1/profiles/fresh/claimed").json()["claimed"] is False

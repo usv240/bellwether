@@ -13,8 +13,9 @@ that says what is missing in the words the Bee app uses.
 What it does, in order
 ----------------------
     1. Is the CLI installed and logged in (the words from the Bee app if not)
-    2. Read the check-ins: each voice note and the band's session it anchors
-    3. Read the everyday conversations, sessions over an hour and media left out
+    2. Read the everyday conversations, sessions over an hour and media left out
+    3. Find the check-ins among them: sessions the wearer declared theirs, by a
+       voice note or by opening with "Bellwether check-in"
     4. Reduce both to nine numbers a day, here; the words go no further
     5. Send the numbers to the wearer's two profiles
     6. Print the page to open, and how many days count so far
@@ -28,6 +29,7 @@ printed that could carry a word of speech: counts, dates and a URL.
 from __future__ import annotations
 
 import sys
+import urllib.error
 from dataclasses import dataclass, field
 
 from .bee import BeeCli, BeeCliError, BeeNotAuthenticated, OwnerFilter, ingest_backfill, ingest_checkins
@@ -70,7 +72,7 @@ def remind_on_the_bee(cli: BeeCli, words_today: int, log) -> bool:
         if isinstance(raw, dict) and str(raw.get("text", "")).startswith(REMINDER_PREFIX) and not raw.get("completed"):
             return False
     need = MIN_WORDS - words_today
-    cli.todos_create(f"{REMINDER_PREFIX} check in: a short voice note, then two minutes of talking ({need} more words for today to count)")
+    cli.todos_create(f"{REMINDER_PREFIX} check in: say 'Bellwether check-in' and the date, then two minutes of talking ({need} more words for today to count)")
     log("A reminder was added to your Bee's todos.")
     return True
 
@@ -82,6 +84,8 @@ def first_day(
     max_minutes: float = 60,
     log=lambda s: print(s, file=sys.stderr),
     remind: bool = False,
+    profile: str = TALK_PROFILE,
+    claim=None,
 ) -> int:
     """Run the whole first day. ``post(days, profile)`` sends rows and
     returns the service's answer; ``reduce(utterances)`` makes day rows.
@@ -91,14 +95,15 @@ def first_day(
         log("The Bee CLI is not installed. Run: npm install -g @beeai/cli")
         return 2
 
-    voice = Stream(VOICE_PROFILE, "check-ins")
-    talk = Stream(TALK_PROFILE, "everyday conversations")
+    voice = Stream(f"{profile}-voice" if profile != TALK_PROFILE else VOICE_PROFILE, "check-ins")
+    talk = Stream(profile, "everyday conversations")
 
     try:
-        log("Reading your check-ins...")
-        voice.days = reduce(ingest_checkins(cli))
         log("Reading the band's conversations (this can take a few minutes)...")
-        talk.days = reduce(ingest_backfill(cli, OwnerFilter(None), max_minutes=max_minutes))
+        records: list = []
+        talk.days = reduce(ingest_backfill(cli, OwnerFilter(None), max_minutes=max_minutes, keep_records=records))
+        log("Finding your check-ins among them...")
+        voice.days = reduce(ingest_checkins(cli, records=records))
     except BeeNotAuthenticated:
         log("Bee is not logged in. Open the Bee app, then run: bee login")
         return 3
@@ -107,19 +112,34 @@ def first_day(
         return 1
 
     if not voice.days and not talk.days:
-        log("Nothing recorded yet. Wear the band through a day, and check in once (a short voice note in the Bee app, then keep talking to the band), then run this again.")
+        log("Nothing recorded yet. Wear the band through a day, and check in once (say 'Bellwether check-in' and the date, then keep talking to the band), then run this again.")
         return 4
 
     for s in (voice, talk):
-        if s.days:
+        if not s.days:
+            continue
+        if claim is not None:
+            # Yours from the first run: the key stays on this machine and
+            # only its hash is stored, so nobody else can post a day as you.
+            try:
+                if claim(s.profile) == "claimed":
+                    log(f"{s.profile} is now your profile. The key is in this folder; keep it.")
+            except urllib.error.HTTPError as err:
+                log(f"could not claim {s.profile}: HTTP {err.code}")
+        try:
             s.posted = post(s.days, s.profile)
-            log(f"{s.label}: {len(s.days)} day(s) read, {s.counted} count toward your baseline")
+        except urllib.error.HTTPError as err:
+            if err.code == 403:
+                log(f"{s.profile} belongs to someone else. Pick a name of your own: bellwether-ingest mine --profile <name>")
+                return 5
+            raise
+        log(f"{s.label}: {len(s.days)} day(s) read, {s.counted} count toward your baseline")
 
     log("")
-    log(f"Your page: {SITE}/app/?profile={VOICE_PROFILE}")
+    log(f"Your page: {SITE}/app/?profile={voice.profile}")
     if voice.counted < 7:
         need = 7 - voice.counted
-        log(f"Your check-ins need {need} more day(s) of at least {MIN_WORDS} words before Bellwether compares anything. A short voice note, then about two minutes of talking, once a day.")
+        log(f"Your check-ins need {need} more day(s) of at least {MIN_WORDS} words before Bellwether compares anything. Say 'Bellwether check-in' and the date, then about two minutes of talking, once a day.")
     else:
         log("Your check-in baseline is set. Every new day is compared with it.")
     if remind:

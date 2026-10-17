@@ -37,7 +37,7 @@ export const PROFILES = {
   "me-voice": {
     simulated: false,
     label: "Real Bee: check-ins",
-    note: "The builder's own check-ins: a short voice note, then two minutes of talking to the band alone. The note proves who started it; the session it anchors is the rest. A day counts once it holds 150 words.",
+    note: "The builder's own check-ins: two minutes talking to the band alone, declared theirs by opening out loud or with a voice note. Anyone else in those minutes would count too; the wearer keeps them to themselves. A day counts once it holds 150 words.",
   },
 } as const;
 
@@ -145,12 +145,31 @@ export async function getJSON<T>(path: string): Promise<T> {
   return (await res.json()) as T;
 }
 
+/**
+ * A claimed profile's writes carry its key. The wearer pastes it once on
+ * their own page; it lives in this browser's storage, is sent as a header
+ * and never appears in a URL.
+ */
+export function ownerKey(profile: string = PROFILE): string {
+  if (typeof window === "undefined") return "";
+  try { return localStorage.getItem(`bw-key-${profile}`) ?? ""; } catch { return ""; }
+}
+
+export function setOwnerKey(profile: string, key: string): void {
+  try {
+    if (key) localStorage.setItem(`bw-key-${profile}`, key);
+    else localStorage.removeItem(`bw-key-${profile}`);
+  } catch { /* storage unavailable: the key simply is not kept */ }
+}
+
 export async function postJSON<T>(path: string, body: unknown): Promise<T> {
+  const key = ownerKey();
   const res = await fetch(`${API}${path}`, {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...(key ? { "x-bellwether-key": key } : {}) },
     body: JSON.stringify(body),
   });
+  if (res.status === 403) throw new Error("This profile is claimed. Paste its key under the note form to write to it.");
   if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`);
   return (await res.json()) as T;
 }

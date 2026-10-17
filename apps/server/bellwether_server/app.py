@@ -8,6 +8,7 @@ Routes:
   GET  /v1/profiles/{id}/assessments?weeks=  day by day, derived on read
   GET  /v1/profiles/{id}/days                the stored feature rows (all that is stored)
   POST /v1/profiles/{id}/days                feature rows in (the public API and the ingest target)
+  POST /v1/profiles/{id}/claim               {key}: make the profile yours; writes then need X-Bellwether-Key
   POST /v1/profiles/{id}/annotations         {date, note}
   POST /v1/profiles/{id}/checks              {kind, score, detail?}
   GET  /v1/profiles/{id}/report?weeks=       the doctor report as data
@@ -78,6 +79,34 @@ def seed_demo(store: Store, profile: str = DEMO_PROFILE) -> int:
             store.put_annotation(profile, date, note)
     store.put_meta(profile, "label", "SIMULATED")
     return len(days)
+
+
+KEY_HEADER = "x-bellwether-key"
+MIN_KEY_LENGTH = 16
+
+
+def _key_hash(key: str) -> str:
+    import hashlib
+
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()
+
+
+def is_claimed(store, profile_id: str) -> bool:
+    return bool(store.get_meta(profile_id, "key_sha256"))
+
+
+def require_key(store, profile_id: str, request: Request) -> None:
+    """Writes to a claimed profile carry its key. An unclaimed profile is
+    open, which is what the demo profile and a first run rely on; the
+    moment a wearer claims theirs, nobody else can post a day into it."""
+    import hmac
+
+    expected = store.get_meta(profile_id, "key_sha256")
+    if not expected:
+        return
+    given = request.headers.get(KEY_HEADER, "")
+    if not given or not hmac.compare_digest(_key_hash(given), expected):
+        raise HTTPException(403, f"profile {profile_id} is claimed; send its key in {KEY_HEADER}")
 
 
 def validate_day(row) -> dict:
@@ -187,11 +216,32 @@ def build_app(
         rows = body if isinstance(body, list) else body.get("days") if isinstance(body, dict) else None
         if not isinstance(rows, list) or not rows:
             raise HTTPException(400, "send a list of day feature rows, or {\"days\": [...]}")
+        require_key(store, profile_id, request)
         clean = [validate_day(r) for r in rows]
         for r in clean:
             store.put_day(profile_id, r)
         view = profile_view(store, profile_id)
         return {"stored": len(clean), "profile_id": profile_id, "tier": view["summary"].tier, "eligible_days": view["summary"].eligible_days}
+
+    @app.post("/v1/profiles/{profile_id}/claim")
+    async def claim(profile_id: str, request: Request):
+        """Make a profile yours. The key is chosen by the wearer's own
+        machine and only its hash is stored, so the service cannot leak
+        it. First claim wins; the demo profile cannot be claimed."""
+        body = await request.json()
+        key = (body or {}).get("key")
+        if profile_id == default_profile:
+            raise HTTPException(403, "the demo profile stays open")
+        if not isinstance(key, str) or len(key) < MIN_KEY_LENGTH:
+            raise HTTPException(400, f"key must be a string of at least {MIN_KEY_LENGTH} characters")
+        if is_claimed(store, profile_id):
+            raise HTTPException(409, f"profile {profile_id} is already claimed")
+        store.put_meta(profile_id, "key_sha256", _key_hash(key))
+        return {"claimed": True, "profile_id": profile_id}
+
+    @app.get("/v1/profiles/{profile_id}/claimed")
+    def claimed(profile_id: str):
+        return {"profile_id": profile_id, "claimed": is_claimed(store, profile_id)}
 
     @app.post("/v1/profiles/{profile_id}/annotations")
     async def post_annotation(profile_id: str, request: Request):
@@ -199,6 +249,7 @@ def build_app(
         date, note = (body or {}).get("date"), (body or {}).get("note")
         if not isinstance(date, str) or len(date) != 10 or not isinstance(note, str) or not note.strip():
             raise HTTPException(400, "date (YYYY-MM-DD) and note are required")
+        require_key(store, profile_id, request)
         store.put_annotation(profile_id, date, note.strip()[:200])
         return {"recorded": True, "date": date, "note": note.strip()[:200]}
 
@@ -208,6 +259,7 @@ def build_app(
         kind, score = body.get("kind"), body.get("score")
         if kind not in ("animal_fluency", "sentence_repetition") or not isinstance(score, int) or not 0 <= score <= 100:
             raise HTTPException(400, "kind must be animal_fluency or sentence_repetition; score an integer 0 to 100")
+        require_key(store, profile_id, request)
         check = {
             "at": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
             "kind": kind,

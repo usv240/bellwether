@@ -162,4 +162,14 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Workaround: a check-in. The note proves who started it; the band's session that begins within a minute before or three minutes after the note and opens with the note's words is the wearer talking to the band on purpose, and `bellwether-ingest pull --checkins` keeps the next ten minutes of it. On 2026-10-15 that turned 16 words of notes into 265 words of check-in, and the day counted. The rule is pinned by five tests, including the session that started fourteen minutes before a note (a meeting, not a check-in) and a session in the same minute with different words.
 - Suggestion: let a note run until the wearer stops it, or document the limit; and the `is_wearer` flag of entry 12 would make all of this unnecessary.
 
+## Entry 17: the wearer's natural opener is a better anchor than the note, and nothing in Bee marks either (2026-10-17)
+
+- Task: count the wearer's two-minute check-ins on 2026-10-16 and 2026-10-17 toward their baseline.
+- Steps: the wearer talked to the band alone on both days, opening with "today's vlog, it's October 16th" and "vlog for October 17th", and did not make a voice note first; pulled check-ins with the note-anchor rule from entry 16.
+- Expected: the sessions to count, since they are plainly declared.
+- Actual: zero, because the rule needed a voice note within three minutes of the session, and there was none. Three sessions of 98, 126 and 152 words, each the wearer alone, each opening by saying what it was, dropped on the floor.
+- Severity: medium, and ours as much as Bee's. The wearer did the natural thing; the rule asked for a ceremony.
+- Workaround: a second anchor. A session whose first six words declare it ("Bellwether check-in", "voice note for", "vlog for", "today's vlog", "journal", "note to self") is a check-in, with the same ten-minute window; the note anchor stays for people who prefer it. Pinned by a test in which "as I was saying in my vlog yesterday" at word ten does not count. On this account it turned 0 counted days into the two expected.
+- Suggestion: a way for the wearer to mark a session as theirs on the band or in the app, carried through to the developer data. Until the `is_wearer` flag of entry 12 exists, a declared session is the honest substitute, and it is the wearer's own voice saying so.
+
 <!-- Add new entries above this line as they happen. -->

@@ -43,7 +43,7 @@ const STEPS: { title: string; body: string; code: string; where: "device" | "you
   },
   {
     title: "Turn your days into numbers",
-    body: "Each day of your speech becomes nine numbers. The words are read, measured and discarded here. Bee does not yet say which speaker is you, so there are two streams. A check-in is you: a short voice note in the Bee app proves who started it, and the band's session that opens with the note's words is the two minutes you then talk alone. The first command reads only those. The second is the band's everyday conversations with sessions over an hour and anything Bee calls media left out, which is a filter rather than your voice alone.",
+    body: "Each day of your speech becomes nine numbers. The words are read, measured and discarded here. Bee does not yet say which speaker is you, so there are two streams. A check-in is you: two minutes talking to the band alone, which you declare yours by opening out loud (Bellwether check-in, October 17) or with a short voice note the session opens with. The first command reads only those. The second is the band's everyday conversations with sessions over an hour and anything Bee calls media left out, which is a filter rather than your voice alone.",
     code: "bellwether-ingest pull --checkins --out voice.json\nbellwether-ingest pull --backfill --max-minutes 60 --out days.json",
     where: "yours",
   },
@@ -88,11 +88,12 @@ export function BeeConnect() {
         </div>
         <p className="mt-2 text-sm leading-relaxed text-muted">
           Reads your check-ins and the band&apos;s conversations, turns each day into nine numbers here, sends only those,
-          and prints the link to your own page. If Bee is not logged in it says so in the words the Bee app uses.
+          claims your profile with a key that stays on your computer, and prints the link to your own page. Nobody else
+          can post a day as you after that. If Bee is not logged in it says so in the words the Bee app uses.
           Rehearsed in tests for every way it can stop, and for the one thing it must never do: print a word you said.
         </p>
         <pre className="mt-3 overflow-x-auto rounded-[var(--radius-sm)] border border-line bg-bg p-3 font-mono text-[12px] leading-relaxed text-ink">
-          <code>bellwether-ingest mine</code>
+          <code>bellwether-ingest mine --profile &lt;your-name&gt;</code>
         </pre>
       </div>
 

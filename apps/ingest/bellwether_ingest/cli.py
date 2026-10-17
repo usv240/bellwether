@@ -58,17 +58,58 @@ def _write_days(days: list[dict], out: str | None) -> None:
 DEFAULT_API = "https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws"
 
 
-def post_days(days: list[dict], profile: str, api: str) -> dict:
+def post_days(days: list[dict], profile: str, api: str, key: str | None = None) -> dict:
     """Send day feature rows to the service. Only the rows travel: the
-    same nine numbers, count and date that --out writes, never text."""
+    same nine numbers, count and date that --out writes, never text. A
+    claimed profile needs its key, sent as a header and never in the URL."""
+    headers = {"content-type": "application/json"}
+    if key:
+        headers["x-bellwether-key"] = key
     req = urllib.request.Request(
         f"{api.rstrip('/')}/v1/profiles/{profile}/days",
         data=json.dumps(days).encode("utf-8"),
-        headers={"content-type": "application/json"},
+        headers=headers,
         method="POST",
     )
     with urllib.request.urlopen(req, timeout=30) as res:
         return json.loads(res.read())
+
+
+def claim_profile(profile: str, api: str, key: str) -> str:
+    """Make a profile the wearer's. Returns "claimed", "already" (by this
+    key or another; the first post will tell) or raises."""
+    req = urllib.request.Request(
+        f"{api.rstrip('/')}/v1/profiles/{profile}/claim",
+        data=json.dumps({"key": key}).encode("utf-8"),
+        headers={"content-type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30):
+            return "claimed"
+    except urllib.error.HTTPError as err:
+        if err.code == 409:
+            return "already"
+        raise
+
+
+KEY_FILE = ".bellwether-key"
+
+
+def load_or_make_key(path: str = KEY_FILE) -> str:
+    """The wearer's key lives on the wearer's machine, in a file next to
+    their day features, and is made once. Only its hash ever leaves."""
+    import secrets
+
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as fh:
+            key = fh.read().strip()
+        if len(key) >= 16:
+            return key
+    key = secrets.token_urlsafe(24)
+    with open(path, "w", encoding="utf-8") as fh:
+        fh.write(key + "\n")
+    return key
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -82,6 +123,10 @@ def main(argv: list[str] | None = None) -> int:
     mine.add_argument("--api", default=os.environ.get("BELLWETHER_API", DEFAULT_API))
     mine.add_argument("--remind", action="store_true",
                       help="if today's voice notes are short, add a todo on your Bee asking for the note")
+    mine.add_argument("--profile", default=os.environ.get("BELLWETHER_PROFILE", "me"),
+                      help="your profile name on the service; your check-ins go to <name>-voice")
+    mine.add_argument("--key-file", default=KEY_FILE,
+                      help="where your profile key lives; made on first run, only its hash leaves")
 
     sub.add_parser(
         "firstrun",
@@ -110,6 +155,8 @@ def main(argv: list[str] | None = None) -> int:
     pull.add_argument("--out", help="write day features JSON here")
     pull.add_argument("--post", metavar="PROFILE", help="also send the day features to this profile on the service")
     pull.add_argument("--api", default=os.environ.get("BELLWETHER_API", DEFAULT_API))
+    pull.add_argument("--key", default=os.environ.get("BELLWETHER_KEY"),
+                      help="the profile's key, if it is claimed; or set BELLWETHER_KEY")
 
     stream = sub.add_parser("stream", help="reduce bee stream --json events from stdin")
     stream.add_argument("--owner")
@@ -121,8 +168,10 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "mine":
         from .mine import first_day
 
-        return first_day(cli, post=lambda days, profile: post_days(days, profile, args.api), reduce=reduce_to_days,
-                         max_minutes=args.max_minutes, remind=args.remind)
+        key = load_or_make_key(args.key_file)
+        return first_day(cli, post=lambda days, profile: post_days(days, profile, args.api, key), reduce=reduce_to_days,
+                         max_minutes=args.max_minutes, remind=args.remind, profile=args.profile,
+                         claim=lambda profile: claim_profile(profile, args.api, key))
 
     if args.command == "evidence":
         from .evidence import capture, to_markdown
@@ -168,7 +217,7 @@ def main(argv: list[str] | None = None) -> int:
             days = reduce_to_days(utterances)
             _write_days(days, args.out)
             if args.post and days:
-                res = post_days(days, args.post, args.api)
+                res = post_days(days, args.post, args.api, args.key)
                 print(f"posted {res['stored']} day(s) to {args.post}: {res['tier']}, "
                       f"{res['eligible_days']} day(s) count", file=sys.stderr)
             if new_cursor:
