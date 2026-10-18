@@ -86,7 +86,9 @@ def test_initialize_issues_session_and_protocol(client):
     assert r.status_code == 200
     assert r.json()["result"]["protocolVersion"] == MCP_PROTOCOL_VERSION
     assert r.json()["result"]["serverInfo"]["name"] == "bellwether-mcp"
-    assert len(r.headers["mcp-session-id"]) == 36
+    # A signed id, nonce.signature, valid on every instance of the deployment.
+    sid = r.headers["mcp-session-id"]
+    assert len(sid) == 41 and sid[16] == "."
 
 
 def test_missing_unknown_and_bad_version(client):
@@ -299,3 +301,21 @@ def test_a_key_from_v1_keys_claims_and_writes_as_a_bearer_token(client):
     ok = client.post("/v1/profiles/judge/days", json=rows, headers={"authorization": f"Bearer {key}"})
     assert ok.status_code == 200
     assert client.get("/v1/profiles/judge/summary").status_code == 200
+
+
+def test_a_session_issued_by_one_instance_is_valid_on_another():
+    """Two app instances stand for two Lambda instances. A session opened
+    on one must be accepted by the other; a made-up id must not."""
+    from bellwether_server import mcp as mcp_mod
+
+    a = TestClient(build_app(store=MemoryStore(), default_profile="test", seed=False))
+    b = TestClient(build_app(store=MemoryStore(), default_profile="test", seed=False))
+    init = a.post("/mcp", json={"jsonrpc": "2.0", "id": 1, "method": "initialize",
+                                "params": {"protocolVersion": MCP_PROTOCOL_VERSION, "capabilities": {}, "clientInfo": {"name": "t", "version": "1"}}})
+    sid = init.headers["mcp-session-id"]
+    ok = b.post("/mcp", headers={"mcp-session-id": sid}, json={"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
+    assert ok.status_code == 200 and len(ok.json()["result"]["tools"]) == 7
+    forged = b.post("/mcp", headers={"mcp-session-id": "0123456789abcdef.000000000000000000000000"},
+                    json={"jsonrpc": "2.0", "id": 3, "method": "tools/list"})
+    assert forged.status_code == 404
+    assert mcp_mod.session_is_ours(sid)

@@ -24,6 +24,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import os
 import json
 import sys
 
@@ -32,7 +33,8 @@ from strands import Agent
 from strands.models import BedrockModel
 from strands.tools.mcp import MCPClient
 
-DEFAULT_MCP_URL = "http://127.0.0.1:8789/mcp"
+# The deployed server when BELLWETHER_MCP says so; a local one otherwise.
+DEFAULT_MCP_URL = os.environ.get("BELLWETHER_MCP", "http://127.0.0.1:8789/mcp")
 MODEL_ID = "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
 
 SYSTEM_PROMPT = """You help one person, or a family member, understand a

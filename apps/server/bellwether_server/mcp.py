@@ -30,6 +30,10 @@ from __future__ import annotations
 import json
 import os
 import re
+import hashlib
+import hmac
+import os
+import secrets
 import uuid
 from datetime import datetime, timezone
 
@@ -231,6 +235,41 @@ class ToolError(Exception):
         self.code = code
 
 
+_LOCAL_SECRET = secrets.token_hex(16)
+
+
+def _session_secret() -> bytes:
+    """Sessions are signed, not remembered.
+
+    On Lambda a client's second request can land on another instance,
+    which never saw the id the first one issued, and a remembered session
+    answers it with 404 "Unknown or terminated session". That happened to
+    the Strands agent in the middle of a recorded run, on its fourth tool
+    call. A signature the whole deployment can check makes the id valid on
+    every instance, with no table and no state. The key is the function's
+    own name and version unless one is configured, the same as Volley's.
+    """
+    configured = os.environ.get("BELLWETHER_SESSION_SECRET")
+    if configured:
+        return configured.encode("utf8")
+    fn = os.environ.get("AWS_LAMBDA_FUNCTION_NAME")
+    if fn:
+        return (fn + ":" + os.environ.get("AWS_LAMBDA_FUNCTION_VERSION", "")).encode("utf8")
+    return _LOCAL_SECRET.encode("utf8")
+
+
+def new_session_id() -> str:
+    nonce = secrets.token_hex(8)
+    return nonce + "." + hmac.new(_session_secret(), nonce.encode("utf8"), hashlib.sha256).hexdigest()[:24]
+
+
+def session_is_ours(session_id: str) -> bool:
+    nonce, dot, sig = session_id.partition(".")
+    if not dot or len(nonce) != 16 or len(sig) != 24:
+        return False
+    return hmac.compare_digest(hmac.new(_session_secret(), nonce.encode("utf8"), hashlib.sha256).hexdigest()[:24], sig)
+
+
 def profile_view(store: Store, profile_id: str) -> dict:
     """Everything derived for one profile, computed from the stored day
     rows on every call. Nothing here is cached or stored."""
@@ -326,7 +365,8 @@ def build_report(view: dict, weeks: int = 8) -> dict:
 
 
 def register_mcp(app: FastAPI, store: Store, default_profile: str) -> None:
-    sessions: set[str] = set()
+    # Ended by DELETE on this instance. Validity itself is the signature.
+    terminated: set[str] = set()
 
     def resolve_profile(args: dict) -> str:
         pid = args.get("profile_id")
@@ -443,8 +483,7 @@ def register_mcp(app: FastAPI, store: Store, default_profile: str) -> None:
             return JSONResponse(_error(msg_id, -32600, f"Unsupported protocol version: {version}"), status_code=400)
 
         if method == "initialize":
-            new_session = str(uuid.uuid4())
-            sessions.add(new_session)
+            new_session = new_session_id()
             return JSONResponse(
                 _result(
                     msg_id,
@@ -460,7 +499,7 @@ def register_mcp(app: FastAPI, store: Store, default_profile: str) -> None:
 
         if not session_id:
             return JSONResponse(_error(msg_id, -32600, "Missing MCP-Session-Id header"), status_code=400)
-        if session_id not in sessions:
+        if not session_is_ours(session_id) or session_id in terminated:
             return JSONResponse(_error(msg_id, -32001, "Unknown or terminated session"), status_code=404)
 
         if msg_id is None:
@@ -491,7 +530,7 @@ def register_mcp(app: FastAPI, store: Store, default_profile: str) -> None:
         # Never reads a body: a real client sends one, empty, with a JSON
         # content-type, and parsing it is how both sibling projects got a 500.
         session_id = request.headers.get("mcp-session-id")
-        if session_id and session_id in sessions:
-            sessions.discard(session_id)
+        if session_id and session_is_ours(session_id) and session_id not in terminated:
+            terminated.add(session_id)
             return Response(status_code=204)
         return Response(status_code=404)
