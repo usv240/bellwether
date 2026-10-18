@@ -173,6 +173,8 @@ Nine, each from something we actually hit, each cross-referenced to the friction
 
 ## Real speech, not ours
 
+**A famous case, run unchanged.** Every presidential press conference of Ronald Reagan (46) and George H. W. Bush (106), from the public record, only the president's own words. A 2015 study reported Reagan's language changing; a 2024 reanalysis found it did not once reporters' questions are held constant. Bellwether's engine, with its defaults, flagged neither president. It did not manufacture the contested signal, and on a few prepared appearances a year it should not; everyday speech is the input it is built for. EVIDENCE.md section 4d.
+
 Across **349 Supreme Court oral arguments by 8 justices** (ConvoKit, from the Oyez Project), speech nobody here wrote, Bellwether flagged **zero**. Paired with sensitivity so the zero means something: a sustained shift of 1.5 of a person's own standard deviations, injected into their real sessions, was caught in 5 of 5 subjects at a median of 2 sessions, and the do-nothing control at 0.0 caught nobody.
 
 And the measured case for the design: on all nine features the gap between two different justices is smaller than one justice's own session-to-session range. Comparing a person with a population asks a detector to resolve a difference smaller than the noise it has to tolerate anyway.

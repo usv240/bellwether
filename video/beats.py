@@ -105,9 +105,10 @@ BEATS: list[Beat] = [
         shows="The front page: the claim, and a simulated person's own range with the days that left it.",
         pause_before=0.8,
         say=(
-            "Your watch knows when your heart skips a beat. Nothing knows when your brain does. "
-            "When something changes there, speech usually shows it first: "
-            "more pauses, simpler sentences, words that will not come."
+            "Your watch knows when your heart skips a beat. "
+            "But what about changes in the way you speak? "
+            "More pauses, simpler sentences, words that suddenly become harder to find. "
+            "Small changes that are easy to overlook."
         ),
     ),
     Beat(
@@ -115,8 +116,8 @@ BEATS: list[Beat] = [
         action="stats",
         shows="The four figures under the problem; the three and a half years card first.",
         say=(
-            "Across all dementias, the average wait from first symptoms to a diagnosis is three and a half years. "
-            "The newest treatments only work at the earliest stage. That wait skips straight past it."
+            "Across all dementias, the average time from first symptoms to a diagnosis is three and a half years. "
+            "That's years of uncertainty for people and their families."
         ),
     ),
     Beat(
@@ -135,9 +136,9 @@ BEATS: list[Beat] = [
         shows="A terminal: bellwether-ingest mine against the builder's own Bee, the days it read, the days that count, the page to open.",
         min_hold=12,
         say=(
-            "This is my Bee. Each day I check in: two minutes of talking to the band on my own. "
-            "One command turns each day into nine numbers on my computer and throws the words away. "
-            "Anyone can do the same with their own Bee, and a free key keeps the profile theirs."
+            "This runs on my own Bee. I talk to it for two minutes each day. "
+            "Bellwether turns that speech into nine measurements and discards the words. "
+            "Anyone can run the same command on their own Bee."
         ),
     ),
     Beat(
@@ -146,7 +147,7 @@ BEATS: list[Beat] = [
         shows="The dashboard on the builder's own check-ins: the real-data badge, the first week filling.",
         pause_before=0.4,
         say=(
-            "My own baseline, from real Bee data. "
+            "Here's the result, from my real data. "
             "Seven days teach it what normal sounds like for me; every day after is compared with them. "
             + _days_line(CHECKIN_DAYS)
         ),
@@ -158,26 +159,21 @@ BEATS: list[Beat] = [
         pause_before=0.3,
         say=(
             "The band also hears everyone around me, and Bee does not yet say who was talking. "
-            "So that stream is kept separate and labelled for what it is: "
-            "three weeks of everyday conversation, also stable."
+            "So that stream is kept separate and labelled for what it is: the room, not just me."
         ),
     ),
     Beat(
         key="change",
         action="simulated",
-        shows="The switcher to the simulated person, labelled; then what else could explain a change.",
+        shows="The switcher to the simulated person, labelled; what moved and since when; then what else could explain it.",
         pause_before=0.3,
         say=(
-            "To show what change looks like: a simulated person, labelled on every screen. "
-            "Before the chart, the ordinary explanations: a bad week of sleep, a cold, a new medication. "
-            "They explain far more changes than anything worrying, so they get the same space as the result."
+            "Now imagine someone's speech gradually changes over several weeks. This is a simulated example. "
+            "Bellwether shows when the change started, which measurements moved, "
+            "and how far they've shifted from that person's usual range. "
+            "Poor sleep, illness or medication could also explain it. "
+            "That's why it shows the possible explanations, not a diagnosis."
         ),
-    ),
-    Beat(
-        key="moved",
-        action="chart",
-        shows="The eight-week chart, then the measures that moved.",
-        say="When it does flag something, it says which measures moved, in which direction, and since when.",
     ),
     Beat(
         key="mcp",
@@ -196,7 +192,7 @@ BEATS: list[Beat] = [
         shows="A terminal: the Strands agent on Amazon Bedrock asking the deployed server how the simulated person's month went.",
         min_hold=10,
         say=(
-            "A Strands agent on Amazon Bedrock asks how the week went. "
+            "A Strands agent on Amazon Bedrock asks how things have been going. "
             "It says the data is simulated before anything else, and it may never name a condition."
         ),
     ),
@@ -207,8 +203,10 @@ BEATS: list[Beat] = [
         pause_before=0.3,
         min_hold=12,
         say=(
-            "This is the point. One page for a twelve-minute appointment: what changed, when, what moved, "
-            "and in full, that this is not a diagnosis. Open source, live at the link. "
+            "Imagine noticing something different, but not knowing how to explain it to your doctor. "
+            "Bellwether gives you a simple timeline of what changed and when. "
+            "Not a diagnosis, but a clearer starting point for that conversation. "
+            "Open source, and built around privacy. "
             "Bellwether. Your own normal, in your own numbers."
         ),
     ),

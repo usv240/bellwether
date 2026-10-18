@@ -1,0 +1,1166 @@
+{
+ "source": "The American Presidency Project, UC Santa Barbara (presidency.ucsb.edu); public record",
+ "replicates": "Berisha V, Wang S, LaCross A, Liss J. Tracking discourse complexity preceding Alzheimer's disease diagnosis: a case study comparing the press conferences of Presidents Ronald Reagan and George Herbert Walker Bush. J Alzheimers Dis. 2015;45(3):959-963.",
+ "engine": "DEFAULT_CONFIG, unchanged; one conference is one day, in date order",
+ "notADiagnosis": "A replication of a published finding about public speech, not a diagnosis of anyone.",
+ "results": {
+  "reagan": {
+   "publishedMeasureNonSpecificPer100ByYear": {
+    "1981": 0.46,
+    "1982": 0.65,
+    "1983": 0.69,
+    "1984": 0.64,
+    "1985": 0.51,
+    "1986": 0.77,
+    "1987": 0.71,
+    "1988": 0.67
+   },
+   "publishedMeasureConferencesPerYear": {
+    "1981": 6,
+    "1982": 8,
+    "1983": 7,
+    "1984": 5,
+    "1985": 6,
+    "1986": 7,
+    "1987": 3,
+    "1988": 4
+   },
+   "speaker": "Ronald Reagan",
+   "conferences": 46,
+   "assessed": 39,
+   "excludedLowExposure": 0,
+   "flaggedDays": 0,
+   "firstFlag": null,
+   "tiers": [
+    {
+     "date": "1981-01-29",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1981-03-06",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1981-06-16",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1981-10-01",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1981-11-10",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1981-12-17",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1982-01-19",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1982-02-18",
+     "tier": "stable",
+     "composite": -0.16,
+     "contributors": []
+    },
+    {
+     "date": "1982-03-31",
+     "tier": "stable",
+     "composite": -0.495,
+     "contributors": []
+    },
+    {
+     "date": "1982-05-13",
+     "tier": "stable",
+     "composite": -0.501,
+     "contributors": []
+    },
+    {
+     "date": "1982-06-30",
+     "tier": "stable",
+     "composite": -0.452,
+     "contributors": []
+    },
+    {
+     "date": "1982-07-28",
+     "tier": "stable",
+     "composite": 0.977,
+     "contributors": []
+    },
+    {
+     "date": "1982-09-28",
+     "tier": "stable",
+     "composite": -1.32,
+     "contributors": []
+    },
+    {
+     "date": "1982-11-11",
+     "tier": "stable",
+     "composite": 1.732,
+     "contributors": []
+    },
+    {
+     "date": "1983-01-05",
+     "tier": "stable",
+     "composite": 1.689,
+     "contributors": []
+    },
+    {
+     "date": "1983-02-16",
+     "tier": "stable",
+     "composite": 0.043,
+     "contributors": []
+    },
+    {
+     "date": "1983-05-17",
+     "tier": "stable",
+     "composite": 0.388,
+     "contributors": []
+    },
+    {
+     "date": "1983-06-28",
+     "tier": "stable",
+     "composite": 2.146,
+     "contributors": []
+    },
+    {
+     "date": "1983-07-26",
+     "tier": "stable",
+     "composite": 0.272,
+     "contributors": []
+    },
+    {
+     "date": "1983-10-19",
+     "tier": "stable",
+     "composite": 0.215,
+     "contributors": []
+    },
+    {
+     "date": "1983-12-20",
+     "tier": "stable",
+     "composite": 1.636,
+     "contributors": []
+    },
+    {
+     "date": "1984-02-22",
+     "tier": "stable",
+     "composite": -1.31,
+     "contributors": []
+    },
+    {
+     "date": "1984-04-04",
+     "tier": "stable",
+     "composite": 0.11,
+     "contributors": []
+    },
+    {
+     "date": "1984-05-22",
+     "tier": "stable",
+     "composite": 0.277,
+     "contributors": []
+    },
+    {
+     "date": "1984-06-14",
+     "tier": "stable",
+     "composite": 1.634,
+     "contributors": []
+    },
+    {
+     "date": "1984-07-24",
+     "tier": "stable",
+     "composite": -0.301,
+     "contributors": []
+    },
+    {
+     "date": "1985-01-09",
+     "tier": "stable",
+     "composite": 1.339,
+     "contributors": []
+    },
+    {
+     "date": "1985-02-21",
+     "tier": "stable",
+     "composite": 0.11,
+     "contributors": []
+    },
+    {
+     "date": "1985-03-21",
+     "tier": "stable",
+     "composite": 1.348,
+     "contributors": []
+    },
+    {
+     "date": "1985-05-10",
+     "tier": "stable",
+     "composite": 0.21,
+     "contributors": []
+    },
+    {
+     "date": "1985-06-18",
+     "tier": "stable",
+     "composite": 1.085,
+     "contributors": []
+    },
+    {
+     "date": "1985-09-17",
+     "tier": "stable",
+     "composite": -1.028,
+     "contributors": []
+    },
+    {
+     "date": "1986-01-07",
+     "tier": "stable",
+     "composite": -1.069,
+     "contributors": []
+    },
+    {
+     "date": "1986-02-11",
+     "tier": "stable",
+     "composite": 0.586,
+     "contributors": []
+    },
+    {
+     "date": "1986-04-09",
+     "tier": "stable",
+     "composite": 0.427,
+     "contributors": []
+    },
+    {
+     "date": "1986-05-07",
+     "tier": "stable",
+     "composite": 0.904,
+     "contributors": []
+    },
+    {
+     "date": "1986-06-11",
+     "tier": "stable",
+     "composite": -0.106,
+     "contributors": []
+    },
+    {
+     "date": "1986-08-12",
+     "tier": "stable",
+     "composite": -1.375,
+     "contributors": []
+    },
+    {
+     "date": "1986-11-19",
+     "tier": "stable",
+     "composite": 0.734,
+     "contributors": []
+    },
+    {
+     "date": "1987-03-19",
+     "tier": "stable",
+     "composite": 0.969,
+     "contributors": []
+    },
+    {
+     "date": "1987-06-11",
+     "tier": "stable",
+     "composite": -0.801,
+     "contributors": []
+    },
+    {
+     "date": "1987-10-22",
+     "tier": "stable",
+     "composite": 0.317,
+     "contributors": []
+    },
+    {
+     "date": "1988-02-24",
+     "tier": "stable",
+     "composite": 0.333,
+     "contributors": []
+    },
+    {
+     "date": "1988-06-01",
+     "tier": "stable",
+     "composite": -0.936,
+     "contributors": []
+    },
+    {
+     "date": "1988-06-21",
+     "tier": "stable",
+     "composite": -1.047,
+     "contributors": []
+    },
+    {
+     "date": "1988-12-08",
+     "tier": "stable",
+     "composite": -0.586,
+     "contributors": []
+    }
+   ],
+   "featuresMovingTheConcerningWay": 5,
+   "trend": {
+    "mattr": {
+     "slopePerYear": -0.0005,
+     "slopeInSdPerYear": -0.066,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": true
+    },
+    "mean_utt_len": {
+     "slopePerYear": 2.8866,
+     "slopeInSdPerYear": 0.268,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": false
+    },
+    "dep_depth_mean": {
+     "slopePerYear": 0.0324,
+     "slopeInSdPerYear": 0.063,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": false
+    },
+    "pronoun_noun_ratio": {
+     "slopePerYear": 0.0081,
+     "slopeInSdPerYear": 0.255,
+     "direction": "higher_is_concerning",
+     "movedTheConcerningWay": true
+    },
+    "filler_rate": {
+     "slopePerYear": -0.0004,
+     "slopeInSdPerYear": -0.064,
+     "direction": "higher_is_concerning",
+     "movedTheConcerningWay": false
+    },
+    "disfluency_rate": {
+     "slopePerYear": 0.0017,
+     "slopeInSdPerYear": 0.027,
+     "direction": "higher_is_concerning",
+     "movedTheConcerningWay": true
+    },
+    "low_freq_word_rate": {
+     "slopePerYear": -0.0205,
+     "slopeInSdPerYear": -0.048,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": true
+    },
+    "idea_density": {
+     "slopePerYear": 0.0192,
+     "slopeInSdPerYear": 0.24,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": false
+    },
+    "vocab_size_day": {
+     "slopePerYear": -13.5035,
+     "slopeInSdPerYear": -0.215,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": true
+    }
+   },
+   "halves": {
+    "mattr": {
+     "firstHalf": 0.781,
+     "secondHalf": 0.7792
+    },
+    "mean_utt_len": {
+     "firstHalf": 54.1351,
+     "secondHalf": 63.9031
+    },
+    "dep_depth_mean": {
+     "firstHalf": 6.873,
+     "secondHalf": 6.983
+    },
+    "pronoun_noun_ratio": {
+     "firstHalf": 0.4315,
+     "secondHalf": 0.4656
+    },
+    "filler_rate": {
+     "firstHalf": 0.002,
+     "secondHalf": 0.0
+    },
+    "disfluency_rate": {
+     "firstHalf": 0.1,
+     "secondHalf": 0.1061
+    },
+    "low_freq_word_rate": {
+     "firstHalf": 3.5894,
+     "secondHalf": 3.578
+    },
+    "idea_density": {
+     "firstHalf": 4.3893,
+     "secondHalf": 4.4443
+    },
+    "vocab_size_day": {
+     "firstHalf": 730.3913,
+     "secondHalf": 663.5217
+    }
+   },
+   "wordsPerConference": 3747.5
+  },
+  "bush": {
+   "publishedMeasureNonSpecificPer100ByYear": {
+    "1989": 0.45,
+    "1990": 0.38,
+    "1991": 0.46,
+    "1992": 0.44,
+    "1993": 0.96
+   },
+   "publishedMeasureConferencesPerYear": {
+    "1989": 26,
+    "1990": 29,
+    "1991": 30,
+    "1992": 20,
+    "1993": 1
+   },
+   "speaker": "George H. W. Bush",
+   "conferences": 106,
+   "assessed": 99,
+   "excludedLowExposure": 0,
+   "flaggedDays": 0,
+   "firstFlag": null,
+   "tiers": [
+    {
+     "date": "1989-01-27",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1989-02-06",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1989-02-21",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1989-02-24",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1989-02-25",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1989-03-07",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1989-03-10",
+     "tier": "learning",
+     "composite": null,
+     "contributors": []
+    },
+    {
+     "date": "1989-03-17",
+     "tier": "stable",
+     "composite": 1.29,
+     "contributors": []
+    },
+    {
+     "date": "1989-03-24",
+     "tier": "stable",
+     "composite": -0.336,
+     "contributors": []
+    },
+    {
+     "date": "1989-04-07",
+     "tier": "stable",
+     "composite": -0.589,
+     "contributors": []
+    },
+    {
+     "date": "1989-05-30",
+     "tier": "stable",
+     "composite": -0.417,
+     "contributors": []
+    },
+    {
+     "date": "1989-06-05",
+     "tier": "stable",
+     "composite": -1.783,
+     "contributors": []
+    },
+    {
+     "date": "1989-06-08",
+     "tier": "stable",
+     "composite": -0.298,
+     "contributors": []
+    },
+    {
+     "date": "1989-06-27",
+     "tier": "stable",
+     "composite": 0.712,
+     "contributors": []
+    },
+    {
+     "date": "1989-07-06",
+     "tier": "stable",
+     "composite": -0.977,
+     "contributors": []
+    },
+    {
+     "date": "1989-07-16",
+     "tier": "stable",
+     "composite": -1.442,
+     "contributors": []
+    },
+    {
+     "date": "1989-07-28",
+     "tier": "stable",
+     "composite": -0.273,
+     "contributors": []
+    },
+    {
+     "date": "1989-08-23",
+     "tier": "stable",
+     "composite": 0.159,
+     "contributors": []
+    },
+    {
+     "date": "1989-09-06",
+     "tier": "stable",
+     "composite": -1.047,
+     "contributors": []
+    },
+    {
+     "date": "1989-09-18",
+     "tier": "stable",
+     "composite": -0.684,
+     "contributors": []
+    },
+    {
+     "date": "1989-10-13",
+     "tier": "stable",
+     "composite": 2.699,
+     "contributors": []
+    },
+    {
+     "date": "1989-10-28",
+     "tier": "stable",
+     "composite": 0.272,
+     "contributors": []
+    },
+    {
+     "date": "1989-10-31",
+     "tier": "stable",
+     "composite": 1.38,
+     "contributors": []
+    },
+    {
+     "date": "1989-11-07",
+     "tier": "stable",
+     "composite": -0.079,
+     "contributors": []
+    },
+    {
+     "date": "1989-12-04",
+     "tier": "stable",
+     "composite": -0.64,
+     "contributors": []
+    },
+    {
+     "date": "1989-12-21",
+     "tier": "stable",
+     "composite": 0.431,
+     "contributors": []
+    },
+    {
+     "date": "1990-01-05",
+     "tier": "stable",
+     "composite": -0.697,
+     "contributors": []
+    },
+    {
+     "date": "1990-01-24",
+     "tier": "stable",
+     "composite": -0.976,
+     "contributors": []
+    },
+    {
+     "date": "1990-01-25",
+     "tier": "stable",
+     "composite": 0.551,
+     "contributors": []
+    },
+    {
+     "date": "1990-02-12",
+     "tier": "stable",
+     "composite": -0.373,
+     "contributors": []
+    },
+    {
+     "date": "1990-02-15",
+     "tier": "stable",
+     "composite": -0.297,
+     "contributors": []
+    },
+    {
+     "date": "1990-03-03",
+     "tier": "stable",
+     "composite": 0.482,
+     "contributors": []
+    },
+    {
+     "date": "1990-03-13",
+     "tier": "stable",
+     "composite": -0.282,
+     "contributors": []
+    },
+    {
+     "date": "1990-03-22",
+     "tier": "stable",
+     "composite": 0.289,
+     "contributors": []
+    },
+    {
+     "date": "1990-03-23",
+     "tier": "stable",
+     "composite": -1.474,
+     "contributors": []
+    },
+    {
+     "date": "1990-05-03",
+     "tier": "stable",
+     "composite": 0.25,
+     "contributors": []
+    },
+    {
+     "date": "1990-05-16",
+     "tier": "stable",
+     "composite": 0.007,
+     "contributors": []
+    },
+    {
+     "date": "1990-05-24",
+     "tier": "stable",
+     "composite": -0.028,
+     "contributors": []
+    },
+    {
+     "date": "1990-06-13",
+     "tier": "stable",
+     "composite": 0.635,
+     "contributors": []
+    },
+    {
+     "date": "1990-06-20",
+     "tier": "stable",
+     "composite": -1.617,
+     "contributors": []
+    },
+    {
+     "date": "1990-06-29",
+     "tier": "stable",
+     "composite": -0.292,
+     "contributors": []
+    },
+    {
+     "date": "1990-07-06",
+     "tier": "stable",
+     "composite": -1.465,
+     "contributors": []
+    },
+    {
+     "date": "1990-07-11",
+     "tier": "stable",
+     "composite": -2.175,
+     "contributors": []
+    },
+    {
+     "date": "1990-08-08",
+     "tier": "stable",
+     "composite": 1.925,
+     "contributors": []
+    },
+    {
+     "date": "1990-08-14",
+     "tier": "stable",
+     "composite": -0.581,
+     "contributors": []
+    },
+    {
+     "date": "1990-08-16",
+     "tier": "stable",
+     "composite": -0.366,
+     "contributors": []
+    },
+    {
+     "date": "1990-08-22",
+     "tier": "stable",
+     "composite": -0.005,
+     "contributors": []
+    },
+    {
+     "date": "1990-08-30",
+     "tier": "stable",
+     "composite": -1.007,
+     "contributors": []
+    },
+    {
+     "date": "1990-09-21",
+     "tier": "stable",
+     "composite": 0.194,
+     "contributors": []
+    },
+    {
+     "date": "1990-10-06",
+     "tier": "stable",
+     "composite": 1.704,
+     "contributors": []
+    },
+    {
+     "date": "1990-10-09",
+     "tier": "stable",
+     "composite": -0.111,
+     "contributors": []
+    },
+    {
+     "date": "1990-11-01",
+     "tier": "stable",
+     "composite": -0.473,
+     "contributors": []
+    },
+    {
+     "date": "1990-11-08",
+     "tier": "stable",
+     "composite": -0.874,
+     "contributors": []
+    },
+    {
+     "date": "1990-11-30",
+     "tier": "stable",
+     "composite": -1.365,
+     "contributors": []
+    },
+    {
+     "date": "1990-12-18",
+     "tier": "stable",
+     "composite": -1.121,
+     "contributors": []
+    },
+    {
+     "date": "1991-01-09",
+     "tier": "stable",
+     "composite": 0.991,
+     "contributors": []
+    },
+    {
+     "date": "1991-01-12",
+     "tier": "stable",
+     "composite": -0.488,
+     "contributors": []
+    },
+    {
+     "date": "1991-01-18",
+     "tier": "stable",
+     "composite": 0.093,
+     "contributors": []
+    },
+    {
+     "date": "1991-02-05",
+     "tier": "stable",
+     "composite": -0.447,
+     "contributors": []
+    },
+    {
+     "date": "1991-03-01",
+     "tier": "stable",
+     "composite": -0.343,
+     "contributors": []
+    },
+    {
+     "date": "1991-03-13",
+     "tier": "stable",
+     "composite": -0.758,
+     "contributors": []
+    },
+    {
+     "date": "1991-03-16",
+     "tier": "stable",
+     "composite": 0.14,
+     "contributors": []
+    },
+    {
+     "date": "1991-04-04",
+     "tier": "stable",
+     "composite": -0.72,
+     "contributors": []
+    },
+    {
+     "date": "1991-04-06",
+     "tier": "stable",
+     "composite": 1.43,
+     "contributors": []
+    },
+    {
+     "date": "1991-05-20",
+     "tier": "stable",
+     "composite": 1.746,
+     "contributors": []
+    },
+    {
+     "date": "1991-05-28",
+     "tier": "stable",
+     "composite": 2.943,
+     "contributors": []
+    },
+    {
+     "date": "1991-07-01",
+     "tier": "stable",
+     "composite": -0.533,
+     "contributors": []
+    },
+    {
+     "date": "1991-07-17",
+     "tier": "stable",
+     "composite": -0.598,
+     "contributors": []
+    },
+    {
+     "date": "1991-07-18",
+     "tier": "stable",
+     "composite": 1.179,
+     "contributors": []
+    },
+    {
+     "date": "1991-08-02",
+     "tier": "stable",
+     "composite": 0.003,
+     "contributors": []
+    },
+    {
+     "date": "1991-08-20",
+     "tier": "stable",
+     "composite": -0.41,
+     "contributors": []
+    },
+    {
+     "date": "1991-08-21",
+     "tier": "stable",
+     "composite": 0.433,
+     "contributors": []
+    },
+    {
+     "date": "1991-08-26",
+     "tier": "stable",
+     "composite": 0.237,
+     "contributors": []
+    },
+    {
+     "date": "1991-08-29",
+     "tier": "stable",
+     "composite": -1.167,
+     "contributors": []
+    },
+    {
+     "date": "1991-09-02",
+     "tier": "stable",
+     "composite": -0.662,
+     "contributors": []
+    },
+    {
+     "date": "1991-09-12",
+     "tier": "stable",
+     "composite": -0.066,
+     "contributors": []
+    },
+    {
+     "date": "1991-09-16",
+     "tier": "stable",
+     "composite": 1.141,
+     "contributors": []
+    },
+    {
+     "date": "1991-10-04",
+     "tier": "stable",
+     "composite": 1.038,
+     "contributors": []
+    },
+    {
+     "date": "1991-10-25",
+     "tier": "stable",
+     "composite": 0.486,
+     "contributors": []
+    },
+    {
+     "date": "1991-10-29",
+     "tier": "stable",
+     "composite": 0.049,
+     "contributors": []
+    },
+    {
+     "date": "1991-11-06",
+     "tier": "stable",
+     "composite": -0.742,
+     "contributors": []
+    },
+    {
+     "date": "1991-11-08",
+     "tier": "stable",
+     "composite": -0.486,
+     "contributors": []
+    },
+    {
+     "date": "1991-12-05",
+     "tier": "stable",
+     "composite": 0.692,
+     "contributors": []
+    },
+    {
+     "date": "1991-12-19",
+     "tier": "stable",
+     "composite": -0.194,
+     "contributors": []
+    },
+    {
+     "date": "1991-12-26",
+     "tier": "stable",
+     "composite": -0.591,
+     "contributors": []
+    },
+    {
+     "date": "1992-01-02",
+     "tier": "stable",
+     "composite": 0.428,
+     "contributors": []
+    },
+    {
+     "date": "1992-01-04",
+     "tier": "stable",
+     "composite": -0.2,
+     "contributors": []
+    },
+    {
+     "date": "1992-01-09",
+     "tier": "stable",
+     "composite": -2.439,
+     "contributors": []
+    },
+    {
+     "date": "1992-01-22",
+     "tier": "stable",
+     "composite": 1.746,
+     "contributors": []
+    },
+    {
+     "date": "1992-02-14",
+     "tier": "stable",
+     "composite": 1.482,
+     "contributors": []
+    },
+    {
+     "date": "1992-03-11",
+     "tier": "stable",
+     "composite": 1.21,
+     "contributors": []
+    },
+    {
+     "date": "1992-03-22",
+     "tier": "stable",
+     "composite": -0.974,
+     "contributors": []
+    },
+    {
+     "date": "1992-04-01",
+     "tier": "stable",
+     "composite": -2.328,
+     "contributors": []
+    },
+    {
+     "date": "1992-04-10",
+     "tier": "stable",
+     "composite": -0.133,
+     "contributors": []
+    },
+    {
+     "date": "1992-05-20",
+     "tier": "stable",
+     "composite": 0.818,
+     "contributors": []
+    },
+    {
+     "date": "1992-06-04",
+     "tier": "stable",
+     "composite": 0.589,
+     "contributors": []
+    },
+    {
+     "date": "1992-06-07",
+     "tier": "stable",
+     "composite": 0.682,
+     "contributors": []
+    },
+    {
+     "date": "1992-06-13",
+     "tier": "stable",
+     "composite": -0.46,
+     "contributors": []
+    },
+    {
+     "date": "1992-07-02",
+     "tier": "stable",
+     "composite": -1.673,
+     "contributors": []
+    },
+    {
+     "date": "1992-07-08",
+     "tier": "stable",
+     "composite": 0.657,
+     "contributors": []
+    },
+    {
+     "date": "1992-07-16",
+     "tier": "stable",
+     "composite": 3.656,
+     "contributors": []
+    },
+    {
+     "date": "1992-08-07",
+     "tier": "stable",
+     "composite": -0.587,
+     "contributors": []
+    },
+    {
+     "date": "1992-08-08",
+     "tier": "stable",
+     "composite": 1.064,
+     "contributors": []
+    },
+    {
+     "date": "1992-08-11",
+     "tier": "stable",
+     "composite": -1.681,
+     "contributors": []
+    },
+    {
+     "date": "1992-08-28",
+     "tier": "stable",
+     "composite": 1.495,
+     "contributors": []
+    },
+    {
+     "date": "1993-01-16",
+     "tier": "stable",
+     "composite": 3.138,
+     "contributors": []
+    }
+   ],
+   "featuresMovingTheConcerningWay": 6,
+   "trend": {
+    "mattr": {
+     "slopePerYear": -0.0003,
+     "slopeInSdPerYear": -0.028,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": true
+    },
+    "mean_utt_len": {
+     "slopePerYear": -1.1672,
+     "slopeInSdPerYear": -0.123,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": true
+    },
+    "dep_depth_mean": {
+     "slopePerYear": 0.0918,
+     "slopeInSdPerYear": 0.117,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": false
+    },
+    "pronoun_noun_ratio": {
+     "slopePerYear": -0.0038,
+     "slopeInSdPerYear": -0.082,
+     "direction": "higher_is_concerning",
+     "movedTheConcerningWay": false
+    },
+    "filler_rate": {
+     "slopePerYear": 0.0,
+     "slopeInSdPerYear": 0.0,
+     "direction": "higher_is_concerning",
+     "movedTheConcerningWay": false
+    },
+    "disfluency_rate": {
+     "slopePerYear": 0.0179,
+     "slopeInSdPerYear": 0.215,
+     "direction": "higher_is_concerning",
+     "movedTheConcerningWay": true
+    },
+    "low_freq_word_rate": {
+     "slopePerYear": -0.1263,
+     "slopeInSdPerYear": -0.206,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": true
+    },
+    "idea_density": {
+     "slopePerYear": -0.0034,
+     "slopeInSdPerYear": -0.033,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": true
+    },
+    "vocab_size_day": {
+     "slopePerYear": -14.5138,
+     "slopeInSdPerYear": -0.099,
+     "direction": "lower_is_concerning",
+     "movedTheConcerningWay": true
+    }
+   },
+   "halves": {
+    "mattr": {
+     "firstHalf": 0.7777,
+     "secondHalf": 0.7758
+    },
+    "mean_utt_len": {
+     "firstHalf": 58.7311,
+     "secondHalf": 57.5996
+    },
+    "dep_depth_mean": {
+     "firstHalf": 6.3992,
+     "secondHalf": 6.6374
+    },
+    "pronoun_noun_ratio": {
+     "firstHalf": 0.4563,
+     "secondHalf": 0.4421
+    },
+    "filler_rate": {
+     "firstHalf": 0.0,
+     "secondHalf": 0.0
+    },
+    "disfluency_rate": {
+     "firstHalf": 0.1189,
+     "secondHalf": 0.1736
+    },
+    "low_freq_word_rate": {
+     "firstHalf": 3.7429,
+     "secondHalf": 3.4427
+    },
+    "idea_density": {
+     "firstHalf": 4.4327,
+     "secondHalf": 4.4162
+    },
+    "vocab_size_day": {
+     "firstHalf": 611.2075,
+     "secondHalf": 583.6604
+    }
+   },
+   "wordsPerConference": 3319.7
+  }
+ }
+}

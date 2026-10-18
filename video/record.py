@@ -292,7 +292,7 @@ def goto(r: Recorder, path: str, ready: str) -> None:
 
 def hero(r: Recorder):
     yield
-    r.on_phrase("speech usually shows it first")
+    r.on_phrase("More pauses")
     r.point("figure", dy=0)
     r.hold_beat()
 
@@ -301,8 +301,6 @@ def stats(r: Recorder):
     r.scroll_to(f"{PROBLEM} h2", rest=URL_BAR_HEIGHT + 60 * SCALE)
     yield
     r.point(f"{PROBLEM} .grid > div:nth-child(1)")
-    r.on_phrase("newest treatments")
-    r.point(f"{PROBLEM} .grid > div:nth-child(2)")
     r.hold_beat()
 
 
@@ -348,7 +346,12 @@ def simulated(r: Recorder):
     r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 120 * SCALE)
     yield
     r.point("span:text-is('Simulated person')")
-    r.on_phrase("Before the chart")
+    r.on_phrase("Bellwether shows when")
+    r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 30 * SCALE)
+    r.point("li:has-text('lower than your baseline since')")
+    r.on_phrase("how far")
+    r.page.mouse.move(*_box_right(r, "li:has-text('higher than your baseline since')"), steps=30)
+    r.on_phrase("Poor sleep")
     r.scroll_to(CONFOUNDERS, rest=URL_BAR_HEIGHT + 60 * SCALE)
     r.point("text=Not sleeping well")
     r.hold_beat()
@@ -387,8 +390,9 @@ def report(r: Recorder):
     goto(r, "/report/", "text=Bellwether speech report")
     r.scroll_to("text=Bellwether speech report", rest=URL_BAR_HEIGHT + 60 * SCALE)
     yield
-    r.on_phrase("what changed")
-    r.point("text=Current status")
+    r.on_phrase("simple timeline")
+    r.scroll_to("text=Tier over the period", rest=URL_BAR_HEIGHT + 120 * SCALE)
+    r.point("text=Tier over the period")
     r.on_phrase("Open source")
     r.page.evaluate(END_CARD_JS)
     r.hold_beat()

@@ -62,6 +62,22 @@ That zero is only worth something paired with sensitivity, so real sessions were
 
 Reproduce: `pip install convokit`, then `python harness/scotus/run.py`. `harness/scotus/results.json`.
 
+## 4d. A famous real case, run unchanged: Reagan and Bush
+
+The best-known real example of speech changing before a diagnosis is a published one. Berisha, Wang, LaCross and Liss compared the formal press conferences of Ronald Reagan, who announced an Alzheimer's diagnosis in 1994, with those of George H. W. Bush, and reported changes in Reagan's language over his presidency and none in Bush's.
+Berisha V, Wang S, LaCross A, Liss J. Tracking discourse complexity preceding Alzheimer's disease diagnosis: a case study comparing the press conferences of Presidents Ronald Reagan and George Herbert Walker Bush. *J Alzheimers Dis*. 2015;45(3):959-963. [doi:10.3233/JAD-142763](https://doi.org/10.3233/JAD-142763)
+
+That finding was later contested. Holding constant the number and type of reporters' questions, a reanalysis found Reagan's unique word usage rate "held form throughout his eight years in the White House".
+Beckmann MN. Did Reagan Decline? *J Alzheimers Dis*. 2024;101(4):1261-1266. [doi:10.3233/JAD-240294](https://doi.org/10.3233/JAD-240294)
+
+`harness/presidents/run.py` fetches every "The President's News Conference" in both terms from the American Presidency Project (public record), keeps only the paragraphs labelled as the president's own words, and runs the product's extractor and engine with the defaults, one conference as one day.
+
+**The engine flagged neither president.** Reagan: 46 conferences, 39 assessed, 0 flagged. Bush: 106 conferences, 99 assessed, 0 flagged. On the nine features' year-on-year trends, five of nine moved the concerning way for Reagan and six of nine for Bush, which is no separation.
+
+The original study's own measure, non-specific nouns per 100 of the president's words, computed on the same transcripts: Reagan 0.46 in 1981, then between 0.51 and 0.77 every later year; Bush between 0.38 and 0.46 across 1989 to 1992, then 0.96 in his final weeks, which is 1 conference. Reagan's later years sit above Bush's, but on three to eight prepared appearances a year it is too thin to call a trend, and the engine is right not to.
+
+What this is, stated precisely: a test on a famous real case that the field itself now disputes, in which Bellwether did not produce the contested signal. It is not evidence about Reagan, not evidence about dementia, and not a diagnosis of anyone. It is one more measured limit: a few prepared public appearances a year is not the input this is built for, which is a person's everyday speech, every day.
+
 ## 5. The features have a literature, feature by feature
 
 Each feature in `speech-vitals` carries its basis in code (`speech_vitals/types.py`), and `speech-vitals schema` prints the table. The load-bearing references:
