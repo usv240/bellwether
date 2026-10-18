@@ -172,4 +172,14 @@ Each entry: the task attempted, the steps taken, what was expected against what 
 - Workaround: a second anchor. A session whose first six words declare it ("Bellwether check-in", "voice note for", "vlog for", "today's vlog", "journal", "note to self") is a check-in, with the same ten-minute window; the note anchor stays for people who prefer it. Pinned by a test in which "as I was saying in my vlog yesterday" at word ten does not count. On this account it turned 0 counted days into the two expected.
 - Suggestion: a way for the wearer to mark a session as theirs on the band or in the app, carried through to the developer data. Until the `is_wearer` flag of entry 12 exists, a declared session is the honest substitute, and it is the wearer's own voice saying so.
 
+## Entry 18: an MCP session remembered in memory breaks the moment Lambda scales (2026-10-18, ours, and a spec-docs gap)
+
+- Task: record the Strands agent asking the deployed MCP server how a month went, for the demo video.
+- Steps: ran `apps/agent/speech_check_in.py` against the function URL; it made four tool calls in one session.
+- Expected: four answers, as on every earlier run.
+- Actual: the fourth call failed with "Session terminated". Sessions were a set in one instance's memory; the agent's calls had made Lambda start a second instance, which had never issued the id and answered 404. Every earlier run had happened to stay on one warm instance, and every test runs one process, so nothing had ever seen it. The same pattern was in all four servers built for this hackathon, so Alexa+ or any judge's MCP client could hit it whenever traffic spread.
+- Severity: high for the Alexa+ surface, and invisible until load.
+- Workaround: a session id is now a nonce and an HMAC of it, keyed by the function's own name and version, so every instance verifies it with no table and no state (the pattern the Volley server already used). A test opens a session on one app instance and uses it on another. Live, 24 sessions opened at once on each of the four servers were all fully usable afterwards.
+- Suggestion: the transport section should say plainly that a session id must be verifiable by any replica, and show the stateless way to do it. Every serverless MCP server meets this, and the natural reading of "the server assigns a session id" is a set in memory.
+
 <!-- Add new entries above this line as they happen. -->
