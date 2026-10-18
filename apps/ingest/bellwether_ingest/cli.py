@@ -120,6 +120,8 @@ def main(argv: list[str] | None = None) -> int:
 
     mine = sub.add_parser("mine", help="your first day: read your Bee, send the numbers, open your page")
     mine.add_argument("--max-minutes", type=float, default=60)
+    mine.add_argument("--days", type=int, default=None,
+                      help="read only the last N days (a daily run); earlier days stay on the service as they were")
     mine.add_argument("--api", default=os.environ.get("BELLWETHER_API", DEFAULT_API))
     mine.add_argument("--remind", action="store_true",
                       help="if today's voice notes are short, add a todo on your Bee asking for the note")
@@ -171,7 +173,7 @@ def main(argv: list[str] | None = None) -> int:
         key = load_or_make_key(args.key_file)
         return first_day(cli, post=lambda days, profile: post_days(days, profile, args.api, key), reduce=reduce_to_days,
                          max_minutes=args.max_minutes, remind=args.remind, profile=args.profile,
-                         claim=lambda profile: claim_profile(profile, args.api, key))
+                         claim=lambda profile: claim_profile(profile, args.api, key), days=args.days)
 
     if args.command == "evidence":
         from .evidence import capture, to_markdown

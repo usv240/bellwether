@@ -488,10 +488,13 @@ def ingest_backfill(
     max_pages: int = 100,
     max_minutes: float | None = None,
     keep_records: list | None = None,
+    since_ms: int | None = None,
 ) -> list[Utterance]:
     """Every conversation the account holds, as the owner's utterances.
     ``keep_records``, if given, receives the fetched records so a caller
     can derive a second stream without reading the device twice.
+    ``since_ms``, if given, stops at the first conversation older than it:
+    the list comes newest first, so a daily run reads a day, not a month.
 
     ``bee changed`` with no cursor answers with recent changes only, so the
     first pull after ten days on the wrist came back with two days. The
@@ -507,8 +510,14 @@ def ingest_backfill(
             items = payload.get("conversations") or payload.get("items") or payload.get("data") or []
         rows.extend(items or [])
         cursor = _next_cursor(payload)
+        if since_ms is not None and items and isinstance(items[-1], dict):
+            oldest = _ms(items[-1].get("start_time"))
+            if oldest is not None and oldest < since_ms:
+                break
         if not cursor or not items:
             break
+    if since_ms is not None:
+        rows = [r for r in rows if not isinstance(r, dict) or (_ms(r.get("start_time")) or 0) >= since_ms]
     if max_minutes is not None:
         rows = [r for r in rows if not isinstance(r, dict) or keep_conversation(r, max_minutes)]
     records = with_utterances(cli, rows, limit=len(rows))

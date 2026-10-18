@@ -154,3 +154,70 @@ def _cli(note_text):
     cli = BeeCli(runner=runner_with(note_text))
     cli.installed = lambda: True  # type: ignore[method-assign]
     return cli
+
+
+def test_days_stops_paging_at_the_first_older_conversation():
+    """A daily run reads a day, not a month: the list comes newest first,
+    so paging stops as soon as a page reaches past the window, and only
+    conversations inside it are fetched for their words."""
+    import time
+
+    from bellwether_ingest.bee import OwnerFilter, ingest_backfill
+
+    now_ms = int(time.time() * 1000)
+    pages = {
+        None: {"conversations": [{"id": 1, "start_time": now_ms - 3600_000}, {"id": 2, "start_time": now_ms - 30 * 86400_000}], "next_cursor": "p2"},
+        "p2": {"conversations": [{"id": 3, "start_time": now_ms - 40 * 86400_000}], "next_cursor": None},
+    }
+    calls = []
+
+    def runner(argv):
+        calls.append(argv)
+        if "list" in argv:
+            cur = argv[argv.index("--cursor") + 1] if "--cursor" in argv else None
+            return (0, json.dumps(pages[cur]), "")
+        if "get" in argv:
+            cid = argv[argv.index("get") + 1]
+            return (0, json.dumps({"conversation": {"id": int(cid), "start_time": now_ms - 3600_000, "transcriptions": [{"utterances": [
+                {"text": "a quiet morning and a walk", "speaker": "Unknown", "spoken_at": now_ms - 3500_000}]}]}}), "")
+        return (1, "", "unexpected")
+
+    ingest_backfill(BeeCli(runner=runner), OwnerFilter(None), since_ms=now_ms - 2 * 86400_000)
+    assert not [a for a in calls if "--cursor" in a]
+    assert [a[a.index("get") + 1] for a in calls if "get" in a] == ["1"]
+
+
+def test_the_count_reported_is_the_one_the_service_holds():
+    lines = []
+    first_day(_cli(NOTE), post=lambda d, p: {"stored": 1, "eligible_days": 4}, reduce=reduce_to_days, log=lines.append)
+    assert "Day 4 of 7 counted." in "\n".join(lines)
+    assert "3 more day(s)" in "\n".join(lines)
+
+
+def test_a_short_run_never_posts_a_day_outside_its_window():
+    """An old voice note is still on the account when a two-day run reads
+    only two days of sessions. Posting its day would overwrite the full
+    day already on the service with a sentence. Found on the first real
+    run, which turned a counted day into an excluded one."""
+    import time
+
+    now_ms = int(time.time() * 1000)
+    old_ms = now_ms - 9 * 86400_000
+
+    def runner(argv):
+        if "journals" in argv:
+            return (0, json.dumps({"journals": [{"id": "old", "text": "Today is a quiet Tuesday at home", "created_at": old_ms}], "next_cursor": None}), "")
+        if "list" in argv:
+            return (0, json.dumps({"conversations": [{"id": 5, "start_time": now_ms - 3600_000}], "next_cursor": None}), "")
+        if "get" in argv:
+            return (0, json.dumps({"conversation": {"id": 5, "start_time": now_ms - 3600_000, "transcriptions": [{"utterances": [
+                {"text": "bellwether check in for today " + "and a long walk by the river " * 25, "speaker": "Unknown", "spoken_at": now_ms - 3500_000}]}]}}), "")
+        return (1, "", "unexpected")
+
+    cli = BeeCli(runner=runner)
+    cli.installed = lambda: True  # type: ignore[method-assign]
+    sent = []
+    first_day(cli, post=lambda d, p: sent.append((p, [r["date"] for r in d])) or {"stored": 1}, reduce=reduce_to_days,
+              log=lambda s: None, days=2)
+    old_day = time.strftime("%Y-%m-%d", time.gmtime(old_ms / 1000))
+    assert sent and all(old_day not in dates for _, dates in sent)

@@ -86,6 +86,7 @@ def first_day(
     remind: bool = False,
     profile: str = TALK_PROFILE,
     claim=None,
+    days: int | None = None,
 ) -> int:
     """Run the whole first day. ``post(days, profile)`` sends rows and
     returns the service's answer; ``reduce(utterances)`` makes day rows.
@@ -99,11 +100,32 @@ def first_day(
     talk = Stream(profile, "everyday conversations")
 
     try:
-        log("Reading the band's conversations (this can take a few minutes)...")
+        since_ms = None
+        if days is not None:
+            import time
+
+            # Whole UTC days, so the earliest day read is read in full.
+            today = int(time.time() // 86400) * 86400
+            since_ms = (today - (days - 1) * 86400) * 1000
+            log(f"Reading the band's last {days} day(s)...")
+        else:
+            log("Reading the band's conversations (this can take a few minutes)...")
         records: list = []
-        talk.days = reduce(ingest_backfill(cli, OwnerFilter(None), max_minutes=max_minutes, keep_records=records))
+        talk.days = reduce(ingest_backfill(cli, OwnerFilter(None), max_minutes=max_minutes,
+                                           keep_records=records, since_ms=since_ms))
         log("Finding your check-ins among them...")
         voice.days = reduce(ingest_checkins(cli, records=records))
+        if since_ms is not None:
+            # Only days inside the window were read in full. A voice note
+            # from last week is still on the account, but the session it
+            # anchored was not fetched this run, so its day would be posted
+            # short and overwrite the full one already on the service.
+            # Found on the first real run: Oct 15 went from 265 words to 16.
+            import datetime as _dt
+
+            first = _dt.datetime.fromtimestamp(since_ms / 1000, _dt.timezone.utc).strftime("%Y-%m-%d")
+            voice.days = [d for d in voice.days if d["date"] >= first]
+            talk.days = [d for d in talk.days if d["date"] >= first]
     except BeeNotAuthenticated:
         log("Bee is not logged in. Open the Bee app, then run: bee login")
         return 3
@@ -135,10 +157,17 @@ def first_day(
             raise
         log(f"{s.label}: {len(s.days)} day(s) read, {s.counted} count toward your baseline")
 
+    # The baseline is what the service holds, not what this run read: a
+    # run with --days reads a day or two and the earlier days are already
+    # there. The service says how many count; this falls back to the run.
+    held = (voice.posted or {}).get("eligible_days") if isinstance(voice.posted, dict) else None
+    counted = held if isinstance(held, int) else voice.counted
+
     log("")
     log(f"Your page: {SITE}/app/?profile={voice.profile}")
-    if voice.counted < 7:
-        need = 7 - voice.counted
+    if counted < 7:
+        need = 7 - counted
+        log(f"Day {counted} of 7 counted.")
         log(f"Your check-ins need {need} more day(s) of at least {MIN_WORDS} words before Bellwether compares anything. Say 'Bellwether check-in' and the date, then about two minutes of talking, once a day.")
     else:
         log("Your check-in baseline is set. Every new day is compared with it.")
