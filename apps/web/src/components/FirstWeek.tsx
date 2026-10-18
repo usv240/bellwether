@@ -43,7 +43,7 @@ export function FirstWeek({ days, assessments, eligibleDays }: { days: DayRow[];
       </p>
       <p className="mt-2 text-sm leading-relaxed text-ink">
         Seven counted days teach Bellwether what normal sounds like for you. Nothing is compared until they are in.{" "}
-        <span className="font-medium">Day {Math.min(eligibleDays + 1, WARMUP_DAYS)} of {WARMUP_DAYS}.</span>
+        <span className="font-medium">{Math.min(eligibleDays, WARMUP_DAYS)} of {WARMUP_DAYS} days counted.</span>
       </p>
 
       <ol className="mt-4 grid grid-cols-7 gap-1.5" aria-label="Counted days">

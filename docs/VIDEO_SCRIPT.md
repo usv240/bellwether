@@ -1,142 +1,99 @@
-# Bellwether demo video: shot list
+# Demo video script
 
-Target length 2:50. Hard limit 3:00; judges are not required to watch past it, so the strongest material is in the first 45 seconds. Everything shown is the live deployment, so nothing in the video can differ from what a judge clicks.
+Under three minutes, public, English. Judges are not required to watch
+past 3:00, so the strongest material is first.
 
-**This video cannot be finished before the Bee device arrives.** The Bee track requires that "your video and code need to show your project actually using live Bee data to do something for a user, mentioning Bee isn't enough." Shots 4 and 5 are the live-data shots, and they need the wristband. Everything else can be recorded now and cut together later.
+This file is written by `python video/beats.py --script` from the same
+data the recorders and the assembler read. Edit `video/beats.py`, not
+this file.
 
-Rules this video must satisfy, and where it does:
-
-- Bee: live Bee data doing something for a person. Shots 4 and 5.
-- Alexa+: "show your MCP server (spec 2025-11-25+, Streamable HTTP) in action." Shots 7 and 8.
-- No third-party trademarks, music, or footage. Narration only, no background track.
-- English, public on YouTube.
-- Nothing that could be read as a medical claim. The disclaimer is spoken aloud, not only shown.
-
-## Before you press record
-
-```
-# 1. Terminal, large font (18pt+), dark theme, 1280x720.
-export API=https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws
-export MCP=$API/mcp
-
-# 2. Warm every endpoint. A Bedrock cold start on camera looks like a bug.
-curl -s $API/v1/profiles/alex-drift/summary | python -m json.tool
-curl -s $API/v1/profiles/alex-drift/weekly-note | python -m json.tool
-curl -s $API/api/resilience | python -m json.tool
-
-# 3. Warm the agent, then run it again on camera.
-python apps/agent/speech_check_in.py --url $MCP --profile alex-drift
-
-# 4. With the device paired and worn for at least ten days:
-bee status                       # expect: logged in
-bellwether-ingest pull --owner <your speaker label> --out days.json
-curl -X POST $API/v1/profiles/me/days -H "content-type: application/json" -d @days.json
-curl -s $API/v1/profiles/me/summary | python -m json.tool
-```
-
-Browser: https://d1xfuyog8wiuvf.cloudfront.net at 125 percent zoom, light theme to start. Open `/app` and `/report` in separate tabs. Close everything else, hide the bookmarks bar.
-
-Record at 1080p, 30fps. Pause half a second before each click.
+---
 
 ## Shot list
 
-### Shot 1: the hook (0:00 to 0:18)
+**0:00, hook, the website, in a real browser**
 
-Screen: the landing page hero.
+The front page: the claim, and a simulated person's own range with the days that left it.
 
-Say: "Your watch knows when your heart skips a beat. Nothing knows when your brain does. Speech is the only thing the brain produces continuously that anyone can observe, and when something changes, speech is usually where it shows first."
+> Your watch knows when your heart skips a beat. Nothing knows when your brain does. When something changes there, speech usually shows it first: more pauses, simpler sentences, words that will not come.
 
-### Shot 2: the gap (0:18 to 0:40)
+**0:14, gap, the website, in a real browser**
 
-Screen: scroll slowly to the four statistics. Let the 3.5 years card rest for two seconds.
+The four figures under the problem; the three and a half years card first.
 
-Say: "Across all dementias, the average time from first symptoms to a diagnosis is three and a half years. The newest treatments are approved only for the earliest stage, which is exactly what that delay skips past. And when the appointment finally happens, patients forget up to eighty percent of what they are told."
+> Across all dementias, the average wait from first symptoms to a diagnosis is three and a half years. The newest treatments only work at the earliest stage. That wait skips straight past it.
 
-### Shot 3: what it is, and is not (0:40 to 0:55)
+**0:27, what, the website, in a real browser**
 
-Screen: still on the landing page, over the how-it-works steps.
+How it works: wear, measure, learn, show.
 
-Say: "Bellwether is not a diagnosis and not a medical device. It learns how one person normally speaks, from the wristband they already wear, and shows them when that changes. It compares you only with your own past, never with anyone else."
+> Bellwether is not a diagnosis and not a medical device. It learns how one person normally speaks, and tells them when that changes. Only against your own past, never against anyone else.
 
-### Shot 4: real Bee data, on your wrist (0:55 to 1:20) **needs the device**
+**0:41, term-mine, a terminal, a real run rendered**
 
-Screen: show the Bee band on your wrist for two seconds, then the terminal.
+A terminal: bellwether-ingest mine against the builder's own Bee, the days it read, the days that count, the page to open.
 
-Run, on camera:
+> This is my Bee. Each day I check in: two minutes of talking to the band on my own. One command turns each day into nine numbers on my computer and throws the words away. Anyone can do the same with their own Bee, and a free key keeps the profile theirs.
 
-```
-bee status
-bellwether-ingest pull --owner <your speaker label> --out days.json
-```
+**1:02, checkins, the website, in a real browser**
 
-Then show `days.json` on screen and scroll it.
+The dashboard on the builder's own check-ins: the real-data badge, the first week filling.
 
-Say: "This is my own Bee wristband, and this is my own speech from the last two weeks. The important part is what is in this file. Nine numbers a day, and no words. The transcript was reduced on my machine and discarded. Nothing that leaves here could reconstruct a sentence."
+> My own baseline, from real Bee data. Seven days teach it what normal sounds like for me; every day after is compared with them. Two days in. Five more and it compares. Until then it says so, instead of hunting for something to report.
 
-### Shot 5: my own baseline (1:20 to 1:40) **needs the device**
+**1:20, room, the website, in a real browser**
 
-Screen: post the file, then open `/app` pointed at your own profile.
+The switcher to the band's conversations, the note under the badge saying what that stream is.
 
-Say: "Fourteen days. Seven of them were spent learning what normal sounds like for me, and the rest are compared with it. Stable, which is what I expected, and the system says so plainly rather than looking for something to report."
+> The band also hears everyone around me, and Bee does not yet say who was talking. So that stream is kept separate and labelled for what it is: three weeks of everyday conversation, also stable.
 
-### Shot 6: what a change looks like (1:40 to 2:05)
+**1:35, change, the website, in a real browser**
 
-Screen: switch to the simulated persona on `/app`. The simulated badge must be visible.
+The switcher to the simulated person, labelled; then what else could explain a change.
 
-Say: "This is a simulated person, labelled throughout, so you can see eight weeks including a gradual change from week six."
+> To show what change looks like: a simulated person, labelled on every screen. Before the chart, the ordinary explanations: a bad week of sleep, a cold, a new medication. They explain far more changes than anything worrying, so they get the same space as the result.
 
-Screen: scroll to `What else could explain this`. Let it be readable.
+**1:54, moved, the website, in a real browser**
 
-Say: "And this is the panel that matters most. Before the chart, before anything frightening, the ordinary explanations: a bad week of sleep, a cold, a new medication, talking to fewer people. Those explain far more changes than anything worrying does, so they get the same space as the result."
+The eight-week chart, then the measures that moved.
 
-Screen: scroll to the trend chart and the contributors.
+> When it does flag something, it says which measures moved, in which direction, and since when.
 
-Say: "When it does flag something, it says which measures moved, in which direction, and since when."
+**2:01, mcp, the website, in a real browser**
 
-### Shot 7: the MCP server (2:05 to 2:20)
+A session held against the MCP server from the page, every request answered by the deployed server.
 
-Screen: terminal.
+> All of this is also a Model Context Protocol server over Streamable HTTP, the way Alexa+ talks to tools. Seven tools, and none can return a transcript, because none exists.
 
-```
-curl -s -D- -o /dev/null -X POST $MCP -H "content-type: application/json" \
-  -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-11-25","capabilities":{},"clientInfo":{"name":"demo","version":"1"}}}' \
-  | grep -i mcp-session-id
-```
+**2:14, term-agent, a terminal, a real run rendered**
 
-Say: "All of this is also a Model Context Protocol server, spec 2025-11-25 over Streamable HTTP. Seven tools, and none of them can return a transcript, because none exists."
+A terminal: the Strands agent on Amazon Bedrock asking the deployed server how the simulated person's month went.
 
-### Shot 8: asking out loud (2:20 to 2:40)
+> A Strands agent on Amazon Bedrock asks how the week went. It says the data is simulated before anything else, and it may never name a condition.
 
-Screen: run the agent live.
+**2:25, report, the website, in a real browser**
 
-```
-python apps/agent/speech_check_in.py --url $MCP --profile alex-drift
-```
+The doctor report, then the links.
 
-Say: "A Strands agent on Amazon Bedrock, with no database access of its own. It reads the status, the trend and the report through those tools, says the data is simulated before anything else, and suggests only what a person can act on themselves. It is forbidden from naming a condition or predicting anything."
+> This is the point. One page for a twelve-minute appointment: what changed, when, what moved, and in full, that this is not a diagnosis. Open source, live at the link. Bellwether. Your own normal, in your own numbers.
 
-### Shot 9: the page that leaves the room (2:40 to 2:55)
+Estimated 2:41 of a 3:00 ceiling. The real narration decides the
+final cut.
 
-Screen: `/report`, then click Print so the print preview shows.
+## The terminal beats
 
-Say: "And this is the point of the whole thing. One page, for a twelve-minute appointment: what changed, when, what moved, and in full, the statement that this is not a diagnosis. Open source, MIT, live at the link."
+Two beats show real commands: `bellwether-ingest mine` against the
+builder's own Bee, and the Strands agent against the deployed MCP
+server. `record_term.py capture` runs them for real and keeps their
+output and how long they took; `render` types them at a human pace in
+a terminal frame the same 4K recorder captures, prints the saved
+output, and says how long each run really took. The frame says it is
+a rendering of a real run.
 
-Hold on the URL for two seconds. Cut.
+## What not to say
 
-## Do not say
-
-- Any sentence in which Bellwether detects, screens for, predicts, or indicates a condition.
-- "Early detection." Say "a record of change over time."
-- "Accurate" or "%" about Bellwether itself. The 85 to 89.6 percent figure belongs to the ADReSS literature and must be attributed to it out loud if used at all.
-- Any number that is not in `docs/EVIDENCE.md`.
-- Anything implying the person on screen in Shot 6 is real.
-
-## If the device does not arrive in time
-
-Do not fake it, and do not imply it. Cut shots 4 and 5, open Shot 1 with the simulated label stated aloud, and say plainly in the closing shot: "The Bee device is on order; everything shown runs on the production pipeline against a labelled simulated person." A judge will respect that far more than footage that quietly implies data we do not have, and the Bee track scoring will reflect the gap either way.
-
-## After recording
-
-- Export 1080p, H.264. No music.
-- YouTube: title "Bellwether: speech is a vital sign", visibility Public, not Unlisted. Description: one paragraph, the site URL, the repo URL, the MCP URL, and the non-diagnostic disclaimer verbatim.
-- Paste the link into `docs/SUBMISSION.md` under Live, and into the Devpost form.
+Any sentence in which Bellwether detects, screens for, predicts or
+indicates a condition. "Early detection." "Accurate" or a percentage
+about Bellwether itself. Any number not in docs/EVIDENCE.md. Anything
+implying the simulated person is real, or that the conversation stream
+is the builder's own speech.
