@@ -97,6 +97,26 @@ export function BeeConnect() {
         </pre>
       </div>
 
+      {/*
+        No Bee yet. Meeting transcripts already say who said what, which is
+        the one thing the Bee does not, so a person's own words can be kept
+        and everyone else's dropped before anything is measured.
+      */}
+      <div className="mt-3 rounded-[var(--radius-md)] border border-line bg-surface p-4">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <p className="font-medium text-ink">No Bee? Use the meetings you already have</p>
+          <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${WHERE.yours.cls}`}>{WHERE.yours.label}</span>
+        </div>
+        <p className="mt-2 text-sm leading-relaxed text-muted">
+          Zoom and Teams transcripts (.vtt), Otter exports (.txt), or any &ldquo;Name: text&rdquo; file. Run it once
+          without a name to see who spoke, then again with yours. Only your own turns are kept, and only nine numbers a
+          day leave your computer.
+        </p>
+        <pre className="mt-3 overflow-x-auto rounded-[var(--radius-sm)] border border-line bg-bg p-3 font-mono text-[12px] leading-relaxed text-ink">
+          <code>{"bellwether-ingest file meetings/*.vtt\nbellwether-ingest file meetings/*.vtt --speaker \"Your Name\" --post <your-name>"}</code>
+        </pre>
+      </div>
+
       <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-muted">What that command does, step by step</p>
       <ol className="mt-3 space-y-3">
         {STEPS.map((s, i) => (

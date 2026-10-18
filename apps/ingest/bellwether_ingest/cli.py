@@ -164,7 +164,53 @@ def main(argv: list[str] | None = None) -> int:
     stream.add_argument("--owner")
     stream.add_argument("--out")
 
+    tf = sub.add_parser("file", help="no Bee needed: your own words from Zoom or Teams .vtt, Otter .txt, or 'Name: text' files")
+    tf.add_argument("paths", nargs="+", help="one or more transcript files; one file is one meeting")
+    tf.add_argument("--speaker", help="your name as the transcript prints it; omit to list the names in the files")
+    tf.add_argument("--date", help="YYYY-MM-DD for files with no date in their name; default is the file's modified date")
+    tf.add_argument("--out", help="write day features JSON here")
+    tf.add_argument("--post", metavar="PROFILE", help="also send the day features to this profile on the service")
+    tf.add_argument("--api", default=os.environ.get("BELLWETHER_API", DEFAULT_API))
+    tf.add_argument("--key", default=os.environ.get("BELLWETHER_KEY"))
+
     args = parser.parse_args(argv)
+
+    if args.command == "file":
+        from pathlib import Path
+
+        from .transcripts import speakers, utterances_from
+
+        files = [Path(p) for p in args.paths]
+        missing = [str(f) for f in files if not f.is_file()]
+        if missing:
+            print(f"not found: {', '.join(missing)}", file=sys.stderr)
+            return 2
+        if not args.speaker:
+            # Names and word counts only; never a word of what was said.
+            from collections import Counter
+
+            total: Counter = Counter()
+            for f in files:
+                total.update(speakers(f.read_text(encoding="utf-8", errors="replace")))
+            if not total:
+                print("no speaker-labelled turns found in these files", file=sys.stderr)
+                return 4
+            print("Speakers in these files, by words spoken. Run again with --speaker \"<your name>\":", file=sys.stderr)
+            for name, words in total.most_common():
+                print(f"  {name}: {words} words", file=sys.stderr)
+            return 0
+        utts = [u for f in files for u in utterances_from(f, args.speaker, args.date)]
+        if not utts:
+            print(f"no turns by {args.speaker!r} in these files; run without --speaker to see the names", file=sys.stderr)
+            return 4
+        days = reduce_to_days(utts)
+        _write_days(days, args.out)
+        if args.post and days:
+            res = post_days(days, args.post, args.api, args.key)
+            print(f"posted {res['stored']} day(s) to {args.post}: {res['tier']}, "
+                  f"{res['eligible_days']} day(s) count", file=sys.stderr)
+        return 0
+
     cli = BeeCli()
 
     if args.command == "mine":
