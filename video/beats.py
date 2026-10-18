@@ -126,8 +126,8 @@ BEATS: list[Beat] = [
         shows="How it works: wear, measure, learn, show.",
         say=(
             "Bellwether is not a diagnosis and not a medical device. "
-            "It learns how one person normally speaks, and tells them when that changes. "
-            "Only against your own past, never against anyone else."
+            "Everyone speaks differently. So it learns what's normal for you, "
+            "rather than comparing you with anyone else, and tells you when that changes."
         ),
     ),
     Beat(
@@ -165,8 +165,9 @@ BEATS: list[Beat] = [
     Beat(
         key="change",
         action="simulated",
-        shows="The switcher to the simulated person, labelled; what moved and since when; then what else could explain it.",
+        shows="The switcher to the simulated person, labelled; the eight-week chart leaving its band; what moved and since when; then what else could explain it.",
         pause_before=0.3,
+        min_hold=28,
         say=(
             "Now imagine someone's speech gradually changes over several weeks. This is a simulated example. "
             "Bellwether shows when the change started, which measurements moved, "
@@ -182,8 +183,8 @@ BEATS: list[Beat] = [
         pause_before=0.3,
         min_hold=9,
         say=(
-            "All of this is also a Model Context Protocol server over Streamable HTTP, the way Alexa+ talks to tools. "
-            "Seven tools, and none can return a transcript, because none exists."
+            "Bellwether also connects to AI assistants through seven MCP tools, using the same protocol Alexa+ supports. "
+            "And because it never stores conversations, those tools can't retrieve them."
         ),
     ),
     Beat(

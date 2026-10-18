@@ -305,7 +305,7 @@ def stats(r: Recorder):
 def how(r: Recorder):
     r.scroll_to(f"{HOW} h2", rest=URL_BAR_HEIGHT + 60 * SCALE)
     yield
-    r.on_phrase("learns how one person")
+    r.on_phrase("Everyone speaks differently")
     r.point(f"{HOW} ol > li:nth-child(3)")
     r.hold_beat()
 
@@ -345,10 +345,17 @@ def simulated(r: Recorder):
     yield
     r.point("span:text-is('Simulated person')")
     r.on_phrase("Bellwether shows when")
-    r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 30 * SCALE)
-    r.point("li:has-text('lower than your baseline since')")
+    # The chart is the strongest picture in the video: the band, the
+    # days inside it, and the days that leave it. Rest on it, then trace
+    # the late days along the line.
+    r.scroll_to(".recharts-wrapper", rest=URL_BAR_HEIGHT + 150 * SCALE)
+    box = r.page.locator(".recharts-wrapper").first.bounding_box()
+    r.page.mouse.move(box["x"] + box["width"] * 0.35, box["y"] + box["height"] * 0.7, steps=24)
+    r.page.wait_for_timeout(900)
+    r.page.mouse.move(box["x"] + box["width"] * 0.9, box["y"] + box["height"] * 0.25, steps=60)
     r.on_phrase("how far")
-    r.page.mouse.move(*_box_right(r, "li:has-text('higher than your baseline since')"), steps=30)
+    r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 30 * SCALE)
+    r.point("li:has-text('higher than your baseline since')")
     r.on_phrase("Poor sleep")
     r.scroll_to(CONFOUNDERS, rest=URL_BAR_HEIGHT + 60 * SCALE)
     r.point("text=Not sleeping well")
@@ -378,10 +385,12 @@ def alexa(r: Recorder):
     yield
     r.click(START)
     r.page.locator("#mcp-steps > li").nth(2).wait_for(state="visible", timeout=60_000)
-    r.on_phrase("Seven tools")
+    r.on_phrase("never stores conversations")
     r.scroll_to("#mcp-steps", rest=URL_BAR_HEIGHT + 60 * SCALE)
     r.point("#mcp-steps > li:nth-child(3)")
+    r.page.evaluate(EVIDENCE_JS)
     r.hold_beat()
+    r.page.evaluate("document.getElementById('__evidence') && document.getElementById('__evidence').remove()")
 
 
 def report(r: Recorder):
@@ -394,6 +403,30 @@ def report(r: Recorder):
     r.on_phrase("Open source")
     r.page.evaluate(END_CARD_JS)
     r.hold_beat()
+
+
+# What the engineering was checked against, on screen and unspoken. Both
+# numbers are in the repository; the label says what they are not.
+EVIDENCE_JS = """
+(() => {
+  const S = __SCALE__;
+  const box = document.createElement('div');
+  box.id = '__evidence';
+  box.style.cssText = ['position:fixed','right:' + (24 * S) + 'px','top:__TOP__px','z-index:2147483645',
+    'background:rgba(16,32,29,0.94)','color:#f2f4f8','border-radius:' + (10 * S) + 'px',
+    'padding:' + (14 * S) + 'px ' + (18 * S) + 'px','font-family:Inter,system-ui,sans-serif',
+    'font-size:' + (15 * S) + 'px','line-height:1.45','max-width:' + (420 * S) + 'px',
+    'opacity:0','transition:opacity 400ms ease-out'].join(';');
+  box.innerHTML = '<div style="font-weight:700;color:#e0b25a;margin-bottom:' + (6 * S) + 'px">Checked, not claimed</div>'
+    + '<div>233 automated tests</div>'
+    + '<div>Engine run on 349 real Supreme Court arguments: zero false alarms</div>'
+    + '<div style="opacity:0.7;margin-top:' + (6 * S) + 'px">System behaviour, not clinical accuracy</div>';
+  document.documentElement.appendChild(box);
+  requestAnimationFrame(() => { box.style.opacity = '1'; });
+})();
+""".replace("__SCALE__", str(SCALE / PAGE_ZOOM)).replace("__TOP__", str(URL_BAR_HEIGHT + 24))
+# The address bar is URL_BAR_HEIGHT CSS pixels on the zoomed root, so the
+# note starts below it; the first render hid its heading under the bar.
 
 
 # The links, for a judge who wants to check, under the address bar.
