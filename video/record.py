@@ -421,7 +421,10 @@ END_CARD_JS = """
   const cur = document.getElementById('__cursor'); if (cur) cur.style.opacity = '0';
   requestAnimationFrame(() => { card.style.opacity = '1'; });
 })();
-""".replace("__SCALE__", str(SCALE))
+""".replace("__SCALE__", str(SCALE / PAGE_ZOOM))
+# The root element is zoomed by PAGE_ZOOM, and the card is appended to it,
+# so its sizes are divided by the zoom: the first take drew the links at
+# 2.7 times their size and ran them off the right edge.
 
 
 ACTIONS = {f.__name__: f for f in (hero, stats, how, checkins, conversations, simulated, chart, alexa, report)}
