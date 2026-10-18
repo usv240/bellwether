@@ -279,8 +279,6 @@ def preflight() -> None:
             f"beats.py says {CHECKIN_DAYS} check-in days; the service holds {voice['eligible_days']}. "
             "Set CHECKIN_DAYS and narrate again."
         )
-    if room["tier"] != "stable":
-        raise SystemExit(f"the narration calls the conversation stream stable; the service says {room['tier']}")
     print(f"preflight: {voice['eligible_days']} check-in days, conversations {room['tier']}")
 
 
@@ -333,8 +331,8 @@ def conversations(r: Recorder):
     r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 230 * SCALE)
     yield
     r.point("text=Bee does not yet tell speakers apart")
-    r.on_phrase("also stable")
-    r.point("text=Stable")
+    r.on_phrase("the room, not just me")
+    r.point("text=Real Bee: conversations")
     r.hold_beat()
 
 

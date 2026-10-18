@@ -138,7 +138,7 @@ BEATS: list[Beat] = [
         say=(
             "This runs on my own Bee. I talk to it for two minutes each day. "
             "Bellwether turns that speech into nine measurements and discards the words. "
-            "Anyone can run the same command on their own Bee."
+            "Anyone can do the same with their own Bee, or with the meeting transcripts they already have."
         ),
     ),
     Beat(
