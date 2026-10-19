@@ -35,7 +35,7 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 | [`packages/speech-vitals`](packages/speech-vitals) | The open-source feature package, on PyPI as [`speech-vitals`](https://pypi.org/project/speech-vitals/) (`pip install speech-vitals`). MIT, dependency-free core. Nine language features per day, each with its literature basis and concerning direction. Features only, never words. | 35 |
 | [`apps/engine`](apps/engine) | The personal baseline: warmup, EWMA baseline, concern-signed composite, CUSUM drift detection, explainable tiers, low-exposure exclusion, and a freeze so the baseline cannot learn its way out of a signal. No model in the loop. Includes the claims suite (every published figure re-derived from the committed personas) the detector comparison against the two simpler rules it replaced, and the external harness that runs the engine over real speech. | 69 |
 | [`apps/ingest`](apps/ingest) | The Bee integration, called in code: `bee conversations`, `bee now`, `bee changed` with exactly-once cursors, a full-history backfill that skips sessions too long or too media-like to be the wearer, `bee stream --json`, `bee sync` markdown, owner isolation when Bee labels the wearer, and the wearer's own voice notes as a stream whose speaker is certain, posted straight to the service with `--post`, and `mine`: a wearer's first day in one command. Check-ins: a voice note anchors the band's session that follows it, so the wearer's deliberate two minutes count even though a Bee note ends after a sentence. | 82 |
-| [`apps/server`](apps/server) | FastAPI: dashboard API, public features API, the MCP server, the Bedrock weekly note, the doctor report. Receives feature rows, never text. | 67 |
+| [`apps/server`](apps/server) | FastAPI: dashboard API, public features API, the MCP server, the Bedrock weekly note, the doctor report. Receives feature rows, never text. | 69 |
 | [`apps/web`](apps/web) | Landing page, dashboard, printable doctor report. Light and dark, 22 info buttons, 100 on accessibility. | |
 | [`apps/agent`](apps/agent) | Two Strands agents on Bedrock, and the Check-in Host: a voice assistant stand-in that speaks tonight's script through Amazon Polly while the Bee records, waits for the Bee, counts the day and reads the coaching note back, never seeing a word. One consumes Bellwether's MCP server as an outside client. The other holds **two** MCP servers at once, Bellwether's and Bee's own, to find the ordinary explanation for a change, behind an audited allowlist that withholds every Bee tool returning verbatim speech. | 35 |
 | [`apps/agentcore`](apps/agentcore) | The second opinion (Advocate, Sceptic, gated Referee) deployed on Amazon Bedrock AgentCore Runtime as an invocable endpoint, verified live. | |
@@ -43,7 +43,7 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 | [`harness/scotus`](harness/scotus) | The engine over real spontaneous speech nobody here wrote: 349 Supreme Court oral arguments by 8 justices. Restraint, sensitivity at a known effect size, and the measured case for an own baseline. | |
 | [`fixtures/personas`](fixtures/personas) | Three synthetic personas through the real extractor and engine, labelled SIMULATED. `sam-first-week` is ten days of check-in-sized days with a short third day, for the dashboard's day-by-day replay of a first week (`?as_of=` on the summary, assessments and coaching endpoints shows a profile as it stood that evening). The two eight-week ones share a seed and differ only in whether a change is injected from day 35, which is asserted, so the comparison is controlled. | |
 
-**288 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
+**290 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
 
 ## Real speech, not ours
 
@@ -179,6 +179,23 @@ It has already paid for itself. Its first run across the three deployed Lambdas 
 ## Status
 
 The device arrived on 2026-09-29 and the chain ran end to end on it the same day: [docs/BEE_LIVE.md](docs/BEE_LIVE.md) is the record, counts and the nine numbers from a real day and not one word. The first session also found that the CLI's shapes differed from every fixture in three ways, now pinned in `apps/ingest/tests/test_device_shapes.py`. Fourteen days in, every speaker Bee returns is "Unknown" (FRICTION_LOG entry 12, [bee-cli issue #19](https://github.com/bee-computer/bee-cli/issues/19)), so the live site shows the wearer's band as two labelled profiles: voice notes, the wearer's own speech by construction, and everyday conversations with long sessions and media filtered out. Both are real; the site says which is which.
+
+## Built with
+
+Every tool this project uses, and the file that uses it.
+
+| Tool | What it does here | Where |
+|---|---|---|
+| Bee CLI | every path Bee data takes in: conversations, journals, todos, changes | [`apps/ingest/bellwether_ingest/bee.py`](apps/ingest/bellwether_ingest/bee.py) |
+| Bee's own MCP server | an agent holds it beside Bellwether's, behind an allow-list that withholds every tool returning speech | [`apps/agent/context_check_in.py`](apps/agent/context_check_in.py) |
+| MCP server, spec 2025-11-25, Streamable HTTP | the Alexa+ surface: ten tools, signed sessions, conformance-probed live | [`apps/server/bellwether_server/mcp.py`](apps/server/bellwether_server/mcp.py) |
+| Agent Skill | tells an agent how to use the ten tools and what never to say; a test checks it names every tool | [`skills/bellwether/SKILL.md`](skills/bellwether/SKILL.md) |
+| Amazon Bedrock (Claude) | phrases the weekly note on a three-model ladder with a template floor; runs the agents | [`apps/server/bellwether_server/bedrock.py`](apps/server/bellwether_server/bedrock.py) |
+| Strands Agents SDK | the Speech Check-in agent, the Context agent, and the second opinion (Advocate, Sceptic, gated Referee) | [`apps/agent/second_opinion.py`](apps/agent/second_opinion.py) |
+| Amazon Bedrock AgentCore Runtime | hosts the second opinion as an invocable endpoint | [`apps/agentcore`](apps/agentcore) |
+| Amazon Polly | the voice of the hosted check-in | [`apps/agent/check_in_host.py`](apps/agent/check_in_host.py) |
+| Amazon DynamoDB, AWS Lambda, Amazon S3, Amazon CloudFront, AWS CDK | the store, the service, the site, one deploy | [`infra/bin/app.ts`](infra/bin/app.ts) |
+| PyPI | speech-vitals, the open-source feature package | [`packages/speech-vitals`](packages/speech-vitals) |
 
 ## License
 

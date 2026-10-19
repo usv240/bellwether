@@ -116,7 +116,7 @@ Two things a visitor can press, both new, both mirroring a pattern proven in the
 
 ## Tech implementation
 
-**288 tests**, passing from a clean clone with the documented install.
+**290 tests**, passing from a clean clone with the documented install.
 
 - **`speech-vitals` (MIT, the open-source deliverable).** Nine features, each carrying its literature citation and the direction the dementia-speech literature associates with decline, in code rather than in a paper. Deterministic: same text, same numbers, so any figure in a doctor report is reproducible from the day's transcript. The base package is dependency-free and imports anywhere, including a Lambda that only ever sees feature rows; extraction lives behind an `nlp` extra. A test asserts that a stored record holds no string but the date.
 - **The engine.** Warmup, EWMA baseline, concern-signed z-scores, a standardised composite, one-sided CUSUM (k 0.5, h 5.0, expected false-alarm interval on the order of nine hundred days), per-feature CUSUMs for attribution only, low-exposure exclusion, and a **freeze** so the baseline cannot learn its way out of a signal. Nothing that decides a tier calls a model.
@@ -205,3 +205,7 @@ None of the eighteen beats it on both axes. Both personas are synthetic and ours
 - **No ADReSS validation, and no harness for it.** The benchmark's data is restricted to verified academic researchers by application, we do not have that access, and nothing here is validated against it. ADReSS is cited as the field's evidence that language features carry the signal, and for nothing else.
 - **No user testing.** Every design decision is reasoned from literature, not observed in a room with an older adult or a clinician.
 - **English only**, stated in the FAQ rather than hidden.
+
+## Built with
+
+Bee CLI; Bee's own MCP server; MCP server, spec 2025-11-25, Streamable HTTP; Agent Skill; Amazon Bedrock (Claude); Strands Agents SDK; Amazon Bedrock AgentCore Runtime; Amazon Polly; Amazon DynamoDB, AWS Lambda, Amazon S3, Amazon CloudFront, AWS CDK; PyPI. Each, with the file that uses it, is in the README's Built with table.
