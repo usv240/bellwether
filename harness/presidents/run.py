@@ -1,4 +1,4 @@
-"""Bellwether on two presidents' own press conferences.
+"""Bellwether on five presidents' own press conferences.
 
     python harness/presidents/run.py            # fetch (cached), measure, write results.json
 
@@ -73,9 +73,18 @@ DATA = HERE / "data"
 BASE = "https://www.presidency.ucsb.edu"
 UA = {"User-Agent": "Mozilla/5.0 (Bellwether research harness; github.com/usv240/bellwether)"}
 
+# Reagan, diagnosed with Alzheimer's disease in 1994, and the published
+# comparison, George H. W. Bush. Then three presidents with no known
+# dementia diagnosis, two full terms each, as the false-alarm question on
+# real people over years: does the engine stay quiet when nothing is
+# known to have changed? A quiet result is not a claim about anyone's
+# health, and neither is a flag; it is a measurement of the engine.
 TERMS = {
     "reagan": ("Ronald Reagan", date(1981, 1, 20), date(1989, 1, 19)),
     "bush": ("George H. W. Bush", date(1989, 1, 20), date(1993, 1, 19)),
+    "clinton": ("Bill Clinton", date(1993, 1, 20), date(2001, 1, 19)),
+    "gwbush": ("George W. Bush", date(2001, 1, 20), date(2009, 1, 19)),
+    "obama": ("Barack Obama", date(2009, 1, 20), date(2017, 1, 19)),
 }
 
 
@@ -112,9 +121,18 @@ def list_conferences(start: date, end: date) -> list[str]:
 
 
 # Speaker labels as the transcripts print them: "The President." (or
-# "THE PRESIDENT." on older pages), "Q." for a reporter, and the
-# occasional named official ("Mr. Speakes.").
-LABEL = re.compile(r"^(Q\.|The President\.|THE PRESIDENT\.|(?:Mr|Mrs|Ms|Dr|Secretary|General|Ambassador)\.? [A-Z][A-Za-z'\-]+\.)\s*")
+# "THE PRESIDENT." on older pages), "Q." for a reporter, a named official
+# ("Mr. Speakes."), and in joint conferences the other leader ("Prime
+# Minister Kaifu.", "President Gorbachev.", "Chancellor Kohl."). The first
+# version knew only the first three, so in six places another leader's
+# words were counted as President Bush's; found 2026-10-19 and fixed
+# before the results were rerun. Later transcripts label the president
+# himself by name in joint conferences ("President Obama."), which
+# PRESIDENT_NAMED handles per run.
+TITLES = (r"Mr|Mrs|Ms|Dr|Secretary|Press Secretary|General|Admiral|Ambassador|Prime Minister|President|"
+          r"Vice President|Chancellor|King|Queen|Crown Prince|Prince|Minister|Foreign Minister|Premier|"
+          r"Chairman|General Secretary|Governor|Senator|Mayor")
+LABEL = re.compile(r"^(Q\.|The President\.|THE PRESIDENT\.|(?:" + TITLES + r")\.? (?:[A-Z][A-Za-z'\-]+ ){0,2}[A-Z][A-Za-z'\-]+\.)\s*")
 PRESIDENT = {"The President.", "THE PRESIDENT."}
 
 
@@ -124,8 +142,9 @@ def is_heading(p: str) -> bool:
     return len(p.split()) <= 8 and not p.rstrip().endswith((".", "?", "!", '"', "'"))
 
 
-def parse(doc: str) -> tuple[str | None, str, str]:
+def parse(doc: str, surname: str | None = None) -> tuple[str | None, str, str]:
     """(iso date, title, the president's own words)."""
+    mine = PRESIDENT | ({f"President {surname}."} if surname else set())
     title = html.unescape(re.search(r"<title>(.*?)</title>", doc, re.S).group(1)).split("|")[0].strip()
     m = re.search(r'class="date-display-single"[^>]*content="(\d{4}-\d{2}-\d{2})', doc)
     day = m.group(1) if m else None
@@ -152,7 +171,7 @@ def parse(doc: str) -> tuple[str | None, str, str]:
             speaker = m.group(1)
             p = p[m.end():]
         p = re.sub(r"\[[^\]]*\]", " ", p).strip()
-        if speaker in PRESIDENT and p and not is_heading(p):
+        if speaker in mine and p and not is_heading(p):
             own.append(p)
     return day, title, "\n".join(own)
 
@@ -175,7 +194,7 @@ def fetch(key: str) -> list[dict]:
         if not page.exists():
             page.write_text(get(BASE + path), encoding="utf-8")
             time.sleep(0.4)
-        day, title, text = parse(page.read_text(encoding="utf-8"))
+        day, title, text = parse(page.read_text(encoding="utf-8"), name.split()[-1])
         if not day or not (start.isoformat() <= day <= end.isoformat()):
             continue
         if "news conference" not in title.lower():

@@ -2,6 +2,20 @@
 
 Every impact claim Bellwether makes, with its source, stated precisely enough to check. Each figure in sections 1 to 4 was verified at its primary source during this build; where the commonly repeated version differed from the source, the source wins and the difference is noted.
 
+## 0. What people say they want, in their own answers
+
+Bellwether has had no outside users, by design. What real people need is taken instead from the two largest recent national surveys on exactly this question, both fielded on a probability-based panel of all US households.
+
+**Nearly 4 in 5 Americans (79%) would want to know if they had Alzheimer's disease before experiencing symptoms or before symptoms interfere with daily activities. More than 4 in 5 (83%) would want to undergo simple medical testing for Alzheimer's if it would allow earlier treatment and care.** Survey of 1,702 US adults aged 45 and older, 7 to 18 November 2024, NORC AmeriSpeak, with oversamples of Hispanic, Black, Asian and Native Americans.
+
+Alzheimer's Association. *American Perspectives on Early Detection of Alzheimer's Disease in the Era of Treatment.* Special report, 2025 Alzheimer's Disease Facts and Figures. [PDF](https://alz.org/getmedia/a6b0adee-d708-43a0-b78d-44bdd9234b60/alzheimers-facts-and-figures-special-report-2025.pdf).
+
+**Two in three adults (66%) named their health care provider as their top source for brain health information, yet only 14% have ever had a conversation about maintaining brain health with their physician, and 11% have discussed ways to reduce dementia risk.** Survey of 3,829 US adults aged 40 and older, 29 December 2025 to 13 January 2026, NORC AmeriSpeak.
+
+Alzheimer's Association. *Brain Health in America: Understanding and Supporting Lifelong Cognitive Health.* Special report, 2026 Alzheimer's Disease Facts and Figures. [PDF](https://www.alz.org/getmedia/3d226bf2-0690-48d0-98ac-d790384f4ec2/alzheimers-facts-and-figures-special-report.pdf).
+
+Read together with sections 1, 1b and 7b: people want to know early, they want to hear it from their doctor, and the conversation almost never happens. The one-page report exists to start it, at a visit that already asks for it.
+
 ## 1. The diagnostic gap is measured in years
 
 **Across all dementias, the mean time from symptom onset to diagnosis is 3.5 years (95 percent CI 2.7 to 4.3). For young-onset dementia it is 4.1 years (CI 3.4 to 4.9).** Thirteen studies, 30,257 participants, ages at onset 54 to 93, moderate-quality evidence.
@@ -70,21 +84,31 @@ That zero is only worth something paired with sensitivity, so real sessions were
 
 Reproduce: `pip install convokit`, then `python harness/scotus/run.py`. `harness/scotus/results.json`.
 
-## 4d. A famous real case, run unchanged: Reagan and Bush
+## 4d. Real people over years: five presidents, run unchanged
 
-The best-known real example of speech changing before a diagnosis is a published one. Berisha, Wang, LaCross and Liss compared the formal press conferences of Ronald Reagan, who announced an Alzheimer's diagnosis in 1994, with those of George H. W. Bush, and reported changes in Reagan's language over his presidency and none in Bush's.
+The best-known real example of speech changing before a diagnosis is a published one. Berisha, Wang, LaCross and Liss compared the formal press conferences of Ronald Reagan, who announced an Alzheimer's diagnosis in 1994, with those of George H. W. Bush, and reported changes in Reagan's language over his presidency.
 Berisha V, Wang S, LaCross A, Liss J. Tracking discourse complexity preceding Alzheimer's disease diagnosis: a case study comparing the press conferences of Presidents Ronald Reagan and George Herbert Walker Bush. *J Alzheimers Dis*. 2015;45(3):959-963. [doi:10.3233/JAD-142763](https://doi.org/10.3233/JAD-142763)
 
 That finding was later contested. Holding constant the number and type of reporters' questions, a reanalysis found Reagan's unique word usage rate "held form throughout his eight years in the White House".
 Beckmann MN. Did Reagan Decline? *J Alzheimers Dis*. 2024;101(4):1261-1266. [doi:10.3233/JAD-240294](https://doi.org/10.3233/JAD-240294)
 
-`harness/presidents/run.py` fetches every "The President's News Conference" in both terms from the American Presidency Project (public record), keeps only the paragraphs labelled as the president's own words, and runs the product's extractor and engine with the defaults, one conference as one day.
+`harness/presidents/run.py` fetches every "The President's News Conference" for five presidents from the American Presidency Project (public record), keeps only the paragraphs labelled as the president's own words, and runs the product's extractor and engine with the defaults, one conference as one day. Three presidents with no known dementia diagnosis were added on 2026-10-19 (Clinton, George W. Bush, Obama, two full terms each), because the question a real person needs answered is the other one: **does it stay quiet on someone whose speech is not known to have changed?**
 
-**The engine flagged neither president.** Reagan: 46 conferences, 39 assessed, 0 flagged. Bush: 106 conferences, 99 assessed, 0 flagged. On the nine features' year-on-year trends, five of nine moved the concerning way for Reagan and six of nine for Bush, which is no separation.
+| | Conferences | Assessed | Flagged | First flag |
+|---|---|---|---|---|
+| Ronald Reagan (diagnosed 1994) | 46 | 39 | 0 | none |
+| George H. W. Bush | 123 | 116 | 6 | 1991-05-28 |
+| Bill Clinton | 193 | 186 | 12 | 1999-07-19 |
+| George W. Bush | 210 | 203 | 0 | none |
+| Barack Obama | 156 | 147 | 0 | none |
 
-The original study's own measure, non-specific nouns per 100 of the president's words, computed on the same transcripts: Reagan 0.46 in 1981, then between 0.51 and 0.77 every later year; Bush between 0.38 and 0.46 across 1989 to 1992, then 0.96 in his final weeks, which is 1 conference. Reagan's later years sit above Bush's, but on three to eight prepared appearances a year it is too thin to call a trend, and the engine is right not to.
+**On the four with no known diagnosis, 18 of 652 assessed conferences were flagged (2.8 percent).** Two of the four ran clean across eight years each. The flags are not scattered: five of George H. W. Bush's six fall in one week in July 1991, at conferences in London, Rambouillet, Athens and Ankara on an overseas trip, and all twelve of Clinton's fall in his last eighteen months, from July 1999, six of them at the higher tier. Travel, joint appearances with another leader, and a changed role are exactly the ordinary explanations the product lists before any chart, and exactly why a flag says "watch" and not anything more.
 
-What this is, stated precisely: a test on a famous real case that the field itself now disputes, in which Bellwether did not produce the contested signal. It is not evidence about Reagan, not evidence about dementia, and not a diagnosis of anyone. It is one more measured limit: a few prepared public appearances a year is not the input this is built for, which is a person's everyday speech, every day.
+**Reagan was not flagged.** Five of nine features moved the concerning way across his presidency, as did five of nine for George H. W. Bush, which is no separation; on three to eight prepared appearances a year the engine is right not to call a trend. The original study's own measure, non-specific nouns per 100 of the president's words, on the same transcripts: Reagan 0.46 in 1981, then between 0.51 and 0.77 every later year; George H. W. Bush between 0.38 and 0.45 across 1989 to 1992.
+
+**A correction, recorded rather than quietly made.** The first run of this harness reported George H. W. Bush as 106 conferences and none flagged. The parser knew only "The President." as his label, and in joint conferences the transcripts name him ("President Bush."), so seventeen joint conferences were silently empty and, in six places, another leader's words were counted as his. Fixed on 2026-10-19; the table above is the corrected run, and the six flags are what the earlier, wrong number hid.
+
+What this is, stated precisely: the engine on six real people's own words across years (with section 4c's justices, eight more across a term). It is not evidence about any president's health, not evidence about dementia, and not a diagnosis of anyone; a quiet series is not a clean bill of health and a flagged one is not a finding. It is the measured false-alarm behaviour of the product on real speech: rare, clustered on changes of setting, and labelled for what it is.
 
 ## 4e. Language changes years before diagnosis, in the same people
 

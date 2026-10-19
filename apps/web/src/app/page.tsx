@@ -64,6 +64,13 @@ const CASE = [
   },
 ];
 
+// What real people said, in the two largest recent national surveys.
+// Bellwether has had no outside users; this is the need, in their words.
+const VOICES = [
+  { value: "79%", label: "of Americans 45 and over would want to know they had Alzheimer's before symptoms, or before symptoms interfere with daily life.", source: "Alzheimer's Association survey of 1,702 adults, 2025" },
+  { value: "66% vs 14%", label: "want brain health guidance from their doctor first, yet only 14% have ever discussed brain health with their physician.", source: "Alzheimer's Association survey of 3,829 adults, 2026" },
+];
+
 const ECONOMICS = [
   { value: "17%", label: "of net benefit lost for every year a diagnosis is delayed", source: "Barnett et al., BMC Neurology, 2014" },
   { value: "$405,262", label: "lifetime cost per person with dementia, about 70% borne by families", source: "Alzheimer's Association, 2026" },
@@ -278,6 +285,21 @@ export default function Home() {
                 </div>
               ))}
             </div>
+
+            <h3 className="mt-12 text-lg font-semibold tracking-tight">What people say they want, in their own answers</h3>
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              {VOICES.map((v) => (
+                <div key={v.value} className="rounded-[var(--radius-lg)] border border-line bg-bg p-5">
+                  <p className="text-3xl font-semibold tracking-tight text-[var(--primary)]">{v.value}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-ink">{v.label}</p>
+                  <p className="mt-2 text-xs text-muted">{v.source}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-3 max-w-[720px] text-sm leading-relaxed text-muted">
+              People want to know early, they want to hear it from their doctor, and the conversation almost never
+              happens. The one-page report exists to start it.
+            </p>
 
             <h3 className="mt-12 text-lg font-semibold tracking-tight">The case, in three verified steps</h3>
             <div className="mt-4 grid gap-4 md:grid-cols-3">
