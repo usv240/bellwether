@@ -4,6 +4,8 @@ Bellwether reads the transcripts your wearable already makes, keeps nine languag
 
 Your watch tracks your heart. What about the way you speak? Bellwether makes speech a vital sign.
 
+**Judging this?** [docs/FOR_JUDGES.md](docs/FOR_JUDGES.md) maps every Rules.md requirement and judging criterion to the file, command or link that proves it.
+
 **On real speech nobody here wrote:** across 349 Supreme Court oral arguments by 8 justices, the engine flagged zero, and on all nine features two different justices sit closer together than one justice's own session-to-session range, which is the measured case for comparing a person with their own past rather than with a population ([harness/scotus](harness/scotus)).
 
 **Measured against the detector a reasonable engineer builds instead:** on two personas that are identical until the day a change is injected, Bellwether flags it two days in, with zero false alarms across 47 quiet days. The simplest rule that is equally quiet is two days later. The simplest rule that is equally fast costs a false alarm on someone whose speech never changed. None of eighteen settings of two simpler rules beats it on both axes ([fixtures/detector-comparison.json](fixtures/detector-comparison.json)). Both personas are synthetic and ours, which the file says in those words: this measures that the decision rule earns its complexity, not that the detector works on a real person.
@@ -171,7 +173,7 @@ It has already paid for itself. Its first run across the three deployed Lambdas 
 
 ## Documentation
 
-[SUBMISSION.md](docs/SUBMISSION.md) · [EVIDENCE.md](docs/EVIDENCE.md) (every claim with its source) · [PILOT.md](docs/PILOT.md) (the study to run, endpoints fixed first) · [DESIGN.md](docs/DESIGN.md) · [AWS.md](docs/AWS.md) · [ACCESSIBILITY.md](docs/ACCESSIBILITY.md) · [FEATURE_REQUESTS.md](docs/FEATURE_REQUESTS.md) · [FRICTION_LOG.md](FRICTION_LOG.md) · [PRODUCT_FEEDBACK.md](PRODUCT_FEEDBACK.md)
+**For judges, start with [FOR_JUDGES.md](docs/FOR_JUDGES.md)**: every Rules.md requirement and judging criterion, with the file or link that proves it. · [SUBMISSION.md](docs/SUBMISSION.md) · [EVIDENCE.md](docs/EVIDENCE.md) (every claim with its source) · [PILOT.md](docs/PILOT.md) (the study to run, endpoints fixed first) · [DESIGN.md](docs/DESIGN.md) · [AWS.md](docs/AWS.md) · [ACCESSIBILITY.md](docs/ACCESSIBILITY.md) · [FEATURE_REQUESTS.md](docs/FEATURE_REQUESTS.md) · [FRICTION_LOG.md](FRICTION_LOG.md) · [PRODUCT_FEEDBACK.md](PRODUCT_FEEDBACK.md)
 
 ## Status
 
