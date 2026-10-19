@@ -160,7 +160,7 @@ Opening an MCP URL in a browser shows an error, because the protocol is a POST w
 
 ```
 node scripts/mcp-conform.mjs            # this project's deployed server
-node scripts/mcp-conform.mjs --all      # all three servers built for this hackathon
+node scripts/mcp-conform.mjs --all      # all five servers built for this hackathon
 ```
 
 No install and no MCP client library: one dependency-free Node script against the deployed Lambda. It checks nineteen rules from spec revision 2025-11-25 over real HTTP, including the two shapes that in-process tests never produce: a DELETE carrying a JSON content-type and an empty body, and a body the server cannot parse.

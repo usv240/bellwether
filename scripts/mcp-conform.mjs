@@ -52,16 +52,18 @@ const DEFAULT_URL =
   "https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/mcp";
 
 /**
- * The three servers built for this hackathon. The point of --all is that
- * the same probe holds against two different frameworks: Nightlight and
- * EveryWord are Fastify on Node, Bellwether is FastAPI on Python. A
- * conformance claim that has only ever met one implementation is a claim
- * about that implementation.
+ * The five servers built for this hackathon. The point of --all is that
+ * the same probe holds against two different frameworks: Nightlight,
+ * EveryWord and Earshot are Fastify on Node, Bellwether and Volley are
+ * FastAPI on Python. A conformance claim that has only ever met one
+ * implementation is a claim about that implementation.
  */
 const SIBLINGS = [
   "https://qdvxx267lgnsitq242aplz722a0zuien.lambda-url.us-east-1.on.aws/mcp",
   "https://bgvgejdhfhlu2inavg23d5dkj40eggxt.lambda-url.us-east-1.on.aws/mcp",
+  "https://inwrmblw32v4iyzsxkr5bfpidu0izuah.lambda-url.us-east-1.on.aws/mcp",
   "https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/mcp",
+  "https://6gm5fp5kuipgvjgr5zmhghq63u0hmmvd.lambda-url.us-east-1.on.aws/mcp",
 ];
 
 const PROTOCOL_VERSION = "2025-11-25";
