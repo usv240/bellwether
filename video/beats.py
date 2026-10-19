@@ -142,6 +142,17 @@ BEATS: list[Beat] = [
         ),
     ),
     Beat(
+        key="term-host",
+        action="term_host",
+        shows="A terminal: the Check-in Host speaking tonight's three questions through the speaker while the Bee on the wrist listens; the day counted; the coaching note read back.",
+        min_hold=14,
+        say=(
+            "Or the assistant hosts it. Using the same MCP tools Alexa+ gets, it asks three standard questions out loud. "
+            "The Bee on my wrist records my answers, and the host's own words are removed before anything is measured. "
+            "Then it tells me where I stand."
+        ),
+    ),
+    Beat(
         key="checkins",
         action="checkins",
         shows="The dashboard on the builder's own check-ins: the real-data badge, the first week filling.",
@@ -158,8 +169,8 @@ BEATS: list[Beat] = [
         shows="The switcher to the band's conversations, the note under the badge saying what that stream is.",
         pause_before=0.3,
         say=(
-            "The band also hears everyone around me, and Bee does not yet say who was talking. "
-            "So that stream is kept separate and labelled for what it is: the room, not just me."
+            "The band also hears the room, and Bee does not yet say who spoke. "
+            "So that stream is kept separate and labelled for what it is."
         ),
     ),
     Beat(
@@ -183,7 +194,7 @@ BEATS: list[Beat] = [
         pause_before=0.3,
         min_hold=9,
         say=(
-            "Bellwether also connects to AI assistants through seven MCP tools, using the same protocol Alexa+ supports. "
+            "Bellwether also connects to AI assistants through nine MCP tools, using the same protocol Alexa+ supports. "
             "And because it never stores conversations, those tools can't retrieve them."
         ),
     ),

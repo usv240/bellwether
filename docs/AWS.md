@@ -16,7 +16,7 @@ Live: `https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/` (A
 
 - Where: `apps/agent/speech_check_in.py`
 - What for: the Speech Check-in agent, which answers the question a person actually asks ("how have I been sounding, and is it worth mentioning to the doctor?"). That needs dependent reads (status, then trend, then the report) and a judgement about whether to say anything, which is an agent's job.
-- The design choice that matters: the agent has no data access. It is a second, independent client of the **same MCP server** Alexa+ would use. It gets seven tools and nothing else; there are no transcripts to give it. Verified against the deployed endpoint: it chained status, trend and report, opened with the simulated label, and suggested nothing beyond bringing the report to an appointment.
+- The design choice that matters: the agent has no data access. It is a second, independent client of the **same MCP server** Alexa+ would use. It gets nine tools and nothing else; there are no transcripts to give it. Verified against the deployed endpoint: it chained status, trend and report, opened with the simulated label, and suggested nothing beyond bringing the report to an appointment.
 - Model: Claude on Amazon Bedrock. The safety boundary does not move because the output is a sentence.
 
 ## Amazon DynamoDB

@@ -26,9 +26,9 @@ const STEPS = [
 // an app with a record button. The wearer's whole job is two minutes a day.
 const WEEK = [
   { when: "Day one", title: "One command", text: "bellwether-ingest mine reads your Bee, turns each day into nine numbers on your own computer, sends only those, and opens your page." },
-  { when: "Every day", title: "A two-minute check-in", text: "Say \"Bellwether check-in\" and the date, then keep talking to the band on your own, any topic. If the day is short, a reminder appears in your Bee's own todos." },
-  { when: "Day eight", title: "The first comparison", text: "Seven days taught it your normal. From here, each day is read against them, and the weekly note starts." },
-  { when: "Any day", title: "Ask out loud", text: "How have I been sounding? Through Alexa+ or any assistant that speaks MCP, answered from the same seven tools." },
+  { when: "Every day", title: "A two-minute check-in", text: "Say \"Bellwether check-in\" and the date, then talk to the band on your own. Or let the assistant host it: it asks three standard questions through the speaker, the band records your answers, and the host's words are removed before anything is measured." },
+  { when: "Day eight", title: "The first comparison", text: "Seven days taught it your normal. From here, each day is read against them, and the coaching note says what to do, not just what moved." },
+  { when: "Any day", title: "Ask out loud", text: "How have I been sounding? Through Alexa+ or any assistant that speaks MCP, answered from the same nine tools." },
   { when: "Appointment day", title: "Print one page", text: "What changed, when, which measures moved, the notes you added, and in full: this is not a diagnosis." },
 ];
 
@@ -63,7 +63,7 @@ const FAQ = [
   { q: "What does Bee record?", a: "Bee transcribes conversations near the wearer, and today it labels every speaker Unknown, so it cannot say which words were yours. Bellwether therefore keeps two streams and labels them: your check-ins, which you declare yours out loud and record alone, and the band's conversations, which are the room. No audio reaches Bellwether at all." },
   { q: "Can it detect a stroke?", a: "No. It is not an emergency product and reacts on the scale of days, not minutes. If speech changes suddenly, call emergency services." },
   { q: "Why does it say the person is simulated?", a: "Because they are. The live baseline on this page is generated speech for one invented person, run through the real extractor and the real engine, so you can see eight weeks including a change from week six. Everything after the words is the product." },
-  { q: "Can an assistant ask it for me?", a: "Yes. Bellwether is a Model Context Protocol server, so a voice assistant or AI agent can ask how you have been sounding, read the report, or run the spoken check with you by voice. The assistant gets the same seven numbers-only tools and nothing else." },
+  { q: "Can an assistant ask it for me?", a: "Yes. Bellwether is a Model Context Protocol server, so a voice assistant or AI agent can ask how you have been sounding, read the report, run the spoken check with you by voice, or host tonight's check-in by asking the three questions itself. The assistant gets the same nine numbers-only tools and nothing else." },
 ];
 
 export default function Home() {
@@ -365,7 +365,7 @@ curl -X POST ${API}/v1/profiles/me/days \\
   -d @days.json`}</code></pre>
               <div className="rounded-[var(--radius-lg)] border border-line bg-surface p-5 text-sm leading-relaxed text-muted">
                 <p><span className="font-semibold text-ink">Endpoints.</span> <code className="font-mono text-xs">GET /v1/profiles/{"{id}"}/summary</code>, <code className="font-mono text-xs">/assessments</code>, <code className="font-mono text-xs">/report</code>, <code className="font-mono text-xs">/weekly-note</code>; <code className="font-mono text-xs">POST /days</code>, <code className="font-mono text-xs">/annotations</code>, <code className="font-mono text-xs">/checks</code>. Interactive docs at <a className="text-[var(--primary)] underline underline-offset-2" href={`${API}/v1/docs`} target="_blank" rel="noopener noreferrer">/v1/docs</a>.</p>
-                <p className="mt-3"><span className="font-semibold text-ink">MCP.</span> <code className="font-mono text-xs">{API}/mcp</code>, spec 2025-11-25 over Streamable HTTP, seven tools. <InfoButton id="mcp" /></p>
+                <p className="mt-3"><span className="font-semibold text-ink">MCP.</span> <code className="font-mono text-xs">{API}/mcp</code>, spec 2025-11-25 over Streamable HTTP, nine tools, two of which host the check-in itself. <InfoButton id="mcp" /></p>
                 <p className="mt-3"><span className="font-semibold text-ink">Resilience.</span> <a className="text-[var(--primary)] underline underline-offset-2" href={`${API}/api/resilience`} target="_blank" rel="noopener noreferrer">/api/resilience</a> reports every degradation path.</p>
                 <p className="mt-3"><span className="font-semibold text-ink">Bee.</span> Ingestion calls <code className="font-mono text-xs">bee conversations</code>, <code className="font-mono text-xs">bee now</code>, <code className="font-mono text-xs">bee changed</code>, <code className="font-mono text-xs">bee stream --json</code> and <code className="font-mono text-xs">bee sync</code> in code. <InfoButton id="bee" /></p>
               </div>

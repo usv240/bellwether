@@ -51,6 +51,13 @@ SHOTS = {
     "term-agent": [
         ["python", "apps/agent/speech_check_in.py", "--profile", "alex-drift"],
     ],
+    # The hosted check-in, for real: the host speaks through the speaker,
+    # the wearer answers, the Bee records, the day is counted and the
+    # coaching note read back. Run on the evening of the take; the answer
+    # window is shortened so the capture stays under two minutes.
+    "term-host": [
+        ["python", "apps/agent/check_in_host.py", "--profile", "me", "--count", "--answer-seconds", "25"],
+    ],
 }
 # What each command actually runs with. Shown on screen as a comment line,
 # so the frame never hides where a command pointed.
@@ -61,6 +68,7 @@ RUN = {
 NOTES = {
     "term-mine": "# the builder's own Bee, signed in on this machine",
     "term-agent": "# BELLWETHER_MCP is the deployed server, " + MCP,
+    "term-host": "# the assistant asks, the Bee on my wrist listens; deployed MCP server, Polly for the voice",
 }
 
 

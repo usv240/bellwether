@@ -12,8 +12,9 @@ family actually asks is spoken and casual ("how have I been sounding
 lately?", "is it worth mentioning to the doctor?"), and the answer needs
 several dependent reads (status, then trend, then the days behind it) and
 a judgement about whether to say anything. That is an agent's job. The
-agent gets exactly the seven tools below and nothing else: no transcripts,
-because none exist to give.
+agent gets exactly the nine tools below and nothing else: no transcripts,
+because none exist to give. Two of the nine host the check-in itself: the
+script to speak tonight, and what to tell the person after.
 
 Transport behaviour, per the spec:
   POST /mcp    JSON-RPC 2.0 requests and notifications, answered as JSON
@@ -43,6 +44,7 @@ from fastapi.responses import JSONResponse
 from bellwether_engine import assess, summarize
 from speech_vitals import FEATURE_NAMES, FEATURES
 
+from .checkin import coaching_payload, start_payload
 from .store import Store
 
 SITE_ORIGIN = "https://d1xfuyog8wiuvf.cloudfront.net"
@@ -196,6 +198,28 @@ TOOLS = [
                 "detail": {"type": "string", "maxLength": 300},
             },
             "required": ["kind", "score"],
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "start_check_in",
+        "description": "Begin tonight's hosted check-in for a person: returns the exact lines to speak aloud, in order (an opener that declares the session a check-in, three standard elicitation prompts, a closing), how long to wait after each prompt, and where the person stands in their first week. Speak the lines verbatim; the Bee on the wearer's wrist records the answers and the host's words are removed before anything is measured. Tells you if a check-in was already started today.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "profile_id": {"type": "string", "description": "The wearer's check-in profile, usually <name>-voice"},
+                "host": {"type": "string", "maxLength": 40, "description": "Who is hosting, for the record, such as alexa"},
+                "date": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "The host's local date; the service clock is UTC"},
+            },
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "coaching_note",
+        "description": "What to tell the person after a check-in: where they are in the first week, whether the last day counted and why not if it did not, or what moved and the one or two things they can do about it. Every sentence is built from the engine's numbers. Not a diagnosis, never a prediction.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"profile_id": {"type": "string"}},
             "additionalProperties": False,
         },
     },
@@ -456,6 +480,15 @@ def register_mcp(app: FastAPI, store: Store, default_profile: str) -> None:
             view = profile_view(store, resolve_profile(args))
             weeks = args.get("weeks") if isinstance(args.get("weeks"), int) else 8
             return _text(build_report(view, max(1, min(12, weeks))))
+
+        if name == "start_check_in":
+            pid = resolve_profile(args)
+            host = args.get("host") if isinstance(args.get("host"), str) else "assistant"
+            day = args.get("date") if isinstance(args.get("date"), str) else None
+            return _text(start_payload(store, pid, profile_view(store, pid), host=host[:40], day=day))
+
+        if name == "coaching_note":
+            return _text(coaching_payload(profile_view(store, resolve_profile(args))))
 
         raise ToolError(f"Unknown tool: {name}")
 

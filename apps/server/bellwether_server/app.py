@@ -40,6 +40,7 @@ from fastapi.responses import JSONResponse
 from speech_vitals import FEATURE_NAMES, features_schema
 
 from .bedrock import MODEL_LADDER, phrase_weekly_note
+from .checkin import coaching_payload, start_payload
 from .mcp import DISCLAIMER, build_report, profile_view, register_mcp
 from .store import MemoryStore, Store
 
@@ -292,6 +293,29 @@ def build_app(
     @app.get("/v1/profiles/{profile_id}/report")
     def report(profile_id: str, weeks: int = 8):
         return build_report(profile_view(store, profile_id), max(1, min(12, weeks)))
+
+    # The hosted check-in, for the page and for any host that is not an MCP
+    # client. Same payloads as the two MCP tools. Reading tonight's script
+    # records that a check-in was started, which is the context the tool
+    # carries across sessions, so a GET here is a start, not a peek; the
+    # page uses ?peek=1 to look without starting.
+    @app.get("/v1/profiles/{profile_id}/check-in")
+    def check_in(profile_id: str, peek: int = 0, host: str = "web", date: str | None = None):
+        view = profile_view(store, profile_id)
+        if peek:
+            class _ReadOnly:
+                def get_meta(self, p, k):
+                    return store.get_meta(p, k)
+
+                def put_meta(self, p, k, v):
+                    return None
+
+            return start_payload(_ReadOnly(), profile_id, view, host=host[:40], day=date)
+        return start_payload(store, profile_id, view, host=host[:40], day=date)
+
+    @app.get("/v1/profiles/{profile_id}/coaching")
+    def coaching(profile_id: str):
+        return {**coaching_payload(profile_view(store, profile_id)), "disclaimer": DISCLAIMER}
 
     @app.get("/v1/profiles/{profile_id}/weekly-note")
     def weekly_note(profile_id: str):

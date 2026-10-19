@@ -4,7 +4,19 @@ A Strands agent that answers the question a person or a family member actually a
 
 ## The closed loop
 
-The agent does not reach into Bellwether's data. It calls the **same MCP server** Alexa+ would use (`apps/server/bellwether_server/mcp.py`, Model Context Protocol spec 2025-11-25 over Streamable HTTP). Seven tools: `get_speech_vitals`, `get_trend`, `list_days`, `add_annotation`, `run_check_instructions`, `log_check_result`, `generate_doctor_report`. There are no transcripts to give it, because none exist.
+The agent does not reach into Bellwether's data. It calls the **same MCP server** Alexa+ would use (`apps/server/bellwether_server/mcp.py`, Model Context Protocol spec 2025-11-25 over Streamable HTTP). Nine tools: `get_speech_vitals`, `get_trend`, `list_days`, `add_annotation`, `run_check_instructions`, `log_check_result`, `generate_doctor_report`, and the two that host the check-in, `start_check_in` and `coaching_note`. There are no transcripts to give it, because none exist.
+
+## The Check-in Host: the assistant asks, the Bee listens
+
+`check_in_host.py` is the two-devices-in-one-room version of the check-in. It calls `start_check_in` for tonight's exact lines (an opener that declares the session a check-in, three standard elicitation prompts rotated by date, a closing), speaks them through Amazon Polly, waits for the wearer to answer each, and the Bee on the wrist records the whole exchange. With `--count` it then waits for the Bee to write the session down, runs `bellwether-ingest mine --days 1` on the wearer's computer, which removes every line the host spoke before measuring, and reads the `coaching_note` back: day three of seven, or the last day fell under the floor and why, or what moved and the one thing to do.
+
+The host stands in for Alexa+ because the Alexa+ MCP connection cannot yet be driven from a script; it uses exactly the tools an Alexa+ agent gets. It never reads a transcript: it polls the conversation list for counts and hears the result come back from `mine`.
+
+```
+python apps/agent/check_in_host.py --dry-run                 # print tonight's script
+python apps/agent/check_in_host.py --profile me              # speak it; count later with mine --days 1
+python apps/agent/check_in_host.py --profile me --count      # speak, wait for the Bee, count, read the note
+```
 
 If the MCP surface were wrong, this agent would be wrong too. That is the cheapest possible proof that the surface is real.
 

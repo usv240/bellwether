@@ -327,6 +327,50 @@ def test_a_session_the_wearer_opens_by_declaring_it_is_a_check_in():
     assert all(u.speaker == WEARER for u in utts)
 
 
+def test_a_hosted_check_in_keeps_the_wearers_answers_and_drops_the_hosts_lines(tmp_path):
+    """A voice assistant opened the session: it spoke the day's opener, three
+    numbered questions and a closing, and the wearer answered each. The
+    opener anchors the session; every host line, including one the device
+    cut in two and the date it heard as digits, is removed; the answers
+    stay. A host file with an extra, unscripted line is honoured too."""
+    import json
+
+    from speech_vitals.elicitation import host_lines_for
+
+    from bellwether_ingest.bee import WEARER, checkins_from, load_host_lines
+
+    start_ms = 1792350000000  # 2026-10-18 UTC
+    from datetime import datetime, timezone
+    day = datetime.fromtimestamp(start_ms / 1000, timezone.utc).date()
+    host = host_lines_for(day)
+    answers = [
+        "I woke up around seven and had tea and then I walked to the station because the car is in the garage.",
+        "There is a desk with two monitors and a window on the left with a plant on the sill and a lamp.",
+        "First I boil the kettle then I grind the beans then I pour slowly and wait about four minutes.",
+    ]
+    extra = "Take your time, there is no hurry at all."
+    heard = [
+        host[0].replace("nineteenth", "19th").replace("eighteenth", "18th").replace("check-in", "check in"),
+        host[1], host[2], answers[0],
+        host[3], " ".join(host[4].split()[:6]), " ".join(host[4].split()[6:]), extra, answers[1],
+        host[5], host[6], answers[2],
+        host[7],
+    ]
+    utts = [{"text": t, "speaker": "Unknown", "spoken_at": start_ms + i * 9000} for i, t in enumerate(heard)]
+    records = [{"id": 9, "start_time": start_ms, "transcriptions": [{"utterances": utts}]}]
+
+    hf = tmp_path / ".bellwether-host.json"
+    hf.write_text(json.dumps({day.isoformat(): [extra]}), encoding="utf-8")
+
+    kept = checkins_from([], records, host_lines=load_host_lines(str(hf)))
+    assert [u.text for u in kept] == answers
+    assert all(u.speaker == WEARER and u.conversation_id == "checkin-9" for u in kept)
+
+    # Without the host file the unscripted line stays; everything scripted still goes.
+    kept2 = [u.text for u in checkins_from([], records)]
+    assert kept2 == [answers[0], extra, answers[1], answers[2]]
+
+
 def test_mine_reads_the_device_once_and_finds_check_ins_in_the_same_records():
     from bellwether_ingest.bee import ingest_checkins
 

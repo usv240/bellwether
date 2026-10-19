@@ -648,11 +648,60 @@ def _page_all(fetch, key: str, limit: int = 100, max_pages: int = 100) -> list[d
     return rows
 
 
-def checkins_from(notes: list[dict], records: list[dict], keep_minutes: float = CHECKIN_KEEP_MIN) -> list[Utterance]:
+HOST_FILE = ".bellwether-host.json"
+
+
+def load_host_lines(path: str = HOST_FILE) -> list[str]:
+    """Lines a host actually spoke on this computer, as the host agent
+    recorded them: ``{date: [line, ...]}``. Empty when no host has run.
+    The day's standard script is known without this file; the file is for
+    anything a host said beyond it."""
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, ValueError):
+        return []
+    out: list[str] = []
+    for lines in (data or {}).values():
+        if isinstance(lines, list):
+            out.extend(str(x) for x in lines if isinstance(x, str))
+    return out
+
+
+def _host_lines_near(anchor_ms: int, extra: list[str]) -> list[str]:
+    """The host's possible sentences around that moment: the standard
+    script for the day before, the day, and the day after (the host and the
+    device may sit on different sides of midnight), plus anything the host
+    on this computer recorded saying."""
+    from datetime import datetime, timedelta, timezone
+
+    from speech_vitals.elicitation import host_lines_for
+
+    d = datetime.fromtimestamp(anchor_ms / 1000, timezone.utc).date()
+    lines: list[str] = []
+    for k in (-1, 0, 1):
+        lines.extend(host_lines_for(d + timedelta(days=k)))
+    lines.extend(extra)
+    return lines
+
+
+def checkins_from(notes: list[dict], records: list[dict], keep_minutes: float = CHECKIN_KEEP_MIN,
+                  host_lines: list[str] | None = None) -> list[Utterance]:
     """The check-ins among ``records`` (conversation records that carry
     their utterances), anchored by ``notes`` or by a spoken opener. Pure,
     so the rule is tested without a device. No session is used twice;
-    nothing before the anchor or after the window is kept."""
+    nothing before the anchor or after the window is kept.
+
+    A hosted check-in is one a voice assistant opened: the host speaks the
+    opener, so the session declares itself, and then the host's questions
+    are in the transcript beside the wearer's answers. Every utterance that
+    is one of the host's lines is dropped before anything is measured, so a
+    sixteen-word question is never counted as the wearer's speech."""
+    from speech_vitals.elicitation import is_host_line
+
+    extra = list(host_lines or [])
     sessions = []
     for raw in records:
         rec = unwrap_conversation(raw)
@@ -671,9 +720,12 @@ def checkins_from(notes: list[dict], records: list[dict], keep_minutes: float = 
     def keep(cid: str, utts: list[Utterance], anchor_ms: int, label: str) -> None:
         used.add(cid)
         until = anchor_ms + int(keep_minutes * 60000)
+        host = _host_lines_near(anchor_ms, extra)
         for u in utts:
             t = _ms(u.ts)
             if t is not None and anchor_ms - CHECKIN_BEFORE_S * 1000 <= t <= until:
+                if is_host_line(u.text, host):
+                    continue
                 out.append(Utterance(ts=u.ts, text=u.text, speaker=WEARER, conversation_id=f"{label}-{cid}"))
 
     for note in sorted(notes, key=lambda n: _ms(n.get("created_at")) or 0):
@@ -703,16 +755,17 @@ def checkins_from(notes: list[dict], records: list[dict], keep_minutes: float = 
 
 
 def ingest_checkins(cli: BeeCli, max_pages: int = 100, keep_minutes: float = CHECKIN_KEEP_MIN,
-                    records: list[dict] | None = None) -> list[Utterance]:
+                    records: list[dict] | None = None, host_file: str = HOST_FILE) -> list[Utterance]:
     """Every check-in on the account. ``records`` may be passed in by a
     caller that has already fetched the history (``mine`` does), so the
-    device is read once."""
+    device is read once. Lines a host on this computer spoke are read from
+    ``host_file`` and never counted as the wearer's."""
     notes = [r for r in _page_all(cli.journals_list, "journals", limit=50, max_pages=max_pages)
              if str(r.get("text") or "").strip()]
     if records is None:
         rows = _page_all(cli.conversations_list, "conversations", limit=100, max_pages=max_pages)
         records = with_utterances(cli, rows, limit=len(rows))
-    return checkins_from(notes, records, keep_minutes)
+    return checkins_from(notes, records, keep_minutes, host_lines=load_host_lines(host_file))
 
 
 def ingest_now(cli: BeeCli, owner: OwnerFilter) -> list[Utterance]:

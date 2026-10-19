@@ -21,7 +21,7 @@ Draft of the submission's product-feedback answer, maintained as we build so it 
 ## Strands Agents SDK
 
 - Used for: the Speech Check-in agent (`apps/agent`), an outside client of our own MCP server, verified against the deployed endpoint.
-- Worked well: `MCPClient` over Streamable HTTP plus `list_tools_sync` handed the agent all seven tools with no adapter code. The agent chained status, trend and report on its own and honoured a system prompt that forbids diagnosis, which is the constraint that matters most in this product.
+- Worked well: `MCPClient` over Streamable HTTP plus `list_tools_sync` handed the agent all nine tools with no adapter code. The agent chained status, trend and report on its own and honoured a system prompt that forbids diagnosis, which is the constraint that matters most in this product.
 - Needs work: tool-call failures surface as long Python tracebacks rather than structured results, which is hard to reason about mid-loop.
 - Onboarding: `pip install strands-agents` and a `BedrockModel` was the whole setup.
 - Build again: yes.

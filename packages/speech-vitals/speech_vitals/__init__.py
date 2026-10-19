@@ -9,6 +9,7 @@ baselines. Features only, never words.
 A ``DayFeatures`` record cannot reconstruct a sentence. That is the point.
 """
 
+from .elicitation import host_lines_for, is_host_line, opener_for, prompts_for, strip_host
 from .features import (
     FILLERS,
     LOW_FREQ_ZIPF,
@@ -43,5 +44,10 @@ __all__ = [
     "aggregate_day",
     "extract_utterance",
     "features_schema",
+    "host_lines_for",
+    "is_host_line",
     "mattr",
+    "opener_for",
+    "prompts_for",
+    "strip_host",
 ]

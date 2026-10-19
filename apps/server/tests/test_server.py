@@ -129,10 +129,13 @@ def test_unknown_tool_and_method(client):
 # ---- tools -----------------------------------------------------------------
 
 
-def test_lists_seven_tools(client):
+def test_lists_nine_tools(client):
     sid = session(client)
     names = sorted(t["name"] for t in rpc(client, "tools/list", sid=sid).json()["result"]["tools"])
-    assert names == sorted(["get_speech_vitals", "get_trend", "list_days", "add_annotation", "run_check_instructions", "log_check_result", "generate_doctor_report"])
+    assert names == sorted([
+        "get_speech_vitals", "get_trend", "list_days", "add_annotation", "run_check_instructions",
+        "log_check_result", "generate_doctor_report", "start_check_in", "coaching_note",
+    ])
 
 
 def test_speech_vitals_reports_the_drift_with_contributors(client):
@@ -314,7 +317,7 @@ def test_a_session_issued_by_one_instance_is_valid_on_another():
                                 "params": {"protocolVersion": MCP_PROTOCOL_VERSION, "capabilities": {}, "clientInfo": {"name": "t", "version": "1"}}})
     sid = init.headers["mcp-session-id"]
     ok = b.post("/mcp", headers={"mcp-session-id": sid}, json={"jsonrpc": "2.0", "id": 2, "method": "tools/list"})
-    assert ok.status_code == 200 and len(ok.json()["result"]["tools"]) == 7
+    assert ok.status_code == 200 and len(ok.json()["result"]["tools"]) == 9
     forged = b.post("/mcp", headers={"mcp-session-id": "0123456789abcdef.000000000000000000000000"},
                     json={"jsonrpc": "2.0", "id": 3, "method": "tools/list"})
     assert forged.status_code == 404
