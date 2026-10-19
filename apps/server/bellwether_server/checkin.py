@@ -161,7 +161,8 @@ def coaching_payload(view: dict, now: datetime | None = None) -> dict:
                 sentences.append(f"The latest check-in, on {last_d}, counted with {last_w} words.")
     elif tier == "stable":
         streak = summary.get("stable_streak_days", 0)
-        sentences.append(f"Stable against your own baseline, {streak} {'day' if streak == 1 else 'days'} in a row.")
+        said = _NUM[streak] if 0 <= streak < len(_NUM) else str(streak)
+        sentences.append(f"Stable against your own baseline, {said} {'day' if streak == 1 else 'days'} in a row.")
         actions.append("Keep the check-ins going at the same time of day. Nothing else to do this week.")
     else:
         who = _spoken_list(list(summary.get("contributors") or []))

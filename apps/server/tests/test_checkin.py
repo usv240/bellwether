@@ -151,3 +151,32 @@ def test_coaching_speaks_about_the_latest_check_in_not_an_old_short_day(client):
     assert f"The latest check-in, on {today.isoformat()}, counted with 297 words." in note["text"]
     assert "93 words" not in note["text"]
     assert not any("full sentences" in a for a in note["actions"])
+
+
+def test_the_simulated_first_week_replays_one_evening_at_a_time():
+    """Seeded beside the demo, labelled simulated, and viewed as of each
+    evening: the short third day does not count, the seventh counted day is
+    the eighth evening, and the first comparison is the ninth."""
+    c = TestClient(build_app(store=MemoryStore()))
+    days = [d["date"] for d in c.get("/v1/profiles/sam-first-week/days").json()["days"]]
+    assert len(days) == 10
+    seen = []
+    for d in days:
+        s = c.get(f"/v1/profiles/sam-first-week/summary?as_of={d}").json()
+        n = c.get(f"/v1/profiles/sam-first-week/coaching?as_of={d}").json()
+        assert s["simulated"] is True and n["text"].startswith("This person is simulated.")
+        assert n["date"] == d
+        seen.append((s["tier"], s["eligible_days"]))
+    assert [e for _, e in seen] == [1, 2, 2, 3, 4, 5, 6, 7, 8, 9]
+    assert [t for t, _ in seen][:8] == ["learning"] * 8
+    assert seen[8][0] in ("stable", "watch", "discuss")
+    third = c.get(f"/v1/profiles/sam-first-week/coaching?as_of={days[2]}").json()
+    assert "came to 118 words, under the floor of 150" in third["text"]
+
+
+def test_as_of_is_validated_and_never_leaks_later_days():
+    c = TestClient(build_app(store=MemoryStore()))
+    assert c.get("/v1/profiles/sam-first-week/summary?as_of=10/12/2026").status_code == 400
+    days = [d["date"] for d in c.get("/v1/profiles/sam-first-week/days").json()["days"]]
+    a = c.get(f"/v1/profiles/sam-first-week/assessments?as_of={days[3]}").json()["days"]
+    assert max(x["date"] for x in a) == days[3]

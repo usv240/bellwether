@@ -34,6 +34,11 @@ export const PROFILES = {
     label: "Real Bee: conversations",
     note: "The builder's own Bee wristband since 2026-09-29. Bee does not yet tell speakers apart, so these are the band's everyday conversations, with sessions over an hour and media left out.",
   },
+  "sam-first-week": {
+    simulated: true,
+    label: "Simulated first week",
+    note: "Ten days of check-ins, generated speech through the real engine, word counts set to check-in size, day three short on purpose. The replay below shows each evening as it stood.",
+  },
   "me-voice": {
     simulated: false,
     label: "Real Bee: check-ins",
@@ -46,6 +51,7 @@ export const PROFILE_TABS: { id: ProfileId; short: string }[] = [
   { id: "alex-drift", short: "Simulated person" },
   { id: "me", short: "My conversations" },
   { id: "me-voice", short: "My check-ins" },
+  { id: "sam-first-week", short: "A first week, simulated" },
 ];
 
 /** A page path for a profile, with no parameter for the default. */

@@ -45,12 +45,14 @@ run(
     `"${path.join(root, "apps", "server")}"`,
 );
 
-// The simulated persona, so the demo profile seeds itself on first request.
-const persona = path.join(root, "fixtures", "personas", "alex-drift");
-const dest = path.join(out, "fixtures", "personas", "alex-drift");
-fs.mkdirSync(dest, { recursive: true });
-for (const f of ["days.json", "meta.json", "summary.json"]) {
-  fs.copyFileSync(path.join(persona, f), path.join(dest, f));
+// The simulated personas, so the demo profiles seed themselves on first request.
+for (const name of ["alex-drift", "sam-first-week"]) {
+  const persona = path.join(root, "fixtures", "personas", name);
+  const dest = path.join(out, "fixtures", "personas", name);
+  fs.mkdirSync(dest, { recursive: true });
+  for (const f of ["days.json", "meta.json", "summary.json"]) {
+    if (fs.existsSync(path.join(persona, f))) fs.copyFileSync(path.join(persona, f), path.join(dest, f));
+  }
 }
 
 // Trim what Lambda never needs.

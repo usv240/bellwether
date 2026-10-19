@@ -1,0 +1,11 @@
+{
+ "label": "SIMULATED",
+ "persona": "sam-first-week",
+ "description": "A simulated first week of check-ins. The first ten days of alex-stable (generated speech, production extractor and engine), re-dated, with word counts set to check-in sizes; day three is under the 150-word floor on purpose.",
+ "source": "alex-stable",
+ "days": 10,
+ "start": "2026-10-09",
+ "end": "2026-10-18",
+ "short_day": "2026-10-11",
+ "annotations": {}
+}

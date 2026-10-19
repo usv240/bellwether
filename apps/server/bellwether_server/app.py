@@ -45,6 +45,8 @@ from .mcp import DISCLAIMER, build_report, profile_view, register_mcp
 from .store import MemoryStore, Store
 
 DEMO_PROFILE = "alex-drift"
+# Seeded beside the demo: a simulated first week, for the day-by-day replay.
+FIRST_WEEK_PROFILE = "sam-first-week"
 REQUIRED_DAY_FIELDS = ("date", "token_count_day", *FEATURE_NAMES)
 
 
@@ -140,6 +142,8 @@ def build_app(
     store = store or MemoryStore()
     if seed:
         seed_demo(store, default_profile)
+        if default_profile == DEMO_PROFILE:
+            seed_demo(store, FIRST_WEEK_PROFILE)
 
     app = FastAPI(title="Bellwether", version="0.1.0", docs_url="/v1/docs", openapi_url="/v1/openapi.json")
     # CORS is handled by exactly one layer. On Lambda the function URL's CORS
@@ -196,14 +200,23 @@ def build_app(
     def schema():
         return {"features": features_schema(), "exposure": "token_count_day", "disclaimer": DISCLAIMER}
 
+    def _as_of(value: str | None) -> str | None:
+        import re as _re
+
+        if value is None:
+            return None
+        if not _re.fullmatch(r"\d{4}-\d{2}-\d{2}", value):
+            raise HTTPException(400, "as_of must be YYYY-MM-DD")
+        return value
+
     @app.get("/v1/profiles/{profile_id}/summary")
-    def summary(profile_id: str):
-        view = profile_view(store, profile_id)
+    def summary(profile_id: str, as_of: str | None = None):
+        view = profile_view(store, profile_id, _as_of(as_of))
         return {"profile_id": profile_id, "simulated": view["simulated"], **view["summary"].to_dict(), "disclaimer": DISCLAIMER}
 
     @app.get("/v1/profiles/{profile_id}/assessments")
-    def assessments(profile_id: str, weeks: int = 8):
-        view = profile_view(store, profile_id)
+    def assessments(profile_id: str, weeks: int = 8, as_of: str | None = None):
+        view = profile_view(store, profile_id, _as_of(as_of))
         weeks = max(1, min(12, weeks))
         return {
             "profile_id": profile_id,
@@ -314,8 +327,14 @@ def build_app(
         return start_payload(store, profile_id, view, host=host[:40], day=date)
 
     @app.get("/v1/profiles/{profile_id}/coaching")
-    def coaching(profile_id: str):
-        return {**coaching_payload(profile_view(store, profile_id)), "disclaimer": DISCLAIMER}
+    def coaching(profile_id: str, as_of: str | None = None):
+        day = _as_of(as_of)
+        now = None
+        if day:
+            from datetime import datetime as _dt, timezone as _tz
+
+            now = _dt.fromisoformat(day + "T23:00:00").replace(tzinfo=_tz.utc)
+        return {**coaching_payload(profile_view(store, profile_id, day), now=now), "disclaimer": DISCLAIMER}
 
     @app.get("/v1/profiles/{profile_id}/weekly-note")
     def weekly_note(profile_id: str):
@@ -340,8 +359,8 @@ def build_app(
 
     @app.post("/v1/profiles/{profile_id}/reset")
     def reset(profile_id: str):
-        if profile_id != default_profile:
-            raise HTTPException(403, "only the demo profile can be reset")
+        if profile_id not in (default_profile, FIRST_WEEK_PROFILE):
+            raise HTTPException(403, "only the simulated profiles can be reset")
         store.reset(profile_id)
         seeded = seed_demo(store, profile_id)
         return {"reset": True, "seeded_days": seeded}

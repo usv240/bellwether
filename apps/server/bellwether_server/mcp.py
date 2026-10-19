@@ -294,11 +294,18 @@ def session_is_ours(session_id: str) -> bool:
     return hmac.compare_digest(hmac.new(_session_secret(), nonce.encode("utf8"), hashlib.sha256).hexdigest()[:24], sig)
 
 
-def profile_view(store: Store, profile_id: str) -> dict:
+def profile_view(store: Store, profile_id: str, as_of: str | None = None) -> dict:
     """Everything derived for one profile, computed from the stored day
-    rows on every call. Nothing here is cached or stored."""
+    rows on every call. Nothing here is cached or stored.
+
+    ``as_of`` (YYYY-MM-DD) computes it as it stood at the end of that day,
+    from the days up to it only, so a replay of a first week shows what the
+    wearer would have seen each evening, not hindsight."""
     days = store.list_days(profile_id)
     annotations = store.list_annotations(profile_id)
+    if as_of:
+        days = [d for d in days if str(d.get("date", "")) <= as_of]
+        annotations = {k: v for k, v in annotations.items() if k <= as_of}
     assessments = assess(days, annotations=annotations)
     summary = summarize(assessments)
     return {

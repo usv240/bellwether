@@ -91,7 +91,7 @@ Each feature in `speech-vitals` carries its basis in code (`speech_vitals/types.
 
 ## 6. What Bellwether measured itself
 
-Two synthetic personas run through the production extractor and the production engine (`fixtures/personas`), labelled SIMULATED in every file.
+Two synthetic eight-week personas run through the production extractor and the production engine (`fixtures/personas`), labelled SIMULATED in every file. A third, `sam-first-week`, is the first ten days of the stable one with word counts set to check-in size; it exists only to show the warmup day by day and supports no claim.
 
 - The stable persona is quiet for 47 consecutive assessed days with zero false alarms.
 - The drift persona is identical until day 35, reaches "watch" two days into a gradual two-week change, "discuss" once the deviation is sharp, and names every contributing feature with its direction.
