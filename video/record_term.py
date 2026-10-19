@@ -120,7 +120,7 @@ html,body{{margin:0;background:#12151b;color:#e8e6e1;font:{fs}px/1.5 'Cascadia M
 .frame{{position:absolute;inset:{pad}px;background:#191d25;border:1px solid #2a303b;border-radius:{r}px;box-shadow:0 20px 60px rgba(0,0,0,.4);overflow:hidden}}
 .bar{{height:{bar}px;background:#222732;border-bottom:1px solid #2a303b;display:flex;align-items:center;padding:0 {pad2}px;color:#aeb3bd;font-size:{fs2}px}}
 .bar span{{margin-left:auto;color:#7c828d}}
-pre{{margin:0;padding:{pad2}px;white-space:pre-wrap;word-break:break-word}}
+pre{{position:absolute;top:{bar}px;left:0;right:0;bottom:0;margin:0;padding:{pad2}px {pad2}px {capgap}px;white-space:pre-wrap;word-break:break-word;overflow:hidden}}
 .p{{color:#7aa2ff}}.k{{color:#f3f1ec}}.d{{color:#aeb3bd}}.c{{color:#7c828d}}
 </style></head><body><div class="frame"><div class="bar">bellwether, a real run<span>rendered from its captured output</span></div><pre id="t"></pre></div></body></html>"""
 
@@ -132,7 +132,13 @@ def render() -> int:
     rec = json.loads(CAPTURE.read_text(encoding="utf8"))
     narration = {n["key"]: n["seconds"] for n in json.loads((OUT / "narration.json").read_text(encoding="utf8"))}
     scale = WIDTH / 1920
-    page_html = PAGE.format(fs=int(30 * scale), fs2=int(22 * scale), pad=int(80 * scale), pad2=int(28 * scale), r=int(16 * scale), bar=int(56 * scale))
+    # The text box scrolls, so a long run shows its last lines, which are
+    # the result; and the bottom gap keeps them above the burned-in
+    # captions. The first render of the hosted check-in let its output run
+    # off the bottom of the frame, so the Bee recording the session and the
+    # day being counted were never on screen.
+    page_html = PAGE.format(fs=int(30 * scale), fs2=int(22 * scale), pad=int(80 * scale), pad2=int(28 * scale), r=int(16 * scale),
+                            bar=int(56 * scale), capgap=int(150 * scale))
     (OUT / "term.html").write_text(page_html, encoding="utf8")
     raw_dir = OUT / "raw-term"
     raw_dir.mkdir(parents=True, exist_ok=True)
