@@ -59,4 +59,5 @@ On-demand DynamoDB, one small Lambda, one CloudFront distribution, and Bedrock u
 ## What was deliberately not used
 
 - SageMaker: nothing here trains a model. The benchmark harness is a scripted evaluation of a deterministic feature set, not a training job, and calling it SageMaker would be a checkbox rather than an integration.
-- Amazon Transcribe and Polly: Bee already transcribes; Bellwether consumes features, not audio. If the week-one gate finds audio access, Transcribe's word-level timestamps would enable a pause and articulation module, and that is documented in TECHNICAL_DESIGN.md as the branch it is.
+- Amazon Polly: used. The Check-in Host (`apps/agent/check_in_host.py`) speaks tonight's check-in through Polly's neural voice while the Bee records, standing in for Alexa+, whose MCP connection cannot yet be driven from a script. It records when each line played so the ingest can remove the host's words by timing.
+- Amazon Transcribe: not used. Bee already transcribes; Bellwether consumes features, not audio. If the week-one gate finds audio access, Transcribe's word-level timestamps would enable a pause and articulation module, and that is documented in TECHNICAL_DESIGN.md as the branch it is.

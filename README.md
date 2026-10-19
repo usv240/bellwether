@@ -133,6 +133,11 @@ curl -X POST $API/v1/profiles/me/days -H "content-type: application/json" -d @da
 # dashboard needs them; the demo profile stays open on purpose.
 bellwether-ingest mine --profile <your-name>
 
+# Let a voice assistant host the check-in: it speaks tonight's three questions through the speaker
+# (Amazon Polly), the Bee records your answers, its own words are removed by timing, the day is counted
+# and the coaching note read back. Band on, phone with the Bee app nearby.
+python apps/agent/check_in_host.py --profile <your-name> --count
+
 # No Bee? Meeting transcripts already say who said what. Zoom or Teams .vtt,
 # Otter .txt, or "Name: text" files: list the names, then keep only yours.
 bellwether-ingest file meetings/*.vtt
