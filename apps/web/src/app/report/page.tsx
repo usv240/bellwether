@@ -153,6 +153,26 @@ export default function ReportPage() {
               </div>
             </section>
 
+            {/*
+              Where the page goes. The Annual Wellness Visit already asks
+              whether anything has changed and leaves the method open, so
+              the page is written to be handed over there, as observation
+              over time and never as a screening result.
+            */}
+            {report.awv && (
+              <section className="mt-8 rounded-[var(--radius-md)] border border-[var(--primary)] p-4">
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--primary)]">{report.awv.title}</h2>
+                <p className="mt-2 text-sm leading-relaxed text-ink">{report.awv.text}</p>
+                <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-muted">Questions to bring</p>
+                <ul className="mt-1 list-disc space-y-1 pl-5 text-sm text-muted">
+                  {report.awv.questions.map((q) => (
+                    <li key={q}>{q}</li>
+                  ))}
+                </ul>
+                <p className="mt-3 text-xs text-muted">{report.awv.source}</p>
+              </section>
+            )}
+
             {/* Disclaimer and method */}
             <section className="mt-8 rounded-[var(--radius-md)] border border-line bg-bg p-4">
               <p className="text-sm font-semibold">This is not a diagnosis.</p>

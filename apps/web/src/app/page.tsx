@@ -39,6 +39,31 @@ const PEOPLE = [
   { who: "The clinician with twelve minutes", text: "Hears a patient for a few minutes a year. Gets nine measures across months, which way each moved, and the ordinary explanations already listed." },
 ];
 
+// The case in three steps, each verified at its primary source and stated
+// with its limit. Together: most early cases are missed, the change is
+// there years before diagnosis, and a visit that already exists asks for
+// exactly what the page holds.
+const CASE = [
+  {
+    value: "92%",
+    label: "of expected mild cognitive impairment cases in US Medicare were never diagnosed, 2015 to 2019. Detection was about half as high for Black and Hispanic beneficiaries.",
+    limit: "Bellwether uses no population norm: each person is compared with their own past.",
+    source: "Mattke et al., Alzheimer's Research & Therapy, 2023",
+  },
+  {
+    value: "7.6 years",
+    label: "before diagnosis, language from people who were still cognitively normal already predicted Alzheimer's onset (AUC 0.74, Framingham Heart Study).",
+    limit: "Written picture descriptions, compared across people. It shows the timing, not Bellwether's accuracy.",
+    source: "Eyigoz et al., EClinicalMedicine, 2020",
+  },
+  {
+    value: "Every year",
+    label: "Medicare's Annual Wellness Visit already requires an assessment to detect cognitive impairment, and names no single tool.",
+    limit: "The doctor page has a section written for that visit: observation over time, never a screening result.",
+    source: "Cordell et al., Alzheimer's & Dementia, 2013",
+  },
+];
+
 const ECONOMICS = [
   { value: "17%", label: "of net benefit lost for every year a diagnosis is delayed", source: "Barnett et al., BMC Neurology, 2014" },
   { value: "$405,262", label: "lifetime cost per person with dementia, about 70% borne by families", source: "Alzheimer's Association, 2026" },
@@ -254,6 +279,19 @@ export default function Home() {
               ))}
             </div>
 
+            <h3 className="mt-12 text-lg font-semibold tracking-tight">The case, in three verified steps</h3>
+            <div className="mt-4 grid gap-4 md:grid-cols-3">
+              {CASE.map((c, i) => (
+                <div key={c.value} className="rounded-[var(--radius-lg)] border border-line bg-bg p-5">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted">Step {i + 1}</p>
+                  <p className="mt-1 text-3xl font-semibold tracking-tight text-[var(--primary)]">{c.value}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-ink">{c.label}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{c.limit}</p>
+                  <p className="mt-2 text-xs text-muted">{c.source}</p>
+                </div>
+              ))}
+            </div>
+
             <h3 className="mt-12 text-lg font-semibold tracking-tight">The economics, in four numbers</h3>
             <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {ECONOMICS.map((e) => (
@@ -273,7 +311,9 @@ export default function Home() {
               </div>
               <div className="rounded-[var(--radius-lg)] border border-line bg-bg p-5 text-sm leading-relaxed text-muted">
                 <p className="font-semibold text-ink">Beyond this hackathon</p>
-                <p className="mt-2"><span className="font-medium text-ink">A family at home:</span> one command, a two-minute note a day, a page for the appointment.</p>
+                <p className="mt-2"><span className="font-medium text-ink">A family at home:</span> one command, a two-minute check-in a day, a page for the appointment.</p>
+                <p className="mt-2"><span className="font-medium text-ink">Someone who will not use a screen:</span> the assistant hosts the check-in by voice, asks three questions, and reads back where they stand. No app to open, nothing to read.</p>
+                <p className="mt-2"><span className="font-medium text-ink">The yearly visit:</span> the doctor page has a section written for Medicare&apos;s Annual Wellness Visit, which already asks whether anything has changed.</p>
                 <p className="mt-2"><span className="font-medium text-ink">A memory clinic between annual visits:</span> the whole stack deploys from one CDK command into the clinic&apos;s own account, and only nine numbers a day ever reach it.</p>
                 <p className="mt-2"><span className="font-medium text-ink">Any transcript, not only Bee:</span> the open-source speech-vitals package reads any speaker-labelled transcript, so the engine is not tied to one device. English only today, and the FAQ says so.</p>
               </div>

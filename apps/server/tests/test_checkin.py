@@ -180,3 +180,17 @@ def test_as_of_is_validated_and_never_leaks_later_days():
     days = [d["date"] for d in c.get("/v1/profiles/sam-first-week/days").json()["days"]]
     a = c.get(f"/v1/profiles/sam-first-week/assessments?as_of={days[3]}").json()["days"]
     assert max(x["date"] for x in a) == days[3]
+
+
+def test_the_report_carries_a_section_for_the_annual_wellness_visit():
+    """Offered as observation over time, never as a screening result, and
+    sourced, so the page has somewhere to go that already exists."""
+    c = TestClient(build_app(store=MemoryStore()))
+    rep = c.get("/v1/profiles/alex-drift/report").json()
+    awv = rep["awv"]
+    assert awv["title"] == "For the Annual Wellness Visit"
+    assert "not a screening result" in awv["text"]
+    assert len(awv["questions"]) == 3
+    assert "10.1016/j.jalz.2012.09.011" in awv["source"]
+    assert any("10.1186/s13195-023-01272-z" in x["source"] for x in rep["citations"])
+    assert not FORBIDDEN.search(awv["text"] + " ".join(awv["questions"]))

@@ -114,10 +114,10 @@ BEATS: list[Beat] = [
     Beat(
         key="gap",
         action="stats",
-        shows="The four figures under the problem; the three and a half years card first.",
+        shows="The figures under the problem; the three and a half years card first, then the case in three verified steps.",
         say=(
             "Across all dementias, the average time from first symptoms to a diagnosis is three and a half years. "
-            "That's years of uncertainty for people and their families."
+            "And in Medicare, nine in ten early cases are never diagnosed at all."
         ),
     ),
     Beat(
@@ -147,8 +147,9 @@ BEATS: list[Beat] = [
         shows="A terminal: the Check-in Host speaking tonight's three questions through the speaker while the Bee on the wrist listens; the day counted; the coaching note read back.",
         min_hold=14,
         say=(
-            "Or the assistant hosts it. Using the same MCP tools Alexa+ gets, it asks three standard questions out loud. "
-            "The Bee on my wrist records my answers, and the host's own words are removed before anything is measured. "
+            "Or the assistant hosts it, with the same MCP tools Alexa+ gets. "
+            "It asks three questions out loud, my Bee records the answers, "
+            "and the host's words are removed before anything is measured. "
             "Then it tells me where I stand."
         ),
     ),
@@ -164,13 +165,14 @@ BEATS: list[Beat] = [
         ),
     ),
     Beat(
-        key="room",
-        action="conversations",
-        shows="The switcher to the band's conversations, the note under the badge saying what that stream is.",
+        key="replay",
+        action="replay",
+        shows="The simulated first week, labelled: the slider stepping through the evenings, the short third day marked, day nine turning green with the first comparison, and the note the assistant reads aloud.",
         pause_before=0.3,
+        min_hold=11,
         say=(
-            "The band also hears the room, and Bee does not yet say who spoke. "
-            "So that stream is kept separate and labelled for what it is."
+            "Here is the whole first week, simulated. A short day doesn't count. "
+            "On day nine the first comparison arrives, and the assistant reads the note aloud."
         ),
     ),
     Beat(
@@ -216,8 +218,9 @@ BEATS: list[Beat] = [
         min_hold=12,
         say=(
             "Imagine noticing something different, but not knowing how to explain it to your doctor. "
-            "Bellwether gives you a simple timeline of what changed and when. "
-            "Not a diagnosis, but a clearer starting point for that conversation. "
+            "Bellwether gives you a simple timeline of what changed and when, "
+            "written for the yearly wellness visit Medicare already offers. "
+            "Not a diagnosis, a clearer starting point. "
             "Open source, and built around privacy. "
             "Bellwether. Your own normal, in your own numbers."
         ),

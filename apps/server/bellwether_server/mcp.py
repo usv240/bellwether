@@ -319,6 +319,23 @@ def profile_view(store: Store, profile_id: str, as_of: str | None = None) -> dic
     }
 
 
+AWV_NOTE = {
+    "title": "For the Annual Wellness Visit",
+    "text": (
+        "Medicare's Annual Wellness Visit includes an assessment to detect cognitive impairment, and leaves "
+        "the method to the clinician. This page is observation over time from the person's own everyday "
+        "speech, compared only with their own past, offered as one input to that assessment. It is not a "
+        "screening result and does not replace one."
+    ),
+    "questions": [
+        "Has anything about how I speak or find words changed since last year?",
+        "Do the dates on this page line up with anything else: sleep, illness, a new medication, a loss?",
+        "Is there an assessment you would want to do, now or at the next visit?",
+    ],
+    "source": "Cordell CB et al. Alzheimer's & Dementia 2013;9(2):141-150. doi:10.1016/j.jalz.2012.09.011",
+}
+
+
 def build_report(view: dict, weeks: int = 8) -> dict:
     """The doctor report as data. The web app renders it to a page and a
     PDF; the agent can read it aloud. Same content either way."""
@@ -391,7 +408,10 @@ def build_report(view: dict, weeks: int = 8) -> dict:
             {"claim": "Time from symptom onset to dementia diagnosis averages 3.5 years", "source": "Orgeta et al., Int J Geriatr Psychiatry, 2025, doi:10.1002/gps.70129"},
             {"claim": "40 to 80 percent of medical information is forgotten immediately", "source": "Kessels, J R Soc Med, 2003, 96:219-222"},
             {"claim": "Language features from spontaneous speech separate Alzheimer's from control speech at 85 to 89.6 percent on the ADReSS benchmark", "source": "Luz et al., Interspeech 2020, doi:10.21437/Interspeech.2020-2571"},
+            {"claim": "About 92 percent of expected mild cognitive impairment cases in US Medicare were undiagnosed, 2015 to 2019", "source": "Mattke et al., Alzheimer's Res Ther, 2023, doi:10.1186/s13195-023-01272-z"},
+            {"claim": "The Medicare Annual Wellness Visit requires an assessment to detect cognitive impairment and names no single tool", "source": "Cordell et al., Alzheimer's & Dementia, 2013, doi:10.1016/j.jalz.2012.09.011"},
         ],
+        "awv": AWV_NOTE,
     }
 
 

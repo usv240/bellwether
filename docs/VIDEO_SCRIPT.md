@@ -19,27 +19,27 @@ The front page: the claim, and a simulated person's own range with the days that
 
 **0:15, gap, the website, in a real browser**
 
-The four figures under the problem; the three and a half years card first.
+The figures under the problem; the three and a half years card first, then the case in three verified steps.
 
-> Across all dementias, the average time from first symptoms to a diagnosis is three and a half years. That's years of uncertainty for people and their families.
+> Across all dementias, the average time from first symptoms to a diagnosis is three and a half years. And in Medicare, nine in ten early cases are never diagnosed at all.
 
-**0:26, what, the website, in a real browser**
+**0:28, what, the website, in a real browser**
 
 How it works: wear, measure, learn, show.
 
 > Bellwether is not a diagnosis and not a medical device. Everyone speaks differently. So it learns what's normal for you, rather than comparing you with anyone else, and tells you when that changes.
 
-**0:40, term-mine, a terminal, a real run rendered**
+**0:41, term-mine, a terminal, a real run rendered**
 
 A terminal: bellwether-ingest mine against the builder's own Bee, the days it read, the days that count, the page to open.
 
 > This runs on my own Bee. I talk to it for two minutes each day. Bellwether turns that speech into nine measurements and discards the words. Anyone can do the same with their own Bee, or with the meeting transcripts they already have.
 
-**0:57, term-host, a terminal, a real run rendered**
+**0:59, term-host, a terminal, a real run rendered**
 
 A terminal: the Check-in Host speaking tonight's three questions through the speaker while the Bee on the wrist listens; the day counted; the coaching note read back.
 
-> Or the assistant hosts it. Using the same MCP tools Alexa+ gets, it asks three standard questions out loud. The Bee on my wrist records my answers, and the host's own words are removed before anything is measured. Then it tells me where I stand.
+> Or the assistant hosts it, with the same MCP tools Alexa+ gets. It asks three questions out loud, my Bee records the answers, and the host's words are removed before anything is measured. Then it tells me where I stand.
 
 **1:16, checkins, the website, in a real browser**
 
@@ -47,11 +47,11 @@ The dashboard on the builder's own check-ins: the real-data badge, the first wee
 
 > Here's the result, from my real data. Seven days teach it what normal sounds like for me; every day after is compared with them. Two days in. Five more and it compares. Until then it says so, instead of hunting for something to report.
 
-**1:34, room, the website, in a real browser**
+**1:34, replay, the website, in a real browser**
 
-The switcher to the band's conversations, the note under the badge saying what that stream is.
+The simulated first week, labelled: the slider stepping through the evenings, the short third day marked, day nine turning green with the first comparison, and the note the assistant reads aloud.
 
-> The band also hears the room, and Bee does not yet say who spoke. So that stream is kept separate and labelled for what it is.
+> Here is the whole first week, simulated. A short day doesn't count. On day nine the first comparison arrives, and the assistant reads the note aloud.
 
 **1:45, change, the website, in a real browser**
 
@@ -65,7 +65,7 @@ A session held against the MCP server from the page, every request answered by t
 
 > Bellwether also connects to AI assistants through nine MCP tools, using the same protocol Alexa+ supports. And because it never stores conversations, those tools can't retrieve them.
 
-**2:25, term-agent, a terminal, a real run rendered**
+**2:24, term-agent, a terminal, a real run rendered**
 
 A terminal: the Strands agent on Amazon Bedrock asking the deployed server how the simulated person's month went.
 
@@ -75,9 +75,9 @@ A terminal: the Strands agent on Amazon Bedrock asking the deployed server how t
 
 The doctor report, then the links.
 
-> Imagine noticing something different, but not knowing how to explain it to your doctor. Bellwether gives you a simple timeline of what changed and when. Not a diagnosis, but a clearer starting point for that conversation. Open source, and built around privacy. Bellwether. Your own normal, in your own numbers.
+> Imagine noticing something different, but not knowing how to explain it to your doctor. Bellwether gives you a simple timeline of what changed and when, written for the yearly wellness visit Medicare already offers. Not a diagnosis, a clearer starting point. Open source, and built around privacy. Bellwether. Your own normal, in your own numbers.
 
-Estimated 2:57 of a 3:00 ceiling. The real narration decides the
+Estimated 2:59 of a 3:00 ceiling. The real narration decides the
 final cut.
 
 ## The terminal beats

@@ -336,7 +336,34 @@ def conversations(r: Recorder):
     r.hold_beat()
 
 
+REPLAY = "#first-week-replay"
+NEXT_EVENING = "#first-week-replay button[aria-label='Next evening']"
+
+
+def replay(r: Recorder):
+    goto(r, "/app/?profile=sam-first-week", REPLAY)
+    r.scroll_to(REPLAY, rest=URL_BAR_HEIGHT + 40 * SCALE)
+    yield
+    r.point("text=Simulated first week, one evening at a time")
+    # One evening a beat, by the real button, to the short third day.
+    for _ in range(2):
+        r.click(NEXT_EVENING)
+        r.page.wait_for_timeout(700)
+    r.on_phrase("A short day")
+    r.point(f"{REPLAY} ol li:nth-child(3)")
+    r.on_phrase("On day nine")
+    for _ in range(6):
+        r.click(NEXT_EVENING)
+        r.page.wait_for_timeout(450)
+    r.page.wait_for_selector(f"{REPLAY} span:text-is('Stable')", timeout=30_000)
+    r.point(f"{REPLAY} ol li:nth-child(9)")
+    r.on_phrase("reads the note aloud")
+    r.point(f"{REPLAY} p:has-text('host says')")
+    r.hold_beat()
+
+
 def simulated(r: Recorder):
+    r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 120 * SCALE)
     r.click(f"{WHOSE} a:has-text('Simulated person')")
     r.page.wait_for_selector("text=Simulated person", timeout=60_000)
     r.page.wait_for_selector(CONFOUNDERS, timeout=60_000)
@@ -418,7 +445,7 @@ EVIDENCE_JS = """
     'font-size:' + (15 * S) + 'px','line-height:1.45','max-width:' + (420 * S) + 'px',
     'opacity:0','transition:opacity 400ms ease-out'].join(';');
   box.innerHTML = '<div style="font-weight:700;color:#e0b25a;margin-bottom:' + (6 * S) + 'px">Checked, not claimed</div>'
-    + '<div>268 automated tests</div>'
+    + '<div>269 automated tests</div>'
     + '<div>Engine run on 349 real Supreme Court arguments: zero false alarms</div>'
     + '<div style="opacity:0.7;margin-top:' + (6 * S) + 'px">System behaviour, not clinical accuracy</div>';
   document.documentElement.appendChild(box);
@@ -462,7 +489,7 @@ END_CARD_JS = """
 # 2.7 times their size and ran them off the right edge.
 
 
-ACTIONS = {f.__name__: f for f in (hero, stats, how, checkins, conversations, simulated, chart, alexa, report)}
+ACTIONS = {f.__name__: f for f in (hero, stats, how, checkins, conversations, replay, simulated, chart, alexa, report)}
 
 
 def assert_full_frame(path: Path) -> None:

@@ -9,6 +9,14 @@ Orgeta V, et al. Time to Diagnosis in Dementia: A Systematic Review With Meta-An
 
 This is the number the whole product is aimed at. Three and a half years is not a queue for a scan; it is the interval in which a change that was audible every day went unrecorded, because nobody was measuring.
 
+## 1b. Most early cases are never recorded at all
+
+**Across the full US Medicare population aged 65 and over, 2015 to 2019, about 92 percent of expected mild cognitive impairment cases went undiagnosed: a mean of 7.4 of 8 million.** The detection rate rose from 0.062 to 0.079 over the period. It was 0.039 for Black and 0.048 for Hispanic beneficiaries, against 0.098 for non-Hispanic White beneficiaries.
+
+Mattke S, Jun H, Chen E, Liu Y, Becker A, Wallick C. Expected and diagnosed rates of mild cognitive impairment and dementia in the U.S. Medicare population: observational analysis. *Alzheimer's Research & Therapy*. 2023;15:128. [doi:10.1186/s13195-023-01272-z](https://doi.org/10.1186/s13195-023-01272-z).
+
+Section 1's three and a half years is the delay for people who are diagnosed. This is the larger group who are not, at the stage the newest treatments require (section 2). Bellwether compares each person with their own past and has no population norm; that is a design property, not a measured effect on these gaps.
+
 ## 2. The treatments that exist are approved only for the early stage
 
 **Lecanemab (Leqembi) received traditional FDA approval in July 2023, and donanemab (Kisunla) on 2 July 2024. Both are indicated only for mild cognitive impairment or mild dementia due to Alzheimer's disease with confirmed amyloid pathology.** The lecanemab label states there are no safety or effectiveness data on initiating treatment at earlier or later stages than were studied.
@@ -78,6 +86,14 @@ The original study's own measure, non-specific nouns per 100 of the president's 
 
 What this is, stated precisely: a test on a famous real case that the field itself now disputes, in which Bellwether did not produce the contested signal. It is not evidence about Reagan, not evidence about dementia, and not a diagnosis of anyone. It is one more measured limit: a few prepared public appearances a year is not the input this is built for, which is a person's everyday speech, every day.
 
+## 4e. Language changes years before diagnosis, in the same people
+
+**In the Framingham Heart Study, language variables from people who were still cognitively normal predicted later onset of Alzheimer's disease with an AUC of 0.74 and accuracy of 0.70, a mean of 7.59 years before diagnosis of mild Alzheimer's disease.** 703 samples from 270 participants; a held-out test set of 80, half of whom developed symptoms before 85.
+
+Eyigoz E, Mathur S, Santamaria M, Cecchi G, Naylor M. Linguistic markers predict onset of Alzheimer's disease. *EClinicalMedicine*. 2020;28:100583. [doi:10.1016/j.eclinm.2020.100583](https://doi.org/10.1016/j.eclinm.2020.100583).
+
+Stated precisely: the samples were **written** descriptions of the cookie-theft picture, not everyday speech, and the model compared people with one another. What it establishes for Bellwether is the timing: the change in language is there years before anyone diagnoses it, which is the interval a daily personal record exists to cover. It is not evidence about Bellwether's own accuracy, which has never been measured on a real cohort (section 7).
+
 ## 5. The features have a literature, feature by feature
 
 Each feature in `speech-vitals` carries its basis in code (`speech_vitals/types.py`), and `speech-vitals schema` prints the table. The load-bearing references:
@@ -140,6 +156,14 @@ What connects them into a shortened delay is a clinical trial nobody has run. Sa
 The savings land in three places: families, who carry 70 percent of the lifetime cost; Medicaid, which pays for much of long-term care; and the treatment window itself, since lecanemab and donanemab are approved **only** for the earliest stage (section 2). A product that moves people from "diagnosed at moderate" to "diagnosed at mild" changes which treatments are even legal to offer them.
 
 That is the case for funding it. It is not a case for believing it works yet.
+
+## 7b. Where the page goes: a visit that already exists
+
+**Medicare's Annual Wellness Visit, a benefit since January 2011, requires an assessment to detect cognitive impairment, and CMS deliberately names no single tool.** The Alzheimer's Association's algorithm for that step includes review of the health risk assessment, the clinician's own observation, unstructured questions, and structured tools for both the patient and an informant.
+
+Cordell CB, Borson S, Boustani M, et al. Alzheimer's Association recommendations for operationalizing the detection of cognitive impairment during the Medicare Annual Wellness Visit in a primary care setting. *Alzheimer's & Dementia*. 2013;9(2):141-150. [doi:10.1016/j.jalz.2012.09.011](https://doi.org/10.1016/j.jalz.2012.09.011).
+
+So the one-page report has somewhere to go that needs no new appointment, no referral and no new billing code: a visit an older adult on Medicare is already entitled to once a year, with a step that already asks whether anything has changed. The report now carries a section written for it. It is offered as observation over time from the person's own speech, one input to the clinician's own assessment, and says in those words that it is not a screening result.
 
 ## 8. What Bellwether is not
 

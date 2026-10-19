@@ -183,7 +183,7 @@ def test_doctor_report_structure(client):
     assert rep["range"]["weeks"] == 6
     assert rep["tier_history"][0]["tier"] == "learning"
     assert any(n["tier"] in ("watch", "discuss") for n in rep["notable_changes"])
-    assert len(rep["citations"]) == 3
+    assert len(rep["citations"]) == 5
     assert "not a diagnosis" in rep["disclaimer"].lower()
     assert rep["spoken_checks"][0]["score"] == 17
 

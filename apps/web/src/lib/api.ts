@@ -142,6 +142,7 @@ export interface Report {
   disclaimer: string;
   method?: string;
   citations?: { claim: string; source: string }[];
+  awv?: { title: string; text: string; questions: string[]; source: string };
   message?: string;
 }
 
