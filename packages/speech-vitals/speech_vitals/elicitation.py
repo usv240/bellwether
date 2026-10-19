@@ -116,17 +116,46 @@ MIN_RUN_WORDS = 4      # a shorter fragment of a host line must be the whole lin
 MIN_BAG_WORDS = 8      # the loose match is for long lines the device misheard
 
 
+_CARDINALS = {"one": "1", "two": "2", "three": "3"}
+_ORDINAL_DIGIT = {w: str(n) for n, w in enumerate(ORDINALS) if w}
+
+
 def _words(text: str) -> list[str]:
-    """Lower-case words, with a date the device wrote as digits ("19th",
-    "19") turned back into the words the host said ("nineteenth")."""
+    """Lower-case words, with numbers as digits on both sides: the device
+    writes "Question 2" and "October 19th" where the host said "Question
+    two" and "October nineteenth"."""
     out: list[str] = []
-    for w in _WORD.findall(text.lower().replace("-", " ")):
+    for w in _WORD.findall(text.lower()):
         m = re.fullmatch(r"(\d{1,2})(st|nd|rd|th)?", w)
-        if m and 1 <= int(m.group(1)) <= 31:
-            out.extend(ORDINALS[int(m.group(1))].replace("-", " ").split())
+        if m:
+            out.append(m.group(1))
         else:
-            out.append(w)
+            out.append(_CARDINALS.get(w) or _ORDINAL_DIGIT.get(w) or w)
     return out
+
+
+def _join_ordinal_hyphens(text: str) -> str:
+    """"twenty-first" is one ordinal, not "twenty" and "first"."""
+    return re.sub(r"\b(twenty|thirty)-(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth)\b",
+                  lambda m: str(ORDINALS.index(f"{m.group(1)}-{m.group(2)}")), text.lower())
+
+
+def host_runs(utterance_text: str, host_lines: list[str], min_run: int = 3) -> int:
+    """How many of the utterance's words sit in a run of ``min_run`` or more
+    consecutive words of one host line (or a whole short host line). The
+    measure the text fallback uses when no timing was recorded."""
+    u = _words(_join_ordinal_hyphens(utterance_text))
+    covered: set[int] = set()
+    for line in host_lines:
+        h = _words(_join_ordinal_hyphens(line))
+        for a in range(len(u)):
+            for b in range(len(h)):
+                k = 0
+                while a + k < len(u) and b + k < len(h) and u[a + k] == h[b + k]:
+                    k += 1
+                if k >= min_run or (k == len(h) and k >= 2):
+                    covered.update(range(a, a + k))
+    return len(covered)
 
 
 def is_host_line(utterance_text: str, host_lines: list[str]) -> bool:
@@ -146,12 +175,12 @@ def is_host_line(utterance_text: str, host_lines: list[str]) -> bool:
       3. It has at least eight words and three quarters of them are in one
          host line, for the small mishearings of a long prompt.
     """
-    u = _words(utterance_text)
+    u = _words(_join_ordinal_hyphens(utterance_text))
     if not u:
         return False
     joined_u = " " + " ".join(u) + " "
     for line in host_lines:
-        h = _words(line)
+        h = _words(_join_ordinal_hyphens(line))
         if not h:
             continue
         if u == h:

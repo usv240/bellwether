@@ -364,7 +364,7 @@ def test_a_hosted_check_in_keeps_the_wearers_answers_and_drops_the_hosts_lines(t
 
     kept = checkins_from([], records, host_lines=load_host_lines(str(hf)))
     assert [u.text for u in kept] == answers
-    assert all(u.speaker == WEARER and u.conversation_id == "checkin-9" for u in kept)
+    assert all(u.speaker == WEARER and u.conversation_id == "hosted-9" for u in kept)
 
     # Without the host file the unscripted line stays; everything scripted still goes.
     kept2 = [u.text for u in checkins_from([], records)]
@@ -387,3 +387,56 @@ def test_mine_reads_the_device_once_and_finds_check_ins_in_the_same_records():
     utts = ingest_checkins(BeeCli(runner=runner), records=records)
     assert [u.conversation_id for u in utts] == ["checkin-9"]
     assert not [a for a in calls if "conversations" in a]
+
+
+def _tonight_shaped_session(start_ms):
+    """The shape of the first live hosted check-in, 2026-10-19, with the
+    wearer's answers replaced: the band was already recording when the host
+    began; it merged the opener, "Question one" and the first prompt into
+    one utterance and misheard parts of it; it wrote "Question 2"; it merged
+    the third question with its prompt; it split and garbled the closing;
+    and the wearer went on talking afterwards."""
+    s = start_ms
+    rows = [
+        (0, "okay so the band is on now"), (3, "testing"),
+        (175, "Phone number checked in October 19th. Question one. Tell me about your day so far, from when you can vote us right now."),
+        (185, "I woke up late and made tea, then I spent the morning on the project and walked to the shop at noon."),
+        (212, "After lunch I fixed two bugs and called my brother for a while."),
+        (229, "Question 2."),
+        (231, "Describe what you can see from the nearest window, in as much detail as you can."),
+        (238, "There is a street light, a parked car and the dark outline of the trees across the road."),
+        (245, "In the day you can see the hills and a school behind the houses."),
+        (281, "Question third, explain how do you plan a day out for a visitor who has never been to your town."),
+        (290, "I would start with breakfast at the market, then the river walk and the museum."),
+        (316, "For someone who has never been to the town I would end with dinner by the water."),
+        (332, "Thank you."), (334, "That is to this check."),
+        (336, "No matter what kind of life the Bee has written you down."),
+        (343, "right, that was the check-in, now back to work on the slides for tomorrow"),
+    ]
+    utts = [{"text": t, "speaker": "Unknown", "spoken_at": s + k * 1000} for k, t in rows]
+    return {"id": 11, "start_time": s, "transcriptions": [{"utterances": utts}]}
+
+
+def test_a_hosted_check_in_inside_an_open_session_by_timing():
+    from bellwether_ingest.bee import checkins_from
+
+    start = 1792383085000  # 2026-10-19 04:11 UTC
+    rec = _tonight_shaped_session(start)
+    # When the host played each line, two seconds ahead of the device's clock.
+    plays = [(173.0, 175.5), (176.4, 177.5), (178.1, 181.3), (227.0, 228.1), (229.0, 233.2),
+             (278.9, 280.0), (280.8, 284.8), (330.6, 336.4)]
+    spans = [(start + int(a * 1000), start + int(b * 1000), "") for a, b in plays]
+    kept = [u.text for u in checkins_from([], [rec], host_spans=spans)]
+    assert kept == [rec["transcriptions"][0]["utterances"][i]["text"] for i in (3, 4, 7, 8, 10, 11)]
+
+
+def test_a_hosted_check_in_inside_an_open_session_by_text_alone():
+    """No timing recorded (a host elsewhere, an Echo): the misheard opener
+    is still found mid-session, the misheard lines still dropped, the
+    wearer's echo of a question kept, and the check-in ends at the closing."""
+    from bellwether_ingest.bee import checkins_from
+
+    start = 1792383085000
+    rec = _tonight_shaped_session(start)
+    kept = [u.text for u in checkins_from([], [rec])]
+    assert kept == [rec["transcriptions"][0]["utterances"][i]["text"] for i in (3, 4, 7, 8, 10, 11)]

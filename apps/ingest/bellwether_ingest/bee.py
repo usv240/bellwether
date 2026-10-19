@@ -666,8 +666,51 @@ def load_host_lines(path: str = HOST_FILE) -> list[str]:
     out: list[str] = []
     for lines in (data or {}).values():
         if isinstance(lines, list):
-            out.extend(str(x) for x in lines if isinstance(x, str))
+            for x in lines:
+                if isinstance(x, str):
+                    out.append(x)
+                elif isinstance(x, dict) and isinstance(x.get("text"), str):
+                    out.append(x["text"])
     return out
+
+
+def load_host_spans(path: str = HOST_FILE) -> list[tuple[int, int, str]]:
+    """When the host on this computer spoke each line: (start_ms, end_ms,
+    text), from the laptop's clock. Lines recorded before timing existed
+    carry no span and are skipped here."""
+    if not os.path.exists(path):
+        return []
+    try:
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, ValueError):
+        return []
+    spans: list[tuple[int, int, str]] = []
+    for lines in (data or {}).values():
+        for x in lines if isinstance(lines, list) else []:
+            if isinstance(x, dict) and isinstance(x.get("start"), (int, float)) and isinstance(x.get("end"), (int, float)):
+                spans.append((int(x["start"] * 1000), int(x["end"] * 1000), str(x.get("text") or "")))
+    return sorted(spans)
+
+
+# The device's clock ran about two seconds behind the host's on 2026-10-19,
+# and the wearer began answering at least three seconds after each prompt
+# ended. An utterance that begins inside a host line, give or take these, is
+# the host.
+HOST_SPAN_BEFORE_S = 1.5
+HOST_SPAN_AFTER_S = 3.0
+HOSTED_GAP_S = 300            # spans further apart than this are separate check-ins
+CLOSING_S = 6                 # how long the closing line takes to say
+
+
+def _span_groups(spans: list[tuple[int, int, str]]) -> list[list[tuple[int, int, str]]]:
+    groups: list[list[tuple[int, int, str]]] = []
+    for sp in spans:
+        if groups and sp[0] - groups[-1][-1][1] <= HOSTED_GAP_S * 1000:
+            groups[-1].append(sp)
+        else:
+            groups.append([sp])
+    return groups
 
 
 def _host_lines_near(anchor_ms: int, extra: list[str]) -> list[str]:
@@ -688,7 +731,8 @@ def _host_lines_near(anchor_ms: int, extra: list[str]) -> list[str]:
 
 
 def checkins_from(notes: list[dict], records: list[dict], keep_minutes: float = CHECKIN_KEEP_MIN,
-                  host_lines: list[str] | None = None) -> list[Utterance]:
+                  host_lines: list[str] | None = None,
+                  host_spans: list[tuple[int, int, str]] | None = None) -> list[Utterance]:
     """The check-ins among ``records`` (conversation records that carry
     their utterances), anchored by ``notes`` or by a spoken opener. Pure,
     so the rule is tested without a device. No session is used twice;
@@ -699,7 +743,7 @@ def checkins_from(notes: list[dict], records: list[dict], keep_minutes: float = 
     are in the transcript beside the wearer's answers. Every utterance that
     is one of the host's lines is dropped before anything is measured, so a
     sixteen-word question is never counted as the wearer's speech."""
-    from speech_vitals.elicitation import is_host_line
+    from speech_vitals.elicitation import host_runs, is_host_line
 
     extra = list(host_lines or [])
     sessions = []
@@ -727,6 +771,75 @@ def checkins_from(notes: list[dict], records: list[dict], keep_minutes: float = 
                 if is_host_line(u.text, host):
                     continue
                 out.append(Utterance(ts=u.ts, text=u.text, speaker=WEARER, conversation_id=f"{label}-{cid}"))
+
+    # Hosted, by timing. The host recorded when it spoke; the device was
+    # often already recording, so the session's own start means nothing.
+    # The check-in is from the first host line to the end of the last, and
+    # anything that began while the host was speaking is the host, however
+    # the device heard it ("phone number checked in" for "Bellwether
+    # check-in", on 2026-10-19).
+    for group in _span_groups(list(host_spans or [])):
+        g_start, g_end = group[0][0], group[-1][1]
+        windows = [(s - int(HOST_SPAN_BEFORE_S * 1000), e + int(HOST_SPAN_AFTER_S * 1000)) for s, e, _ in group]
+        texts = [t for _, _, t in group] + _host_lines_near(g_start, extra)
+        for cid, start, utts, words in sessions:
+            if cid in used:
+                continue
+            times = [t for t in (_ms(u.ts) for u in utts) if t is not None]
+            if not times or max(times) < g_start or min(times) > g_end + 60000:
+                continue
+            used.add(cid)
+            for u in utts:
+                t = _ms(u.ts)
+                if t is None or not (g_start - int(HOST_SPAN_BEFORE_S * 1000) <= t <= g_end + int(HOST_SPAN_AFTER_S * 1000)):
+                    continue
+                if any(a <= t <= b for a, b in windows) or is_host_line(u.text, texts):
+                    continue
+                out.append(Utterance(ts=u.ts, text=u.text, speaker=WEARER, conversation_id=f"hosted-{cid}"))
+            break
+
+    # Hosted, by text, for a host that recorded no timing (an Echo, say).
+    # The opener and the first question are found anywhere in a session; the
+    # check-in runs to the closing line, or the usual window; an utterance
+    # mostly made of host words is the host.
+    for cid, start, utts, words in sessions:
+        if cid in used:
+            continue
+        anchor_i = None
+        for i, u in enumerate(utts):
+            t = _ms(u.ts)
+            if t is None:
+                continue
+            near = _host_lines_near(t, [])
+            head = [ln for ln in near if ln.startswith("Bellwether check-in") or ln.startswith("Question 1") or ln.startswith("Question one")]
+            first_prompts = [ln for k, ln in enumerate(near) if k % 8 == 2]
+            if host_runs(u.text, head + first_prompts, min_run=4) >= 4:
+                anchor_i = i
+                break
+        if anchor_i is None:
+            continue
+        anchor_ms = _ms(utts[anchor_i].ts)
+        lines = _host_lines_near(anchor_ms, extra)
+        closing = [ln for ln in lines if ln.startswith("Thank you. That is today's check-in")]
+        until = anchor_ms + int(keep_minutes * 60000)
+        used.add(cid)
+        for u in utts[anchor_i:]:
+            t = _ms(u.ts)
+            if t is None or t > until:
+                break
+            if host_runs(u.text, closing) >= 3:
+                # The closing takes about six seconds to say, and the device
+                # may have heard its first words as separate, garbled
+                # utterances ("thank you" and a mangled "that is today's
+                # check-in" on 2026-10-19). Nothing the wearer said in those
+                # seconds is an answer.
+                while out and out[-1].conversation_id == f"hosted-{cid}" and (_ms(out[-1].ts) or 0) >= t - CLOSING_S * 1000:
+                    out.pop()
+                break
+            n = len(u.text.split())
+            if is_host_line(u.text, lines) or (n and host_runs(u.text, lines) * 2 >= n):
+                continue
+            out.append(Utterance(ts=u.ts, text=u.text, speaker=WEARER, conversation_id=f"hosted-{cid}"))
 
     for note in sorted(notes, key=lambda n: _ms(n.get("created_at")) or 0):
         at = _ms(note.get("created_at"))
@@ -765,7 +878,8 @@ def ingest_checkins(cli: BeeCli, max_pages: int = 100, keep_minutes: float = CHE
     if records is None:
         rows = _page_all(cli.conversations_list, "conversations", limit=100, max_pages=max_pages)
         records = with_utterances(cli, rows, limit=len(rows))
-    return checkins_from(notes, records, keep_minutes, host_lines=load_host_lines(host_file))
+    return checkins_from(notes, records, keep_minutes, host_lines=load_host_lines(host_file),
+                         host_spans=load_host_spans(host_file))
 
 
 def ingest_now(cli: BeeCli, owner: OwnerFilter) -> list[Utterance]:

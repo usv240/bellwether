@@ -107,7 +107,10 @@ class PollySpeaker:
         self.out.mkdir(parents=True, exist_ok=True)
         self._n = 0
 
-    def say(self, text: str) -> None:
+    def say(self, text: str) -> tuple[float, float]:
+        """Speak one line. Returns when playback began and ended, by this
+        computer's clock, so the ingest can drop what the band heard from
+        the speaker however it transcribed it."""
         # Printed as well as spoken, so a recording of the terminal shows
         # what the room heard.
         print(f"  host: {text}", flush=True)
@@ -121,7 +124,9 @@ class PollySpeaker:
             wf.setsampwidth(2)
             wf.setframerate(16000)
             wf.writeframes(pcm)
+        began = time.time()
         _play(path)
+        return began, began + len(pcm) / 32000
 
 
 def _play(path: Path) -> None:
@@ -139,14 +144,18 @@ def _play(path: Path) -> None:
 class PrintSpeaker:
     """The dry run: the lines, and nothing through the speaker."""
 
-    def say(self, text: str) -> None:
+    def say(self, text: str) -> tuple[float, float]:
         print(f"  host: {text}")
+        now = time.time()
+        return now, now
 
 
 # ---- the host file ---------------------------------------------------------
 
 
-def record_spoken(path: str, day: str, lines: list[str]) -> None:
+def record_spoken(path: str, day: str, lines: list) -> None:
+    """Append what the host said. Each entry is a line, or a dict with the
+    line and when it played ({"text", "start", "end"}, epoch seconds)."""
     data: dict = {}
     if os.path.exists(path):
         try:
@@ -176,9 +185,12 @@ def run_check_in(mcp, speaker, profile: str, day: str, wait, answer_seconds: int
     spoken: list[str] = []
 
     def say(line: str) -> None:
-        speaker.say(line)
+        when = speaker.say(line)
         spoken.append(line)
-        record_spoken(host_file, day, [line])
+        if isinstance(when, tuple) and len(when) == 2:
+            record_spoken(host_file, day, [{"text": line, "start": round(when[0], 3), "end": round(when[1], 3)}])
+        else:
+            record_spoken(host_file, day, [line])
 
     log(f"Day {start.get('eligible_days', 0)} of {start.get('warmup_days', 7)} counted before tonight.")
     if start.get("already_started_today"):
@@ -196,7 +208,7 @@ def run_check_in(mcp, speaker, profile: str, day: str, wait, answer_seconds: int
     return {**start, "spoken": spoken}
 
 
-def wait_for_the_bee(started_at: float, poll=None, every: int = 60, limit: int = 20 * 60, clock=time.time, sleep=time.sleep,
+def wait_for_the_bee(started_at: float, poll=None, every: int = 60, limit: int = 30 * 60, clock=time.time, sleep=time.sleep,
                      log=print) -> dict | None:
     """The Bee writes a session down minutes after it ends. Watch the
     conversation list for a session that began around the check-in and
@@ -212,7 +224,11 @@ def wait_for_the_bee(started_at: float, poll=None, every: int = 60, limit: int =
                 continue
             if started_at - 180 <= start_ms / 1000 <= started_at + 420:
                 cid, n = str(conv.get("id")), int(conv.get("utterances_count") or 0)
-                if n >= 4 and seen.get(cid) == n:
+                # A session the device is still capturing is not done, however
+                # still its count looks: on 2026-10-19 the wearer went on
+                # talking after the closing and the session stayed open.
+                done = str(conv.get("state") or "COMPLETED").upper() != "CAPTURING"
+                if n >= 4 and done and seen.get(cid) == n:
                     log(f"The Bee has written the session down: {n} utterances.")
                     return conv
                 seen[cid] = n
@@ -297,7 +313,7 @@ def main(argv: list[str] | None = None) -> int:
         print("Dry run: not waiting for the Bee.")
         return 0
     if wait_for_the_bee(started_at) is None:
-        print("The Bee had not written the session down after twenty minutes. Run: bellwether-ingest mine --days 1 later.")
+        print("The Bee had not written the session down after thirty minutes. Run: bellwether-ingest mine --days 1 later.")
         return 2
     rc = count_the_day(args.profile)
     if rc != 0:

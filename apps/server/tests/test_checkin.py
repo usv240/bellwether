@@ -141,3 +141,13 @@ def test_a_guessed_date_is_ignored_and_does_not_mark_that_day(client):
         assert tool(client, sid, "start_check_in", {"profile_id": f"p{k}", "date": near})["date"] == near
     far = (utc + timedelta(days=2)).isoformat()
     assert tool(client, sid, "start_check_in", {"profile_id": "p2", "date": far})["date"] == utc.isoformat()
+
+
+def test_coaching_speaks_about_the_latest_check_in_not_an_old_short_day(client):
+    today = date.today()
+    rows = [day_row(today - timedelta(days=3), 93), day_row(today - timedelta(days=2), 299), day_row(today, 297)]
+    assert client.post("/v1/profiles/me-voice/days", json=rows).status_code == 200
+    note = client.get("/v1/profiles/me-voice/coaching").json()
+    assert f"The latest check-in, on {today.isoformat()}, counted with 297 words." in note["text"]
+    assert "93 words" not in note["text"]
+    assert not any("full sentences" in a for a in note["actions"])

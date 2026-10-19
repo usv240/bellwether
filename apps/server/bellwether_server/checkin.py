@@ -148,14 +148,17 @@ def coaching_payload(view: dict, now: datetime | None = None) -> dict:
             actions.append("Check in tomorrow at about the same time of day. A baseline is most useful when the conditions are alike.")
         else:
             sentences.append("From tomorrow each day is compared with these seven.")
-        if short_days:
-            d, w = short_days[-1]
-            sentences.append(
-                f"The check-in on {d} came to {w} words, under the floor of {WORD_FLOOR}, so it did not count."
-            )
-            actions.append("Answer each of the three questions in full sentences until the host says thank you. Two minutes is about 250 words.")
-        elif avg_counted:
-            sentences.append(f"Your counted days average {avg_counted} words, well over the floor of {WORD_FLOOR}.")
+        # About the latest check-in only. On 2026-10-19 the note read a
+        # three-day-old short day aloud right after a check-in that counted.
+        if recent:
+            last_d, last_w = recent[-1], recent_words[-1]
+            if 0 < last_w < WORD_FLOOR:
+                sentences.append(
+                    f"The check-in on {last_d} came to {last_w} words, under the floor of {WORD_FLOOR}, so it did not count."
+                )
+                actions.append("Answer each of the three questions in full sentences until the host says thank you. Two minutes is about 250 words.")
+            elif last_w >= WORD_FLOOR:
+                sentences.append(f"The latest check-in, on {last_d}, counted with {last_w} words.")
     elif tier == "stable":
         streak = summary.get("stable_streak_days", 0)
         sentences.append(f"Stable against your own baseline, {streak} {'day' if streak == 1 else 'days'} in a row.")

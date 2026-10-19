@@ -137,3 +137,36 @@ def test_the_host_never_reads_a_transcript():
 def test_the_count_uses_the_projects_own_ingest_when_installed():
     cmd = host._ingest_command()
     assert cmd and ("bellwether-ingest" in cmd[0] or cmd[-1] == "bellwether_ingest.cli")
+
+
+def test_when_the_speaker_reports_timing_each_line_is_saved_with_it(tmp_path):
+    """The ingest drops whatever began while the host was speaking, however
+    the band transcribed it, so the host keeps when each line played."""
+    class TimedSpeaker:
+        t = 1000.0
+
+        def say(self, text):
+            self.t += 2.0
+            return self.t, self.t + 1.5
+
+    hf = tmp_path / "host.json"
+    host.run_check_in(FakeMcp(), TimedSpeaker(), "me-voice", "2026-10-19", lambda s: None,
+                      host_file=str(hf), log=lambda *_: None)
+    saved = json.loads(hf.read_text(encoding="utf-8"))["2026-10-19"]
+    assert saved[0] == {"text": SCRIPT["opener"], "start": 1002.0, "end": 1003.5}
+    assert all(set(x) == {"text", "start", "end"} for x in saved) and len(saved) == 8
+
+    import importlib
+    bee = importlib.import_module("bellwether_ingest.bee")
+    spans = bee.load_host_spans(str(hf))
+    assert spans[0] == (1002000, 1003500, SCRIPT["opener"])
+    assert SCRIPT["closing"] in bee.load_host_lines(str(hf))
+
+
+def test_waiting_does_not_count_a_session_the_band_is_still_capturing():
+    started = 1_000_000.0
+    conv = {"id": 7, "start_time": (started + 30) * 1000, "utterances_count": 9, "state": "CAPTURING"}
+    now = [started]
+    got = host.wait_for_the_bee(started, poll=lambda: [conv], every=60, limit=300, clock=lambda: now[0],
+                                sleep=lambda s: now.__setitem__(0, now[0] + s), log=lambda *_: None)
+    assert got is None

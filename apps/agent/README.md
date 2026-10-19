@@ -12,6 +12,8 @@ The agent does not reach into Bellwether's data. It calls the **same MCP server*
 
 The host stands in for Alexa+ because the Alexa+ MCP connection cannot yet be driven from a script; it uses exactly the tools an Alexa+ agent gets. It never reads a transcript: it polls the conversation list for counts and hears the result come back from `mine`.
 
+The band hears the host, and on the first live run it merged, split and misheard the host's lines. So the host saves when it played each line, by this computer's clock, in `.bellwether-host.json`, and the ingest drops anything that began while the host was speaking and ends the check-in at the closing line. On that real session this kept exactly the wearer's 17 answers, 297 words. A host that saves no timing still works by text, which matched on the same session.
+
 ```
 python apps/agent/check_in_host.py --dry-run                 # print tonight's script
 python apps/agent/check_in_host.py --profile me              # speak it; count later with mine --days 1
