@@ -1,0 +1,17 @@
+{
+  "targets": {
+    "default": {
+      "resources": {
+        "runtimes": {
+          "secondopinion": {
+            "runtimeId": "bellwethersecond_secondopinion-KpfPAmGsp1",
+            "runtimeArn": "arn:aws:bedrock-agentcore:us-east-1:957325809861:runtime/bellwethersecond_secondopinion-KpfPAmGsp1",
+            "roleArn": "arn:aws:iam::957325809861:role/AgentCore-bellwethersecon-ApplicationAgentSecondopi-D35qqTC5R76p"
+          }
+        },
+        "stackName": "AgentCore-bellwethersecond-default",
+        "deployHash": "812fdf1abf546d4d"
+      }
+    }
+  }
+}

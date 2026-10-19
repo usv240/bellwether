@@ -28,7 +28,7 @@ API docs https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1
 | Product feedback on every tool used | [PRODUCT_FEEDBACK.md](../PRODUCT_FEEDBACK.md) and the Devpost feedback answers, Bee CLI to Amazon Polly | Read |
 | Tracks and mini challenges | Bee (primary), Alexa+; AWS Builder; Open Source | [SUBMISSION.md](SUBMISSION.md) |
 | Open Source fields | `speech-vitals` on PyPI (MIT) and a pull request to Bee's own CLI (bee-computer/bee-cli#20) | https://pypi.org/project/speech-vitals/ |
-| AWS Builder: documented integrations | [AWS.md](AWS.md): Bedrock, Strands Agents, Polly, DynamoDB, Lambda, S3, CloudFront, CDK | Read |
+| AWS Builder: documented integrations | [AWS.md](AWS.md): Bedrock, Bedrock AgentCore Runtime, Strands Agents, Polly, DynamoDB, Lambda, S3, CloudFront, CDK | Read |
 | Pre-existing project | None; first commit 2026-09-16, inside the window | `git log --reverse` |
 | Feature requests, rated | [FEATURE_REQUESTS.md](FEATURE_REQUESTS.md), each critical, important or nice-to-have | Read |
 | Friction log (up to 10 percent bonus) | [FRICTION_LOG.md](../FRICTION_LOG.md), nineteen entries in the required form | Read |
@@ -54,10 +54,10 @@ API docs https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1
   so the host's questions are removed by when it spoke; on the first live
   session this kept exactly the wearer's 17 answers, and across 6,645 real
   utterances it removes none of the wearer's own words.
-- **A second opinion, argued and gated.** Three Strands agents argue a flagged change from evidence the engine computes (`weigh_the_change`): an Advocate, a Sceptic and a Referee. The Referee's note must cite both sides and use only the evidence's numbers, or it is refused and retried; a real run is committed in `apps/agent/runs/`. `python apps/agent/second_opinion.py --profile alex-drift`.
+- **A second opinion, argued and gated.** Three Strands agents argue a flagged change from evidence the engine computes (`weigh_the_change`): an Advocate, a Sceptic and a Referee. The Referee's note must cite both sides and use only the evidence's numbers, or it is refused and retried; a real run is committed in `apps/agent/runs/`. `python apps/agent/second_opinion.py --profile alex-drift`. The same agents are deployed on **Amazon Bedrock AgentCore Runtime** as an invocable endpoint ([apps/agentcore](../apps/agentcore/README.md)), verified with a live invocation.
 - **Privacy by construction.** The server drops any field it does not
   know; a test sends a transcript full of names and finds none stored.
-- **287 tests**, including guards that fail when a published number
+- **288 tests**, including guards that fail when a published number
   drifts from the code.
 
 ### Design
