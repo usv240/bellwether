@@ -1,6 +1,7 @@
 """The terminal camera: real commands, real output, rendered.
 
     python record_term.py capture      # run the commands for real, keep their output
+    python record_term.py capture --only term-host   # the live hosted check-in, merged in
     python record_term.py render       # type them out in a terminal frame and record it
 
 Two steps on purpose. `capture` runs each command against the operator's
@@ -72,19 +73,36 @@ NOTES = {
 }
 
 
-def capture() -> int:
+# The host waits for the Bee to finish writing the session down, which can
+# take most of twenty minutes; everything else returns in seconds.
+TIMEOUTS = {"term-host": 30 * 60}
+
+
+def capture(only: str | None = None) -> int:
+    """Run the shots for real. ``only`` runs one and merges it into the
+    saved capture, so the live hosted check-in can be taken on its own
+    evening without re-running the others."""
     import os
 
     OUT.mkdir(parents=True, exist_ok=True)
     env = {**os.environ, "BELLWETHER_MCP": MCP, "PYTHONIOENCODING": "utf-8"}
     record: dict = {"captured": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "shots": {}}
+    if only:
+        if only not in SHOTS:
+            print(f"unknown shot {only}; one of {', '.join(SHOTS)}", file=sys.stderr)
+            return 2
+        if CAPTURE.exists():
+            record = json.loads(CAPTURE.read_text(encoding="utf8"))
+            record["captured"] = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
     for key, commands in SHOTS.items():
+        if only and key != only:
+            continue
         record["shots"][key] = []
         for argv in commands:
             real = RUN[argv[0]] + argv[1:]
             t0 = time.perf_counter()
             proc = subprocess.run(real, cwd=BW, capture_output=True, text=True, encoding="utf-8",
-                                  errors="replace", timeout=300, env=env)
+                                  errors="replace", timeout=TIMEOUTS.get(key, 300), env=env)
             out = (proc.stdout + proc.stderr).rstrip()
             record["shots"][key].append({"argv": argv, "output": out, "seconds": round(time.perf_counter() - t0, 2),
                                          "code": proc.returncode, "note": NOTES.get(key, "")})
@@ -193,7 +211,10 @@ def main() -> int:
     if len(sys.argv) < 2 or sys.argv[1] not in ("capture", "render"):
         print(__doc__)
         return 2
-    return capture() if sys.argv[1] == "capture" else render()
+    if sys.argv[1] == "capture":
+        only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else None
+        return capture(only)
+    return render()
 
 
 if __name__ == "__main__":

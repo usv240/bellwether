@@ -130,3 +130,8 @@ def test_the_host_never_reads_a_transcript():
     assert "conversations get" not in src
     assert "utterances\"]" not in src and "['utterances']" not in src
     assert "bee conversations list" in src and "utterances_count" in src
+
+
+def test_the_count_uses_the_projects_own_ingest_when_installed():
+    cmd = host._ingest_command()
+    assert cmd and ("bellwether-ingest" in cmd[0] or cmd[-1] == "bellwether_ingest.cli")

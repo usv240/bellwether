@@ -231,11 +231,25 @@ def _bee_recent() -> list[dict]:
 def count_the_day(profile_base: str, log=print) -> int:
     """``bellwether-ingest mine --days 1``: the words are reduced to numbers
     on this computer; its output is counts and a link, never speech."""
-    cmd = [sys.executable, "-m", "bellwether_ingest.cli", "mine", "--days", "1", "--profile", profile_base]
+    cmd = [*_ingest_command(), "mine", "--days", "1", "--profile", profile_base]
     proc = subprocess.run(cmd, capture_output=True, text=True)
     for line in (proc.stdout + proc.stderr).splitlines():
         log(f"  {line}")
     return proc.returncode
+
+
+def _ingest_command() -> list[str]:
+    """The project's own ``bellwether-ingest`` when it is installed in the
+    repository's virtual environment, then one on PATH, then this Python.
+    The host may run under a different interpreter from the ingest."""
+    import shutil
+
+    repo = Path(__file__).resolve().parents[2]
+    for venv in (repo / ".venv" / "Scripts" / "bellwether-ingest.exe", repo / ".venv" / "bin" / "bellwether-ingest"):
+        if venv.exists():
+            return [str(venv)]
+    found = shutil.which("bellwether-ingest")
+    return [found] if found else [sys.executable, "-m", "bellwether_ingest.cli"]
 
 
 def speak_coaching(mcp, speaker, profile: str, log=print) -> dict:
