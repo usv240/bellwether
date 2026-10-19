@@ -143,11 +143,13 @@ BEATS: list[Beat] = [
     Beat(
         key="checkins",
         action="checkins",
-        shows="The dashboard on the builder's own check-ins: the real-data badge, the first week filling.",
+        shows="The dashboard on the builder's own check-ins: the real-data badge, the first week filling, then the one command that gives anyone their own profile.",
         pause_before=0.4,
         say=(
             "This is my own Bee data, live. Seven days teach it what normal sounds like for me. "
             + _days_line(CHECKIN_DAYS)
+            + " Anyone with a Bee can do the same. One command gives you your own private profile, "
+            "locked with your own API key, and meeting transcripts work too."
         ),
     ),
     Beat(

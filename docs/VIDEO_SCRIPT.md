@@ -37,41 +37,41 @@ A terminal: the assistant speaking tonight's three questions while the Bee on th
 
 **1:02, checkins, the website, in a real browser**
 
-The dashboard on the builder's own check-ins: the real-data badge, the first week filling.
+The dashboard on the builder's own check-ins: the real-data badge, the first week filling, then the one command that gives anyone their own profile.
 
-> This is my own Bee data, live. Seven days teach it what normal sounds like for me. Three days counted. Four more and it starts comparing.
+> This is my own Bee data, live. Seven days teach it what normal sounds like for me. Three days counted. Four more and it starts comparing. Anyone with a Bee can do the same. One command gives you your own private profile, locked with your own API key, and meeting transcripts work too.
 
-**1:13, change, the website, in a real browser**
+**1:25, change, the website, in a real browser**
 
 The switcher to the simulated person, labelled; the eight-week chart leaving its band; what moved and since when; then what else could explain it.
 
 > Imagine your speech changing so gradually that you don't notice. In this simulated example, Bellwether shows when the change started, which measurements shifted, and how far they've moved from that person's usual range. It also offers everyday explanations, like poor sleep, illness, or medication. It never names a condition.
 
-**1:39, proof, the website, in a real browser**
+**1:51, proof, the website, in a real browser**
 
 The same page, with what the software was checked against on screen.
 
 > We tested Bellwether on speech we didn't write: three hundred forty-nine Supreme Court arguments with no alerts, and six hundred fifty-two presidential press conferences with fewer than three percent flagged. These tests measure software behaviour, not medical accuracy.
 
-**1:55, mcp, the website, in a real browser**
+**2:06, mcp, the website, in a real browser**
 
 A session held against the MCP server from the page: protocol agreed, nine tools listed, the answer returned.
 
 > Bellwether also connects to AI assistants through an MCP server, built using the same standard Alexa+ supports. Assistants can ask about your speech trends, but they cannot retrieve your conversations, because Bellwether doesn't store them.
 
-**2:10, term-agent, a terminal, a real run rendered**
+**2:21, term-agent, a terminal, a real run rendered**
 
 A terminal: the Strands agent on Amazon Bedrock asking the deployed server how the simulated person's month went.
 
 > Here a Strands agent on Amazon Bedrock asks for a monthly summary, and says the data is simulated before anything else.
 
-**2:19, report, the website, in a real browser**
+**2:30, report, the website, in a real browser**
 
 The doctor report: the timeline, then the questions to bring, then the links.
 
 > And if something changes, Bellwether gives you a simple timeline to bring to your doctor. What changed, when it started, and what questions to ask. No diagnosis, just a clearer conversation. Open source, and working today. Bellwether. Your own normal, in your own numbers.
 
-Estimated 2:37 of a 3:00 ceiling. The real narration decides the
+Estimated 2:48 of a 3:00 ceiling. The real narration decides the
 final cut.
 
 ## The terminal beats

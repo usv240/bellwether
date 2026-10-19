@@ -32,7 +32,8 @@ WHERE = {
                   "The shot shows the sequence in order: the question spoken, \"you answer; the Bee on your wrist is recording\", "
                   "\"The Bee recorded the check-in\", the day counted, and the note read back."),
     "checkins": (f"{SITE}/app/?profile=me-voice",
-                 'Point at the green badge "Real Bee: check-ins", then at the filled days in the first-week card.'),
+                 'Point at the green badge "Real Bee: check-ins", then at the filled days in the first-week card. '
+                 'On "Anyone with a Bee", scroll to the command with `--profile <your-name>` in the hosted check-in card and point at it.'),
     "change": ('Same page. Click the tab "Simulated person".',
                'Point at the "Simulated person" label. Rest on the "Eight weeks" chart and trace the dots as they leave the shaded band. '
                'On "how far", point at the first line ending "lower than your baseline since". On "Poor sleep", scroll to "What else could explain this" and hold.'),

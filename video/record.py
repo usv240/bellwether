@@ -257,6 +257,7 @@ HERO = "h1"
 PROBLEM = "#problem"
 HOW = "#how"
 FIRST_WEEK = "#first-week"
+YOUR_OWN = "pre:has-text('--profile <your-name>')"
 WHOSE = "nav[aria-label='Whose data']"
 CONFOUNDERS = "text=What else could explain this"
 ALEXA = "#alexa"
@@ -325,6 +326,9 @@ def checkins(r: Recorder):
     r.on_phrase("Seven days teach it")
     r.scroll_to(FIRST_WEEK, rest=URL_BAR_HEIGHT + 60 * SCALE)
     r.point(f"ol[aria-label='Counted days']")
+    r.on_phrase("Anyone with a Bee")
+    r.scroll_to(YOUR_OWN, rest=URL_BAR_HEIGHT + 200 * SCALE)
+    r.point(YOUR_OWN)
     r.hold_beat()
 
 
