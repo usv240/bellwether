@@ -15,7 +15,7 @@ this file.
 
 The front page: the claim, and a simulated person's own range with the days that left it.
 
-> Your watch tracks your heart. Nothing tracks the way you speak. More pauses, simpler sentences, words that are harder to find. They can be the first sign that something is changing.
+> Your watch tracks your heart. But what about changes in the way you speak? More pauses, simpler sentences, words that become harder to find. Small changes that are easy to overlook.
 
 **0:13, gap, the website, in a real browser**
 
@@ -45,7 +45,7 @@ The dashboard on the builder's own check-ins: the real-data badge, the first wee
 
 The switcher to the simulated person, labelled; the eight-week chart leaving its band; what moved and since when; then what else could explain it.
 
-> Imagine your speech changing so gradually that you don't notice. This simulated example shows how Bellwether makes that change visible. Bellwether shows when it started, which measures moved, and how far from that person's own normal. Then it lists the everyday explanations first. Poor sleep, illness, a new medication. It never names a condition.
+> Imagine your speech changing so gradually that you don't notice. In this simulated example, Bellwether shows when the change started, which measurements shifted, and how far they've moved from that person's usual range. It also offers everyday explanations, like poor sleep, illness, or medication. It never names a condition.
 
 **1:39, proof, the website, in a real browser**
 
@@ -57,21 +57,21 @@ The same page, with what the software was checked against on screen.
 
 A session held against the MCP server from the page: protocol agreed, nine tools listed, the answer returned.
 
-> It also works with AI assistants like Alexa+. They can ask how you have been sounding, but they can never retrieve your conversations, because none are stored.
+> Bellwether also connects to AI assistants through an MCP server, built using the same standard Alexa+ supports. Assistants can ask about your speech trends, but they cannot retrieve your conversations, because Bellwether doesn't store them.
 
-**2:07, term-agent, a terminal, a real run rendered**
+**2:10, term-agent, a terminal, a real run rendered**
 
 A terminal: the Strands agent on Amazon Bedrock asking the deployed server how the simulated person's month went.
 
 > Here a Strands agent on Amazon Bedrock asks for a monthly summary, and says the data is simulated before anything else.
 
-**2:15, report, the website, in a real browser**
+**2:19, report, the website, in a real browser**
 
 The doctor report: the timeline, then the questions to bring, then the links.
 
 > And if something changes, Bellwether gives you a simple timeline to bring to your doctor. What changed, when it started, and what questions to ask. No diagnosis, just a clearer conversation. Open source, and working today. Bellwether. Your own normal, in your own numbers.
 
-Estimated 2:34 of a 3:00 ceiling. The real narration decides the
+Estimated 2:37 of a 3:00 ceiling. The real narration decides the
 final cut.
 
 ## The terminal beats

@@ -104,9 +104,9 @@ BEATS: list[Beat] = [
         shows="The front page: the claim, and a simulated person's own range with the days that left it.",
         pause_before=0.8,
         say=(
-            "Your watch tracks your heart. Nothing tracks the way you speak. "
-            "More pauses, simpler sentences, words that are harder to find. "
-            "They can be the first sign that something is changing."
+            "Your watch tracks your heart. But what about changes in the way you speak? "
+            "More pauses, simpler sentences, words that become harder to find. "
+            "Small changes that are easy to overlook."
         ),
     ),
     Beat(
@@ -158,9 +158,9 @@ BEATS: list[Beat] = [
         min_hold=26,
         say=(
             "Imagine your speech changing so gradually that you don't notice. "
-            "This simulated example shows how Bellwether makes that change visible. "
-            "Bellwether shows when it started, which measures moved, and how far from that person's own normal. "
-            "Then it lists the everyday explanations first. Poor sleep, illness, a new medication. "
+            "In this simulated example, Bellwether shows when the change started, which measurements shifted, "
+            "and how far they've moved from that person's usual range. "
+            "It also offers everyday explanations, like poor sleep, illness, or medication. "
             "It never names a condition."
         ),
     ),
@@ -184,8 +184,8 @@ BEATS: list[Beat] = [
         pause_before=0.3,
         min_hold=8,
         say=(
-            "It also works with AI assistants like Alexa+. "
-            "They can ask how you have been sounding, but they can never retrieve your conversations, because none are stored."
+            "Bellwether also connects to AI assistants through an MCP server, built using the same standard Alexa+ supports. "
+            "Assistants can ask about your speech trends, but they cannot retrieve your conversations, because Bellwether doesn't store them."
         ),
     ),
     Beat(

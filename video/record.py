@@ -390,7 +390,7 @@ def simulated(r: Recorder):
     r.on_phrase("how far")
     r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 30 * SCALE)
     r.point("li:has-text('lower than your baseline since')")
-    r.on_phrase("Poor sleep")
+    r.on_phrase("poor sleep")
     r.scroll_to(CONFOUNDERS, rest=URL_BAR_HEIGHT + 60 * SCALE)
     r.point("text=Not sleeping well")
     r.hold_beat()
@@ -431,7 +431,7 @@ def alexa(r: Recorder):
     yield
     r.click(START)
     r.page.locator("#mcp-steps > li").nth(2).wait_for(state="visible", timeout=60_000)
-    r.on_phrase("never retrieve")
+    r.on_phrase("cannot retrieve")
     r.scroll_to("#mcp-steps", rest=URL_BAR_HEIGHT + 60 * SCALE)
     r.point("#mcp-steps > li:nth-child(3)")
     r.hold_beat()
