@@ -209,7 +209,7 @@ TOOLS = [
             "properties": {
                 "profile_id": {"type": "string", "description": "The wearer's check-in profile, usually <name>-voice"},
                 "host": {"type": "string", "maxLength": 40, "description": "Who is hosting, for the record, such as alexa"},
-                "date": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "The host's local date; the service clock is UTC"},
+                "date": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$", "description": "The person's local date, YYYY-MM-DD, from the device clock, never guessed. Accepted only within a day of the service's UTC date; otherwise the service uses its own."},
             },
             "additionalProperties": False,
         },

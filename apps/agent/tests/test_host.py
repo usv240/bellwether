@@ -118,9 +118,11 @@ def test_waiting_ignores_sessions_from_another_time_and_gives_up():
     started = 1_000_000.0
     now = [started]
     polls = lambda: [{"id": 1, "start_time": (started - 3600) * 1000, "utterances_count": 50}]
+    said = []
     conv = host.wait_for_the_bee(started, poll=polls, every=100, limit=300, clock=lambda: now[0],
-                                 sleep=lambda s: now.__setitem__(0, now[0] + s), log=lambda *_: None)
+                                 sleep=lambda s: now.__setitem__(0, now[0] + s), log=said.append)
     assert conv is None
+    assert "No session began on the Bee" in said[-1]
 
 
 def test_the_host_never_reads_a_transcript():

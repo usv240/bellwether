@@ -112,45 +112,56 @@ def host_lines_for(d: date | str) -> list[str]:
     return lines
 
 
+MIN_RUN_WORDS = 4      # a shorter fragment of a host line must be the whole line
+MIN_BAG_WORDS = 8      # the loose match is for long lines the device misheard
+
+
 def _words(text: str) -> list[str]:
-    return _WORD.findall(text.lower().replace("-", " "))
+    """Lower-case words, with a date the device wrote as digits ("19th",
+    "19") turned back into the words the host said ("nineteenth")."""
+    out: list[str] = []
+    for w in _WORD.findall(text.lower().replace("-", " ")):
+        m = re.fullmatch(r"(\d{1,2})(st|nd|rd|th)?", w)
+        if m and 1 <= int(m.group(1)) <= 31:
+            out.extend(ORDINALS[int(m.group(1))].replace("-", " ").split())
+        else:
+            out.append(w)
+    return out
 
 
 def is_host_line(utterance_text: str, host_lines: list[str]) -> bool:
     """Is this utterance the host speaking, as the Bee heard it?
 
-    Two ways to match, because the device is not exact. A contiguous run
-    of a host line (the Bee often cuts one sentence into two utterances).
-    Or three quarters of the utterance's words inside one host line, for
-    the small mishearings: a date as digits, "check in" without its
-    hyphen, a dropped article. Anything under four words needs the exact
-    run, so a short real answer such as "the room" can never be mistaken
-    for the question that asked about it.
+    Three ways to match, each narrow on purpose, because a wrong match
+    deletes the wearer's own words. Measured on 2026-10-18 over 6,645 real
+    utterances from 60 sessions on the builder's account, an earlier,
+    looser rule took 98 of them (1.5%), mostly "thank you" and "yes" inside
+    a host line. This one took none of the 6,645 (56,444 words). The
+    ingest test pins a whole hosted session; the elicitation tests pin
+    the short replies that must survive.
+
+      1. The whole utterance is a whole host line ("Question one.").
+      2. It is a contiguous run of at least four words of a host line, the
+         device's habit of cutting one sentence into two.
+      3. It has at least eight words and three quarters of them are in one
+         host line, for the small mishearings of a long prompt.
     """
     u = _words(utterance_text)
     if not u:
         return False
+    joined_u = " " + " ".join(u) + " "
     for line in host_lines:
         h = _words(line)
         if not h:
             continue
-        joined_h = " " + " ".join(h) + " "
-        if (" " + " ".join(u) + " ") in joined_h:
+        if u == h:
             return True
-        if len(u) >= 4:
+        if len(u) >= MIN_RUN_WORDS and joined_u in " " + " ".join(h) + " ":
+            return True
+        if len(u) >= MIN_BAG_WORDS:
             bag = set(h)
-            hits = sum(1 for w in u if w in bag or _digit_match(w, bag))
-            if hits * 4 >= len(u) * 3:
+            if sum(1 for w in u if w in bag) * 4 >= len(u) * 3:
                 return True
-    return False
-
-
-def _digit_match(word: str, bag: set[str]) -> bool:
-    """"19th" or "19" for "nineteenth", and the reverse."""
-    m = re.fullmatch(r"(\d{1,2})(st|nd|rd|th)?", word)
-    if m:
-        n = int(m.group(1))
-        return 1 <= n <= 31 and ORDINALS[n].replace("-", " ") in " ".join(bag)
     return False
 
 

@@ -83,3 +83,18 @@ def test_strip_host_keeps_only_the_wearer():
                "There is a lamp, a desk, and a window on the left.", lines[-1]]
     kept = strip_host(session, lines)
     assert kept == ["I woke up late and walked to the station.", "There is a lamp, a desk, and a window on the left."]
+
+
+def test_short_everyday_replies_inside_a_host_line_are_kept():
+    """"thank you" is inside the closing and "the room" inside a prompt;
+    neither is the host unless it is the whole line."""
+    lines = host_lines_for(date(2026, 10, 19))
+    for reply in ["Thank you.", "Yes.", "you", "the room", "thank you so much", "as if to", "Question"]:
+        assert not is_host_line(reply, lines), reply
+    assert is_host_line("Question two.", lines)
+
+
+def test_a_date_written_as_digits_still_matches():
+    lines = host_lines_for(date(2026, 10, 21))
+    assert is_host_line("Bellwether check-in, October 21st.", lines)
+    assert is_host_line("bellwether check in october 21", lines)

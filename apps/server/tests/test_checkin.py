@@ -126,3 +126,18 @@ def test_a_drift_note_names_at_most_three_measures_in_plain_words():
     assert _spoken_list(["mattr", "filler_rate"]) == "vocabulary variety and ums and uhs"
     assert _spoken_list([]) == "several measures"
     assert "_" not in _spoken_list(names)
+
+
+def test_a_guessed_date_is_ignored_and_does_not_mark_that_day(client):
+    """On 2026-10-18 the Strands agent, asked to host, sent 2025-01-17."""
+    from datetime import datetime, timezone
+
+    sid = session(client)
+    utc = datetime.now(timezone.utc).date()
+    out = tool(client, sid, "start_check_in", {"profile_id": "me-voice", "date": "2025-01-17"})
+    assert out["date"] == utc.isoformat()
+    for k in (-1, 1):
+        near = (utc + timedelta(days=k)).isoformat()
+        assert tool(client, sid, "start_check_in", {"profile_id": f"p{k}", "date": near})["date"] == near
+    far = (utc + timedelta(days=2)).isoformat()
+    assert tool(client, sid, "start_check_in", {"profile_id": "p2", "date": far})["date"] == utc.isoformat()

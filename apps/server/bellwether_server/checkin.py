@@ -59,12 +59,17 @@ def _today(now: datetime | None = None) -> str:
     return (now or datetime.now(timezone.utc)).date().isoformat()
 
 
-def _valid_day(s: str) -> bool:
+def _plausible_day(s: str, now: datetime | None = None) -> bool:
+    """A host's local date is never more than a day from UTC. Anything
+    further is a guess, and a language model asked for "today" will guess:
+    on 2026-10-18 the Strands agent sent 2025-01-17. A guessed date would
+    hand out the wrong night's script and mark the wrong day as started."""
     try:
-        date.fromisoformat(s)
+        d = date.fromisoformat(s)
     except ValueError:
         return False
-    return True
+    utc = (now or datetime.now(timezone.utc)).date()
+    return abs((d - utc).days) <= 1
 
 
 def start_payload(store, profile_id: str, view: dict, now: datetime | None = None, host: str = "assistant",
@@ -73,7 +78,7 @@ def start_payload(store, profile_id: str, view: dict, now: datetime | None = Non
     ``day`` is the host's local date when it sends one; the service's clock
     is UTC and an evening check-in in the Americas is already tomorrow
     there."""
-    today = day if day and _valid_day(day) else _today(now)
+    today = day if day and _plausible_day(day, now) else _today(now)
     summary = view["summary"].to_dict()
     eligible_dates = {a.date for a in view["assessments"] if a.eligible}
     started = store.get_meta(profile_id, f"checkin_started:{today}")

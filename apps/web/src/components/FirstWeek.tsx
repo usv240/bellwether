@@ -95,7 +95,7 @@ export function FirstWeek({ days, assessments, eligibleDays }: { days: DayRow[];
         </p>
         <p>
           <span className="font-medium text-ink">What that looks like:</span>{" "}
-          <Link href="/app" className="text-[var(--primary)] underline underline-offset-2">the simulated person</Link>, eight weeks in, labelled as simulated on every screen.
+          <Link prefetch={false} href="/app" className="text-[var(--primary)] underline underline-offset-2">the simulated person</Link>, eight weeks in, labelled as simulated on every screen.
         </p>
       </div>
     </section>

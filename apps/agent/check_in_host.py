@@ -108,6 +108,9 @@ class PollySpeaker:
         self._n = 0
 
     def say(self, text: str) -> None:
+        # Printed as well as spoken, so a recording of the terminal shows
+        # what the room heard.
+        print(f"  host: {text}", flush=True)
         self._n += 1
         res = self.polly.synthesize_speech(Text=text, OutputFormat="pcm", SampleRate="16000",
                                            VoiceId=self.voice, Engine="neural")
@@ -215,6 +218,10 @@ def wait_for_the_bee(started_at: float, poll=None, every: int = 60, limit: int =
                 seen[cid] = n
         log("Waiting for the Bee to finish writing the session down.")
         sleep(every)
+    if seen:
+        log(f"A session began but was still growing at {max(seen.values())} utterances after the wait.")
+    else:
+        log("No session began on the Bee around the check-in. Is the band on, and close enough to hear the speaker and you?")
     return None
 
 

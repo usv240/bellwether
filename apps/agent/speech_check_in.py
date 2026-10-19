@@ -101,7 +101,12 @@ def main() -> int:
             description="Answers a person's question from Bellwether's MCP tools only.",
             callback_handler=None,
         )
-        result = agent(f"The profile is {args.profile}. {question}")
+        # The agent cannot know today's date; asked to host, it guessed one
+        # a year and a half out. The device clock says it instead.
+        from datetime import date as _date
+
+        result = agent(f"The profile is {args.profile}. Today's local date is {_date.today().isoformat()}; "
+                       f"pass it as date to any tool that takes one. {question}")
         text = str(result).strip()
 
     if args.json:
