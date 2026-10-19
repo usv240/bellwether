@@ -295,10 +295,17 @@ def hero(r: Recorder):
     r.hold_beat()
 
 
+VOICES = "h3:has-text('What people say they want')"
+
+
 def stats(r: Recorder):
     r.scroll_to(f"{PROBLEM} h2", rest=URL_BAR_HEIGHT + 60 * SCALE)
     yield
+    r.on_phrase("three and a half years")
     r.point(f"{PROBLEM} .grid > div:nth-child(1)")
+    r.on_phrase("nearly four in five")
+    r.scroll_to(VOICES, rest=URL_BAR_HEIGHT + 120 * SCALE)
+    r.point(f"{VOICES} + div > div:nth-child(1)")
     r.hold_beat()
 
 
@@ -382,11 +389,23 @@ def simulated(r: Recorder):
     r.page.mouse.move(box["x"] + box["width"] * 0.9, box["y"] + box["height"] * 0.25, steps=60)
     r.on_phrase("how far")
     r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 30 * SCALE)
-    r.point("li:has-text('higher than your baseline since')")
+    r.point("li:has-text('lower than your baseline since')")
     r.on_phrase("Poor sleep")
     r.scroll_to(CONFOUNDERS, rest=URL_BAR_HEIGHT + 60 * SCALE)
     r.point("text=Not sleeping well")
     r.hold_beat()
+
+
+def proof(r: Recorder):
+    # The chart stays in frame; what the software was checked against
+    # appears beside it, so the claim and the picture are on one screen.
+    r.scroll_to(".recharts-wrapper", rest=URL_BAR_HEIGHT + 150 * SCALE)
+    yield
+    r.page.evaluate(EVIDENCE_JS)
+    r.on_phrase("Three hundred forty-nine")
+    r.point(".recharts-wrapper")
+    r.hold_beat()
+    r.page.evaluate("document.getElementById('__evidence') && document.getElementById('__evidence').remove()")
 
 
 def chart(r: Recorder):
@@ -412,18 +431,19 @@ def alexa(r: Recorder):
     yield
     r.click(START)
     r.page.locator("#mcp-steps > li").nth(2).wait_for(state="visible", timeout=60_000)
-    r.on_phrase("never stores conversations")
+    r.on_phrase("never retrieve")
     r.scroll_to("#mcp-steps", rest=URL_BAR_HEIGHT + 60 * SCALE)
     r.point("#mcp-steps > li:nth-child(3)")
-    r.page.evaluate(EVIDENCE_JS)
     r.hold_beat()
-    r.page.evaluate("document.getElementById('__evidence') && document.getElementById('__evidence').remove()")
 
 
 def report(r: Recorder):
     goto(r, "/report/", "text=Bellwether speech report")
     r.scroll_to("text=Bellwether speech report", rest=URL_BAR_HEIGHT + 60 * SCALE)
     yield
+    r.on_phrase("wellness visit")
+    r.scroll_to("text=For the Annual Wellness Visit", rest=URL_BAR_HEIGHT + 120 * SCALE)
+    r.point("text=Questions to bring")
     r.on_phrase("simple timeline")
     r.scroll_to("text=Tier over the period", rest=URL_BAR_HEIGHT + 120 * SCALE)
     r.point("text=Tier over the period")
@@ -446,7 +466,8 @@ EVIDENCE_JS = """
     'opacity:0','transition:opacity 400ms ease-out'].join(';');
   box.innerHTML = '<div style="font-weight:700;color:#e0b25a;margin-bottom:' + (6 * S) + 'px">Checked, not claimed</div>'
     + '<div>269 automated tests</div>'
-    + '<div>Engine run on 349 real Supreme Court arguments: zero false alarms</div>'
+    + '<div>349 real Supreme Court arguments: zero false alarms</div>'
+    + '<div>Four presidents, 28 years of press conferences: 18 of 652 flagged</div>'
     + '<div style="opacity:0.7;margin-top:' + (6 * S) + 'px">System behaviour, not clinical accuracy</div>';
   document.documentElement.appendChild(box);
   requestAnimationFrame(() => { box.style.opacity = '1'; });
@@ -489,7 +510,7 @@ END_CARD_JS = """
 # 2.7 times their size and ran them off the right edge.
 
 
-ACTIONS = {f.__name__: f for f in (hero, stats, how, checkins, conversations, replay, simulated, chart, alexa, report)}
+ACTIONS = {f.__name__: f for f in (hero, stats, how, checkins, conversations, replay, simulated, proof, chart, alexa, report)}
 
 
 def assert_full_frame(path: Path) -> None:
