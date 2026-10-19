@@ -6,6 +6,7 @@ import { InfoButton } from "../../components/InfoButton";
 import { Confounders } from "../../components/Confounders";
 import { FirstWeek } from "../../components/FirstWeek";
 import { HostedCheckIn } from "../../components/HostedCheckIn";
+import { SecondOpinion } from "../../components/SecondOpinion";
 import { FirstWeekReplay } from "../../components/FirstWeekReplay";
 import { Nav } from "../../components/Nav";
 import { TrendChart, type TrendRow } from "../../components/TrendChart";
@@ -267,6 +268,8 @@ export default function Dashboard() {
             <section className="mt-4">
               <Confounders summary={summary} />
             </section>
+
+            <SecondOpinion />
 
             {/* Recent days + annotate */}
             <section className="mt-4 grid gap-4 md:grid-cols-3">

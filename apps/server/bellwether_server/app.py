@@ -326,6 +326,12 @@ def build_app(
             return start_payload(_ReadOnly(), profile_id, view, host=host[:40], day=date)
         return start_payload(store, profile_id, view, host=host[:40], day=date)
 
+    @app.get("/v1/profiles/{profile_id}/weigh")
+    def weigh_route(profile_id: str, as_of: str | None = None):
+        from .weigh import weigh
+
+        return {**weigh(profile_view(store, profile_id, _as_of(as_of))), "disclaimer": DISCLAIMER}
+
     @app.get("/v1/profiles/{profile_id}/coaching")
     def coaching(profile_id: str, as_of: str | None = None):
         day = _as_of(as_of)

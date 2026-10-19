@@ -23,7 +23,7 @@ API docs https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1
 | Open-source licence visible at the top | MIT, [LICENSE](../LICENSE) | The About panel |
 | **Bee: the repo calls Bee's CLI, MCP or Skill in code** | `apps/ingest/bellwether_ingest/bee.py` runs `bee conversations list` and `get`, `now`, `changed`, `journals list` and `todos create`, and reads `bee stream --json` and `bee sync` output; every argv pinned in tests. `apps/agent/context_check_in.py` holds Bee's own MCP server behind an audited allow-list | `pytest apps/ingest apps/agent` |
 | **Bee: live Bee data doing something for a user** | The builder's own check-ins since 2026-10-15, counted from the Bee: three days so far, the latest 298 words (2026-10-19). The hosted check-in ran live on 2026-10-19: an assistant asked three questions out loud, the Bee recorded the answers, the assistant's own words were removed by timing, the day was counted and the coaching note read back | The live dashboard above; [FRICTION_LOG.md](../FRICTION_LOG.md) entry 19 |
-| **Alexa+: MCP server, spec 2025-11-25, Streamable HTTP, in action** | Self-hosted MCP server with nine tools, two of which host the check-in; an Agent Skill at [skills/bellwether/SKILL.md](../skills/bellwether/SKILL.md); a live session from the site; a conformance probe over real HTTP | `node scripts/mcp-conform.mjs` (12 of 12 MUST, 7 of 7 SHOULD) |
+| **Alexa+: MCP server, spec 2025-11-25, Streamable HTTP, in action** | Self-hosted MCP server with ten tools, two of which host the check-in; an Agent Skill at [skills/bellwether/SKILL.md](../skills/bellwether/SKILL.md); a live session from the site; a conformance probe over real HTTP | `node scripts/mcp-conform.mjs` (12 of 12 MUST, 7 of 7 SHOULD) |
 | Demo video under three minutes | To be recorded last; the script is [VIDEO_SCRIPT.md](VIDEO_SCRIPT.md), generated from the beats the recorder reads | |
 | Product feedback on every tool used | [PRODUCT_FEEDBACK.md](../PRODUCT_FEEDBACK.md) and the Devpost feedback answers, Bee CLI to Amazon Polly | Read |
 | Tracks and mini challenges | Bee (primary), Alexa+; AWS Builder; Open Source | [SUBMISSION.md](SUBMISSION.md) |
@@ -54,9 +54,10 @@ API docs https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1
   so the host's questions are removed by when it spoke; on the first live
   session this kept exactly the wearer's 17 answers, and across 6,645 real
   utterances it removes none of the wearer's own words.
+- **A second opinion, argued and gated.** Three Strands agents argue a flagged change from evidence the engine computes (`weigh_the_change`): an Advocate, a Sceptic and a Referee. The Referee's note must cite both sides and use only the evidence's numbers, or it is refused and retried; a real run is committed in `apps/agent/runs/`. `python apps/agent/second_opinion.py --profile alex-drift`.
 - **Privacy by construction.** The server drops any field it does not
   know; a test sends a transcript full of names and finds none stored.
-- **269 tests**, including guards that fail when a published number
+- **287 tests**, including guards that fail when a published number
   drifts from the code.
 
 ### Design

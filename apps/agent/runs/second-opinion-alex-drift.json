@@ -1,0 +1,57 @@
+{
+ "profile_id": "alex-drift",
+ "simulated": true,
+ "tier": "discuss",
+ "since": "2026-09-03",
+ "advocate": "Your speech changed across all nine measured dimensions starting on 2026-09-03, reached a change score of 26.1 against your own baseline [C2][C3], and has remained away from baseline on all 18 readable days since [C1][C4]. Your notes show travel and poor sleep on 2026-08-16, but that was 18 days before the change began [O1], and common causes like illness, medication adjustments, stress, sleep problems, or alcohol typically affect speech for shorter periods than the 18 days this pattern has persisted [O3][O4]. A clinician could determine whether this sustained shift across multiple speech features warrants evaluation or reflects circumstances not captured in your passive monitoring.",
+ "sceptic": "You are looking at simulated data for alex-drift, where Bellwether flagged a change on 2026-09-03 that has persisted across 18 readable days [C1]. All 9 measures moved together in the same direction [C2], reaching a change score of 26.1 from baseline [C3], and the pattern has not returned to baseline on any day since [C4]. The strongest case for an ordinary explanation is that common causes like not sleeping well, illness, medication changes, stress, altered conversation patterns, or alcohol can move these same measures [O3], your notes show poor sleep and travel 18 days before the change began [O1], and while 18 days exceeds the typical two week window where ordinary stretches mimic trends [O4], no spoken check has yet been logged to provide active comparison [O5]. However, the simultaneous movement of all 9 measures, the sustained 18 day duration without any return to baseline, and the absence of notes documenting ongoing stressors or illness during this period make an ordinary week unlikely to fully account for what Bellwether detected.",
+ "note": "The ordinary explanation is weaker because your notes show travel and poor sleep ending 18 days before the change [O1], common causes like illness or stress typically affect speech for shorter periods [O3], and all nine measures moved together and stayed moved for 18 days without returning to baseline even once [C2][C4]. Running the spoken check this week would add active measurement to compare against the passive data [O5]. Bring this report to a clinician you trust.",
+ "note_source": "referee",
+ "gate": "ok",
+ "rejected": [],
+ "evidence": {
+  "change": [
+   {
+    "id": "C1",
+    "claim": "Flagged on 18 of 18 readable days since 2026-09-03."
+   },
+   {
+    "id": "C2",
+    "claim": "9 of 9 measures moved together: ums and uhs, restarts, pronoun use, rarer words, sentence structure, words used, sentence length, idea density, vocabulary variety."
+   },
+   {
+    "id": "C3",
+    "claim": "The change score peaked at 26.1, where 0 is this person's own baseline."
+   },
+   {
+    "id": "C4",
+    "claim": "It has not returned to the baseline on any readable day since it began."
+   }
+  ],
+  "ordinary": [
+   {
+    "id": "O1",
+    "claim": "The person's notes are not near the change: the closest is 2026-08-16 (travel, slept badly), 18 days before it began."
+   },
+   {
+    "id": "O2",
+    "claim": "No days since the change were too quiet to read."
+   },
+   {
+    "id": "O3",
+    "claim": "Everyday causes known to move the measures that moved: not sleeping well (rarer words, sentence length, ums and uhs); a cold, flu or any illness (it moves many measures at once, and 9 moved); a new or changed medication (idea density, sentence length, sentence structure); a stressful or busy week (restarts, ums and uhs, vocabulary variety); talking mostly to one person, or on the phone (rarer words, vocabulary variety, words used); alcohol or a late night (restarts, ums and uhs)."
+   },
+   {
+    "id": "O4",
+    "claim": "The change is 18 readable days old, past the two weeks in which an ordinary stretch is easily mistaken for a trend."
+   },
+   {
+    "id": "O5",
+    "claim": "No spoken check has been logged, so there is no active measure beside the passive one yet."
+   }
+  ]
+ },
+ "captured": "2026-10-19",
+ "model": "Claude Sonnet 4.5 via Strands Agents on Amazon Bedrock",
+ "server": "https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/mcp (weigh_the_change)"
+}

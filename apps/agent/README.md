@@ -4,7 +4,18 @@ A Strands agent that answers the question a person or a family member actually a
 
 ## The closed loop
 
-The agent does not reach into Bellwether's data. It calls the **same MCP server** Alexa+ would use (`apps/server/bellwether_server/mcp.py`, Model Context Protocol spec 2025-11-25 over Streamable HTTP). Nine tools: `get_speech_vitals`, `get_trend`, `list_days`, `add_annotation`, `run_check_instructions`, `log_check_result`, `generate_doctor_report`, and the two that host the check-in, `start_check_in` and `coaching_note`. There are no transcripts to give it, because none exist.
+The agent does not reach into Bellwether's data. It calls the **same MCP server** Alexa+ would use (`apps/server/bellwether_server/mcp.py`, Model Context Protocol spec 2025-11-25 over Streamable HTTP). Ten tools: `get_speech_vitals`, `get_trend`, `list_days`, `add_annotation`, `run_check_instructions`, `log_check_result`, `generate_doctor_report`, and the two that host the check-in, `start_check_in` and `coaching_note`. There are no transcripts to give it, because none exist.
+
+## The second opinion: two agents argue, a third decides what you read
+
+`second_opinion.py` asks Bellwether's MCP server for `weigh_the_change`: numbered evidence that a flagged change is real (C1, C2...) and that an ordinary week explains it (O1, O2...), computed from the engine's numbers with no model. Three Strands agents on Bedrock take it from there. The Advocate argues the change is real; the Sceptic argues the everyday explanations; the Referee writes three sentences for the person: which case is stronger on this evidence, what would settle it, and one thing to do this week.
+
+The Referee's note is gated, not trusted: it must cite at least one item from each side, every number in it must appear in the evidence (written as words or not, and never rounded), and it may not name or predict a condition. A refused note is sent back once with the reason; a second refusal falls back to a note built from the evidence alone. The arguments are shown too, and either is withheld if it names a condition. Fourteen tests drive it with a scripted model.
+
+```
+python apps/agent/second_opinion.py --profile alex-drift          # the debate, printed
+python apps/agent/second_opinion.py --profile alex-drift --json   # the record committed in runs/
+```
 
 ## The Check-in Host: the assistant asks, the Bee listens
 

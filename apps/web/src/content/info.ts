@@ -216,9 +216,9 @@ export const INFO: Record<string, InfoEntry> = {
     id: "mcp",
     term: "Ask it out loud",
     plain:
-      "Bellwether is also available to voice assistants and AI agents, so you can ask how you have been sounding without opening anything, or let the assistant host tonight's check-in. The assistant gets the same nine numbers-only tools and nothing else.",
+      "Bellwether is also available to voice assistants and AI agents, so you can ask how you have been sounding without opening anything, or let the assistant host tonight's check-in. The assistant gets the same ten numbers-only tools and nothing else.",
     technical:
-      "A self-hosted Model Context Protocol server, spec 2025-11-25 over Streamable HTTP, with nine tools: seven to read and annotate, two to host the check-in (start_check_in returns tonight's exact lines; coaching_note returns what to say after). A Strands agent on Amazon Bedrock and the Check-in Host consume it as independent clients with no other data access.",
+      "A self-hosted Model Context Protocol server, spec 2025-11-25 over Streamable HTTP, with ten tools: seven to read and annotate, two to host the check-in (start_check_in returns tonight's exact lines; coaching_note returns what to say after), and weigh_the_change, which lists the evidence on both sides of a flagged change for the second-opinion agents to argue over. A Strands agent on Amazon Bedrock and the Check-in Host consume it as independent clients with no other data access.",
   },
   "bedrock-ladder": {
     id: "bedrock-ladder",

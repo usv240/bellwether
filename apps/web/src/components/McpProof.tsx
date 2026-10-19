@@ -28,7 +28,7 @@ import { API, TIER_LABEL, TIER_CLASS, humaniseExplanation, type Tier } from "../
  * `get_speech_vitals` is the tool it calls because it is the spoken
  * question, and because it reads the same profile the dashboard above
  * shows, which is why the tier it returns can be compared against the
- * page. It reads and never writes. Three of the nine tools do write,
+ * page. It reads and never writes. Three of the ten tools do write,
  * and this panel calls none of them.
  */
 
@@ -278,7 +278,7 @@ export function McpProof() {
               That is the same tier the dashboard above shows, because the
               assistant reads the same profile rather than a copy made for
               this panel. Five requests, one session, {ms}ms, from this
-              browser to the deployed server. Six of the nine tools only
+              browser to the deployed server. Seven of the ten tools only
               read; the three that write are not called here. The endpoint
               is open to any MCP client:{" "}
               <code className="break-all rounded bg-primary-soft px-1.5 py-0.5 font-mono text-[12px]">

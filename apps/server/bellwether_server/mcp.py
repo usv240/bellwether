@@ -12,9 +12,11 @@ family actually asks is spoken and casual ("how have I been sounding
 lately?", "is it worth mentioning to the doctor?"), and the answer needs
 several dependent reads (status, then trend, then the days behind it) and
 a judgement about whether to say anything. That is an agent's job. The
-agent gets exactly the nine tools below and nothing else: no transcripts,
-because none exist to give. Two of the nine host the check-in itself: the
-script to speak tonight, and what to tell the person after.
+agent gets exactly the ten tools below and nothing else: no transcripts,
+because none exist to give. Two host the check-in itself: the script to
+speak tonight, and what to tell the person after. One, weigh_the_change,
+lays out the evidence on both sides of a flagged change for the
+second-opinion agents to argue over.
 
 Transport behaviour, per the spec:
   POST /mcp    JSON-RPC 2.0 requests and notifications, answered as JSON
@@ -45,6 +47,7 @@ from bellwether_engine import assess, summarize
 from speech_vitals import FEATURE_NAMES, FEATURES
 
 from .checkin import coaching_payload, start_payload
+from .weigh import weigh
 from .store import Store
 
 SITE_ORIGIN = "https://d1xfuyog8wiuvf.cloudfront.net"
@@ -217,6 +220,15 @@ TOOLS = [
     {
         "name": "coaching_note",
         "description": "What to tell the person after a check-in: where they are in the first week, whether the last day counted and why not if it did not, or what moved and the one or two things they can do about it. Every sentence is built from the engine's numbers. Not a diagnosis, never a prediction.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {"profile_id": {"type": "string"}},
+            "additionalProperties": False,
+        },
+    },
+    {
+        "name": "weigh_the_change",
+        "description": "Both sides of a flagged change, before anyone decides: numbered evidence that the change is real (C1, C2...: how long it has held, how many measures moved, how far, whether it returned) and that an ordinary week explains it (O1, O2...: notes near the change, quiet days, everyday causes known to move those measures, how young it is, spoken checks). Every item is computed from the engine's numbers. It does not say which side is right. Cite items by id.",
         "inputSchema": {
             "type": "object",
             "properties": {"profile_id": {"type": "string"}},
@@ -513,6 +525,9 @@ def register_mcp(app: FastAPI, store: Store, default_profile: str) -> None:
             host = args.get("host") if isinstance(args.get("host"), str) else "assistant"
             day = args.get("date") if isinstance(args.get("date"), str) else None
             return _text(start_payload(store, pid, profile_view(store, pid), host=host[:40], day=day))
+
+        if name == "weigh_the_change":
+            return _text(weigh(profile_view(store, resolve_profile(args))))
 
         if name == "coaching_note":
             return _text(coaching_payload(profile_view(store, resolve_profile(args))))

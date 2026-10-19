@@ -39,10 +39,11 @@ A local instance runs at `http://127.0.0.1:8789/mcp` (`uvicorn bellwether_server
 
 The demo profile is `alex-drift`, a **simulated** person with eight weeks of speech including a gradual change from week six. Every response about that profile carries `simulated: true`, and you must say so before anything else.
 
-## The nine tools
+## The ten tools
 
 - **`start_check_in`** Tonight's check-in script for a wearer, as exact lines to speak in order: an opener that declares the session a check-in, three standard elicitation prompts, a closing. Speak them verbatim; the Bee records the answers and the host's lines are removed before measuring. Says if a check-in was already started today.
 - **`coaching_note`** What to tell the person after a check-in: day N of seven, whether the last day counted and why not, or what moved and the one or two things to do. Built only from the engine's numbers.
+- **`weigh_the_change`** When the tier is watch or discuss: numbered evidence for a real change (C1...) and for an ordinary week (O1...), from the engine's numbers. It does not say which is right. Cite items by id; never add to them.
 - **`get_speech_vitals`** Current tier, since when, how many days of baseline, which features are driving any change. **Always call this first when asked how someone has been sounding.**
 - **`get_trend`** Day by day over recent weeks, with the composite change score and the features most out of range each day.
 - **`list_days`** The raw feature rows. Nine numbers and a word count per day. This is everything that is stored.
