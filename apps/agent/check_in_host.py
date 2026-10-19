@@ -202,7 +202,7 @@ def run_check_in(mcp, speaker, profile: str, day: str, wait, answer_seconds: int
     for i, prompt in enumerate(start["prompts"], start=1):
         say(f"Question {NUMBER_WORDS[i]}.")
         say(prompt["text"])
-        log(f"  listening for {seconds} seconds ({prompt['kind']})")
+        log(f"  you answer, {seconds} seconds; the Bee on your wrist is recording")
         wait(seconds)
     say(start["closing"])
     return {**start, "spoken": spoken}
@@ -216,6 +216,7 @@ def wait_for_the_bee(started_at: float, poll=None, every: int = 60, limit: int =
     read here."""
     poll = poll or _bee_recent
     seen: dict[str, int] = {}
+    announced = False
     deadline = clock() + limit
     while clock() < deadline:
         for conv in poll():
@@ -229,10 +230,12 @@ def wait_for_the_bee(started_at: float, poll=None, every: int = 60, limit: int =
                 # talking after the closing and the session stayed open.
                 done = str(conv.get("state") or "COMPLETED").upper() != "CAPTURING"
                 if n >= 4 and done and seen.get(cid) == n:
-                    log(f"The Bee has written the session down: {n} utterances.")
+                    log(f"The Bee recorded the check-in: {n} utterances. Counting it now, on this computer.")
                     return conv
                 seen[cid] = n
-        log("Waiting for the Bee to finish writing the session down.")
+        if not announced:
+            log("Waiting for the Bee to finish writing the session down.")
+            announced = True
         sleep(every)
     if seen:
         log(f"A session began but was still growing at {max(seen.values())} utterances after the wait.")

@@ -157,8 +157,9 @@ BEATS: list[Beat] = [
         pause_before=0.3,
         min_hold=26,
         say=(
-            "Here is why that matters. This is a simulated person whose speech slowly changes over several weeks. "
-            "Bellwether shows when it started, which measures moved, and how far from their own normal. "
+            "Imagine your speech changing so gradually that you don't notice. "
+            "This simulated example shows how Bellwether makes that change visible. "
+            "Bellwether shows when it started, which measures moved, and how far from that person's own normal. "
             "Then it lists the everyday explanations first. Poor sleep, illness, a new medication. "
             "It never names a condition."
         ),
@@ -170,10 +171,10 @@ BEATS: list[Beat] = [
         pause_before=0.3,
         min_hold=11,
         say=(
-            "We tested it on real speech we did not write. "
-            "Three hundred forty-nine Supreme Court arguments: zero false alarms. "
-            "Twenty-eight years of presidential press conferences: under three percent flagged. "
-            "That is how the software behaves, not clinical accuracy."
+            "We tested Bellwether on speech we didn't write: "
+            "three hundred forty-nine Supreme Court arguments with no alerts, "
+            "and six hundred fifty-two presidential press conferences with fewer than three percent flagged. "
+            "These tests measure software behaviour, not medical accuracy."
         ),
     ),
     Beat(
@@ -200,13 +201,14 @@ BEATS: list[Beat] = [
     Beat(
         key="report",
         action="report",
-        shows="The doctor report, its section for the yearly wellness visit, then the links.",
+        shows="The doctor report: the timeline, then the questions to bring, then the links.",
         pause_before=0.3,
         min_hold=12,
         say=(
-            "And when it matters, one page for your doctor, written for the yearly wellness visit Medicare already offers. "
-            "Not a diagnosis. A simple timeline of what changed and when, so that conversation finally happens. "
-            "Open source, and live today. "
+            "And if something changes, Bellwether gives you a simple timeline to bring to your doctor. "
+            "What changed, when it started, and what questions to ask. "
+            "No diagnosis, just a clearer conversation. "
+            "Open source, and working today. "
             "Bellwether. Your own normal, in your own numbers."
         ),
     ),

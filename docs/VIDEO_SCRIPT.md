@@ -45,13 +45,13 @@ The dashboard on the builder's own check-ins: the real-data badge, the first wee
 
 The switcher to the simulated person, labelled; the eight-week chart leaving its band; what moved and since when; then what else could explain it.
 
-> Here is why that matters. This is a simulated person whose speech slowly changes over several weeks. Bellwether shows when it started, which measures moved, and how far from their own normal. Then it lists the everyday explanations first. Poor sleep, illness, a new medication. It never names a condition.
+> Imagine your speech changing so gradually that you don't notice. This simulated example shows how Bellwether makes that change visible. Bellwether shows when it started, which measures moved, and how far from that person's own normal. Then it lists the everyday explanations first. Poor sleep, illness, a new medication. It never names a condition.
 
 **1:39, proof, the website, in a real browser**
 
 The same page, with what the software was checked against on screen.
 
-> We tested it on real speech we did not write. Three hundred forty-nine Supreme Court arguments: zero false alarms. Twenty-eight years of presidential press conferences: under three percent flagged. That is how the software behaves, not clinical accuracy.
+> We tested Bellwether on speech we didn't write: three hundred forty-nine Supreme Court arguments with no alerts, and six hundred fifty-two presidential press conferences with fewer than three percent flagged. These tests measure software behaviour, not medical accuracy.
 
 **1:55, mcp, the website, in a real browser**
 
@@ -67,11 +67,11 @@ A terminal: the Strands agent on Amazon Bedrock asking the deployed server how t
 
 **2:15, report, the website, in a real browser**
 
-The doctor report, its section for the yearly wellness visit, then the links.
+The doctor report: the timeline, then the questions to bring, then the links.
 
-> And when it matters, one page for your doctor, written for the yearly wellness visit Medicare already offers. Not a diagnosis. A simple timeline of what changed and when, so that conversation finally happens. Open source, and live today. Bellwether. Your own normal, in your own numbers.
+> And if something changes, Bellwether gives you a simple timeline to bring to your doctor. What changed, when it started, and what questions to ask. No diagnosis, just a clearer conversation. Open source, and working today. Bellwether. Your own normal, in your own numbers.
 
-Estimated 2:35 of a 3:00 ceiling. The real narration decides the
+Estimated 2:34 of a 3:00 ceiling. The real narration decides the
 final cut.
 
 ## The terminal beats

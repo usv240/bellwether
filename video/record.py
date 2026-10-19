@@ -402,7 +402,7 @@ def proof(r: Recorder):
     r.scroll_to(".recharts-wrapper", rest=URL_BAR_HEIGHT + 150 * SCALE)
     yield
     r.page.evaluate(EVIDENCE_JS)
-    r.on_phrase("Three hundred forty-nine")
+    r.on_phrase("three hundred forty-nine")
     r.point(".recharts-wrapper")
     r.hold_beat()
     r.page.evaluate("document.getElementById('__evidence') && document.getElementById('__evidence').remove()")
@@ -441,12 +441,12 @@ def report(r: Recorder):
     goto(r, "/report/", "text=Bellwether speech report")
     r.scroll_to("text=Bellwether speech report", rest=URL_BAR_HEIGHT + 60 * SCALE)
     yield
-    r.on_phrase("wellness visit")
-    r.scroll_to("text=For the Annual Wellness Visit", rest=URL_BAR_HEIGHT + 120 * SCALE)
-    r.point("text=Questions to bring")
     r.on_phrase("simple timeline")
     r.scroll_to("text=Tier over the period", rest=URL_BAR_HEIGHT + 120 * SCALE)
     r.point("text=Tier over the period")
+    r.on_phrase("what questions to ask")
+    r.scroll_to("text=For the Annual Wellness Visit", rest=URL_BAR_HEIGHT + 120 * SCALE)
+    r.point("text=Questions to bring")
     r.on_phrase("Open source")
     r.page.evaluate(END_CARD_JS)
     r.hold_beat()
@@ -467,8 +467,8 @@ EVIDENCE_JS = """
   box.innerHTML = '<div style="font-weight:700;color:#e0b25a;margin-bottom:' + (6 * S) + 'px">Checked, not claimed</div>'
     + '<div>269 automated tests</div>'
     + '<div>349 real Supreme Court arguments: zero false alarms</div>'
-    + '<div>Four presidents, 28 years of press conferences: 18 of 652 flagged</div>'
-    + '<div style="opacity:0.7;margin-top:' + (6 * S) + 'px">System behaviour, not clinical accuracy</div>';
+    + '<div>652 presidential press conferences, four presidents: 18 flagged</div>'
+    + '<div style="opacity:0.7;margin-top:' + (6 * S) + 'px">Software behaviour, not medical accuracy</div>';
   document.documentElement.appendChild(box);
   requestAnimationFrame(() => { box.style.opacity = '1'; });
 })();
