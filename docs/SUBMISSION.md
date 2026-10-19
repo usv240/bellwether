@@ -2,7 +2,7 @@
 
 ## What it does
 
-Your watch knows when your heart skips a beat. Nothing knows when your brain does.
+Your watch tracks your heart. What about the way you speak?
 
 Speech is the brain's only continuous, externally observable output, and when something changes it is usually where the change shows first: more pauses, simpler sentences, lost words. Clinicians know this, and they hear a patient for a few minutes a year. Across all dementias, the mean time from first symptoms to diagnosis is **3.5 years** ([Orgeta et al., 2025](https://onlinelibrary.wiley.com/doi/10.1002/gps.70129), 13 studies, 30,257 participants), and the newest treatments are approved **only** for the earliest stage, which is precisely what that delay skips past.
 

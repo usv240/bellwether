@@ -2,7 +2,7 @@
 
 Bellwether reads the transcripts your wearable already makes, keeps nine language numbers and throws every word away, learns how you normally speak, and tells you when that changes against your own past.
 
-Your watch knows when your heart skips a beat. Nothing knows when your brain does. Bellwether makes speech a vital sign.
+Your watch tracks your heart. What about the way you speak? Bellwether makes speech a vital sign.
 
 **On real speech nobody here wrote:** across 349 Supreme Court oral arguments by 8 justices, the engine flagged zero, and on all nine features two different justices sit closer together than one justice's own session-to-session range, which is the measured case for comparing a person with their own past rather than with a population ([harness/scotus](harness/scotus)).
 

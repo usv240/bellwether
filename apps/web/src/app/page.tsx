@@ -168,7 +168,7 @@ export default function Home() {
         {/* The problem */}
         <section id="problem" className="border-t border-line bg-surface">
           <div className="mx-auto max-w-[1120px] px-4 py-16 sm:px-6">
-            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Your watch knows when your heart skips. Nothing knows when your brain does.</h2>
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Your watch tracks your heart. What about the way you speak?</h2>
             <p className="mt-4 max-w-[720px] leading-relaxed text-muted">
               Speech is the brain&apos;s only continuous, observable output. When something changes, speech is usually where it shows first: more pauses, simpler sentences, lost words. Doctors know this. They also hear a patient for a few minutes a year, so the change hides in plain sound, for years.
               <InfoButton id="speech-as-signal" />
