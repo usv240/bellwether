@@ -125,6 +125,21 @@ def test_waiting_ignores_sessions_from_another_time_and_gives_up():
     assert "No session began on the Bee" in said[-1]
 
 
+def test_waiting_counts_a_session_the_band_opened_before_the_check_in():
+    """On 2026-10-20 the band had been recording for seven minutes when
+    the host began, so the session's start was outside the window and the
+    host waited thirty minutes for one that already existed."""
+    started = 1_000_000.0
+    conv = {"id": 9, "start_time": (started - 420) * 1000, "end_time": (started + 540) * 1000,
+            "utterances_count": 198, "state": "COMPLETED"}
+    earlier = {"id": 8, "start_time": (started - 3600) * 1000, "end_time": (started - 1200) * 1000,
+               "utterances_count": 40, "state": "COMPLETED"}
+    now = [started]
+    got = host.wait_for_the_bee(started, poll=lambda: [earlier, conv], every=60, limit=600, clock=lambda: now[0],
+                                sleep=lambda s: now.__setitem__(0, now[0] + s), log=lambda *_: None)
+    assert got["id"] == 9
+
+
 def test_the_host_never_reads_a_transcript():
     """The host's own source does not fetch utterances or print text from
     the Bee: it polls the conversation list for counts and runs `mine`."""

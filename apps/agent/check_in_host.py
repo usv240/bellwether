@@ -223,7 +223,14 @@ def wait_for_the_bee(started_at: float, poll=None, every: int = 60, limit: int =
             start_ms = conv.get("start_time")
             if not isinstance(start_ms, (int, float)):
                 continue
-            if started_at - 180 <= start_ms / 1000 <= started_at + 420:
+            # A session that began around the check-in, or one the band had
+            # already opened and that ran on through it: on 2026-10-20 the
+            # band started recording seven minutes early and this missed it.
+            end_ms = conv.get("end_time")
+            began_near = started_at - 180 <= start_ms / 1000 <= started_at + 420
+            ran_through = (start_ms / 1000 < started_at - 180 and isinstance(end_ms, (int, float))
+                           and end_ms / 1000 >= started_at)
+            if began_near or ran_through:
                 cid, n = str(conv.get("id")), int(conv.get("utterances_count") or 0)
                 # A session the device is still capturing is not done, however
                 # still its count looks: on 2026-10-19 the wearer went on
