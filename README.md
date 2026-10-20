@@ -97,6 +97,20 @@ Reproduce the sweep: `python fixtures/compare_detectors.py`. Eighteen settings, 
 - **A quiet day is not a change in you.** Days below 150 words are excluded and drawn hollow.
 - **Nothing fails into silence.** Three-model Bedrock ladder to a deterministic template; the catalogue and the store report their own degradation at [`/api/resilience`](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/api/resilience).
 
+## Use it without cloning
+
+Checked in a fresh environment on 2026-10-20:
+
+```
+pip install "speech-vitals[nlp]" "bellwether-ingest @ git+https://github.com/usv240/bellwether#subdirectory=apps/ingest"
+python -m spacy download en_core_web_sm
+bellwether-ingest mine --profile <your-name>        # with a Bee: your first day, your own page
+bellwether-ingest file meetings/*.vtt --speaker "Your Name"   # no Bee: your own turns from meeting transcripts
+```
+
+To let your own assistant read your baseline, add the Agent Skill the
+way Bee's own skill is added: `npx skills add usv240/bellwether`.
+
 ## Run it
 
 ```
