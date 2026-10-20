@@ -322,3 +322,19 @@ def test_a_session_issued_by_one_instance_is_valid_on_another():
                     json={"jsonrpc": "2.0", "id": 3, "method": "tools/list"})
     assert forged.status_code == 404
     assert mcp_mod.session_is_ours(sid)
+
+
+def test_the_weekly_note_is_phrased_once_per_change_in_its_facts():
+    """The dashboard asks on every load; Bedrock is asked once per change."""
+    calls = []
+
+    def create(_s, _u, model):
+        calls.append(model)
+        return "A quiet week, within your normal range."
+    c = _client_with_note(create, ["m"])
+    for _ in range(4):
+        assert c.get("/v1/profiles/t/weekly-note").json()["source"] == "bedrock"
+    assert len(calls) == 1
+    c.post("/v1/profiles/t/days", json=synthetic_days(n=45, seed=4))
+    c.get("/v1/profiles/t/weekly-note")
+    assert len(calls) == 2

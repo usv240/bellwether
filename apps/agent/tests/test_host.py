@@ -11,6 +11,7 @@ only when its utterance count has stopped growing.
 from __future__ import annotations
 
 import importlib.util
+import io
 import json
 from pathlib import Path
 
@@ -185,3 +186,23 @@ def test_waiting_does_not_count_a_session_the_band_is_still_capturing():
     got = host.wait_for_the_bee(started, poll=lambda: [conv], every=60, limit=300, clock=lambda: now[0],
                                 sleep=lambda s: now.__setitem__(0, now[0] + s), log=lambda *_: None)
     assert got is None
+
+
+def test_polly_is_asked_once_per_line_and_voice(tmp_path):
+    """Polly is most of a check-in's cost; a repeated question is played
+    from the copy already on this machine."""
+    calls = []
+
+    class FakePolly:
+        def synthesize_speech(self, **kw):
+            calls.append((kw["VoiceId"], kw["Text"]))
+            return {"AudioStream": io.BytesIO(b"\x00\x00" * 1600)}
+
+    sp = host.PollySpeaker.__new__(host.PollySpeaker)
+    sp.polly, sp.voice, sp.out, sp._n = FakePolly(), "Joanna", tmp_path, 0
+    first = sp.audio_for("Question one.")
+    assert sp.audio_for("Question one.") == first and len(calls) == 1
+    sp.audio_for("Question two.")
+    sp.voice = "Matthew"
+    sp.audio_for("Question one.")
+    assert len(calls) == 3

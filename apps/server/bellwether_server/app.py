@@ -342,6 +342,13 @@ def build_app(
             now = _dt.fromisoformat(day + "T23:00:00").replace(tzinfo=_tz.utc)
         return {**coaching_payload(profile_view(store, profile_id, day), now=now), "disclaimer": DISCLAIMER}
 
+    # A model's note, per profile, for the facts it was written from. The
+    # dashboard asks on every load and the facts change at most once a day,
+    # so Bedrock is asked once per change, per running instance. Only a
+    # model's note is kept: a template written because every model failed
+    # is tried again next time.
+    phrased: dict[str, tuple[str, dict]] = {}
+
     @app.get("/v1/profiles/{profile_id}/weekly-note")
     def weekly_note(profile_id: str):
         view = profile_view(store, profile_id)
@@ -349,7 +356,17 @@ def build_app(
             {"date": a.date, "tier": a.tier, "annotation": a.annotation}
             for a in view["assessments"][-7:]
         ]
-        note = phrase_weekly_note(view["summary"].to_dict(), trend, note_deps)
+        summary = view["summary"].to_dict()
+        facts = json.dumps([summary, trend], sort_keys=True, default=str)
+        kept = phrased.get(profile_id)
+        if kept and kept[0] == facts:
+            note = kept[1]
+        else:
+            note = phrase_weekly_note(summary, trend, note_deps)
+            if note.get("source") == "bedrock":
+                if len(phrased) > 500:
+                    phrased.clear()
+                phrased[profile_id] = (facts, note)
         return {"profile_id": profile_id, "simulated": view["simulated"], **note, "disclaimer": DISCLAIMER}
 
     # The privacy claim, pressable. A day is sent with a transcript full of

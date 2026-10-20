@@ -47,7 +47,7 @@ Participants are told in writing, and the dashboard says on every page, that Bel
 
 ## Cost
 
-Forty wristbands at $49.99, about $2,000. The service costs pennies per participant per month inside the clinic's account. The real cost is staff time at three visits the clinic was holding anyway, plus one person to answer the phone when the command does not run. This is the whole reason the study can exist: every previous speech-cognition instrument needed a trained administrator in a room, so none could be run daily for a year.
+Forty wristbands at $49.99, about $2,000. The service costs about 20 cents per participant per month inside the clinic's account with a nightly spoken check-in, at list prices (`scripts/cost.py`). The real cost is staff time at three visits the clinic was holding anyway, plus one person to answer the phone when the command does not run. This is the whole reason the study can exist: every previous speech-cognition instrument needed a trained administrator in a room, so none could be run daily for a year.
 
 ## Why a payer would care
 

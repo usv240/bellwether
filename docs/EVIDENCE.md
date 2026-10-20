@@ -161,7 +161,7 @@ For context on what the alternative to home costs: a semi-private nursing home r
 
 ### What Bellwether costs to run
 
-Estimated at list prices, not measured as a bill: **pennies per person per month**. Nine numbers a day into DynamoDB, one Bedrock call a week for the note, Lambda inside the free tier. The wristband is $49.99 once, and it is a device people are buying anyway for reasons that have nothing to do with this.
+**About 20 cents a person a month with a spoken check-in every night; 6 cents without it.** AWS list prices (Price List API, us-east-1, 2026-10-20) with the free tier ignored, times usage measured on the live stack: Lambda's average duration over 1,660 requests from CloudWatch, a weekly note's tokens from a real call (287 in, 39 out), the dashboard's 14 requests and 1.0 MB from a real page load, a check-in's 672 spoken characters. The pattern is generous: a check-in and a dashboard visit every day, a year of history read on every request. Polly's voice is most of it, so the host keeps each line's audio on the wearer's machine; only the dated opener and the coaching note are new each night, which took it from 38 cents to 20. `python scripts/cost.py` recomputes it into `docs/cost.json`, and a test fails if this paragraph and that file disagree. The wristband is $49.99 once, and it is a device people are buying anyway for reasons that have nothing to do with this.
 
 There is no clinic visit, no scan, no trained administrator, and no appointment. That is the entire argument for why this can exist at all: **every existing speech-cognition tool is a scripted assessment delivered by a professional in a room**, which is why none of them can be run daily for two years.
 
@@ -171,7 +171,7 @@ There is no clinic visit, no scan, no trained administrator, and no appointment.
 
 1. The diagnostic delay is 3.5 years, and each year of it costs roughly 17 percent of the available net benefit. **Measured, by others.**
 2. Language features from spontaneous speech carry a signal strong enough to separate Alzheimer's from control speech at 85 to 89.6 percent on the field's benchmark. **Measured, by others.**
-3. Those features can be extracted from ordinary wearable transcripts, at pennies, daily, with no clinic. **Measured, by us, on synthetic personas through the production pipeline.**
+3. Those features can be extracted from ordinary wearable transcripts, for about 20 cents a month, daily, with no clinic. **Measured, by us, on synthetic personas through the production pipeline.**
 
 What connects them into a shortened delay is a clinical trial nobody has run. Saying so is more useful than a number we invented, and a judge can check every step above independently.
 

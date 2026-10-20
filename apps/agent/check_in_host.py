@@ -37,6 +37,7 @@ sides derive it from the date.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import platform
@@ -115,18 +116,32 @@ class PollySpeaker:
         # what the room heard.
         print(f"  host: {text}", flush=True)
         self._n += 1
+        path = self.audio_for(text)
+        with wave.open(str(path), "rb") as wf:
+            seconds = wf.getnframes() / wf.getframerate()
+        began = time.time()
+        _play(path)
+        return began, began + seconds
+
+    def audio_for(self, text: str) -> Path:
+        """The line's audio, synthesised once per voice and wording and kept
+        on this machine. Polly is most of what a daily check-in costs, and
+        the questions come from a fixed set, so most nights most lines are
+        already here; only the dated opener and the coaching note are new.
+        The text is a host line, never anything the wearer said."""
+        digest = hashlib.sha256(f"{self.voice}|{text}".encode("utf-8")).hexdigest()[:24]
+        path = self.out / f"{digest}.wav"
+        if path.exists():
+            return path
         res = self.polly.synthesize_speech(Text=text, OutputFormat="pcm", SampleRate="16000",
                                            VoiceId=self.voice, Engine="neural")
         pcm = res["AudioStream"].read()
-        path = self.out / f"line-{self._n:02d}.wav"
         with wave.open(str(path), "wb") as wf:
             wf.setnchannels(1)
             wf.setsampwidth(2)
             wf.setframerate(16000)
             wf.writeframes(pcm)
-        began = time.time()
-        _play(path)
-        return began, began + len(pcm) / 32000
+        return path
 
 
 def _play(path: Path) -> None:

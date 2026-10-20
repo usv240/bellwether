@@ -75,7 +75,7 @@ const ECONOMICS = [
   { value: "17%", label: "of net benefit lost for every year a diagnosis is delayed", source: "Barnett et al., BMC Neurology, 2014" },
   { value: "$405,262", label: "lifetime cost per person with dementia, about 70% borne by families", source: "Alzheimer's Association, 2026" },
   { value: "$49.99", label: "once, for a wristband people are buying anyway", source: "Bee" },
-  { value: "Pennies", label: "per person per month to run, estimated at list prices", source: "AWS list prices" },
+  { value: "20\u00a2", label: "per person per month to run, with a spoken check-in every night; 6\u00a2 without", source: "AWS list prices, measured usage" },
 ];
 
 const EVIDENCE = [
@@ -328,7 +328,7 @@ export default function Home() {
             <div className="mt-8 grid gap-4 md:grid-cols-2">
               <div className="rounded-[var(--radius-lg)] border border-line bg-bg p-5 text-sm leading-relaxed text-muted">
                 <p className="font-semibold text-ink">What is measured, and by whom</p>
-                <p className="mt-2">The delay costs about 17 percent a year: measured, by others. Language features separate Alzheimer&apos;s from control speech at 85 to 89.6 percent on the field&apos;s benchmark: measured, by others. Those features come out of ordinary wearable transcripts at pennies, daily, with no clinic: measured, by us, on the production pipeline.</p>
+                <p className="mt-2">The delay costs about 17 percent a year: measured, by others. Language features separate Alzheimer&apos;s from control speech at 85 to 89.6 percent on the field&apos;s benchmark: measured, by others. Those features come out of ordinary wearable transcripts for about 20 cents a month, daily, with no clinic: measured, by us, on the production pipeline.</p>
                 <p className="mt-2">What connects them into a shorter delay is a trial nobody has run. We would rather say so than invent a number. <a className="text-[var(--primary)] underline underline-offset-2" href="https://github.com/usv240/bellwether/blob/main/docs/PILOT.md" target="_blank" rel="noopener noreferrer">The study to run</a> is written, with its endpoints fixed before any data.</p>
               </div>
               <div className="rounded-[var(--radius-lg)] border border-line bg-bg p-5 text-sm leading-relaxed text-muted">

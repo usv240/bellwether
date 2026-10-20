@@ -57,7 +57,7 @@ API docs https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1
 - **A second opinion, argued and gated.** Three Strands agents argue a flagged change from evidence the engine computes (`weigh_the_change`): an Advocate, a Sceptic and a Referee. The Referee's note must cite both sides and use only the evidence's numbers, or it is refused and retried; a real run is committed in `apps/agent/runs/`. `python apps/agent/second_opinion.py --profile alex-drift`. The same agents are deployed on **Amazon Bedrock AgentCore Runtime** as an invocable endpoint ([apps/agentcore](../apps/agentcore/README.md)), verified with a live invocation.
 - **Privacy by construction.** The server drops any field it does not
   know; a test sends a transcript full of names and finds none stored.
-- **291 tests**, including guards that fail when a published number
+- **295 tests**, including guards that fail when a published number
   drifts from the code.
 
 ### Design
