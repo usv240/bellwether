@@ -6,11 +6,11 @@ Your watch tracks your heart. What about the way you speak? Bellwether makes spe
 
 **Judging this?** [docs/FOR_JUDGES.md](docs/FOR_JUDGES.md) maps every Rules.md requirement and judging criterion to the file, command or link that proves it.
 
-**On real speech nobody here wrote:** across 349 Supreme Court oral arguments by 8 justices, the engine flagged zero, and on all nine features two different justices sit closer together than one justice's own session-to-session range, which is the measured case for comparing a person with their own past rather than with a population ([harness/scotus](harness/scotus)).
+**On real speech nobody here wrote:** across 349 oral-argument sessions of 8 Supreme Court justices, the engine flagged zero, and on all nine features two different justices sit closer together than one justice's own session-to-session range, which is the measured case for comparing a person with their own past rather than with a population ([harness/scotus](harness/scotus)).
 
 **Measured against the detector a reasonable engineer builds instead:** on two personas that are identical until the day a change is injected, Bellwether flags it two days in, with zero false alarms across 47 quiet days. The simplest rule that is equally quiet is two days later. The simplest rule that is equally fast costs a false alarm on someone whose speech never changed. None of eighteen settings of two simpler rules beats it on both axes ([fixtures/detector-comparison.json](fixtures/detector-comparison.json)). Both personas are synthetic and ours, which the file says in those words: this measures that the decision rule earns its complexity, not that the detector works on a real person.
 
-Built for the Build, Ship, Shape: Amazon Developer Hackathon. Track: Bee (Wearable AI), with the MCP server as a genuine Alexa+ surface. Mini challenges: AWS Builder, Open Source.
+Built for the Build, Ship, Shape: Amazon Developer Hackathon. Tracks: Bee (Wearable AI), and Alexa+ through an Agent Skill and an MCP server, with a Polly-voiced stand-in playing the assistant out loud. Mini challenges: AWS Builder, Open Source.
 
 **Not a diagnosis.** Bellwether is a general wellness tool. It does not diagnose, treat, cure, or prevent any disease, and it is not a medical device. Changes in speech have many everyday causes, including sleep, stress, medication, and mood. It describes change over time in one person against their own past, lists its reasons, and produces something to put on a doctor's desk. Share it with a clinician you trust.
 
@@ -20,7 +20,7 @@ Built for the Build, Ship, Shape: Amazon Developer Hackathon. Track: Bee (Wearab
 - API: https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws ([interactive docs](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1/docs), [resilience report](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/api/resilience))
 - MCP server (the Alexa+ surface): `https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/mcp`, spec 2025-11-25 over Streamable HTTP, ten tools
 
-The person on the live site is simulated and labelled as such everywhere. The extractor, the engine, the store, the tiers and the report are the product.
+The person whose speech changes on the live site is simulated and labelled as such everywhere; the builder's own check-ins, counted from the Bee, are a real profile beside them. The extractor, the engine, the store, the tiers and the report are the product.
 
 ## What it does
 
@@ -40,7 +40,7 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 | [`apps/agent`](apps/agent) | Two Strands agents on Bedrock, and the Check-in Host: a voice assistant stand-in that speaks tonight's script through Amazon Polly while the Bee records, waits for the Bee, counts the day and reads the coaching note back, never seeing a word. One consumes Bellwether's MCP server as an outside client. The other holds **two** MCP servers at once, Bellwether's and Bee's own, to find the ordinary explanation for a change, behind an audited allowlist that withholds every Bee tool returning verbatim speech. | 35 |
 | [`apps/agentcore`](apps/agentcore) | The second opinion (Advocate, Sceptic, gated Referee) deployed on Amazon Bedrock AgentCore Runtime as an invocable endpoint, verified live. | |
 | [`harness/presidents`](harness/presidents) | Five presidents' own words at every press conference, public record, run unchanged. On the four with no known dementia, 18 of 652 conferences flagged (2.8%), clustered on one overseas trip and one president's last eighteen months; Reagan, the famous contested case, not flagged. The measured false-alarm behaviour on real people, written up in EVIDENCE.md 4d, with the parser bug that first hid six of those flags. | |
-| [`harness/scotus`](harness/scotus) | The engine over real spontaneous speech nobody here wrote: 349 Supreme Court oral arguments by 8 justices. Restraint, sensitivity at a known effect size, and the measured case for an own baseline. | |
+| [`harness/scotus`](harness/scotus) | The engine over real spontaneous speech nobody here wrote: 349 oral-argument sessions of 8 Supreme Court justices. Restraint, sensitivity at a known effect size, and the measured case for an own baseline. | |
 | [`fixtures/personas`](fixtures/personas) | Three synthetic personas through the real extractor and engine, labelled SIMULATED. `sam-first-week` is ten days of check-in-sized days with a short third day, for the dashboard's day-by-day replay of a first week (`?as_of=` on the summary, assessments and coaching endpoints shows a profile as it stood that evening). The two eight-week ones share a seed and differ only in whether a change is injected from day 35, which is asserted, so the comparison is controlled. | |
 
 **290 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
@@ -49,7 +49,7 @@ The Bee wristband already transcribes its wearer's day. Bellwether reads those t
 
 Everything above is measured on two personas we wrote, and a person we invented cannot surprise us. So the engine was run over the Supreme Court oral argument corpus (ConvoKit, from the Oyez Project): the same named people speaking spontaneously and unscripted across dozens of separate sittings in one term, transcribed by court reporters, published by the Court, and authored by nobody here.
 
-**Restraint.** Across **349 arguments by 8 justices** in the 2019 term, the engine flagged **zero**. Every one of the eight series ran clean. A justice does not undergo a systematic language change over a single nine-month term, so a flag inside a series would be a false alarm, and there were none.
+**Restraint.** Across **349 oral-argument sessions of 8 justices** in the 2019 term, the engine flagged **zero**. Every one of the eight series ran clean. A justice does not undergo a systematic language change over a single nine-month term, so a flag inside a series would be a false alarm, and there were none.
 
 **Sensitivity, so the zero means something.** A detector that never fires also scores zero. Real sessions from real justices were shifted in the concerning direction by a known multiple of that person's own standard deviation, ramped over fourteen sessions exactly as the persona ramps:
 
@@ -166,7 +166,7 @@ node scripts/mcp-conform.mjs --all      # all five servers built for this hackat
 
 No install and no MCP client library: one dependency-free Node script against the deployed Lambda. It checks nineteen rules from spec revision 2025-11-25 over real HTTP, including the two shapes that in-process tests never produce: a DELETE carrying a JSON content-type and an empty body, and a body the server cannot parse.
 
-The same file runs in all three repositories, which is the point of `--all`: this server is FastAPI on Python and the other two are Fastify on Node, and a conformance claim that has only ever met one implementation is a claim about that implementation. This one passes all nineteen on every run, including both shapes that the Node servers failed.
+The same file probes all five servers, which is the point of `--all`: this one and Volley's are FastAPI on Python and the other three are Fastify on Node, and a conformance claim that has only ever met one implementation is a claim about that implementation. This one passes all nineteen on every run, including both shapes that the Node servers failed.
 
 It grades what it checks. A MUST failure is a spec violation and exits non-zero; a SHOULD failure is reported and does not. Where the spec allows more than one answer, such as GET opening a stream or declining with 405, the probe accepts either and says which it saw. A conformance tool that grades its own preferences as violations teaches people to ignore it.
 

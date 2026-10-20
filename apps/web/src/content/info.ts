@@ -25,9 +25,9 @@ export const INFO: Record<string, InfoEntry> = {
   },
   "real-speech": {
     id: "real-speech",
-    term: "349 real recorded conversations",
+    term: "349 real recorded oral-argument sessions",
     plain:
-      "To check the engine does not cry wolf on real people, it was run over 349 Supreme Court oral arguments by 8 justices, speech nobody here wrote. It flagged nothing. It also found that two different people sit closer together than one person's own day-to-day range, which is the reason this compares you only with yourself.",
+      "To check the engine does not cry wolf on real people, it was run over 349 oral-argument sessions of 8 Supreme Court justices, speech nobody here wrote. It flagged nothing. It also found that two different people sit closer together than one person's own day-to-day range, which is the reason this compares you only with yourself.",
     technical:
       "ConvoKit's Supreme Court corpus, from the Oyez Project. Paired with a sensitivity sweep so the zero means something: a sustained shift of 1.5 of a person's own standard deviations, injected into their real sessions, was caught in 5 of 5 subjects at a median of 2 sessions, and a do-nothing control at 0.0 caught nobody. There is no labelled cognitive change in that corpus, so none of this is evidence about dementia.",
     sourceUrl:

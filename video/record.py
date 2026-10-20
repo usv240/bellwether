@@ -470,7 +470,7 @@ EVIDENCE_JS = """
     'opacity:0','transition:opacity 400ms ease-out'].join(';');
   box.innerHTML = '<div style="font-weight:700;color:#e0b25a;margin-bottom:' + (6 * S) + 'px">Checked, not claimed</div>'
     + '<div>288 automated tests</div>'
-    + '<div>349 real Supreme Court arguments: zero false alarms</div>'
+    + '<div>349 Supreme Court argument sessions: zero false alarms</div>'
     + '<div>652 presidential press conferences, four presidents: 18 flagged</div>'
     + '<div style="opacity:0.7;margin-top:' + (6 * S) + 'px">Software behaviour, not medical accuracy</div>';
   document.documentElement.appendChild(box);

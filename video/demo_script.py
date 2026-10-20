@@ -38,7 +38,7 @@ WHERE = {
                'Point at the "Simulated person" label. Rest on the "Eight weeks" chart and trace the dots as they leave the shaded band. '
                'On "how far", point at the first line ending "lower than your baseline since". On "Poor sleep", scroll to "What else could explain this" and hold.'),
     "proof": ("Same page, the chart back in view.",
-              'A note appears top right: the tests, 349 Supreme Court arguments with no alerts, 652 presidential press conferences with 18 flagged, '
+              'A note appears top right: the tests, 349 Supreme Court argument sessions with no alerts, 652 presidential press conferences with 18 flagged, '
               'and "Software behaviour, not medical accuracy". Point at the chart while it reads.'),
     "mcp": ('Home page, "Ask Alexa+ how you have been sounding".',
             'Click "Start a session" and point at the rows as they fill: protocol agreed, nine tools listed, the answer returned.'),

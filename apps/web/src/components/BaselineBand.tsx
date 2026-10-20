@@ -11,7 +11,7 @@
  * remarkable relative to the band it left.
  *
  * Why an own baseline rather than a population is not an assertion here.
- * Measured on 349 real Supreme Court oral arguments, the spread between
+ * Measured on 349 real Supreme Court oral-argument sessions, the spread between
  * two different speakers is smaller than the spread within one speaker's
  * own sessions on all nine features. A population comparison would be
  * asking a detector to resolve a difference smaller than the noise it has

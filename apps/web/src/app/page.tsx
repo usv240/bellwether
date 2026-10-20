@@ -75,7 +75,7 @@ const ECONOMICS = [
   { value: "17%", label: "of net benefit lost for every year a diagnosis is delayed", source: "Barnett et al., BMC Neurology, 2014" },
   { value: "$405,262", label: "lifetime cost per person with dementia, about 70% borne by families", source: "Alzheimer's Association, 2026" },
   { value: "$49.99", label: "once, for a wristband people are buying anyway", source: "Bee" },
-  { value: "Pennies", label: "per person per month to run, measured on the live deployment", source: "AWS Cost Explorer" },
+  { value: "Pennies", label: "per person per month to run, estimated at list prices", source: "AWS list prices" },
 ];
 
 const EVIDENCE = [
@@ -143,7 +143,7 @@ export default function Home() {
               The band is this person&apos;s own ordinary range, learned from
               their own earlier days. Nothing here is compared with anyone
               else. That is not a preference: measured on 349 real recorded
-              conversations
+              oral-argument sessions
               <InfoButton id="real-speech" />, the gap between two different people is{" "}
               <span className="font-medium text-ink">smaller</span> than one
               person&apos;s own day-to-day range on all nine measures, so

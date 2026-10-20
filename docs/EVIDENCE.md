@@ -72,7 +72,7 @@ Sections 4 and 4b rest on literature and on two personas we authored. This one d
 
 The Supreme Court oral argument corpus (ConvoKit, from the Oyez Project) gives the same named individuals speaking spontaneously across dozens of separate sittings in a single term, transcribed by court reporters and published by the Court.
 
-**Across 349 arguments by 8 justices in the 2019 term, Bellwether flagged zero.** All eight series ran clean.
+**Across 349 oral-argument sessions of 8 justices in the 2019 term, Bellwether flagged zero.** All eight series ran clean.
 
 That zero is only worth something paired with sensitivity, so real sessions were shifted in the concerning direction by a known multiple of each person's own standard deviation and the magnitude swept. A sustained shift of 1.5 within-person standard deviations was caught in 5 of 5 subjects at a median of 2 sessions; 1.0 SD in 4 of 5; and the do-nothing control at 0.0 SD caught nobody, which is what makes the rest of the row readable.
 
@@ -161,7 +161,7 @@ For context on what the alternative to home costs: a semi-private nursing home r
 
 ### What Bellwether costs to run
 
-Measured from AWS Cost Explorer on the live deployment: **pennies per person per month**. Nine numbers a day into DynamoDB, one Bedrock call a week for the note, Lambda inside the free tier. The wristband is $49.99 once, and it is a device people are buying anyway for reasons that have nothing to do with this.
+Estimated at list prices, not measured as a bill: **pennies per person per month**. Nine numbers a day into DynamoDB, one Bedrock call a week for the note, Lambda inside the free tier. The wristband is $49.99 once, and it is a device people are buying anyway for reasons that have nothing to do with this.
 
 There is no clinic visit, no scan, no trained administrator, and no appointment. That is the entire argument for why this can exist at all: **every existing speech-cognition tool is a scripted assessment delivered by a professional in a room**, which is why none of them can be run daily for two years.
 

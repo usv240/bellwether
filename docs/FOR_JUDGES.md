@@ -22,7 +22,7 @@ API docs https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1
 | Public repository with all source, assets and run instructions | This repository; [README.md](../README.md), "Run it" | Clone, then `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent` |
 | Open-source licence visible at the top | MIT, [LICENSE](../LICENSE) | The About panel |
 | **Bee: the repo calls Bee's CLI, MCP or Skill in code** | `apps/ingest/bellwether_ingest/bee.py` runs `bee conversations list` and `get`, `now`, `changed`, `journals list` and `todos create`, and reads `bee stream --json` and `bee sync` output; every argv pinned in tests. `apps/agent/context_check_in.py` holds Bee's own MCP server behind an audited allow-list | `pytest apps/ingest apps/agent` |
-| **Bee: live Bee data doing something for a user** | The builder's own check-ins since 2026-10-15, counted from the Bee: three days so far, the latest 298 words (2026-10-19). The hosted check-in ran live on 2026-10-19: an assistant asked three questions out loud, the Bee recorded the answers, the assistant's own words were removed by timing, the day was counted and the coaching note read back | The live dashboard above; [FRICTION_LOG.md](../FRICTION_LOG.md) entry 19 |
+| **Bee: live Bee data doing something for a user** | The builder's own check-ins since 2026-10-15, counted from the Bee: three days so far that clear the 150-word floor (2026-10-15, 10-17 and 10-19), the latest 415 words. The hosted check-in ran live on 2026-10-19: an assistant asked three questions out loud, the Bee recorded the answers, the assistant's own words were removed by timing, the day was counted and the coaching note read back | The live dashboard above; [FRICTION_LOG.md](../FRICTION_LOG.md) entry 19 |
 | **Alexa+: MCP server, spec 2025-11-25, Streamable HTTP, in action** | Self-hosted MCP server with ten tools, two of which host the check-in; an Agent Skill at [skills/bellwether/SKILL.md](../skills/bellwether/SKILL.md); a live session from the site; a conformance probe over real HTTP | `node scripts/mcp-conform.mjs` (12 of 12 MUST, 7 of 7 SHOULD) |
 | Demo video under three minutes | To be recorded last; the script is [VIDEO_SCRIPT.md](VIDEO_SCRIPT.md), generated from the beats the recorder reads | |
 | Product feedback on every tool used | [PRODUCT_FEEDBACK.md](../PRODUCT_FEEDBACK.md) and the Devpost feedback answers, Bee CLI to Amazon Polly | Read |
@@ -45,8 +45,8 @@ API docs https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1
 - **Measured against the rules a reasonable engineer writes instead:**
   none of eighteen settings of two simpler rules beats it on both speed
   and false alarms ([fixtures/detector-comparison.json](../fixtures/detector-comparison.json)).
-- **Run on real speech nobody here wrote:** 349 Supreme Court oral
-  arguments, no alerts; every press conference of five presidents, with
+- **Run on real speech nobody here wrote:** 349 oral-argument sessions of
+  8 Supreme Court justices, no alerts; every press conference of five presidents, with
   18 of 652 flagged on the four with no known dementia, clustered on one
   overseas trip and one final year ([EVIDENCE.md](EVIDENCE.md) 4c and 4d,
   including the parser bug that first hid six of those flags).
