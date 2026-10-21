@@ -247,7 +247,7 @@ def assess(
                     contributors=(),
                     explanation=(
                         (
-                            f"Learning your baseline: {remaining} more day(s) of speech needed."
+                            f"Learning your baseline: {remaining} more {'day' if remaining == 1 else 'days'} of speech needed."
                             if remaining > 0
                             else "Baseline learned. From tomorrow, days are compared with it."
                         ),

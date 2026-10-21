@@ -21,72 +21,67 @@ const LINKS = [
 export function Nav() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-[color-mix(in_srgb,var(--bg)_85%,transparent)] backdrop-blur">
-      <div className="mx-auto flex h-16 max-w-[1120px] items-center justify-between gap-6 px-4 sm:px-6 2xl:max-w-[1400px]">
-        <Link prefetch={false} href="/" className="text-lg font-semibold tracking-tight text-ink">
+    <header className="site-header sticky top-0 z-40 border-b border-line bg-[color-mix(in_srgb,var(--bg)_85%,transparent)] backdrop-blur">
+      <div className="mx-auto flex h-16 max-w-[1120px] items-center justify-between gap-5 px-4 sm:px-6 xl:max-w-[1400px]">
+        <Link prefetch={false} href="/" className="flex min-h-11 shrink-0 items-center text-lg font-semibold tracking-tight text-ink">
           Bell<span className="text-[var(--accent)]">wether</span>
         </Link>
         {/*
-          Nine links, a theme toggle, GitHub and a call to action do not
-          fit on one line below about 1280px, and with md:flex they tried
-          anyway: every two-word label broke onto two lines. Adding one
-          more link ("Your own Bee") took it from one wrapped label to
-          five, and a ninth ("Alexa+") was measured rather than
-          guessed at before it went in. So labels never break, and the full row appears only where
-          it fits; below that the links live in the Menu. "Where it fits" was
-          xl, and a screenshot at 1400px showed the row still crowding the
-          wordmark ("BellwetherThe problem") and wrapping the theme toggle, so
-          it is 2xl now, with a wider header at that size.
+          Eleven links, the theme control and a call to action. Labels never
+          break; the row appears from xl, where it was measured to fit with
+          the theme control drawn as three icons, and GitHub joins it only
+          at 2xl. Below xl the links live in the Menu.
         */}
-        <nav className="hidden items-center gap-4 2xl:flex" aria-label="Main">
+        <nav className="hidden items-center gap-x-4 xl:flex 2xl:gap-x-5" aria-label="Main">
           {LINKS.map((l) => (
-            <a key={l.href} href={l.href} className="whitespace-nowrap text-sm text-muted transition-colors hover:text-ink">
+            <a key={l.href} href={l.href} className="flex min-h-11 items-center whitespace-nowrap text-sm text-muted transition-colors hover:text-ink">
               {l.label}
             </a>
           ))}
         </nav>
         <div className="ml-auto hidden items-center gap-3 md:flex">
-          <ThemeToggle />
+          <ThemeToggle compact />
           <a
             href="https://github.com/usv240/bellwether"
             target="_blank"
             rel="noopener noreferrer"
-            className="whitespace-nowrap text-sm text-muted transition-colors hover:text-ink"
+            className="flex min-h-11 items-center whitespace-nowrap text-sm text-muted transition-colors hover:text-ink xl:hidden 2xl:flex"
           >
             GitHub
           </a>
           <Link prefetch={false}
             href="/app"
-            className="whitespace-nowrap rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] transition-opacity hover:opacity-90"
+            className="press inline-flex min-h-11 items-center whitespace-nowrap rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90"
           >
             See a live baseline
           </Link>
         </div>
         <button
           type="button"
-          className="rounded-[var(--radius-sm)] border border-line px-3 py-2 text-sm text-ink 2xl:hidden"
+          className="press inline-flex min-h-11 items-center rounded-[var(--radius-sm)] border border-line px-4 text-sm font-medium text-ink xl:hidden"
           aria-expanded={open}
-          aria-label="Toggle menu"
+          aria-controls="site-menu"
           onClick={() => setOpen((v) => !v)}
         >
-          Menu
+          {open ? "Close" : "Menu"}
         </button>
       </div>
       {open && (
-        <div className="border-t border-line bg-surface px-4 py-4 2xl:hidden">
-          <nav className="flex flex-col gap-3" aria-label="Mobile">
+        <div id="site-menu" className="border-t border-line bg-surface px-4 pb-4 pt-2 xl:hidden">
+          <nav className="flex flex-col" aria-label="Mobile">
             {LINKS.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm text-muted">
+              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="flex min-h-11 items-center text-base text-muted hover:text-ink">
                 {l.label}
               </a>
             ))}
-            <Link prefetch={false} href="/app" className="text-sm font-medium text-[var(--primary)]">
+            <Link prefetch={false} href="/app" className="flex min-h-11 items-center text-base font-medium text-[var(--primary)]">
               See a live baseline
             </Link>
-            <a href="https://github.com/usv240/bellwether" className="text-sm text-muted">
+            <a href="https://github.com/usv240/bellwether" className="flex min-h-11 items-center text-base text-muted hover:text-ink">
               GitHub
             </a>
-            <div className="pt-2">
+            <div className="mt-2 flex items-center gap-3 border-t border-line pt-4">
+              <span className="text-sm text-muted">Theme</span>
               <ThemeToggle />
             </div>
           </nav>

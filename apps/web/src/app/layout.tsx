@@ -26,17 +26,19 @@ export const viewport: Viewport = {
 };
 
 /*
-  Theme is applied before first paint: an explicit choice is stamped on
-  data-theme; the default (system) stamps nothing and the CSS media query
-  decides. Stored choice read inside try/catch: storage can be unavailable.
+  Theme is applied before first paint. Light is the default on every page,
+  whatever the system preference: data-theme is always stamped, "dark" only
+  when the visitor chose it with the toggle, so the prefers-color-scheme
+  rule (guarded by :not([data-theme="light"])) never matches by default.
+  Stored choice read inside try/catch: storage can be unavailable.
 */
-const themeScript = `(function(){try{var t=localStorage.getItem("bw-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();`;
+const themeScript = `(function(){var t="light";try{if(localStorage.getItem("bw-theme")==="dark"){t="dark";}}catch(e){}document.documentElement.setAttribute("data-theme",t);})();`;
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="light" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>

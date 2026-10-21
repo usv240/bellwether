@@ -73,7 +73,7 @@ export function HostedCheckIn() {
         </span>
       </div>
 
-      <p className="mt-3 max-w-[720px] text-sm leading-relaxed text-muted">
+      <p className="mt-3 max-w-[720px] text-base leading-relaxed text-muted">
         The assistant speaks the opener and three questions through the speaker. The band records the answers.
         On your computer, the host&apos;s own words are removed before anything is measured, so a sixteen-word
         question is never counted as your speech. Two minutes of answers is about 250 words; a day counts from
@@ -81,28 +81,28 @@ export function HostedCheckIn() {
       </p>
 
       {failed && (
-        <p className="mt-4 text-sm text-muted">Tonight&apos;s script could not be fetched from the service just now.</p>
+        <p className="mt-4 text-base text-muted">Tonight&apos;s script could not be fetched from the service just now.</p>
       )}
 
       {start && (
         <>
           <ol className="mt-4 space-y-2">
-            <li className="rounded-[var(--radius-md)] border border-line bg-bg p-3 text-sm">
+            <li className="rounded-[var(--radius-md)] border border-line bg-bg p-3 text-base">
               <span className="mr-2 font-mono text-xs text-muted">opens</span>
               <span className="text-ink">{start.opener}</span>
             </li>
             {start.prompts.map((p, i) => (
-              <li key={p.kind} className="rounded-[var(--radius-md)] border border-line bg-bg p-3 text-sm">
+              <li key={p.kind} className="rounded-[var(--radius-md)] border border-line bg-bg p-3 text-base">
                 <span className="mr-2 font-mono text-xs text-muted">{i + 1}</span>
-                <span className="mr-2 rounded-full bg-[var(--success-soft)] px-2 py-0.5 text-[11px] font-semibold text-[var(--success)]">{KIND[p.kind]}</span>
+                <span className="mr-2 rounded-full bg-[var(--success-soft)] px-2 py-0.5 text-xs font-semibold text-[var(--success)]">{KIND[p.kind]}</span>
                 <span className="text-ink">{p.text}</span>
               </li>
             ))}
           </ol>
-          <p className="mt-3 text-xs leading-relaxed text-muted">
+          <p className="mt-3 text-sm leading-relaxed text-muted">
             {start.basis} Tonight is {fmtDate(start.date)}. {start.answer_seconds} seconds to answer each.
           </p>
-          <p className="mt-2 text-sm text-ink">
+          <p className="mt-2 text-base text-ink">
             {start.today_counted
               ? "Today has already counted."
               : start.already_started_today
@@ -112,15 +112,6 @@ export function HostedCheckIn() {
         </>
       )}
 
-      <pre className="mt-4 overflow-x-auto rounded-[var(--radius-sm)] border border-line bg-bg p-3 font-mono text-[12px] leading-relaxed text-ink">
-        <code>{"python apps/agent/check_in_host.py --profile <your-name> --count"}</code>
-      </pre>
-      <p className="mt-2 text-xs leading-relaxed text-muted">
-        The host is a client of the same MCP server an Alexa+ agent gets: <code className="font-mono">start_check_in</code> for
-        tonight&apos;s lines, <code className="font-mono">coaching_note</code> for what to say after. It speaks through Amazon
-        Polly because the Alexa+ connection is not yet open to scripts. It never reads a transcript; it waits for the
-        Bee, runs <code className="font-mono">bellwether-ingest mine --days 1</code>, and hears the count come back.
-      </p>
     </section>
   );
 }

@@ -111,9 +111,6 @@ export default function Home() {
         */}
         <section className="mx-auto max-w-[1120px] px-4 pb-16 pt-14 sm:px-6 sm:pt-20">
           <div className="max-w-[760px]">
-            <p className="mb-4 inline-block rounded-full border border-line bg-surface px-3 py-1 text-xs font-medium text-muted">
-              Built on Bee. Not a diagnosis.
-            </p>
             <h1 className="text-4xl font-semibold leading-tight tracking-tight text-balance sm:text-5xl">
               Speech is a vital sign.{" "}
               <span className="text-[var(--primary)]">Start measuring yours.</span>
@@ -122,7 +119,8 @@ export default function Home() {
               Bellwether reads the transcripts your wearable already makes,
               keeps nine language numbers and throws every word away, learns
               how you normally speak, and tells you when that changes against
-              your own past.
+              your own past. Built on Bee.{" "}
+              <span className="whitespace-nowrap font-medium text-ink">Not a diagnosis.</span>
             </p>
           </div>
 
@@ -153,10 +151,10 @@ export default function Home() {
           </figure>
 
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#demo" className="rounded-[var(--radius-sm)] bg-[var(--primary)] px-5 py-3 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
+            <a href="#demo" className="press inline-flex min-h-11 items-center rounded-[var(--radius-sm)] bg-[var(--primary)] px-5 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
               See a live baseline
             </a>
-            <a href="#evidence" className="rounded-[var(--radius-sm)] border border-line bg-surface px-5 py-3 text-sm font-medium text-ink hover:bg-surface-raised">
+            <a href="#evidence" className="press inline-flex min-h-11 items-center rounded-[var(--radius-sm)] border border-line bg-surface px-5 text-sm font-medium text-ink hover:bg-surface-raised">
               Read the evidence
             </a>
           </div>
@@ -200,14 +198,13 @@ export default function Home() {
                   {i < 3 && <path d="M186 40 L212 40 M204 33 L212 40 L204 47" stroke="var(--primary)" strokeWidth="2" fill="none" />}
                 </g>
               ))}
-              <text x="90" y="86" textAnchor="middle" fontSize="11" fill="var(--text-muted)">words</text>
-              <text x="310" y="86" textAnchor="middle" fontSize="11" fill="var(--text-muted)">numbers only from here</text>
+              <text x="90" y="86" textAnchor="middle" fontSize="12" fill="var(--text-muted)">words</text>
+              <text x="310" y="86" textAnchor="middle" fontSize="12" fill="var(--text-muted)">numbers only from here</text>
             </svg>
             <ol className="mt-8 grid gap-4 md:grid-cols-4">
               {STEPS.map((s) => (
                 <li key={s.n} className="rounded-[var(--radius-lg)] border border-line bg-surface p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-[var(--primary)]">Step {s.n}</p>
-                  <h3 className="mt-1 text-lg font-semibold">
+                  <h3 className="text-lg font-semibold">
                     {s.title}
                     <InfoButton id={s.info} />
                   </h3>
@@ -303,10 +300,9 @@ export default function Home() {
 
             <h3 className="mt-12 text-lg font-semibold tracking-tight">The case, in three verified steps</h3>
             <div className="mt-4 grid gap-4 md:grid-cols-3">
-              {CASE.map((c, i) => (
+              {CASE.map((c) => (
                 <div key={c.value} className="rounded-[var(--radius-lg)] border border-line bg-bg p-5">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted">Step {i + 1}</p>
-                  <p className="mt-1 text-3xl font-semibold tracking-tight text-[var(--primary)]">{c.value}</p>
+                  <p className="text-3xl font-semibold tracking-tight text-[var(--primary)]">{c.value}</p>
                   <p className="mt-2 text-sm leading-relaxed text-ink">{c.label}</p>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{c.limit}</p>
                   <p className="mt-2 text-xs text-muted">{c.source}</p>
@@ -418,16 +414,16 @@ export default function Home() {
               The API accepts feature rows, not text. Run the open-source <code className="font-mono text-sm">speech-vitals</code> package where the transcript is, and post the numbers. That is a stance, not a limit.
             </p>
             <div className="mt-8 grid gap-4 md:grid-cols-2">
-              <pre className="overflow-x-auto rounded-[var(--radius-lg)] border border-line bg-surface p-4 font-mono text-xs leading-relaxed text-ink"><code>{`pip install "speech-vitals[nlp]"
+              <pre tabIndex={0} aria-label="Install and post commands" className="min-w-0 overflow-x-auto rounded-[var(--radius-lg)] border border-line bg-surface p-4 font-mono text-xs leading-relaxed text-ink"><code>{`pip install "speech-vitals[nlp]"
 python -m spacy download en_core_web_sm
 speech-vitals analyze transcript.jsonl --speaker speaker_1 --out days.json
 
 curl -X POST ${API}/v1/profiles/me/days \\
   -H "content-type: application/json" \\
   -d @days.json`}</code></pre>
-              <div className="rounded-[var(--radius-lg)] border border-line bg-surface p-5 text-sm leading-relaxed text-muted">
+              <div className="min-w-0 rounded-[var(--radius-lg)] border border-line bg-surface p-5 text-sm leading-relaxed text-muted">
                 <p><span className="font-semibold text-ink">Endpoints.</span> <code className="font-mono text-xs">GET /v1/profiles/{"{id}"}/summary</code>, <code className="font-mono text-xs">/assessments</code>, <code className="font-mono text-xs">/report</code>, <code className="font-mono text-xs">/weekly-note</code>; <code className="font-mono text-xs">POST /days</code>, <code className="font-mono text-xs">/annotations</code>, <code className="font-mono text-xs">/checks</code>. Interactive docs at <a className="text-[var(--primary)] underline underline-offset-2" href={`${API}/v1/docs`} target="_blank" rel="noopener noreferrer">/v1/docs</a>.</p>
-                <p className="mt-3"><span className="font-semibold text-ink">MCP.</span> <code className="font-mono text-xs">{API}/mcp</code>, spec 2025-11-25 over Streamable HTTP, ten tools, two of which host the check-in itself. <InfoButton id="mcp" /></p>
+                <p className="mt-3"><span className="font-semibold text-ink">MCP.</span> <code className="font-mono text-xs break-all">{API}/mcp</code>, spec 2025-11-25 over Streamable HTTP, ten tools, two of which host the check-in itself. <InfoButton id="mcp" /></p>
                 <p className="mt-3"><span className="font-semibold text-ink">Resilience.</span> <a className="text-[var(--primary)] underline underline-offset-2" href={`${API}/api/resilience`} target="_blank" rel="noopener noreferrer">/api/resilience</a> reports every degradation path.</p>
                 <p className="mt-3"><span className="font-semibold text-ink">Bee.</span> Ingestion calls <code className="font-mono text-xs">bee conversations</code>, <code className="font-mono text-xs">bee now</code>, <code className="font-mono text-xs">bee changed</code>, <code className="font-mono text-xs">bee stream --json</code> and <code className="font-mono text-xs">bee sync</code> in code. <InfoButton id="bee" /></p>
               </div>
@@ -471,9 +467,9 @@ curl -X POST ${API}/v1/profiles/me/days \\
             <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">The questions a careful person asks</h2>
             <div className="mt-8 max-w-[760px] divide-y divide-line rounded-[var(--radius-lg)] border border-line bg-surface">
               {FAQ.map((f) => (
-                <details key={f.q} className="group px-5 py-4">
-                  <summary className="cursor-pointer list-none text-sm font-semibold text-ink marker:hidden">{f.q}</summary>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{f.a}</p>
+                <details key={f.q} className="group px-5 py-1.5">
+                  <summary className="disclose text-sm font-semibold text-ink">{f.q}</summary>
+                  <p className="pb-3 pl-[15px] text-sm leading-relaxed text-muted">{f.a}</p>
                 </details>
               ))}
             </div>

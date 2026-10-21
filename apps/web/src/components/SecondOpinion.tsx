@@ -18,7 +18,7 @@
 
 import { useEffect, useState } from "react";
 import debate from "../data/second-opinion.json";
-import { API, PROFILE } from "../lib/api";
+import { API, PROFILE, fmtDate } from "../lib/api";
 
 interface Item {
   id: string;
@@ -37,7 +37,7 @@ function Side({ title, items, tone }: { title: string; items: Item[]; tone: stri
   return (
     <div className="rounded-[var(--radius-md)] border border-line bg-bg p-4">
       <p className={`text-xs font-semibold uppercase tracking-wider ${tone}`}>{title}</p>
-      <ul className="mt-2 space-y-2 text-sm leading-relaxed text-ink">
+      <ul className="mt-2 space-y-2 text-base leading-relaxed text-ink">
         {items.map((e) => (
           <li key={e.id}>
             <span className="mr-2 font-mono text-xs text-muted">{e.id}</span>
@@ -72,7 +72,7 @@ export function SecondOpinion() {
           Evidence, not a verdict
         </span>
       </div>
-      <p className="mt-3 max-w-[720px] text-sm leading-relaxed text-muted">
+      <p className="mt-3 max-w-[720px] text-base leading-relaxed text-muted">
         Every item below is computed from this person&apos;s own numbers by the same MCP server Alexa+ uses, with no model
         involved. Two agents then argue it, one for each side, and a third writes the note. The note may cite only these
         items and use only these numbers, or it is refused.
@@ -86,11 +86,11 @@ export function SecondOpinion() {
       {debate.profile_id === PROFILE && (
         <div className="mt-4 rounded-[var(--radius-md)] border border-[var(--primary)] p-4">
           <p className="text-xs font-semibold uppercase tracking-wider text-[var(--primary)]">
-            The agents&apos; note, from a real run on {debate.captured}
+            The agents&apos; note, from a real run on {fmtDate(debate.captured)}
           </p>
-          <p className="mt-2 text-sm leading-relaxed text-ink">{debate.note}</p>
-          <details className="mt-3 text-sm text-muted">
-            <summary className="cursor-pointer font-medium text-ink">Read the two arguments it weighed</summary>
+          <p className="mt-2 text-base leading-relaxed text-ink">{debate.note}</p>
+          <details className="mt-2 text-base text-muted">
+            <summary className="disclose font-medium text-ink">Read the two arguments it weighed</summary>
             <p className="mt-2 leading-relaxed">
               <span className="font-semibold text-ink">The Advocate, for a real change: </span>
               {debate.advocate}
@@ -100,10 +100,6 @@ export function SecondOpinion() {
               {debate.sceptic}
             </p>
           </details>
-          <p className="mt-3 text-xs text-muted">
-            {debate.model}. Gate: {debate.gate}. Run it yourself:{" "}
-            <code className="font-mono">python apps/agent/second_opinion.py --profile {debate.profile_id}</code>
-          </p>
         </div>
       )}
     </section>

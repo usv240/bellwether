@@ -230,7 +230,23 @@ export function humaniseExplanation(line: string): string {
   for (const [key, label] of Object.entries(FEATURE_LABEL)) {
     out = out.replaceAll(key, label);
   }
+  // The same reader is owed dates in words, not 2026-09-10, and no
+  // internal score in brackets: "(composite 21.0)" means nothing to them
+  // and the chart already shows how far the day moved.
+  out = out.replace(/\s*\(composite -?[\d.]+\)/g, "");
+  out = out.replace(/\b(\d{4}-\d{2}-\d{2})\b/g, (_, iso: string) => fmtDate(iso));
+  // Older engine output said "2 more day(s)"; say it the way a person would.
+  out = out.replace(/\b1 more day\(s\)/g, "1 more day").replace(/more day\(s\)/g, "more days");
   return out;
+}
+
+/**
+ * An engine explanation line that describes one measure ("mattr has been
+ * lower than your baseline since ..."), as opposed to the day as a whole.
+ * The dashboard leads with the whole-day lines and folds these away.
+ */
+export function isMeasureLine(line: string): boolean {
+  return Object.keys(FEATURE_LABEL).some((key) => line.startsWith(`${key} `));
 }
 
 export const FEATURE_INFO: Record<string, string> = {

@@ -77,7 +77,8 @@ def test_first_warmup_days_are_learning_and_then_stop():
     tiers = [x.tier for x in a]
     assert tiers[: DEFAULT_CONFIG.warmup_days] == ["learning"] * DEFAULT_CONFIG.warmup_days
     assert tiers[DEFAULT_CONFIG.warmup_days] != "learning"
-    assert "more day(s)" in a[0].explanation[0]
+    assert "6 more days of speech needed" in a[0].explanation[0]
+    assert "1 more day of speech needed" in a[DEFAULT_CONFIG.warmup_days - 2].explanation[0]
     assert "Baseline learned" in a[DEFAULT_CONFIG.warmup_days - 1].explanation[0]
 
 

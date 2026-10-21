@@ -10,10 +10,12 @@ import { SecondOpinion } from "../../components/SecondOpinion";
 import { FirstWeekReplay } from "../../components/FirstWeekReplay";
 import { Nav } from "../../components/Nav";
 import { TrendChart, type TrendRow } from "../../components/TrendChart";
+import debate from "../../data/second-opinion.json";
 import {
   FEATURE_INFO,
   FEATURE_LABEL,
   humaniseExplanation,
+  isMeasureLine,
   PROFILE,
   PROFILES,
   PROFILE_TABS,
@@ -36,6 +38,8 @@ interface DayRow {
   token_count_day: number;
   [k: string]: number | string | undefined;
 }
+
+const cap = (s: string) => (s ? s[0]!.toUpperCase() + s.slice(1) : s);
 
 const SENTENCES = [
   "The quiet river ran behind the old stone mill.",
@@ -109,6 +113,17 @@ export default function Dashboard() {
   const recent = [...assessments].reverse().slice(0, 14);
   const sampleRow = days[days.length - 1];
 
+  // The flag moment's parts: one whole-day sentence leads, the rest folds.
+  const flagged = summary?.tier === "watch" || summary?.tier === "discuss";
+  const general = (summary?.explanation ?? []).filter((l) => !isMeasureLine(l)).map(humaniseExplanation);
+  const measureLines = (summary?.explanation ?? []).filter(isMeasureLine).map((l) => ({
+    text: cap(humaniseExplanation(l)),
+    key: Object.keys(FEATURE_LABEL).find((k) => l.startsWith(`${k} `)),
+  }));
+  const lead = general[0] ?? "";
+  const detail: { text: string; key?: string }[] = [...general.slice(1).map((text) => ({ text })), ...measureLines];
+  const measureCount = measureLines.length;
+
   async function saveAnnotation(e: React.FormEvent) {
     e.preventDefault();
     if (!annDate || !annText.trim()) return;
@@ -134,28 +149,34 @@ export default function Dashboard() {
     <div className="min-h-screen bg-bg text-ink">
       <Nav />
       <main id="main" className="mx-auto max-w-[1120px] px-4 py-10 sm:px-6">
+        <h1 className="text-2xl font-semibold tracking-tight">Speech baseline</h1>
         {mounted && (<>
-        <div className="flex flex-wrap items-center gap-3">
-          <span className={`rounded-full border border-line px-2.5 py-0.5 text-xs font-medium ${PROFILES[PROFILE].simulated ? "bg-accent-soft text-[var(--accent)]" : "bg-success-soft text-[var(--success)]"}`}>{PROFILES[PROFILE].label}</span>
-          {PROFILES[PROFILE].simulated && <InfoButton id="simulated" />}
-          <span className="text-xs text-muted">{PROFILES[PROFILE].note}</span>
-        </div>
-        {/* Plain links, not next/link: PROFILE is read once when the page loads. */}
-        <nav aria-label="Whose data" className="mt-3 grid grid-cols-3 rounded-[var(--radius-sm)] border border-line bg-surface p-0.5 text-xs sm:inline-grid">
+        {/*
+          Whose data. Four choices, so two rows of two on a phone and one
+          row from sm up; the old three-column grid stranded the fourth on
+          a row of its own. Plain links, not next/link: PROFILE is read once
+          when the page loads.
+        */}
+        <nav aria-label="Whose data" className="mt-4 grid grid-cols-2 gap-0.5 rounded-[var(--radius-sm)] border border-line bg-surface p-0.5 text-[13px] sm:inline-flex sm:text-sm">
           {PROFILE_TABS.map((t) => (
             <a
               key={t.id}
               href={withProfile("/app", t.id)}
               aria-current={t.id === PROFILE ? "page" : undefined}
-              className={`rounded-[calc(var(--radius-sm)-2px)] px-1.5 py-1.5 text-center font-medium sm:px-3 ${t.id === PROFILE ? "bg-[var(--primary)] text-[var(--primary-contrast)]" : "text-muted hover:text-ink"}`}
+              className={`press flex min-h-11 items-center justify-center rounded-[calc(var(--radius-sm)-2px)] px-2 text-center sm:px-3 font-medium leading-tight sm:whitespace-nowrap ${t.id === PROFILE ? "bg-[var(--primary)] text-[var(--primary-contrast)]" : "text-muted hover:bg-bg hover:text-ink"}`}
             >
               {t.short}
             </a>
           ))}
         </nav>
+        <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span className={`rounded-full border border-line px-2.5 py-0.5 text-xs font-medium ${PROFILES[PROFILE].simulated ? "bg-accent-soft text-[var(--accent)]" : "bg-success-soft text-[var(--success)]"}`}>{PROFILES[PROFILE].label}</span>
+          {PROFILES[PROFILE].simulated && <InfoButton id="simulated" />}
+          <span className="max-w-[760px] text-sm text-muted">{PROFILES[PROFILE].note}</span>
+        </div>
         </>)}
 
-        {error && <p className="mt-6 rounded-[var(--radius-md)] border border-line bg-surface p-4 text-sm text-muted">The service did not answer: {error}</p>}
+        {error && <p className="mt-6 rounded-[var(--radius-md)] border border-line bg-surface p-4 text-base text-muted">The service did not answer: {error}</p>}
 
         {!summary && !error && (
           <section
@@ -165,7 +186,7 @@ export default function Dashboard() {
             <p className="text-xs font-semibold uppercase tracking-wider text-muted">
               Right now
             </p>
-            <p className="mt-2 text-sm text-muted">Reading the baseline...</p>
+            <p className="mt-2 text-base text-muted">Reading the baseline...</p>
           </section>
         )}
 
@@ -180,22 +201,53 @@ export default function Dashboard() {
                 </p>
                 <div className="mt-2 flex flex-wrap items-center gap-3">
                   <span className={`rounded-full px-3 py-1 text-base font-semibold ${TIER_CLASS[summary.tier]}`}>{TIER_LABEL[summary.tier]}</span>
-                  {summary.since && <span className="text-sm text-muted">since {fmtDate(summary.since)}</span>}
+                  {summary.since && <span className="text-base text-muted">since {fmtDate(summary.since)}</span>}
                 </div>
-                <ul className="mt-3 space-y-1 text-sm leading-relaxed text-muted">
-                  {summary.explanation.map((line) => (
-                    <li key={line}>{humaniseExplanation(line)}</li>
-                  ))}
-                </ul>
-                {summary.contributors.length > 0 && (
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {summary.contributors.map((c) => (
-                      <span key={c} className="rounded-full border border-line bg-bg px-2.5 py-1 text-xs text-ink">
-                        {FEATURE_LABEL[c] ?? c}
-                        <InfoButton id={FEATURE_INFO[c] ?? "features-not-words"} />
-                      </span>
+                {flagged ? (
+                  <>
+                    {/*
+                      The flag moment. A red pill followed by ten mechanical
+                      lines reads as a verdict. So: one plain sentence, then
+                      what the tier does and does not mean, right under it,
+                      and the measure-by-measure detail one tap away.
+                    */}
+                    {lead && <p className="mt-3 text-lg leading-snug text-ink">{lead}</p>}
+                    <ul className="mt-3 space-y-1 text-base leading-relaxed text-muted">
+                      <li>It is not a diagnosis, a screening result, or a probability of any condition.</li>
+                      <li>It is a reason to add a note about your week, or to bring the report to a clinician. It is not a reason to act on your own.</li>
+                    </ul>
+                    {(detail.length > 0 || summary.contributors.length > 0) && (
+                      <details className="mt-4 rounded-[var(--radius-md)] border border-line bg-bg px-4">
+                        <summary className="disclose text-base font-medium text-ink">
+                          What moved{measureCount > 0 ? ` (${measureCount} ${measureCount === 1 ? "measure" : "measures"})` : ""}
+                        </summary>
+                        <ul className="space-y-2 pb-3 text-base leading-relaxed text-muted">
+                          {detail.map((d) => (
+                            <li key={d.text}>
+                              {d.text}
+                              {d.key && <InfoButton id={FEATURE_INFO[d.key] ?? "features-not-words"} />}
+                            </li>
+                          ))}
+                        </ul>
+                        {measureCount === 0 && summary.contributors.length > 0 && (
+                          <div className="flex flex-wrap gap-2 border-t border-line py-3">
+                            {summary.contributors.map((c) => (
+                              <span key={c} className="rounded-full border border-line bg-surface px-2.5 py-1 text-sm text-ink">
+                                {FEATURE_LABEL[c] ?? c}
+                                <InfoButton id={FEATURE_INFO[c] ?? "features-not-words"} />
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </details>
+                    )}
+                  </>
+                ) : (
+                  <ul className="mt-3 space-y-1 text-base leading-relaxed text-muted">
+                    {summary.explanation.map((line) => (
+                      <li key={line}>{humaniseExplanation(line)}</li>
                     ))}
-                  </div>
+                  </ul>
                 )}
               </div>
               <div className="rounded-[var(--radius-lg)] border border-line bg-surface p-5">
@@ -203,13 +255,13 @@ export default function Dashboard() {
                   Baseline
                   <InfoButton id="n-of-1" />
                 </p>
-                <dl className="mt-3 space-y-2 text-sm">
+                <dl className="mt-3 space-y-2 text-base">
                   <div className="flex justify-between"><dt className="text-muted">Days assessed</dt><dd className="font-medium">{summary.eligible_days}</dd></div>
                   <div className="flex justify-between"><dt className="text-muted">Quiet days excluded <InfoButton id="exposure" /></dt><dd className="font-medium">{summary.excluded_days}</dd></div>
                   <div className="flex justify-between"><dt className="text-muted">Stable streak</dt><dd className="font-medium">{summary.stable_streak_days} days</dd></div>
                   <div className="flex justify-between"><dt className="text-muted">Latest day</dt><dd className="font-medium">{fmtDate(summary.latest_date)}</dd></div>
                 </dl>
-                <Link prefetch={false} href={withProfile("/report")} className="mt-4 inline-block rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
+                <Link prefetch={false} href={withProfile("/report")} className="press mt-4 inline-flex min-h-11 items-center rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 text-base font-medium text-[var(--primary-contrast)] hover:opacity-90">
                   Open the doctor report
                 </Link>
               </div>
@@ -230,13 +282,12 @@ export default function Dashboard() {
               {note ? (
                 <>
                   <p className="mt-2 max-w-[720px] text-base leading-relaxed">{note.text}</p>
-                  <p className="mt-2 text-xs text-muted">
-                    {note.source === "bedrock" ? `Phrased by ${note.model} on Amazon Bedrock from facts the engine computed.` : "The deterministic template: every model in the ladder was unavailable, so this is the engine's own summary."}
-                    {note.attempts.length > 1 && ` ${note.attempts.length - 1} model(s) were tried first.`}
+                  <p className="mt-2 text-sm text-muted">
+                    {note.source === "bedrock" ? "Phrased on Amazon Bedrock from facts the engine computed." : "The engine's own summary, from a fixed template."}
                   </p>
                 </>
               ) : (
-                <p className="mt-2 text-sm text-muted">Writing the note...</p>
+                <p className="mt-2 text-base text-muted">Writing the note...</p>
               )}
             </section>
 
@@ -249,7 +300,7 @@ export default function Dashboard() {
               <div className="mt-3">
                 <TrendChart rows={rows} height={240} />
               </div>
-              <p className="mt-2 text-xs text-muted">Zero is your baseline. Higher is further from it in the direction the literature associates with decline. Hollow marks are quiet days, excluded. A ringed dot has a note. <InfoButton id="freeze" /></p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">Zero is your baseline. Higher is further from it in the direction the literature associates with decline. Hollow marks are quiet days, excluded. A ringed dot has a note. <InfoButton id="freeze" /></p>
             </section>
 
             {/*
@@ -293,21 +344,21 @@ export default function Dashboard() {
               </div>
               <form onSubmit={saveAnnotation} className="rounded-[var(--radius-lg)] border border-line bg-surface p-5">
                 <p className="text-xs font-semibold uppercase tracking-wider text-muted">Add a note to a day</p>
-                <p className="mt-2 text-sm text-muted">Travel, illness, poor sleep, a new medication. Notes never change the numbers; they help you read them.</p>
-                <label className="mt-3 block text-xs text-muted">
+                <p className="mt-2 text-base text-muted">Travel, illness, poor sleep, a new medication. Notes never change the numbers; they help you read them.</p>
+                <label className="mt-3 block text-sm text-muted">
                   Day
-                  <input type="date" value={annDate} onChange={(e) => setAnnDate(e.target.value)} className="mt-1 w-full rounded-[var(--radius-sm)] border border-line bg-bg px-3 py-2 text-sm text-ink" required />
+                  <input type="date" value={annDate} onChange={(e) => setAnnDate(e.target.value)} className="mt-1 min-h-11 w-full rounded-[var(--radius-sm)] border border-line bg-bg px-3 py-2 text-base text-ink" required />
                 </label>
-                <label className="mt-3 block text-xs text-muted">
+                <label className="mt-3 block text-sm text-muted">
                   Note
-                  <input type="text" value={annText} onChange={(e) => setAnnText(e.target.value)} maxLength={200} placeholder="slept badly, travelling" className="mt-1 w-full rounded-[var(--radius-sm)] border border-line bg-bg px-3 py-2 text-sm text-ink" required />
+                  <input type="text" value={annText} onChange={(e) => setAnnText(e.target.value)} maxLength={200} placeholder="slept badly, travelling" className="mt-1 min-h-11 w-full rounded-[var(--radius-sm)] border border-line bg-bg px-3 py-2 text-base text-ink" required />
                 </label>
-                <button type="submit" disabled={saving} className="mt-4 rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90 disabled:opacity-60">
+                <button type="submit" disabled={saving} className="press mt-4 min-h-11 rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 text-base font-medium text-[var(--primary-contrast)] hover:opacity-90 disabled:opacity-60">
                   {saving ? "Saving..." : "Save note"}
                 </button>
-                {saveError && <p className="mt-3 text-sm text-[var(--discuss)]">{saveError}</p>}
+                {saveError && <p className="mt-3 text-base text-[var(--discuss)]">{saveError}</p>}
                 {claimed && (
-                  <label className="mt-4 block text-xs text-muted">
+                  <label className="mt-4 block text-sm text-muted">
                     This profile is claimed by its wearer. Their key, to write here (kept in this browser only)
                     <input
                       type="password"
@@ -315,7 +366,7 @@ export default function Dashboard() {
                       value={keyDraft}
                       onChange={(e) => { setKeyDraft(e.target.value); setOwnerKey(PROFILE, e.target.value.trim()); }}
                       placeholder="from .bellwether-key on the wearer's computer"
-                      className="mt-1 w-full rounded-[var(--radius-sm)] border border-line bg-bg px-3 py-2 text-sm text-ink"
+                      className="mt-1 min-h-11 w-full rounded-[var(--radius-sm)] border border-line bg-bg px-3 py-2 text-base text-ink"
                     />
                   </label>
                 )}
@@ -328,34 +379,34 @@ export default function Dashboard() {
                 The spoken check
                 <InfoButton id="spoken-check" />
               </p>
-              <p className="mt-2 max-w-[720px] text-sm text-muted">Ninety seconds, out loud. Useful when the tier is watch or discuss, and any time you like. An assistant can run it with you by voice through the MCP server.</p>
+              <p className="mt-2 max-w-[720px] text-base text-muted">Ninety seconds, out loud. Useful when the tier is watch or discuss, and any time you like. An assistant can run it with you by voice through the MCP server.</p>
               <div className="mt-4 grid gap-4 md:grid-cols-2">
                 <div className="rounded-[var(--radius-md)] border border-line bg-bg p-4">
-                  <p className="text-sm font-semibold">1. Name as many animals as you can in sixty seconds</p>
+                  <p className="text-base font-semibold">1. Name as many animals as you can in sixty seconds</p>
                   <div className="mt-3 flex flex-wrap items-center gap-3">
-                    <button type="button" onClick={() => { setFluencyLeft(60); setFluencyRunning(true); }} disabled={fluencyRunning} className="rounded-[var(--radius-sm)] border border-line px-3 py-2 text-sm hover:bg-surface-raised disabled:opacity-60">
+                    <button type="button" onClick={() => { setFluencyLeft(60); setFluencyRunning(true); }} disabled={fluencyRunning} className="press min-h-11 rounded-[var(--radius-sm)] border border-line px-4 text-base hover:bg-surface-raised disabled:opacity-60">
                       {fluencyRunning ? "Running" : "Start the timer"}
                     </button>
                     <span className="font-mono text-2xl tabular-nums" aria-live="polite">{fluencyLeft}s</span>
                   </div>
-                  <label className="mt-3 block text-xs text-muted">
+                  <label className="mt-3 block text-sm text-muted">
                     Distinct animals named
-                    <input type="number" min={0} max={100} value={fluencyCount} onChange={(e) => setFluencyCount(e.target.value)} className="mt-1 w-32 rounded-[var(--radius-sm)] border border-line bg-surface px-3 py-2 text-sm text-ink" />
+                    <input type="number" min={0} max={100} value={fluencyCount} onChange={(e) => setFluencyCount(e.target.value)} className="mt-1 block min-h-11 w-32 rounded-[var(--radius-sm)] border border-line bg-surface px-3 py-2 text-base text-ink" />
                   </label>
-                  <button type="button" onClick={() => logCheck("animal_fluency", Number(fluencyCount || 0), "web dashboard")} disabled={fluencyCount === ""} className="mt-3 rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90 disabled:opacity-60">
+                  <button type="button" onClick={() => logCheck("animal_fluency", Number(fluencyCount || 0), "web dashboard")} disabled={fluencyCount === ""} className="press mt-3 min-h-11 rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 text-base font-medium text-[var(--primary-contrast)] hover:opacity-90 disabled:opacity-60">
                     Log the score
                   </button>
                 </div>
                 <div className="rounded-[var(--radius-md)] border border-line bg-bg p-4">
-                  <p className="text-sm font-semibold">2. Repeat each sentence exactly</p>
-                  <ol className="mt-3 space-y-3 text-sm">
+                  <p className="text-base font-semibold">2. Repeat each sentence exactly</p>
+                  <ol className="mt-3 space-y-3 text-base">
                     {SENTENCES.map((s, i) => (
                       <li key={s}>
                         <p className="text-muted">{s}</p>
-                        <div className="mt-1 flex gap-2 text-xs">
+                        <div className="choice-row mt-1.5 grid grid-cols-3 gap-1.5 text-sm" role="radiogroup" aria-label={`Sentence ${i + 1}`}>
                           {[2, 1, 0].map((v) => (
-                            <label key={v} className="flex items-center gap-1">
-                              <input type="radio" name={`rep-${i}`} checked={repScores[i] === v} onChange={() => setRepScores((r) => r.map((x, j) => (j === i ? v : x)))} />
+                            <label key={v} className={`press relative flex min-h-11 cursor-pointer items-center justify-center rounded-[var(--radius-sm)] border px-2 text-center leading-tight ${repScores[i] === v ? "border-[var(--primary)] bg-primary-soft font-semibold text-[var(--primary)]" : "border-line text-muted hover:text-ink"}`}>
+                              <input type="radio" className="sr-only" name={`rep-${i}`} checked={repScores[i] === v} onChange={() => setRepScores((r) => r.map((x, j) => (j === i ? v : x)))} />
                               {v === 2 ? "exact" : v === 1 ? "one change" : "different"}
                             </label>
                           ))}
@@ -363,13 +414,13 @@ export default function Dashboard() {
                       </li>
                     ))}
                   </ol>
-                  <button type="button" onClick={() => logCheck("sentence_repetition", repScores.reduce((a, b) => a + b, 0), "web dashboard")} className="mt-3 rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
+                  <button type="button" onClick={() => logCheck("sentence_repetition", repScores.reduce((a, b) => a + b, 0), "web dashboard")} className="press mt-3 min-h-11 rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 text-base font-medium text-[var(--primary-contrast)] hover:opacity-90">
                     Log {repScores.reduce((a, b) => a + b, 0)} of 6
                   </button>
                 </div>
               </div>
-              {checkMsg && <p className="mt-3 text-sm text-[var(--success)]" role="status">{checkMsg}</p>}
-              <p className="mt-3 text-xs text-muted">Scores are displayed on the timeline and never turned into a judgement beyond the tier language.</p>
+              {checkMsg && <p className="mt-3 text-base text-[var(--success)]" role="status">{checkMsg}</p>}
+              <p className="mt-3 text-sm text-muted">Scores are displayed on the timeline and never turned into a judgement beyond the tier language.</p>
             </section>
 
             {/* What we store */}
@@ -380,22 +431,67 @@ export default function Dashboard() {
               </p>
               <div className="mt-3 grid gap-4 md:grid-cols-2">
                 <div>
-                  <p className="text-sm text-muted">An actual stored row for {latest ? fmtDate(latest.date) : "the latest day"}. This is everything there is.</p>
-                  <pre className="mt-2 overflow-x-auto rounded-[var(--radius-md)] border border-line bg-bg p-3 font-mono text-xs leading-relaxed">{sampleRow ? JSON.stringify(sampleRow, null, 1) : "..."}</pre>
+                  <p className="text-base text-muted">An actual stored row for {latest ? fmtDate(latest.date) : "the latest day"} is under How this works, below. This is everything there is.</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted">Never stored, by construction:</p>
-                  <ul className="mt-2 space-y-1 text-sm text-muted">
+                  <p className="text-base text-muted">Never stored, by construction:</p>
+                  <ul className="mt-2 space-y-1 text-base text-muted">
                     <li>The words that produced those numbers</li>
                     <li>Any audio</li>
                     <li>Anyone else&apos;s speech</li>
                   </ul>
-                  <p className="mt-3 text-xs text-muted">A test posts a row with a transcript field and proves it never lands. Extraction runs on your own machine; the service only ever receives numbers.</p>
+                  <p className="mt-3 text-sm text-muted">A test posts a row with a transcript field and proves it never lands. Extraction runs on your own machine; the service only ever receives numbers.</p>
                 </div>
               </div>
             </section>
 
-            <p className="mt-8 text-xs leading-relaxed text-muted">{summary.disclaimer}</p>
+            {/*
+              How this works. The model ids, the commands and the raw row
+              are real and worth keeping, for a developer or a judge. They
+              are not for the person whose speech this is, so they sit
+              behind one disclosure at the end rather than beside the tier.
+            */}
+            <details className="mt-4 rounded-[var(--radius-lg)] border border-line bg-surface px-5">
+              <summary className="disclose text-base font-semibold text-ink">How this works</summary>
+              <div className="space-y-5 border-t border-line py-5 text-sm leading-relaxed text-muted">
+                {note && (
+                  <div>
+                    <p className="font-semibold text-ink">The weekly note</p>
+                    <p className="mt-1">
+                      {note.source === "bedrock" ? `Phrased by ${note.model} on Amazon Bedrock from facts the engine computed.` : "The deterministic template: every model in the ladder was unavailable, so this is the engine's own summary."}
+                      {note.attempts.length > 1 && ` ${note.attempts.length - 1} ${note.attempts.length - 1 === 1 ? "model was" : "models were"} tried first.`}
+                    </p>
+                  </div>
+                )}
+                {debate.profile_id === PROFILE && (
+                  <div>
+                    <p className="font-semibold text-ink">The second opinion</p>
+                    <p className="mt-1">
+                      {debate.model}. Gate: {debate.gate}. Run it yourself:
+                    </p>
+                    <pre tabIndex={0} className="mt-2 overflow-x-auto rounded-[var(--radius-md)] border border-line bg-bg p-3 font-mono text-xs leading-relaxed text-ink"><code>{`python apps/agent/second_opinion.py --profile ${debate.profile_id}`}</code></pre>
+                  </div>
+                )}
+                {!PROFILES[PROFILE].simulated && (
+                  <div>
+                    <p className="font-semibold text-ink">The hosted check-in</p>
+                    <pre tabIndex={0} className="mt-2 overflow-x-auto rounded-[var(--radius-md)] border border-line bg-bg p-3 font-mono text-xs leading-relaxed text-ink"><code>{"python apps/agent/check_in_host.py --profile <your-name> --count"}</code></pre>
+                    <p className="mt-2">
+                      The host is a client of the same MCP server an Alexa+ agent gets: <code className="font-mono text-xs">start_check_in</code> for
+                      tonight&apos;s lines, <code className="font-mono text-xs">coaching_note</code> for what to say after. It speaks through Amazon
+                      Polly because the Alexa+ connection is not yet open to scripts. It never reads a transcript; it waits for the
+                      Bee, runs <code className="font-mono text-xs">bellwether-ingest mine --days 1</code>, and hears the count come back.
+                    </p>
+                  </div>
+                )}
+                <div>
+                  <p className="font-semibold text-ink">An actual stored row for {latest ? fmtDate(latest.date) : "the latest day"}</p>
+                  <pre tabIndex={0} className="mt-2 overflow-x-auto rounded-[var(--radius-md)] border border-line bg-bg p-3 font-mono text-xs leading-relaxed text-ink">{sampleRow ? JSON.stringify(sampleRow, null, 1) : "..."}</pre>
+                </div>
+              </div>
+            </details>
+
+            <p className="mt-8 max-w-[760px] text-sm leading-relaxed text-muted">{summary.disclaimer}</p>
           </>
         )}
       </main>

@@ -102,13 +102,13 @@ export function FirstWeekReplay() {
           Simulated
         </span>
       </div>
-      <p className="mt-3 max-w-[720px] text-sm leading-relaxed text-muted">
+      <p className="mt-3 max-w-[720px] text-base leading-relaxed text-muted">
         Generated speech through the real extractor and engine, word counts set to the size of a two-minute
         check-in, and the third day short on purpose. Each step is the profile as it stood that evening, and the
         note is what the assistant would read aloud after the check-in.
       </p>
 
-      {failed && <p className="mt-4 text-sm text-muted">The simulated week could not be fetched from the service just now.</p>}
+      {failed && <p className="mt-4 text-base text-muted">The simulated week could not be fetched from the service just now.</p>}
 
       {days.length > 0 && (
         <>
@@ -117,8 +117,8 @@ export function FirstWeekReplay() {
               type="button"
               onClick={() => setI((k) => Math.max(0, k - 1))}
               disabled={i === 0}
-              className="rounded-[var(--radius-sm)] border border-line px-3 py-1.5 text-sm text-ink disabled:opacity-40"
-              aria-label="Previous evening"
+              className="press min-h-11 shrink-0 rounded-[var(--radius-sm)] border border-line px-4 text-base text-ink disabled:opacity-40"
+              aria-label="Back, previous evening"
             >
               Back
             </button>
@@ -128,7 +128,7 @@ export function FirstWeekReplay() {
               max={days.length - 1}
               value={i}
               onChange={(e) => setI(Number(e.target.value))}
-              className="w-full accent-[var(--primary)]"
+              className="h-11 w-full cursor-pointer accent-[var(--primary)]"
               aria-label="Evening"
               aria-valuetext={`Day ${i + 1}, ${fmtDate(day?.date)}`}
             />
@@ -136,7 +136,7 @@ export function FirstWeekReplay() {
               type="button"
               onClick={() => setI((k) => Math.min(days.length - 1, k + 1))}
               disabled={i === days.length - 1}
-              className="rounded-[var(--radius-sm)] bg-[var(--primary)] px-3 py-1.5 text-sm font-medium text-[var(--primary-contrast)] disabled:opacity-40"
+              className="press min-h-11 shrink-0 rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 text-base font-medium text-[var(--primary-contrast)] disabled:opacity-40"
               aria-label="Next evening"
             >
               Next
@@ -156,34 +156,34 @@ export function FirstWeekReplay() {
                     : "border-[var(--primary)] bg-bg text-ink";
               return (
                 <li key={d.date} className={`rounded-[var(--radius-sm)] border p-1.5 text-center ${cls}`}>
-                  <span className="block text-[11px] font-semibold">Day {k + 1}</span>
-                  <span className="block font-mono text-[11px]">{future ? "" : short ? `${d.token_count_day}, short` : d.token_count_day}</span>
+                  <span className="block text-xs font-semibold">Day {k + 1}</span>
+                  <span className="block font-mono text-xs">{future ? "" : short ? `${d.token_count_day}, short` : d.token_count_day}</span>
                 </li>
               );
             })}
           </ol>
-          <p className="mt-2 text-xs text-muted">
+          <p className="mt-2 text-sm text-muted">
             Words that evening. Outlined days build the baseline, green days are compared with it, and a day under {FLOOR} words is short and does not count.
           </p>
 
           <div className="mt-4 rounded-[var(--radius-md)] border border-line bg-bg p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-sm font-medium text-ink">Evening of {fmtDate(day?.date)}</span>
+              <span className="text-base font-medium text-ink">Evening of {fmtDate(day?.date)}</span>
               {summary && (
                 <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${TIER[summary.tier].cls}`}>
                   {TIER[summary.tier].label}
                 </span>
               )}
-              {summary && <span className="text-xs text-muted">{Math.min(summary.eligible_days, 7)} of 7 baseline days counted</span>}
+              {summary && <span className="text-sm text-muted">{Math.min(summary.eligible_days, 7)} of 7 baseline days counted</span>}
             </div>
             {note && (
               <>
-                <p className="mt-3 text-sm leading-relaxed text-ink">
+                <p className="mt-3 text-base leading-relaxed text-ink">
                   <span className="mr-2 font-mono text-xs text-muted">host says</span>
                   {note.text}
                 </p>
                 {note.actions.length > 0 && (
-                  <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted">
+                  <ul className="mt-2 list-disc space-y-1 pl-5 text-base text-muted">
                     {note.actions.map((a) => (
                       <li key={a}>{a}</li>
                     ))}

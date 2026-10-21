@@ -92,7 +92,7 @@ export function BeeConnect() {
           can post a day as you after that. If Bee is not logged in it says so in the words the Bee app uses.
           Rehearsed in tests for every way it can stop, and for the one thing it must never do: print a word you said.
         </p>
-        <pre className="mt-3 overflow-x-auto rounded-[var(--radius-sm)] border border-line bg-bg p-3 font-mono text-[12px] leading-relaxed text-ink">
+        <pre tabIndex={0} className="mt-3 min-w-0 overflow-x-auto rounded-[var(--radius-sm)] border border-line bg-bg p-3 font-mono text-[12px] leading-relaxed text-ink">
           <code>bellwether-ingest mine --profile &lt;your-name&gt;</code>
         </pre>
       </div>
@@ -112,7 +112,7 @@ export function BeeConnect() {
           without a name to see who spoke, then again with yours. Only your own turns are kept, and only nine numbers a
           day leave your computer.
         </p>
-        <pre className="mt-3 overflow-x-auto rounded-[var(--radius-sm)] border border-line bg-bg p-3 font-mono text-[12px] leading-relaxed text-ink">
+        <pre tabIndex={0} className="mt-3 min-w-0 overflow-x-auto rounded-[var(--radius-sm)] border border-line bg-bg p-3 font-mono text-[12px] leading-relaxed text-ink">
           <code>{"bellwether-ingest file meetings/*.vtt\nbellwether-ingest file meetings/*.vtt --speaker \"Your Name\" --post <your-name>"}</code>
         </pre>
       </div>
@@ -134,7 +134,7 @@ export function BeeConnect() {
               </span>
             </div>
             <p className="mt-2 text-sm leading-relaxed text-muted">{s.body}</p>
-            <pre className="mt-3 overflow-x-auto rounded-[var(--radius-sm)] border border-line bg-bg p-3 font-mono text-[12px] leading-relaxed text-ink">
+            <pre tabIndex={0} className="mt-3 min-w-0 overflow-x-auto rounded-[var(--radius-sm)] border border-line bg-bg p-3 font-mono text-[12px] leading-relaxed text-ink">
               <code>{s.code}</code>
             </pre>
           </li>

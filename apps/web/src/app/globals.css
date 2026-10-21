@@ -24,16 +24,20 @@
   --primary: #1f6f68;
   --primary-contrast: #ffffff;
   --primary-soft: #e3f1ef;
-  --accent: #a66a0f;
+  /* Darkened from #a66a0f and #2e7d5b: the tier pills and the simulated
+     label are 12px text on their own soft fills, and the lighter values
+     measured 3.83:1 and 4.29:1 there. These pass 4.5:1 on the soft fill,
+     on --bg and on --surface. */
+  --accent: #8f5c0b;
   --accent-soft: #f7ecd9;
-  --success: #2e7d5b;
+  --success: #28734f;
   --success-soft: #e3f1ea;
-  --watch: #a66a0f;
+  --watch: #8f5c0b;
   --watch-soft: #f7ecd9;
   --discuss: #b3402e;
   --discuss-soft: #f7e6e2;
   --chart-1: #1f6f68;
-  --chart-2: #a66a0f;
+  --chart-2: #8f5c0b;
   --chart-3: #5b7a99;
   --chart-4: #8a94a6;
 
@@ -128,8 +132,12 @@
 }
 
 html {
-  color-scheme: light dark;
+  color-scheme: light;
   scroll-behavior: smooth;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 body {
@@ -137,6 +145,18 @@ body {
   color: var(--text);
   font-feature-settings: "cv02", "cv03", "cv04";
   -webkit-font-smoothing: antialiased;
+}
+
+/*
+  One monospace voice. Preflight gives bare <code> and <pre> the
+  ui-monospace stack resolved at :root, which is not the JetBrains Mono the
+  font-mono utility uses, so the same page drew code in two faces.
+*/
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
 }
 
 *:focus-visible {
@@ -148,6 +168,135 @@ body {
 ::selection {
   background: var(--accent);
   color: #ffffff;
+}
+
+/*
+  Small controls keep their drawn size and get a larger hit area: the
+  ::before box is part of the button, so a press anywhere in it lands.
+  44 wide by 32 tall: well past the 24px minimum both ways, and short
+  enough that two info buttons on consecutive lines do not overlap.
+*/
+.hit-44 {
+  position: relative;
+}
+.hit-44::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 44px;
+  height: 32px;
+  transform: translate(-50%, -50%);
+}
+
+/* A segmented control built on real radio inputs, so arrow keys work. */
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  padding: 2px;
+  gap: 2px;
+}
+.seg label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 36px;
+  min-width: 36px;
+  padding: 0 8px;
+  border-radius: calc(var(--radius-sm) - 2px);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+.seg[data-size="lg"] label {
+  min-height: 44px;
+  padding: 0 12px;
+  font-size: 0.875rem;
+}
+.seg label:hover {
+  color: var(--text);
+}
+.seg label:has(input:checked) {
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+.seg label:has(input:focus-visible) {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+}
+.seg input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* Choice chips over visually hidden radios keep the keyboard ring. */
+.choice-row label:has(input:focus-visible) {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Pressable things answer the press. */
+.press {
+  transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1), opacity 150ms ease;
+}
+.press:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* Disclosure markers drawn from the palette, not the browser default. */
+details > summary.disclose {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  cursor: pointer;
+}
+details > summary.disclose::-webkit-details-marker {
+  display: none;
+}
+details > summary.disclose::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--primary);
+  border-bottom: 2px solid var(--primary);
+  transform: rotate(-45deg);
+  transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+details[open] > summary.disclose::before {
+  transform: rotate(45deg);
+}
+
+/*
+  Print. Only the site navigation is dropped: the report's own header
+  (title, dates, days assessed) and the simulated label must print.
+*/
+@media print {
+  .site-header,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  .print-page {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

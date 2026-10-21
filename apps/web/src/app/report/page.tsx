@@ -26,22 +26,27 @@ export default function ReportPage() {
 
   return (
     <div className="min-h-screen bg-bg text-ink">
-      <style>{`@media print { header, .no-print { display: none !important; } body { background: #fff; color: #000; } .print-page { border: none !important; box-shadow: none !important; } }`}</style>
       <Nav />
       <main id="main" className="mx-auto max-w-[860px] px-4 py-10 sm:px-6">
-        <div className="no-print flex flex-wrap items-center justify-between gap-3">
+        {/*
+          Print rules live in globals.css and hide only the site navigation
+          (.site-header) and .no-print, so the report's own header and the
+          whose-data label below both reach the paper.
+        */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex min-h-[26px] items-center gap-2">
             {mounted && (<>
             <span className={`rounded-full border border-line px-2.5 py-0.5 text-xs font-medium ${PROFILES[PROFILE].simulated ? "bg-accent-soft text-[var(--accent)]" : "bg-success-soft text-[var(--success)]"}`}>{PROFILES[PROFILE].label}</span>
-            {PROFILES[PROFILE].simulated && <InfoButton id="simulated" />}
+            {PROFILES[PROFILE].simulated && <span className="no-print"><InfoButton id="simulated" /></span>}
+            {PROFILES[PROFILE].simulated && <span className="hidden text-xs print:inline">{PROFILES[PROFILE].note}</span>}
             </>)}
           </div>
-          <button type="button" onClick={() => window.print()} className="rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-contrast)] hover:opacity-90">
+          <button type="button" onClick={() => window.print()} className="no-print press min-h-11 rounded-[var(--radius-sm)] bg-[var(--primary)] px-4 text-base font-medium text-[var(--primary-contrast)] hover:opacity-90">
             Print or save as PDF
           </button>
         </div>
 
-        {error && <p className="mt-6 text-sm text-muted">The service did not answer: {error}</p>}
+        {error && <p className="mt-6 text-base text-muted">The service did not answer: {error}</p>}
 
         {report && report.available && (
           <article className="print-page mt-6 rounded-[var(--radius-lg)] border border-line bg-surface p-6 shadow-[var(--shadow-sm)] sm:p-10">
@@ -50,7 +55,7 @@ export default function ReportPage() {
               <h1 className="mt-1 text-2xl font-semibold tracking-tight">
                 {fmtDate(report.range?.from)} to {fmtDate(report.range?.to)}, {report.range?.weeks} weeks
               </h1>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
+              <p className="mt-2 text-base leading-relaxed text-muted">
                 A record of change over time in one person&apos;s everyday speech, compared only with their own baseline. Nine language features per day; no transcript exists. {report.eligible_days} days assessed, {report.excluded_days} quiet days excluded.
               </p>
             </header>
@@ -62,12 +67,12 @@ export default function ReportPage() {
                 {report.current && (
                   <>
                     <span className={`rounded-full px-3 py-1 text-base font-semibold ${TIER_CLASS[report.current.tier]}`}>{TIER_LABEL[report.current.tier]}</span>
-                    {report.current.since && <span className="text-sm text-muted">since {fmtDate(report.current.since)}</span>}
+                    {report.current.since && <span className="text-base text-muted">since {fmtDate(report.current.since)}</span>}
                   </>
                 )}
               </div>
               {report.current && report.current.contributors.length > 0 && (
-                <p className="mt-2 text-sm text-muted">
+                <p className="mt-2 text-base text-muted">
                   Measures behind this: {report.current.contributors.map((c) => FEATURE_LABEL[c] ?? c).join(", ")}.
                 </p>
               )}
@@ -81,7 +86,7 @@ export default function ReportPage() {
                   <div key={i} title={`${TIER_LABEL[r.tier]}: ${fmtDate(r.from)} to ${fmtDate(r.to)}`} className={`${TIER_CLASS[r.tier as Tier]} h-full`} style={{ width: `${(r.days / Math.max(total, 1)) * 100}%` }} />
                 ))}
               </div>
-              <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted">
+              <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted">
                 {report.tier_history?.map((r, i) => (
                   <li key={i}>{TIER_LABEL[r.tier]}: {fmtDate(r.from)}{r.days > 1 ? ` to ${fmtDate(r.to)}` : ""} ({r.days}d)</li>
                 ))}
@@ -92,7 +97,7 @@ export default function ReportPage() {
             <section className="mt-6">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">Notable changes</h2>
               {report.notable_changes && report.notable_changes.length > 0 ? (
-                <table className="mt-2 w-full text-sm">
+                <table className="mt-2 w-full text-base">
                   <thead className="text-left text-xs text-muted">
                     <tr><th className="py-1 pr-3 font-medium">From</th><th className="py-1 pr-3 font-medium">Tier</th><th className="py-1 pr-3 font-medium">What moved</th></tr>
                   </thead>
@@ -109,7 +114,7 @@ export default function ReportPage() {
                   </tbody>
                 </table>
               ) : (
-                <p className="mt-2 text-sm text-muted">No change outside the person&apos;s normal range in this period.</p>
+                <p className="mt-2 text-base text-muted">No change outside the person&apos;s normal range in this period.</p>
               )}
             </section>
 
@@ -117,7 +122,7 @@ export default function ReportPage() {
             {report.most_moved_features && report.most_moved_features.length > 0 && (
               <section className="mt-6">
                 <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">Features that moved most</h2>
-                <ul className="mt-2 space-y-1 text-sm">
+                <ul className="mt-2 space-y-1 text-base">
                   {report.most_moved_features.map((f) => (
                     <li key={f.feature}><span className="font-medium">{FEATURE_LABEL[f.feature] ?? f.feature}</span> <span className="text-muted">({f.plain}) mean change score {f.mean_concern_z.toFixed(2)}</span></li>
                   ))}
@@ -130,25 +135,25 @@ export default function ReportPage() {
               <div>
                 <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">Spoken checks</h2>
                 {report.spoken_checks && report.spoken_checks.length > 0 ? (
-                  <ul className="mt-2 space-y-1 text-sm text-muted">
+                  <ul className="mt-2 space-y-1 text-base text-muted">
                     {report.spoken_checks.map((c, i) => (
                       <li key={i}>{fmtDate(c.at.slice(0, 10))}: {c.kind === "animal_fluency" ? "animals in 60 s" : "sentence repetition"} {c.score}</li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="mt-2 text-sm text-muted">None recorded in this period.</p>
+                  <p className="mt-2 text-base text-muted">None recorded in this period.</p>
                 )}
               </div>
               <div>
                 <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">Notes the person added</h2>
                 {report.annotations && Object.keys(report.annotations).length > 0 ? (
-                  <ul className="mt-2 space-y-1 text-sm text-muted">
+                  <ul className="mt-2 space-y-1 text-base text-muted">
                     {Object.entries(report.annotations).map(([d, n]) => (
                       <li key={d}>{fmtDate(d)}: {n}</li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="mt-2 text-sm text-muted">None.</p>
+                  <p className="mt-2 text-base text-muted">None.</p>
                 )}
               </div>
             </section>
@@ -162,27 +167,27 @@ export default function ReportPage() {
             {report.awv && (
               <section className="mt-8 rounded-[var(--radius-md)] border border-[var(--primary)] p-4">
                 <h2 className="text-sm font-semibold uppercase tracking-wider text-[var(--primary)]">{report.awv.title}</h2>
-                <p className="mt-2 text-sm leading-relaxed text-ink">{report.awv.text}</p>
+                <p className="mt-2 text-base leading-relaxed text-ink">{report.awv.text}</p>
                 <p className="mt-3 text-xs font-semibold uppercase tracking-wider text-muted">Questions to bring</p>
-                <ul className="mt-1 list-disc space-y-1 pl-5 text-sm text-muted">
+                <ul className="mt-1 list-disc space-y-1 pl-5 text-base text-muted">
                   {report.awv.questions.map((q) => (
                     <li key={q}>{q}</li>
                   ))}
                 </ul>
-                <p className="mt-3 text-xs text-muted">{report.awv.source}</p>
+                <p className="mt-3 text-sm text-muted">{report.awv.source}</p>
               </section>
             )}
 
             {/* Disclaimer and method */}
             <section className="mt-8 rounded-[var(--radius-md)] border border-line bg-bg p-4">
-              <p className="text-sm font-semibold">This is not a diagnosis.</p>
-              <p className="mt-1 text-sm leading-relaxed text-muted">{report.disclaimer}</p>
-              <p className="mt-2 text-xs leading-relaxed text-muted">{report.method}</p>
+              <p className="text-base font-semibold">This is not a diagnosis.</p>
+              <p className="mt-1 text-base leading-relaxed text-muted">{report.disclaimer}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{report.method}</p>
             </section>
 
             <section className="mt-6">
               <h2 className="text-sm font-semibold uppercase tracking-wider text-muted">Sources</h2>
-              <ol className="mt-2 space-y-1 text-xs leading-relaxed text-muted">
+              <ol className="mt-2 space-y-1 text-sm leading-relaxed text-muted">
                 {report.citations?.map((c, i) => (
                   <li key={i}>{i + 1}. {c.claim}. {c.source}</li>
                 ))}
@@ -191,7 +196,7 @@ export default function ReportPage() {
           </article>
         )}
 
-        {report && !report.available && <p className="mt-6 text-sm text-muted">{report.message}</p>}
+        {report && !report.available && <p className="mt-6 text-base text-muted">{report.message}</p>}
       </main>
     </div>
   );

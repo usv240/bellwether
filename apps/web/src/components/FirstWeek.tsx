@@ -41,7 +41,7 @@ export function FirstWeek({ days, assessments, eligibleDays }: { days: DayRow[];
         Your first week
         <InfoButton id="n-of-1" />
       </p>
-      <p className="mt-2 text-sm leading-relaxed text-ink">
+      <p className="mt-2 text-base leading-relaxed text-ink">
         Seven counted days teach Bellwether what normal sounds like for you. Nothing is compared until they are in.{" "}
         <span className="font-medium">{Math.min(eligibleDays, WARMUP_DAYS)} of {WARMUP_DAYS} days counted.</span>
       </p>
@@ -61,7 +61,7 @@ export function FirstWeek({ days, assessments, eligibleDays }: { days: DayRow[];
 
       {latest && !latestCounted && (
         <div className="mt-4">
-          <div className="flex items-baseline justify-between text-sm">
+          <div className="flex items-baseline justify-between text-base">
             <span className="text-muted">{fmtDate(latest.date)}, so far</span>
             <span className="font-medium">
               {latest.token_count_day} of {MIN_WORDS} words
@@ -70,7 +70,7 @@ export function FirstWeek({ days, assessments, eligibleDays }: { days: DayRow[];
           <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-bg" role="progressbar" aria-valuemin={0} aria-valuemax={MIN_WORDS} aria-valuenow={Math.min(latest.token_count_day, MIN_WORDS)} aria-label="Words toward today counting">
             <div className="h-full rounded-full bg-[var(--primary)]" style={{ width: `${Math.min(100, (latest.token_count_day / MIN_WORDS) * 100)}%` }} />
           </div>
-          <p className="mt-2 text-sm leading-relaxed text-muted">
+          <p className="mt-2 text-base leading-relaxed text-muted">
             {voice
               ? `About ${Math.max(1, Math.ceil((MIN_WORDS - latest.token_count_day) / 130))} more minute${MIN_WORDS - latest.token_count_day > 130 ? "s" : ""} of talking today and this day counts. Check in: say "Bellwether check-in" and the date, then keep talking to the band on your own. Any topic: what you did, what is on your mind, plans for tomorrow.`
               : "A day needs 150 words of speech to count. Quiet days are left out rather than misread as change."}
@@ -79,7 +79,7 @@ export function FirstWeek({ days, assessments, eligibleDays }: { days: DayRow[];
       )}
 
       {short.length > 0 && (
-        <ul className="mt-4 divide-y divide-line rounded-[var(--radius-sm)] border border-line text-sm">
+        <ul className="mt-4 divide-y divide-line rounded-[var(--radius-sm)] border border-line text-base">
           {short.map((d) => (
             <li key={d.date} className="flex justify-between px-3 py-1.5">
               <span className="text-muted">{fmtDate(d.date)}</span>
@@ -89,7 +89,7 @@ export function FirstWeek({ days, assessments, eligibleDays }: { days: DayRow[];
         </ul>
       )}
 
-      <div className="mt-4 grid gap-3 text-sm leading-relaxed text-muted sm:grid-cols-2">
+      <div className="mt-4 grid gap-3 text-base leading-relaxed text-muted sm:grid-cols-2">
         <p>
           <span className="font-medium text-ink">From day eight:</span> each new day is compared with these seven. The chart fills, the weekly note starts, and the report becomes something to bring to an appointment.
         </p>

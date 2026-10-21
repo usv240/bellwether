@@ -50,7 +50,7 @@ export function Confounders({ summary }: { summary: Summary | null }) {
         <InfoButton id="confounders" />
       </h2>
 
-      <p className="mt-2 max-w-[720px] text-sm leading-relaxed">
+      <p className="mt-2 max-w-[720px] text-base leading-relaxed">
         {flagged ? (
           <>
             Bellwether has flagged a change, and the most likely reasons are ordinary ones. Speech moves with sleep, health, mood and who you spend the week talking to. Before reading anything else into it, look down this list and see whether you recognise your own weeks.
@@ -64,7 +64,7 @@ export function Confounders({ summary }: { summary: Summary | null }) {
 
       <ul className="mt-4 grid gap-x-8 gap-y-2 sm:grid-cols-2">
         {COMMON.map((c) => (
-          <li key={c.cause} className="text-sm leading-relaxed">
+          <li key={c.cause} className="text-base leading-relaxed">
             <span className="font-medium text-ink">{c.cause}</span>
             <span className="text-muted">: {c.effect}</span>
           </li>
@@ -72,8 +72,8 @@ export function Confounders({ summary }: { summary: Summary | null }) {
       </ul>
 
       <div className="mt-5 rounded-[var(--radius-md)] border border-line bg-bg p-4">
-        <p className="text-sm font-semibold">What {tierWord} does not mean</p>
-        <ul className="mt-2 space-y-1 text-sm leading-relaxed text-muted">
+        <p className="text-base font-semibold">What {tierWord} does not mean</p>
+        <ul className="mt-2 space-y-1 text-base leading-relaxed text-muted">
           <li>It is not a diagnosis, a screening result, or a probability of any condition.</li>
           <li>It does not predict what will happen next. Bellwether has no opinion about the future.</li>
           <li>It compares you only with your own past, never with other people, so it says nothing about how you compare with anyone.</li>
@@ -81,7 +81,7 @@ export function Confounders({ summary }: { summary: Summary | null }) {
         </ul>
       </div>
 
-      <p className="mt-4 text-sm leading-relaxed text-muted">
+      <p className="mt-4 text-base leading-relaxed text-muted">
         The most useful thing you can do is add a note to the days you remember. A week marked{" "}
         <span className="text-ink">slept badly, travelling</span> is a week you can read honestly a month later, and notes never change the numbers.
       </p>

@@ -45,7 +45,7 @@ export function InfoButton({ id }: { id: string }) {
         aria-expanded={open}
         aria-controls={popId}
         onClick={() => setOpen((v) => !v)}
-        className="ml-1 inline-flex h-[18px] w-[18px] items-center justify-center rounded-full border border-line text-[11px] font-serif italic leading-none text-muted transition-colors hover:border-primary hover:text-primary"
+        className="hit-44 ml-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full border border-line text-xs font-serif italic leading-none text-muted transition-colors hover:border-primary hover:text-primary"
       >
         i
       </button>
@@ -54,14 +54,14 @@ export function InfoButton({ id }: { id: string }) {
           id={popId}
           role="dialog"
           aria-label={entry.term}
-          className="absolute left-1/2 z-50 mt-2 block w-72 -translate-x-1/2 rounded-[var(--radius-md)] border border-line bg-surface-raised p-4 text-left shadow-[var(--shadow-md)] max-sm:fixed max-sm:inset-x-4 max-sm:left-auto max-sm:w-auto max-sm:translate-x-0"
+          className="absolute left-1/2 z-50 mt-2 block w-80 -translate-x-1/2 rounded-[var(--radius-md)] border border-line bg-surface-raised p-4 text-left shadow-[var(--shadow-md)] max-sm:fixed max-sm:inset-x-4 max-sm:left-auto max-sm:w-auto max-sm:translate-x-0"
         >
-          <span className="block text-sm font-semibold text-ink">{entry.term}</span>
-          <span className="mt-1 block text-sm leading-relaxed text-muted">
+          <span className="block text-base font-semibold normal-case tracking-normal text-ink">{entry.term}</span>
+          <span className="mt-1 block text-base font-normal normal-case leading-relaxed tracking-normal text-muted">
             {entry.plain}
           </span>
           {entry.technical && (
-            <span className="mt-2 block border-t border-line pt-2 text-xs leading-relaxed text-muted">
+            <span className="mt-2 block border-t border-line pt-2 text-sm font-normal normal-case leading-relaxed tracking-normal text-muted">
               <span className="font-semibold text-ink">In technical terms: </span>
               {entry.technical}
             </span>
@@ -71,7 +71,7 @@ export function InfoButton({ id }: { id: string }) {
               href={entry.sourceUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-2 block text-xs font-medium text-primary underline underline-offset-2"
+              className="mt-2 block text-sm font-medium normal-case tracking-normal text-primary underline underline-offset-2"
             >
               Source: {entry.sourceLabel ?? entry.sourceUrl}
             </a>
