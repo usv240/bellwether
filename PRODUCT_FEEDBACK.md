@@ -99,3 +99,9 @@ Stated here as well as in docs/AWS.md, because the rules ask for it in the feedb
 **What needs work:** we found no public way to load a skill into Alexa+ ourselves and watch it run, so ours is checked against the MCP server by a test rather than end to end in Alexa+.
 
 **Would we build with it again:** yes.
+
+## Not used, and why
+
+- Kiro and Kiro Crew: not used. The build ran in one coding agent from the first commit; a second workspace mid-window would have added nothing a judge can see. Every AWS integration here is a service the product calls at run time.
+- SageMaker: not used. Nothing trains a model; the engine is a deterministic baseline and the harnesses are scripted evaluations.
+- Bee Skill (bee-computer/bee-skill): read, not installed. Its first instruction is to run `bee now`, which returns the wearer's last ten hours of conversations into the coding agent; the wearer's own rule keeps those out of any model, so the Bee is reached through its CLI and its MCP server behind an allow-list instead.
