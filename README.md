@@ -1,115 +1,96 @@
 # Bellwether
 
-Bellwether reads the transcripts your wearable already makes, keeps nine language numbers and throws every word away, learns how you normally speak, and tells you when that changes against your own past.
+Bellwether turns the speech your Bee already transcribes into nine numbers a day, learns how you normally speak, and shows you when that changes against your own past. The words never leave your computer.
 
-Your watch tracks your heart. What about the way you speak? Bellwether makes speech a vital sign.
+Built for the Build, Ship, Shape: Amazon Developer Hackathon. Tracks: Bee (primary) and Alexa+ (a self-hosted MCP server and an Agent Skill). Mini challenges: AWS Builder and Open Source.
 
-**Judging this?** [docs/FOR_JUDGES.md](docs/FOR_JUDGES.md) maps every Rules.md requirement and judging criterion to the file, command or link that proves it.
+**Not a diagnosis.** Bellwether is a general wellness tool. It does not diagnose, treat, cure or prevent any disease, and it is not a medical device. Speech changes with sleep, stress, illness, medication and mood. Bellwether describes change over time in one person, lists its reasons, and gives you a page to bring to a clinician.
 
-**On real speech nobody here wrote:** across 349 oral-argument sessions of 8 Supreme Court justices, the engine flagged zero, and on all nine features two different justices sit closer together than one justice's own session-to-session range, which is the measured case for comparing a person with their own past rather than with a population ([harness/scotus](harness/scotus)).
-
-**Measured against the detector a reasonable engineer builds instead:** on two personas that are identical until the day a change is injected, Bellwether flags it two days in, with zero false alarms across 47 quiet days. The simplest rule that is equally quiet is two days later. The simplest rule that is equally fast costs a false alarm on someone whose speech never changed. None of eighteen settings of two simpler rules beats it on both axes ([fixtures/detector-comparison.json](fixtures/detector-comparison.json)). Both personas are synthetic and ours, which the file says in those words: this measures that the decision rule earns its complexity, not that the detector works on a real person.
-
-Built for the Build, Ship, Shape: Amazon Developer Hackathon. Tracks: Bee (Wearable AI), and Alexa+ through an Agent Skill and an MCP server, with a Polly-voiced stand-in playing the assistant out loud. Mini challenges: AWS Builder, Open Source.
-
-**Not a diagnosis.** Bellwether is a general wellness tool. It does not diagnose, treat, cure, or prevent any disease, and it is not a medical device. Changes in speech have many everyday causes, including sleep, stress, medication, and mood. It describes change over time in one person against their own past, lists its reasons, and produces something to put on a doctor's desk. Share it with a clinician you trust.
+**Judging this?** [docs/FOR_JUDGES.md](docs/FOR_JUDGES.md) maps every rule and judging criterion to the file, command or link that proves it.
 
 ## Live
 
 - Site, dashboard and doctor report: https://d1xfuyog8wiuvf.cloudfront.net
+- The builder's own Bee check-ins: https://d1xfuyog8wiuvf.cloudfront.net/app/?profile=me-voice
 - API: https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws ([interactive docs](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1/docs), [resilience report](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/api/resilience))
-- MCP server (the Alexa+ surface): `https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/mcp`, spec 2025-11-25 over Streamable HTTP, ten tools
-
-The person whose speech changes on the live site is simulated and labelled as such everywhere; the builder's own check-ins, counted from the Bee, are a real profile beside them. The extractor, the engine, the store, the tiers and the report are the product.
+- MCP server, the Alexa+ surface: `https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/mcp` (spec 2025-11-25, Streamable HTTP, ten tools)
+- Open-source package: [`speech-vitals` on PyPI](https://pypi.org/project/speech-vitals/)
 
 ## What it does
 
-Speech is the brain's only continuous, externally observable output, and when something changes it is usually where the change shows first: more pauses, simpler sentences, lost words. Clinicians know this, and they hear a patient for a few minutes a year. Across all dementias, the average time from first symptoms to diagnosis is **3.5 years** ([Orgeta et al., 2025](https://onlinelibrary.wiley.com/doi/10.1002/gps.70129)), and the newest treatments are approved only for the earliest stage.
+- **Reads your Bee.** `bellwether-ingest` calls the Bee CLI (`bee conversations`, `bee journals`, `bee now`, `bee changed`, `bee todos`) and reads `bee stream --json` and `bee sync` output. One command, `bellwether-ingest mine`, does a wearer's first day end to end.
+- **Keeps nine numbers, throws the words away.** `speech-vitals` reduces each day to nine language features (vocabulary variety, sentence length, syntactic depth, pronoun reliance, filled pauses, disfluencies, rare words, idea density, vocabulary size) on your own computer. Only the numbers are sent.
+- **Compares you with yourself.** Seven days of warmup build a personal baseline. After that a one-sided CUSUM on a concern-signed composite looks for persistent drift. No model decides a tier; it is arithmetic you can reproduce from the day's numbers.
+- **Explains and reports.** A tier (learning, stable, watch, discuss, excluded) with the measures and dates behind it, a weekly note phrased by Amazon Bedrock from the engine's facts only, and a one-page doctor report.
+- **Lets a voice assistant take part.** Ten MCP tools let an assistant read your baseline, host tonight's check-in (`start_check_in`, `coaching_note`), and ask for a second opinion (`weigh_the_change`). A Check-in Host speaks the questions through Amazon Polly while the Bee records, then removes its own words by timing.
+- **Works without a Bee too.** `bellwether-ingest file` reads Zoom or Teams `.vtt`, Otter `.txt` or `Name: text` transcripts and keeps only your turns.
 
-The Bee wristband already transcribes its wearer's day. Bellwether reads those transcripts **on the wearer's own machine**, keeps nine numbers and discards the words, learns how that one person normally speaks, and shows them, in numbers they own, when that changes. Every claim on the site is sourced in [docs/EVIDENCE.md](docs/EVIDENCE.md).
+## Why it matters
 
-## What is here
+Across all dementias the mean time from first symptoms to diagnosis is 3.5 years [1], and in the US Medicare population about 92 percent of expected mild cognitive impairment cases went undiagnosed [2]. Language from people who were still cognitively normal predicted later Alzheimer's onset a mean of 7.6 years ahead [3]. Everyday speech is recorded by a device people already wear, and nobody is measuring it; Bellwether measures it against the person's own past and hands them a page for a visit that already asks the question [9].
 
-| Piece | What it is | Tests |
-|---|---|---|
-| [`packages/speech-vitals`](packages/speech-vitals) | The open-source feature package, on PyPI as [`speech-vitals`](https://pypi.org/project/speech-vitals/) (`pip install speech-vitals`). MIT, dependency-free core. Nine language features per day, each with its literature basis and concerning direction. Features only, never words. | 35 |
-| [`apps/engine`](apps/engine) | The personal baseline: warmup, EWMA baseline, concern-signed composite, CUSUM drift detection, explainable tiers, low-exposure exclusion, and a freeze so the baseline cannot learn its way out of a signal. No model in the loop. Includes the claims suite (every published figure re-derived from the committed personas) the detector comparison against the two simpler rules it replaced, and the external harness that runs the engine over real speech. | 69 |
-| [`apps/ingest`](apps/ingest) | The Bee integration, called in code: `bee conversations`, `bee now`, `bee changed` with exactly-once cursors, a full-history backfill that skips sessions too long or too media-like to be the wearer, `bee stream --json`, `bee sync` markdown, owner isolation when Bee labels the wearer, and the wearer's own voice notes as a stream whose speaker is certain, posted straight to the service with `--post`, and `mine`: a wearer's first day in one command. Check-ins: a voice note anchors the band's session that follows it, so the wearer's deliberate two minutes count even though a Bee note ends after a sentence. | 82 |
-| [`apps/server`](apps/server) | FastAPI: dashboard API, public features API, the MCP server, the Bedrock weekly note, the doctor report. Receives feature rows, never text. | 72 |
-| [`apps/web`](apps/web) | Landing page, dashboard, printable doctor report. Light and dark, 22 info buttons, 100 on accessibility. | |
-| [`apps/agent`](apps/agent) | Two Strands agents on Bedrock, and the Check-in Host: a voice assistant stand-in that speaks tonight's script through Amazon Polly while the Bee records, waits for the Bee, counts the day and reads the coaching note back, never seeing a word. One consumes Bellwether's MCP server as an outside client. The other holds **two** MCP servers at once, Bellwether's and Bee's own, to find the ordinary explanation for a change, behind an audited allowlist that withholds every Bee tool returning verbatim speech. | 37 |
-| [`apps/agentcore`](apps/agentcore) | The second opinion (Advocate, Sceptic, gated Referee) deployed on Amazon Bedrock AgentCore Runtime as an invocable endpoint, verified live. | |
-| [`harness/presidents`](harness/presidents) | Five presidents' own words at every press conference, public record, run unchanged. On the four with no known dementia, 18 of 652 conferences flagged (2.8%), clustered on one overseas trip and one president's last eighteen months; Reagan, the famous contested case, not flagged. The measured false-alarm behaviour on real people, written up in EVIDENCE.md 4d, with the parser bug that first hid six of those flags. | |
-| [`harness/scotus`](harness/scotus) | The engine over real spontaneous speech nobody here wrote: 349 oral-argument sessions of 8 Supreme Court justices. Restraint, sensitivity at a known effect size, and the measured case for an own baseline. | |
-| [`fixtures/personas`](fixtures/personas) | Three synthetic personas through the real extractor and engine, labelled SIMULATED. `sam-first-week` is ten days of check-in-sized days with a short third day, for the dashboard's day-by-day replay of a first week (`?as_of=` on the summary, assessments and coaching endpoints shows a profile as it stood that evening). The two eight-week ones share a seed and differ only in whether a change is injected from day 35, which is asserted, so the comparison is controlled. | |
+## Architecture
 
-**295 tests.** Run them: `pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent`
-
-## Real speech, not ours
-
-Everything above is measured on two personas we wrote, and a person we invented cannot surprise us. So the engine was run over the Supreme Court oral argument corpus (ConvoKit, from the Oyez Project): the same named people speaking spontaneously and unscripted across dozens of separate sittings in one term, transcribed by court reporters, published by the Court, and authored by nobody here.
-
-**Restraint.** Across **349 oral-argument sessions of 8 justices** in the 2019 term, the engine flagged **zero**. Every one of the eight series ran clean. A justice does not undergo a systematic language change over a single nine-month term, so a flag inside a series would be a false alarm, and there were none.
-
-**Sensitivity, so the zero means something.** A detector that never fires also scores zero. Real sessions from real justices were shifted in the concerning direction by a known multiple of that person's own standard deviation, ramped over fourteen sessions exactly as the persona ramps:
-
-| Shift, in that person's own SD | Detected | Median sessions to detect |
-|---|---|---|
-| 0.0 (nothing done) | 0 of 5 | n/a |
-| 0.5 | 1 of 5 | 1 |
-| 1.0 | 4 of 5 | 6.5 |
-| 1.5 | **5 of 5** | 2 |
-| 2.0 | 5 of 5 | 1 |
-| 3.0 | 5 of 5 | 1 |
-
-The zero row is in the table on purpose. It is the same real series with nothing done to it, and if it ever detects anyone then every other row is measuring the engine tripping over its own tail.
-
-**And the reason for an own baseline, measured rather than asserted.** On all nine features, the spread between different justices is *smaller* than the spread within a single justice's own sessions: ratios from 0.16 to 0.76, none above 1. Comparing a person against a population would be asking a detector to resolve a difference smaller than the noise it has to tolerate anyway. This is the clearest evidence in the repository for the n-of-1 design, and it comes from speech we did not write.
-
-**What it is not.** There is no labelled cognitive change anywhere in this corpus, so nothing here is evidence about dementia and none of it is offered as any. A session is one argument, not a day of a life. Court reporters strip "um" and "uh", so two of the nine features are near-constant here and the corpus exercises seven of them honestly. Appellate argument is a formal register, not kitchen-table conversation. All four limits are in the result file.
-
-Reproduce: `pip install convokit`, then `python harness/scotus/run.py`. That exact command downloads the 2019 term (7 MB) and reproduces the committed `harness/scotus/results.json` byte for byte. One term is the right unit rather than a shortcut: spanning decades would confound restraint with ordinary ageing. Pinned by tests in `apps/engine/tests/test_scotus_harness.py` which skip when the corpus is absent, so a fresh clone never fails over a download it was not asked to make.
-
-## The detector it replaced
-
-Accumulating is a design choice, and a design choice is worth nothing unless the obvious alternative was measured and lost. Two were, and they are not strawmen: they are what most people build first, they need no state, and they are trivially explainable.
-
-Every detector below sees the same nine features, the same per-person EWMA baseline, the same concern signing and the same low-exposure exclusions. Only the decision rule differs, which is what makes the comparison about the rule rather than about feature engineering.
-
-| Rule | False alarms on the unchanged person | Days into the change before it fires |
-|---|---|---|
-| **Bellwether** (one-sided CUSUM on the composite, k 0.5, h 5.0) | **0** | **2** |
-| Composite over a fixed threshold, best quiet setting (4) | 0 | 4 |
-| Composite over a fixed threshold, fastest setting (3) | 1 | 1 |
-| Any single feature's z over a threshold, best setting (4.0) | 1 | 3 |
-| Any single feature's z over a threshold, at z 2.0 | 6 | 1 |
-
-The two axes trade against each other, which is the whole point: a detector that buys silence with lateness has not won anything, and neither has one that buys speed with false alarms. Every false alarm costs a family a frightened week; every day of delay is a day nobody acted on.
-
-Reproduce the sweep: `python fixtures/compare_detectors.py`. Eighteen settings, both directions, written to `fixtures/detector-comparison.json` and pinned by tests.
-
-## The properties worth arguing with
-
-- **Features, never words.** The API accepts feature rows and drops any field the schema does not know at the door. A stored record holds no string but the date. Both are tests, not promises.
-- **Your own baseline.** Bellwether never compares you with a population. An accent or a quiet manner is simply your normal.
-- **Nothing that decides a tier calls a model.** Extraction is a tagger and parser; the engine is arithmetic. A reviewer can reproduce any tier from the day's features. A language model is allowed to phrase the weekly note and explain nothing else.
-- **The baseline cannot learn its way out of a signal.** While drift is flagged, the baseline stops updating. Otherwise a slow real change becomes the new normal within weeks.
-- **A quiet day is not a change in you.** Days below 150 words are excluded and drawn hollow.
-- **Nothing fails into silence.** Three-model Bedrock ladder to a deterministic template; the catalogue and the store report their own degradation at [`/api/resilience`](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/api/resilience).
-
-## Use it without cloning
-
-Checked in a fresh environment on 2026-10-20:
-
-```
-pip install "speech-vitals[nlp]" "bellwether-ingest @ git+https://github.com/usv240/bellwether#subdirectory=apps/ingest"
-python -m spacy download en_core_web_sm
-bellwether-ingest mine --profile <your-name>        # with a Bee: your first day, your own page
-bellwether-ingest file meetings/*.vtt --speaker "Your Name"   # no Bee: your own turns from meeting transcripts
+```mermaid
+flowchart LR
+  Bee["Bee wristband<br/>transcribes the day"] -->|Bee CLI| Ingest["bellwether-ingest on your computer<br/>speech-vitals: nine numbers a day, words discarded"]
+  Ingest -->|feature rows only| API["API on AWS Lambda<br/>FastAPI behind a function URL"]
+  API --> DB[("Amazon DynamoDB<br/>feature rows, notes, checks")]
+  API --> Web["Dashboard and doctor report<br/>Next.js on Amazon S3 and CloudFront"]
+  API --> MCP["MCP server, spec 2025-11-25<br/>the Alexa+ surface, ten tools"]
+  API --> Bedrock["Amazon Bedrock<br/>phrases the weekly note"]
+  MCP --> Agents["Strands Agents<br/>check-in, context, second opinion"]
+  Agents --> Bedrock
+  Agents --> AgentCore["Amazon Bedrock AgentCore<br/>hosts the second opinion"]
+  BeeMCP["Bee's own MCP server<br/>context tools only"] --> Agents
+  MCP --> Host["Check-in Host<br/>speaks through Amazon Polly"]
+  Host -->|three questions out loud| Bee
 ```
 
-To let your own assistant read your baseline, add the Agent Skill the
-way Bee's own skill is added: `npx skills add usv240/bellwether`.
+Every box is in this repository: `apps/ingest`, `packages/speech-vitals`, `apps/server` (API, MCP server, Bedrock note), `apps/web`, `apps/agent` (Strands agents and the Check-in Host), `apps/agentcore`, `infra` (CDK for Lambda, DynamoDB, S3, CloudFront).
+
+## What is real and what is simulated
+
+- **Real:** the builder's own Bee check-ins on the live site (profile `me-voice`), counted from the device since 2026-10-15; the live Bee capture in [docs/BEE_LIVE.md](docs/BEE_LIVE.md); the hosted check-in run on 2026-10-19; the Supreme Court and presidential harness runs; the deployed API, MCP server and AgentCore endpoint; the committed second-opinion run in `apps/agent/runs/`.
+- **Simulated:** the person whose speech changes on the live site (`alex-drift`) and the quiet twin (`alex-stable`) are synthetic personas written by this project, labelled SIMULATED on every screen and in every response. `sam-first-week` is a simulated first week for the day-by-day replay. The detector comparison runs on those personas and says so in its result file.
+- **Replayed:** the dashboard's first-week replay shows a profile as it stood on each evening (`?as_of=`), built from committed fixtures.
+- **Stand-in:** the Check-in Host speaks through Amazon Polly in place of Alexa+, using exactly the MCP tools an Alexa+ agent would get.
+
+## Evidence
+
+Every number below is read from a committed file.
+
+| Measured | Result | File |
+|---|---|---|
+| Restraint on real speech | 349 oral-argument sessions of 8 Supreme Court justices (2019 term), 0 flagged | `harness/scotus/results.json` |
+| Sensitivity on the same real sessions | A shift of 1.5 within-person SD caught in 5 of 5 subjects, median 2 sessions; 0.0 SD caught 0 of 5 | `harness/scotus/results.json` |
+| The case for an own baseline | On all nine features, between-justice spread is 0.16 to 0.76 of within-justice spread, none above 1 | `harness/scotus/results.json` |
+| Real people over years | 652 assessed press conferences of four presidents with no known dementia diagnosis, 18 flagged (2.8 percent); Reagan 39 assessed, 0 flagged | `harness/presidents/results.json` |
+| The decision rule against two simpler ones | 0 false alarms and a flag 2 days into the change; 0 of 18 simpler settings beat it on both axes; the quietest simpler rule is 4 days, the fastest costs 1 false alarm | `fixtures/detector-comparison.json` |
+| The synthetic personas | Stable twin: 47 consecutive assessed days with zero false alarms. Drift twin: discuss tier since 2026-09-03 | `fixtures/personas/alex-stable/summary.json`, `fixtures/personas/alex-drift/summary.json` |
+| Live Bee data | 209 conversations, 24,849 utterances, 16 days with speech, 205,750 words read on the wearer's machine, 0 words written | `docs/BEE_LIVE.md` |
+| Hosted check-in | The first live session kept exactly the wearer's 17 answers, 297 words; host-line removal took 0 of 6,645 real utterances | `apps/agent/README.md`, `packages/speech-vitals/speech_vitals/elicitation.py` |
+| Second opinion on AgentCore | Referee note passed the gate first time (`gate: ok`, `note_source: referee`), captured 2026-10-19 | `apps/agent/runs/second-opinion-alex-drift.json` |
+| Running cost | 19.8 cents per person per month with a nightly spoken check-in, 5.7 cents without, at AWS list prices | `docs/cost.json` |
+| MCP conformance, live | 12 of 12 MUST and 7 of 7 SHOULD on the deployed server (`node scripts/mcp-conform.mjs`, run 2026-10-22) | `scripts/mcp-conform.mjs` |
+| Accessibility | Lighthouse 100 on accessibility on all three pages | `docs/ACCESSIBILITY.md` |
+
+The harness corpora contain no labelled cognitive change, so none of this is evidence about dementia; it is the measured behaviour of the software on real speech. Full sources and method: [docs/EVIDENCE.md](docs/EVIDENCE.md). Reproduce: `pip install convokit && python harness/scotus/run.py`, `python harness/presidents/run.py`, `python fixtures/compare_detectors.py`.
+
+## Research
+
+1. Orgeta V, et al. Time to Diagnosis in Dementia: A Systematic Review With Meta-Analysis. *Int J Geriatr Psychiatry*. 2025. doi:10.1002/gps.70129, PMC12300619.
+2. Mattke S, et al. Expected and diagnosed rates of mild cognitive impairment and dementia in the U.S. Medicare population. *Alzheimer's Research & Therapy*. 2023;15:128. doi:10.1186/s13195-023-01272-z.
+3. Eyigoz E, et al. Linguistic markers predict onset of Alzheimer's disease. *EClinicalMedicine*. 2020;28:100583. doi:10.1016/j.eclinm.2020.100583.
+4. Kessels RPC. Patients' memory for medical information. *J R Soc Med*. 2003;96(5):219-222. doi:10.1177/014107680309600504.
+5. Luz S, et al. Alzheimer's Dementia Recognition through Spontaneous Speech: The ADReSS Challenge. *Interspeech 2020*. arXiv:2004.06833.
+6. Berisha V, et al. Tracking discourse complexity preceding Alzheimer's disease diagnosis: Reagan and Bush press conferences. *J Alzheimers Dis*. 2015;45(3):959-963. doi:10.3233/JAD-142763.
+7. Beckmann MN. Did Reagan Decline? *J Alzheimers Dis*. 2024;101(4):1261-1266. doi:10.3233/JAD-240294.
+8. Barnett JH, et al. Early intervention in Alzheimer's disease: a health economic study of the effects of diagnostic timing. *BMC Neurology*. 2014;14:101. PMC4032565.
+9. Cordell CB, et al. Alzheimer's Association recommendations for operationalizing the detection of cognitive impairment during the Medicare Annual Wellness Visit. *Alzheimer's & Dementia*. 2013;9(2):141-150. doi:10.1016/j.jalz.2012.09.011.
+10. Alzheimer's Association. 2026 Alzheimer's Disease Facts and Figures. *Alzheimer's & Dementia*. 2026. doi:10.1002/alz.71345.
+
+The feature-by-feature literature (Covington and McFall 2010, Fraser et al. 2016, Ahmed et al. 2013, Snowdon et al. 1996, Konig et al. 2015) is in [packages/speech-vitals/README.md](packages/speech-vitals/README.md) and in code in `speech_vitals/types.py`.
 
 ## Run it
 
@@ -117,100 +98,84 @@ way Bee's own skill is added: `npx skills add usv240/bellwether`.
 python -m venv .venv && .venv/Scripts/activate      # or source .venv/bin/activate
 pip install -e "packages/speech-vitals[nlp,dev]" -e "apps/engine[dev]" -e "apps/ingest[dev]" -e "apps/server[dev]"
 python -m spacy download en_core_web_sm
-pytest packages/speech-vitals apps/engine apps/ingest apps/server apps/agent
 
-python fixtures/personas/generate.py                # regenerate the personas
-uvicorn bellwether_server.main:app --port 8789      # API + MCP on :8789
+uvicorn bellwether_server.main:app --port 8789      # API and MCP server on :8789
 cd apps/web && npm install && npm run dev           # the site on :3000
 ```
 
-On Windows, clone to a short path such as `C:/dev/bellwether`. spaCy's compiled parser fails to load from a deep directory and reports it as `DLL load failed ... The filename or extension is too long`, which names the wrong cause. FRICTION_LOG.md entry 8.
-
-Bee: `npm install -g @beeai/cli`, enable Developer Mode in the Bee app (tap the version five times in Settings), then `bee login`. Everything above runs without it.
-
-The day a device arrives, one command rehearses the whole chain and stops at the first thing genuinely wrong:
+With a Bee: `npm install -g @beeai/cli`, enable Developer Mode in the Bee app, `bee login`, then:
 
 ```
-bellwether-ingest firstrun          # read only, safe to run twice
-bellwether-ingest evidence          # writes docs/BEE_LIVE.md, no speech in it
+bellwether-ingest firstrun                          # rehearse the whole chain, read only
+bellwether-ingest mine --profile <your-name>        # your first day: read the Bee, send nine numbers, open your page
+python apps/agent/check_in_host.py --profile <your-name> --count   # the assistant asks, the Bee records, the day is counted
 ```
 
-`firstrun` checks the CLI, the login, whether anything has been recorded yet, whether a real day reduces to the nine features, and whether that day has enough speech to assess at all. Every one of those failures is reproduced in tests with an injected runner, so the path is rehearsed before the hardware is unboxed.
+Without a Bee: `bellwether-ingest file meetings/*.vtt --speaker "Your Name"`.
 
-`evidence` writes a record that live Bee data flowed, containing counts, shapes and the nine numbers and not one word of speech. A test feeds it a transcript full of names, a doctor, a family member and an account number, and asserts none of them survive. It is designed to be committed to a public repository even though its input never could be.
-
-```
-bellwether-ingest status
-bellwether-ingest pull --backfill --max-minutes 60 --out days.json
-curl -X POST $API/v1/profiles/me/days -H "content-type: application/json" -d @days.json
-
-# Or the whole first day in one command, which also claims your two profiles with a
-# key kept in .bellwether-key on this machine. Only its hash leaves. After that, writes to
-# your profiles need the key (header X-Bellwether-Key); reads stay open, the way the
-# dashboard needs them; the demo profile stays open on purpose.
-bellwether-ingest mine --profile <your-name>
-
-# Let a voice assistant host the check-in: it speaks tonight's three questions through the speaker
-# (Amazon Polly), the Bee records your answers, its own words are removed by timing, the day is counted
-# and the coaching note read back. Band on, phone with the Bee app nearby.
-python apps/agent/check_in_host.py --profile <your-name> --count
-
-# No Bee? Meeting transcripts already say who said what. Zoom or Teams .vtt,
-# Otter .txt, or "Name: text" files: list the names, then keep only yours.
-bellwether-ingest file meetings/*.vtt
-bellwether-ingest file meetings/*.vtt --speaker "Your Name" --post <your-name>
-```
-
-## Every number here is a test
-
-[`apps/engine/tests/test_claims.py`](apps/engine/tests/test_claims.py) re-derives every published figure from the committed personas and checks it against the documents that state it. Two of its seventeen assertions do more than bookkeeping.
-
-The personas share a seed, and the test asserts their feature values are identical up to the exact day the change is injected. Without that, the drift persona would not be evidence that the engine detects drift; it would be evidence that the engine can tell two people apart.
-
-And the freeze is asserted against twenty days of real output: from the first non-stable day, every feature's baseline stops moving and never moves again. An adaptive baseline that keeps learning while it is signalling will absorb the change it was built to report and return to "stable" with nothing resolved. That failure is invisible in ordinary operation, which is exactly why it needs a test.
-
-## Verify the live MCP server yourself
-
-Opening an MCP URL in a browser shows an error, because the protocol is a POST with a session handshake. So there is a probe:
+Agents (`pip install strands-agents strands-agents-tools mcp`, AWS credentials with Bedrock access):
 
 ```
-node scripts/mcp-conform.mjs            # this project's deployed server
-node scripts/mcp-conform.mjs --all      # all five servers built for this hackathon
+python apps/agent/speech_check_in.py --url https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/mcp
+python apps/agent/second_opinion.py --profile alex-drift
+python apps/agent/context_check_in.py --profile alex-drift
 ```
 
-No install and no MCP client library: one dependency-free Node script against the deployed Lambda. It checks nineteen rules from spec revision 2025-11-25 over real HTTP, including the two shapes that in-process tests never produce: a DELETE carrying a JSON content-type and an empty body, and a body the server cannot parse.
+Deploy your own stack: `cd infra && npm install && npm run deploy` (see [docs/AWS.md](docs/AWS.md)). Deploy the second opinion to AgentCore: see [apps/agentcore/README.md](apps/agentcore/README.md).
 
-The same file probes all five servers, which is the point of `--all`: this one and Volley's are FastAPI on Python and the other three are Fastify on Node, and a conformance claim that has only ever met one implementation is a claim about that implementation. This one passes all nineteen on every run, including both shapes that the Node servers failed.
+On Windows, clone to a short path such as `C:/dev/bellwether`; spaCy's parser does not load from a deep directory (FRICTION_LOG.md entry 8).
 
-It grades what it checks. A MUST failure is a spec violation and exits non-zero; a SHOULD failure is reported and does not. Where the spec allows more than one answer, such as GET opening a stream or declining with 405, the probe accepts either and says which it saw. A conformance tool that grades its own preferences as violations teaches people to ignore it.
+## Tests
 
-It has already paid for itself. Its first run across the three deployed Lambdas found that a malformed request body came back as an HTTP 500 carrying the framework's own error envelope, where JSON-RPC calls for a -32700 Parse error. Bellwether was already correct; the two Node servers were not, and every in-process test in both passed while the live servers were wrong. That is the whole argument for probing over real HTTP.
+```
+.venv/Scripts/python.exe -m pytest -q packages/speech-vitals apps/engine apps/ingest apps/server apps/agent
+```
 
-## Documentation
+Run on 2026-10-22: `295 passed`.
 
-**For judges, start with [FOR_JUDGES.md](docs/FOR_JUDGES.md)**: every Rules.md requirement and judging criterion, with the file or link that proves it. · [SUBMISSION.md](docs/SUBMISSION.md) · [EVIDENCE.md](docs/EVIDENCE.md) (every claim with its source) · [PILOT.md](docs/PILOT.md) (the study to run, endpoints fixed first) · [DESIGN.md](docs/DESIGN.md) · [AWS.md](docs/AWS.md) · [ACCESSIBILITY.md](docs/ACCESSIBILITY.md) · [FEATURE_REQUESTS.md](docs/FEATURE_REQUESTS.md) · [FRICTION_LOG.md](FRICTION_LOG.md) · [PRODUCT_FEEDBACK.md](PRODUCT_FEEDBACK.md)
+| Package | Tests |
+|---|---|
+| [`packages/speech-vitals`](packages/speech-vitals) | 35 |
+| [`apps/engine`](apps/engine) | 69 |
+| [`apps/ingest`](apps/ingest) | 82 |
+| [`apps/server`](apps/server) | 72 |
+| [`apps/agent`](apps/agent) | 37 |
 
-## Status
+**295 tests.** They include guards that check published numbers against the files that produce them: `apps/engine/tests/test_claims.py` re-derives every persona figure, `test_published_counts.py` counts this table, `apps/server/tests/test_cost.py` recomputes `docs/cost.json`, and `apps/engine/tests/test_scotus_harness.py` pins the Supreme Court result when the corpus is present.
 
-The device arrived on 2026-09-29 and the chain ran end to end on it the same day: [docs/BEE_LIVE.md](docs/BEE_LIVE.md) is the record, counts and the nine numbers from a real day and not one word. The first session also found that the CLI's shapes differed from every fixture in three ways, now pinned in `apps/ingest/tests/test_device_shapes.py`. Fourteen days in, every speaker Bee returns is "Unknown" (FRICTION_LOG entry 12, [bee-cli issue #19](https://github.com/bee-computer/bee-cli/issues/19)), so the live site shows the wearer's band as two labelled profiles: voice notes, the wearer's own speech by construction, and everyday conversations with long sessions and media filtered out. Both are real; the site says which is which.
+The web app (`apps/web`) has no unit tests; `npx vitest run` reports no test files. It is checked against the deployed site by the Lighthouse runs in `docs/ACCESSIBILITY.md`.
 
-## Built with
-
-Every tool this project uses, and the file that uses it.
+## AWS and tools used
 
 | Tool | What it does here | Where |
 |---|---|---|
-| Bee CLI | every path Bee data takes in: conversations, journals, todos, changes | [`apps/ingest/bellwether_ingest/bee.py`](apps/ingest/bellwether_ingest/bee.py) |
-| Bee's own MCP server | an agent holds it beside Bellwether's, behind an allow-list that withholds every tool returning speech | [`apps/agent/context_check_in.py`](apps/agent/context_check_in.py) |
-| MCP server, spec 2025-11-25, Streamable HTTP | the Alexa+ surface: ten tools, signed sessions, conformance-probed live | [`apps/server/bellwether_server/mcp.py`](apps/server/bellwether_server/mcp.py) |
-| Agent Skill | tells an agent how to use the ten tools and what never to say; a test checks it names every tool | [`skills/bellwether/SKILL.md`](skills/bellwether/SKILL.md) |
-| Amazon Bedrock (Claude) | phrases the weekly note on a three-model ladder with a template floor; runs the agents | [`apps/server/bellwether_server/bedrock.py`](apps/server/bellwether_server/bedrock.py) |
-| Strands Agents SDK | the Speech Check-in agent, the Context agent, and the second opinion (Advocate, Sceptic, gated Referee) | [`apps/agent/second_opinion.py`](apps/agent/second_opinion.py) |
-| Amazon Bedrock AgentCore Runtime | hosts the second opinion as an invocable endpoint | [`apps/agentcore`](apps/agentcore) |
-| Amazon Polly | the voice of the hosted check-in | [`apps/agent/check_in_host.py`](apps/agent/check_in_host.py) |
-| Amazon DynamoDB, AWS Lambda, Amazon S3, Amazon CloudFront, AWS CDK | the store, the service, the site, one deploy | [`infra/bin/app.ts`](infra/bin/app.ts) |
-| PyPI | speech-vitals, the open-source feature package | [`packages/speech-vitals`](packages/speech-vitals) |
+| Bee CLI | every path Bee data takes in: conversations, journals, todos, changes, stream, sync | `apps/ingest/bellwether_ingest/bee.py` |
+| Bee's own MCP server | held beside Bellwether's by the context agent, behind an allowlist of nine context tools | `apps/agent/context_check_in.py` |
+| MCP server, spec 2025-11-25, Streamable HTTP | the Alexa+ surface: ten tools, signed sessions, probed live | `apps/server/bellwether_server/mcp.py` |
+| Agent Skill | tells an assistant how to use the ten tools and what never to say | `skills/bellwether/SKILL.md` |
+| Amazon Bedrock | phrases the weekly note on a three-model Claude ladder with a deterministic template floor; runs every agent | `apps/server/bellwether_server/bedrock.py` |
+| Strands Agents | Speech Check-in agent, Context agent, and the second opinion (Advocate, Sceptic, gated Referee) | `apps/agent/speech_check_in.py`, `apps/agent/context_check_in.py`, `apps/agent/second_opinion.py` |
+| Amazon Bedrock AgentCore | hosts the second opinion as runtime `bellwethersecond_secondopinion`, verified by live invocation | `apps/agentcore/app/secondopinion/main.py` |
+| Amazon Polly | the voice of the Check-in Host | `apps/agent/check_in_host.py` |
+| Amazon DynamoDB | one on-demand table of feature rows, notes, checks and metadata | `apps/server/bellwether_server/store.py`, `infra/bin/app.ts` |
+| AWS Lambda | the FastAPI app behind a function URL (Python 3.12, Mangum) | `apps/server/bellwether_server/lambda.py`, `infra/bin/app.ts` |
+| Amazon S3 and Amazon CloudFront | the static Next.js site | `infra/bin/app.ts` |
+| AWS CDK | the whole stack as TypeScript, one `npm run deploy` | `infra/` |
 
-## License
+Reasons for each choice, and what was deliberately not used: [docs/AWS.md](docs/AWS.md).
 
-MIT.
+## Privacy
+
+- **On your computer:** the transcript is reduced to nine numbers and a word count inside `speech_vitals.aggregate_day`, and the words are dropped at the day boundary. The Check-in Host's line timings stay in a local `.bellwether-host.json`.
+- **What leaves:** a date, nine features and a word count per day. The API's `validate_day` drops any field the schema does not know; `apps/server/tests/test_server.py` posts a row carrying a `transcript` field and checks it never lands.
+- **What is stored:** feature rows (`DAY#`), notes you choose to add (`ANN#`), spoken-check scores (`CHECK#`) and metadata such as a profile's claim-key hash (`META#`), under `PROFILE#{id}` in one DynamoDB table. Reads are open; writes to a claimed profile need the key (`X-Bellwether-Key`), stored as SHA-256 and compared in constant time.
+- **What the models see:** Amazon Bedrock receives the engine's facts text, never speech. The context agent's allowlist withholds every Bee tool that returns verbatim speech (`apps/agent/tests/test_allowlist.py`). The AgentCore runtime reaches a profile only through the public MCP tools.
+- **Shown live:** the site's privacy check sends a transcript full of names to a fresh in-memory store and searches what was kept (`apps/server/bellwether_server/privacy_check.py`).
+
+## Documentation
+
+[FOR_JUDGES.md](docs/FOR_JUDGES.md) · [SUBMISSION.md](docs/SUBMISSION.md) · [EVIDENCE.md](docs/EVIDENCE.md) · [PILOT.md](docs/PILOT.md) · [DESIGN.md](docs/DESIGN.md) · [AWS.md](docs/AWS.md) · [ACCESSIBILITY.md](docs/ACCESSIBILITY.md) · [BEE_LIVE.md](docs/BEE_LIVE.md) · [VIDEO_SCRIPT.md](docs/VIDEO_SCRIPT.md) · [FEATURE_REQUESTS.md](docs/FEATURE_REQUESTS.md) · nineteen entries in [FRICTION_LOG.md](FRICTION_LOG.md) · [PRODUCT_FEEDBACK.md](PRODUCT_FEEDBACK.md)
+
+## Licence
+
+MIT. See [LICENSE](LICENSE).

@@ -6,7 +6,7 @@ A transcript goes in. Nine numbers per day come out. None of them can reconstruc
 
 ## Install
 
-Not yet on PyPI. Install from the repository:
+On PyPI as `speech-vitals` (`pip install speech-vitals`), or install from the repository:
 
 ```
 pip install "git+https://github.com/usv240/bellwether.git#subdirectory=packages/speech-vitals&egg=speech-vitals[nlp]"
