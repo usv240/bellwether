@@ -264,6 +264,77 @@ ALEXA = "#alexa"
 START = "#alexa button:has-text('Start a session')"
 
 
+
+# Full-frame cards drawn inside the zoomed document: sizes are divided by
+# the zoom, as the end card's are, so a 15px line is 15px on a 1080p frame.
+def _card_js(inner_html: str, card_id: str) -> str:
+    return """
+(() => {
+  const S = __SCALE__;
+  const old = document.getElementById('__ID__'); if (old) old.remove();
+  const card = document.createElement('div');
+  card.id = '__ID__';
+  card.style.cssText = ['position:fixed','left:0','right:0','bottom:0','top:' + (56 * S) + 'px',
+    'z-index:2147483645','background:#10201d','color:#f2f4f8','display:flex','flex-direction:column',
+    'align-items:center','justify-content:center','gap:' + (18 * S) + 'px','font-family:Inter,system-ui,sans-serif',
+    'opacity:0','transition:opacity 500ms ease-out'].join(';');
+  card.innerHTML = __HTML__;
+  document.documentElement.appendChild(card);
+  const cur = document.getElementById('__cursor'); if (cur) cur.style.opacity = '0';
+  requestAnimationFrame(() => { card.style.opacity = '1'; });
+})();
+""".replace("__SCALE__", str(SCALE / PAGE_ZOOM)).replace("__ID__", card_id).replace("__HTML__", json.dumps(inner_html.replace("__S__", str(SCALE / PAGE_ZOOM))))
+
+
+def _fade_card(r: "Recorder", card_id: str) -> None:
+    r.page.evaluate(f"(() => {{ const c = document.getElementById('{card_id}'); if (!c) return; c.style.opacity = '0'; setTimeout(() => c.remove(), 520); const cur = document.getElementById('__cursor'); if (cur) cur.style.opacity = '1'; }})()")
+    r.page.wait_for_timeout(560)
+
+
+def _tile(title: str, body: str, accent: str = "#e0b25a") -> str:
+    S = "__S__"
+    return (f'<div style="flex:1;min-width:0;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);'
+            f'border-radius:calc(14px * {S});padding:calc(26px * {S}) calc(28px * {S})">'
+            f'<div style="color:{accent};font-weight:700;font-size:calc(30px * {S});line-height:1.15">{title}</div>'
+            f'<div style="margin-top:calc(12px * {S});font-size:calc(20px * {S});line-height:1.4;color:#d7dde6">{body}</div></div>')
+
+
+HOOK_HTML = (
+    '<div style="font-weight:700;font-size:calc(54px * __S__);margin-bottom:calc(10px * __S__)">Bellwether</div>'
+    '<div style="display:flex;gap:calc(22px * __S__);width:calc(1180px * __S__);align-items:stretch">'
+    + _tile("Bee", "captures your speech, on the band you already wear")
+    + '<div style="align-self:center;font-size:calc(40px * __S__);color:#7c8a86">&rarr;</div>'
+    + _tile("Bellwether", "finds changes in how you speak, against your own past")
+    + '<div style="align-self:center;font-size:calc(40px * __S__);color:#7c8a86">&rarr;</div>'
+    + _tile("Doctor report", "supports a better conversation with a clinician")
+    + '</div>'
+    '<div style="margin-top:calc(14px * __S__);font-size:calc(20px * __S__);color:#9aa7a3">Nine numbers a day. Never your words. Not a diagnosis.</div>'
+)
+
+COMPARE_HTML = (
+    '<div style="font-size:calc(18px * __S__);letter-spacing:0.08em;text-transform:uppercase;color:#e0b25a;font-weight:700">Two simulated people, labelled SIMULATED on every screen</div>'
+    '<div style="display:flex;gap:calc(26px * __S__);width:calc(1180px * __S__);align-items:stretch">'
+    + _tile("Stable speech", "Fifty-four assessed days. Every measure inside their own normal range. Forty-seven stable days in a row. <b style=\"color:#8fd3b6\">Nothing flagged.</b>", "#8fd3b6")
+    + _tile("Changing speech", "Fifty-four assessed days. Nine measures drifted together and stayed there: shorter sentences, more fillers, fewer rare words. <b style=\"color:#f0a36a\">Persistent change since September 3.</b>", "#f0a36a")
+    + '</div>'
+    '<div style="margin-top:calc(10px * __S__);font-size:calc(18px * __S__);color:#9aa7a3">Read from fixtures/personas/alex-stable and alex-drift, the committed synthetic personas</div>'
+)
+
+AWS_HTML = (
+    '<div style="font-size:calc(18px * __S__);letter-spacing:0.08em;text-transform:uppercase;color:#e0b25a;font-weight:700">Where the data goes</div>'
+    '<div style="display:flex;gap:calc(16px * __S__);width:calc(1260px * __S__);align-items:stretch">'
+    + _tile("Bee", "records the day; the transcript stays in your Bee account")
+    + '<div style="align-self:center;font-size:calc(36px * __S__);color:#7c8a86">&rarr;</div>'
+    + _tile("Your computer", "speech-vitals turns a day into nine numbers; the words are dropped here")
+    + '<div style="align-self:center;font-size:calc(36px * __S__);color:#7c8a86">&rarr;</div>'
+    + _tile("AWS", "AWS Lambda and Amazon DynamoDB keep the nine numbers; Claude on Amazon Bedrock phrases the note; the agent runs on Amazon Bedrock AgentCore")
+    + '<div style="align-self:center;font-size:calc(36px * __S__);color:#7c8a86">&rarr;</div>'
+    + _tile("Dashboard and report", "the trend, the weekly note, the page for your clinician; the MCP server for Alexa+")
+    + '</div>'
+    '<div style="margin-top:calc(10px * __S__);font-size:calc(18px * __S__);color:#9aa7a3">apps/ingest and packages/speech-vitals on your computer; apps/server, apps/agent and infra on AWS</div>'
+)
+
+
 def preflight() -> None:
     """The narration states facts about the live service. Check them before a frame is shot."""
     import urllib.request
@@ -290,9 +361,11 @@ def goto(r: Recorder, path: str, ready: str) -> None:
 
 
 def hero(r: Recorder):
+    r.page.evaluate(_card_js(HOOK_HTML, "__hook"))
     yield
-    r.on_phrase("More pauses")
-    r.point("figure", dy=0)
+    r.on_phrase("Nine numbers a day")
+    _fade_card(r, "__hook")
+    r.point(HERO, dy=0)
     r.hold_beat()
 
 
@@ -329,7 +402,7 @@ def checkins(r: Recorder):
     r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 120 * SCALE)
     yield
     r.point("text=Real Bee: check-ins")
-    r.on_phrase("Seven days teach it")
+    r.on_phrase("Seven days counted")
     if r.page.locator(FIRST_WEEK).count():
         r.scroll_to(FIRST_WEEK, rest=URL_BAR_HEIGHT + 60 * SCALE)
         r.point(f"ol[aria-label='Counted days']")
@@ -389,6 +462,51 @@ def replay(r: Recorder):
     r.hold_beat()
 
 
+def compare(r: Recorder):
+    r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 120 * SCALE)
+    r.click(f"{WHOSE} a:has-text('Simulated person')")
+    r.page.wait_for_selector("text=Simulated person", timeout=60_000)
+    r.page.wait_for_selector(CONFOUNDERS, timeout=60_000)
+    r.page.wait_for_timeout(1200)
+    r.scroll_to(".recharts-wrapper", rest=URL_BAR_HEIGHT + 150 * SCALE)
+    r.page.evaluate(_card_js(COMPARE_HTML, "__compare"))
+    yield
+    r.on_phrase("The other changes")
+    _fade_card(r, "__compare")
+    # Ring the late days: the right third of the chart, where the line leaves the band.
+    box = r.page.locator(".recharts-wrapper").first.bounding_box()
+    z = PAGE_ZOOM
+    left, top = (box["x"] + box["width"] * 0.62) / z, (box["y"] + box["height"] * 0.05) / z
+    w, h = box["width"] * 0.36 / z, box["height"] * 0.72 / z
+    r.page.evaluate("([l, t, w, h]) => { const k = document.createElement('div'); k.id = '__ring'; k.style.cssText = 'position:fixed;left:' + l + 'px;top:' + t + 'px;width:' + w + 'px;height:' + h + 'px;border:4px solid #f0a36a;border-radius:14px;box-shadow:0 0 0 6px rgba(240,163,106,0.18);z-index:2147483644;opacity:0;transition:opacity 400ms ease'; document.documentElement.appendChild(k); requestAnimationFrame(() => { k.style.opacity = '1'; }); }", [left, top, w, h])
+    r.page.mouse.move(box["x"] + box["width"] * 0.35, box["y"] + box["height"] * 0.7, steps=24)
+    r.page.mouse.move(box["x"] + box["width"] * 0.9, box["y"] + box["height"] * 0.25, steps=60)
+    r.on_phrase("It offers everyday explanations")
+    r.page.evaluate("const k = document.getElementById('__ring'); if (k) k.remove();")
+    r.scroll_to(CONFOUNDERS, rest=URL_BAR_HEIGHT + 60 * SCALE)
+    r.point("text=Not sleeping well")
+    r.hold_beat()
+
+
+def aws(r: Recorder):
+    r.page.evaluate(_card_js(AWS_HTML, "__aws"))
+    yield
+    r.hold_beat()
+    _fade_card(r, "__aws")
+
+
+def close(r: Recorder):
+    goto(r, "/app/", ".recharts-wrapper")
+    r.scroll_to(".recharts-wrapper", rest=URL_BAR_HEIGHT + 150 * SCALE)
+    yield
+    r.on_phrase("Bellwether turns those moments")
+    goto(r, "/report/", "text=Bellwether speech report")
+    r.scroll_to("text=Tier over the period", rest=URL_BAR_HEIGHT + 120 * SCALE)
+    r.on_phrase("It does not diagnose")
+    r.page.evaluate(END_CARD_JS)
+    r.hold_beat()
+
+
 def simulated(r: Recorder):
     r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 120 * SCALE)
     r.click(f"{WHOSE} a:has-text('Simulated person')")
@@ -422,7 +540,7 @@ def proof(r: Recorder):
     r.scroll_to(".recharts-wrapper", rest=URL_BAR_HEIGHT + 150 * SCALE)
     yield
     r.page.evaluate(EVIDENCE_JS)
-    r.on_phrase("three hundred forty-nine")
+    r.on_phrase("three hundred automated tests")
     r.point(".recharts-wrapper")
     r.hold_beat()
     r.page.evaluate("document.getElementById('__evidence') && document.getElementById('__evidence').remove()")
@@ -451,7 +569,7 @@ def alexa(r: Recorder):
     yield
     r.click(START)
     r.page.locator("#mcp-steps > li").nth(2).wait_for(state="visible", timeout=60_000)
-    r.on_phrase("cannot retrieve")
+    r.on_phrase("never your conversations")
     r.scroll_to("#mcp-steps", rest=URL_BAR_HEIGHT + 60 * SCALE)
     r.point("#mcp-steps > li:nth-child(3)")
     r.hold_beat()
@@ -464,11 +582,9 @@ def report(r: Recorder):
     r.on_phrase("simple timeline")
     r.scroll_to("text=Tier over the period", rest=URL_BAR_HEIGHT + 120 * SCALE)
     r.point("text=Tier over the period")
-    r.on_phrase("what questions to ask")
+    r.on_phrase("which questions to ask")
     r.scroll_to("text=For the Annual Wellness Visit", rest=URL_BAR_HEIGHT + 120 * SCALE)
     r.point("text=Questions to bring")
-    r.on_phrase("Open source")
-    r.page.evaluate(END_CARD_JS)
     r.hold_beat()
 
 
@@ -482,12 +598,12 @@ EVIDENCE_JS = """
   box.style.cssText = ['position:fixed','right:' + (24 * S) + 'px','top:__TOP__px','z-index:2147483645',
     'background:rgba(16,32,29,0.94)','color:#f2f4f8','border-radius:' + (10 * S) + 'px',
     'padding:' + (14 * S) + 'px ' + (18 * S) + 'px','font-family:Inter,system-ui,sans-serif',
-    'font-size:' + (15 * S) + 'px','line-height:1.45','max-width:' + (420 * S) + 'px',
+    'font-size:' + (17 * S) + 'px','line-height:1.5','max-width:' + (520 * S) + 'px',
     'opacity:0','transition:opacity 400ms ease-out'].join(';');
   box.innerHTML = '<div style="font-weight:700;color:#e0b25a;margin-bottom:' + (6 * S) + 'px">Checked, not claimed</div>'
-    + '<div>288 automated tests</div>'
-    + '<div>349 Supreme Court argument sessions: zero false alarms</div>'
-    + '<div>652 presidential press conferences, four presidents: 18 flagged</div>'
+    + '<div><b>Real Bee data:</b> seven counted days from my own band</div>'
+    + '<div><b>Privacy:</b> the words never leave the computer; nine numbers a day are sent</div>'
+    + '<div><b>Tested:</b> 300 automated tests; 349 Supreme Court sessions, zero false alarms</div>'
     + '<div style="opacity:0.7;margin-top:' + (6 * S) + 'px">Software behaviour, not medical accuracy</div>';
   document.documentElement.appendChild(box);
   requestAnimationFrame(() => { box.style.opacity = '1'; });
@@ -508,8 +624,12 @@ END_CARD_JS = """
     'opacity:0','transition:opacity 600ms ease-out'].join(';');
   const h = document.createElement('div');
   h.textContent = 'Bellwether';
-  h.style.cssText = 'font-weight:700;font-size:' + (64 * S) + 'px;margin-bottom:' + (18 * S) + 'px';
+  h.style.cssText = 'font-weight:700;font-size:' + (64 * S) + 'px;margin-bottom:' + (6 * S) + 'px';
   card.appendChild(h);
+  const t = document.createElement('div');
+  t.textContent = 'Because sometimes the first step is simply noticing.';
+  t.style.cssText = 'font-size:' + (28 * S) + 'px;color:#d7dde6;margin-bottom:' + (18 * S) + 'px';
+  card.appendChild(t);
   [['Live', 'd1xfuyog8wiuvf.cloudfront.net'], ['Code', 'github.com/usv240/bellwether'],
    ['Open source', 'pypi.org/project/speech-vitals'], ['Not a diagnosis', 'a record of change, for a clinician you trust']].forEach(([k, v]) => {
     const row = document.createElement('div');
@@ -530,7 +650,7 @@ END_CARD_JS = """
 # 2.7 times their size and ran them off the right edge.
 
 
-ACTIONS = {f.__name__: f for f in (hero, stats, how, checkins, conversations, replay, simulated, proof, chart, alexa, report)}
+ACTIONS = {f.__name__: f for f in (hero, stats, how, checkins, conversations, replay, simulated, compare, proof, chart, alexa, report, aws, close)}
 
 
 def assert_full_frame(path: Path) -> None:

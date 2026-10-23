@@ -101,12 +101,14 @@ BEATS: list[Beat] = [
     Beat(
         key="hook",
         action="hero",
-        shows="The front page: the claim, and a simulated person's own range with the days that left it.",
+        shows="Three tiles over the front page: Bee captures speech, Bellwether finds changes, a doctor report supports the conversation; then the page under them.",
         pause_before=0.8,
+        min_hold=16,
         say=(
-            "Your watch tracks your heart. But what about changes in the way you speak? "
-            "More pauses, simpler sentences, words that become harder to find. "
-            "Small changes that are easy to overlook."
+            "Your Bee already captures your conversations. "
+            "Bellwether looks for changes in how you speak over time, "
+            "and turns them into something useful for a conversation with your doctor. "
+            "Nine numbers a day, never your words, and not a diagnosis."
         ),
     ),
     Beat(
@@ -114,80 +116,66 @@ BEATS: list[Beat] = [
         action="stats",
         shows="The three and a half years card, then what people say they want: 79 percent.",
         say=(
-            "Most of us would never notice. And if we did, how would we explain it to a doctor months later? "
-            "On average, dementia takes three and a half years to diagnose, "
-            "and nearly four in five of us say we would want to know early."
-        ),
-    ),
-    Beat(
-        key="what",
-        action="how",
-        shows="How it works: wear, measure, learn, show.",
-        say=(
-            "Bellwether uses the Bee on your wrist to learn how you normally speak. "
-            "Everyone speaks differently, so it compares you only with your own past. "
-            "It keeps nine numbers a day, never your words, and it is not a diagnosis."
+            "Most of us would never notice, and months later could not describe it to a doctor. "
+            "Dementia takes three and a half years to diagnose on average, "
+            "and nearly four in five of us would want to know early."
         ),
     ),
     Beat(
         key="term-host",
         action="term_host",
-        shows="A terminal: the assistant speaking tonight's three questions while the Bee on the wrist listens; the day read from the Bee and counted; the note read back.",
+        shows="A terminal: the assistant speaking tonight's three questions while the Bee on the wrist listens; the day read from the Bee and counted; the note read back. Tonight's real run.",
         min_hold=14,
         say=(
             "Every evening, an assistant asks me three short questions out loud. "
-            "My Bee records my answers. Bellwether removes the assistant's own voice, "
-            "turns my speech into those nine numbers, and tells me where I stand."
+            "My Bee records my answers. On my own computer, Bellwether removes the assistant's voice, "
+            "keeps nine numbers, and throws the words away."
         ),
     ),
     Beat(
         key="checkins",
         action="checkins",
-        shows="The dashboard on the builder's own check-ins: the real-data badge, the first week filling, then the one command that gives anyone their own profile.",
+        shows="The dashboard on the builder's own check-ins: the real-data badge, seven of seven days, then the one command that gives anyone their own profile.",
         pause_before=0.4,
         say=(
-            "This is my own Bee data, live. Seven days teach it what normal sounds like for me. "
+            "This is my own Bee data, live. "
             + _days_line(CHECKIN_DAYS)
-            + " Anyone with a Bee can do the same. One command gives you your own private profile, "
-            "locked with your own API key, and meeting transcripts work too."
+            + " Anyone with a Bee can do the same, with one command and a key of their own."
         ),
     ),
     Beat(
-        key="change",
-        action="simulated",
-        shows="The switcher to the simulated person, labelled; the eight-week chart leaving its band; what moved and since when; then what else could explain it.",
+        key="compare",
+        action="compare",
+        shows="Two simulated people side by side, labelled: the stable one with nothing flagged, the changing one with a persistent change since September; then the changing person's chart with the late days ringed; then what else could explain it.",
         pause_before=0.3,
-        min_hold=26,
+        min_hold=24,
         say=(
-            "Imagine your speech changing so gradually that you don't notice. "
-            "In this simulated example, Bellwether shows when the change started, which measurements shifted, "
-            "and how far they've moved from that person's usual range. "
-            "It also offers everyday explanations, like poor sleep, illness, or medication. "
-            "It never names a condition."
+            "Two simulated people, labelled as such. One speaks the same way week after week: nothing is flagged. "
+            "The other changes so gradually they would never notice, and Bellwether shows when it started, "
+            "which measures moved, and how far. "
+            "It offers everyday explanations first, like poor sleep, illness or medication. It never names a condition."
         ),
     ),
     Beat(
-        key="proof",
-        action="proof",
-        shows="The same page, with what the software was checked against on screen.",
+        key="report",
+        action="report",
+        shows="The doctor report: the timeline, then the questions to bring.",
         pause_before=0.3,
         min_hold=11,
         say=(
-            "We tested Bellwether on speech we didn't write: "
-            "three hundred forty-nine Supreme Court arguments with no alerts, "
-            "and six hundred fifty-two presidential press conferences with fewer than three percent flagged. "
-            "These tests measure software behaviour, not medical accuracy."
+            "And when something changes, Bellwether gives you a simple timeline to bring to your doctor: "
+            "what changed, when it started, and which questions to ask."
         ),
     ),
     Beat(
         key="mcp",
         action="alexa",
-        shows="A session held against the MCP server from the page: protocol agreed, nine tools listed, the answer returned.",
+        shows="A session held against the MCP server from the page: protocol agreed, the tools listed, the answer returned.",
         pause_before=0.3,
         min_hold=8,
         say=(
-            "Bellwether also connects to AI assistants through an MCP server, built using the same standard Alexa+ supports. "
-            "Assistants can ask about your speech trends, but they cannot retrieve your conversations, because Bellwether doesn't store them."
+            "Bellwether also connects to assistants through an MCP server, on the standard Alexa+ uses. "
+            "An assistant can ask about your trends, never your conversations, because Bellwether never stored them."
         ),
     ),
     Beat(
@@ -196,22 +184,44 @@ BEATS: list[Beat] = [
         shows="A terminal: the Strands agent on Amazon Bedrock asking the deployed server how the simulated person's month went.",
         min_hold=8,
         say=(
-            "Here a Strands agent on Amazon Bedrock asks for a monthly summary, "
+            "Here a Strands agent on Amazon Bedrock asks for a month's summary, "
             "and says the data is simulated before anything else."
         ),
     ),
     Beat(
-        key="report",
-        action="report",
-        shows="The doctor report: the timeline, then the questions to bring, then the links.",
+        key="aws",
+        action="aws",
+        shows="One line of four boxes: Bee, local analysis on the wearer's computer, AWS (Lambda, DynamoDB, Bedrock, AgentCore), the dashboard and report.",
         pause_before=0.3,
         min_hold=12,
         say=(
-            "And if something changes, Bellwether gives you a simple timeline to bring to your doctor. "
-            "What changed, when it started, and what questions to ask. "
-            "No diagnosis, just a clearer conversation. "
-            "Open source, and working today. "
-            "Bellwether. Your own normal, in your own numbers."
+            "Speech is analysed on my own computer. AWS Lambda and Amazon DynamoDB hold the nine numbers a day, "
+            "and Claude on Amazon Bedrock phrases the weekly note from those numbers alone."
+        ),
+    ),
+    Beat(
+        key="proof",
+        action="proof",
+        shows="Three checked facts beside the chart: real Bee data from the wearer's own band; words that never leave the computer; three hundred tests and the Supreme Court run with zero false alarms.",
+        pause_before=0.3,
+        min_hold=14,
+        say=(
+            "Checked, not claimed: real Bee data from my own band; words that never leave my computer; "
+            "and three hundred automated tests, with three hundred forty-nine Supreme Court sessions and zero false alarms. "
+            "Software behaviour, not medical accuracy."
+        ),
+    ),
+    Beat(
+        key="close",
+        action="close",
+        shows="The changing person's chart, then the doctor report, then the final card with the product name and the last line.",
+        pause_before=0.3,
+        min_hold=26,
+        say=(
+            "Imagine noticing small changes in how someone you love speaks, with no way to tell whether they are becoming a pattern. "
+            "Bellwether turns those moments into a clearer picture to bring to the doctor, instead of memory alone. "
+            "It does not diagnose. It helps you notice a change, understand it, and start a better conversation with a clinician. "
+            "Because sometimes the first step is simply noticing."
         ),
     ),
 ]
