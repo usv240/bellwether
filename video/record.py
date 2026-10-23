@@ -318,15 +318,31 @@ def how(r: Recorder):
     r.hold_beat()
 
 
+DAYS_ASSESSED = "dt:has-text('Days assessed')"
+
+
 def checkins(r: Recorder):
-    goto(r, "/app/?profile=me-voice", FIRST_WEEK)
+    # During the warmup the page shows the first-week card; once seven days
+    # are counted it shows the summary with the days assessed instead.
+    goto(r, "/app/?profile=me-voice", WHOSE)
+    r.page.wait_for_selector(f"{FIRST_WEEK}, {DAYS_ASSESSED}", timeout=60_000)
     r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 120 * SCALE)
     yield
     r.point("text=Real Bee: check-ins")
     r.on_phrase("Seven days teach it")
-    r.scroll_to(FIRST_WEEK, rest=URL_BAR_HEIGHT + 60 * SCALE)
-    r.point(f"ol[aria-label='Counted days']")
+    if r.page.locator(FIRST_WEEK).count():
+        r.scroll_to(FIRST_WEEK, rest=URL_BAR_HEIGHT + 60 * SCALE)
+        r.point(f"ol[aria-label='Counted days']")
+    else:
+        r.scroll_to(DAYS_ASSESSED, rest=URL_BAR_HEIGHT + 260 * SCALE)
+        r.point(DAYS_ASSESSED, dx=260 * SCALE)
     r.on_phrase("Anyone with a Bee")
+    # The one command sits behind the "How this works" disclosure at the
+    # end of the page; open it on camera, then point at the line.
+    how = "details summary:has-text('How this works')"
+    r.scroll_to(how, rest=URL_BAR_HEIGHT + 300 * SCALE)
+    r.click(how)
+    r.page.wait_for_timeout(500)
     r.scroll_to(YOUR_OWN, rest=URL_BAR_HEIGHT + 200 * SCALE)
     r.point(YOUR_OWN)
     r.hold_beat()

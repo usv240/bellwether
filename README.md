@@ -51,7 +51,7 @@ Every box is in this repository: `apps/ingest`, `packages/speech-vitals`, `apps/
 
 ## What is real and what is simulated
 
-- **Real:** the builder's own Bee check-ins on the live site (profile `me-voice`), counted from the device since 2026-10-15; the live Bee capture in [docs/BEE_LIVE.md](docs/BEE_LIVE.md); the hosted check-in run on 2026-10-19; the Supreme Court and presidential harness runs; the deployed API, MCP server and AgentCore endpoint; the committed second-opinion run in `apps/agent/runs/`.
+- **Real:** the builder's own Bee check-ins on the live site (profile `me-voice`), seven counted days from the device between 2026-10-15 and 2026-10-23, so the baseline is set and every new day is compared with it; the live Bee capture in [docs/BEE_LIVE.md](docs/BEE_LIVE.md); the hosted check-ins run nightly since 2026-10-19, the last two on 2026-10-22 and 2026-10-23 with 289 and 305 words; the Supreme Court and presidential harness runs; the deployed API, MCP server and AgentCore endpoint; the committed second-opinion run in `apps/agent/runs/`.
 - **Simulated:** the person whose speech changes on the live site (`alex-drift`) and the quiet twin (`alex-stable`) are synthetic personas written by this project, labelled SIMULATED on every screen and in every response. `sam-first-week` is a simulated first week for the day-by-day replay. The detector comparison runs on those personas and says so in its result file.
 - **Replayed:** the dashboard's first-week replay shows a profile as it stood on each evening (`?as_of=`), built from committed fixtures.
 - **Stand-in:** the Check-in Host speaks through Amazon Polly in place of Alexa+, using exactly the MCP tools an Alexa+ agent would get.

@@ -54,7 +54,7 @@ CEILING_SECONDS = 180
 
 # Days of check-ins the live baseline holds on the day of the take. Set it
 # before narrating; record.py checks it against the service.
-CHECKIN_DAYS = 3
+CHECKIN_DAYS = 7
 
 _WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven"]
 
