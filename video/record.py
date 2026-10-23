@@ -203,7 +203,14 @@ class Recorder:
                 "the narration changed and this action did not"
             )
         began = next(m["at"] for m in self.marks if m["key"] == key)
-        target = began + next(b.pause_before for b in BEATS if b.key == key) + spans[idx][0]
+        # Inside the sentence, by word position: a cue on its ninth word of
+        # twenty-five fires a third of the way through, so two cues in one
+        # sentence land on their own words instead of both at its start.
+        sentence = parts[idx]
+        before = sentence.lower()[: sentence.lower().index(text.lower())]
+        frac = len(before.split()) / max(1, len(sentence.split()))
+        s0, s1 = spans[idx]
+        target = began + next(b.pause_before for b in BEATS if b.key == key) + s0 + frac * (s1 - s0)
         remaining = target - (time.monotonic() - self.start)
         if remaining > 0:
             self.page.wait_for_timeout(remaining * 1000)
