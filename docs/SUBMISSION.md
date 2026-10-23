@@ -100,7 +100,7 @@ It is also where the privacy guarantee is most at risk, so it is enforced rather
 - API: https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws ([docs](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1/docs), [resilience](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/api/resilience))
 - MCP server: `https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/mcp`
 - Repository (MIT): https://github.com/usv240/bellwether
-- Demo video (under 3 minutes): YouTube link, add when published. Shot list with pre-flight commands, and what to do if the device does not arrive in time: [VIDEO_SCRIPT.md](VIDEO_SCRIPT.md)
+- Demo video (2:58): https://youtu.be/hcvqqNoXumw. The script, generated from the beats the recorder reads: [VIDEO_SCRIPT.md](VIDEO_SCRIPT.md)
 
 The dashboard opens on a simulated person, labelled as such on every surface that touches them, and switches in one row to two profiles of real Bee data from the builder's own band: voice notes, whose speaker is certain, and everyday conversations, whose speaker is not. The extractor, engine, store, tiers, report and MCP server are the product.
 

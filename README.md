@@ -10,6 +10,7 @@ Built for the Build, Ship, Shape: Amazon Developer Hackathon. Tracks: Bee (prima
 
 ## Live
 
+- Demo video (2:58): https://youtu.be/hcvqqNoXumw
 - Site, dashboard and doctor report: https://d1xfuyog8wiuvf.cloudfront.net
 - The builder's own Bee check-ins: https://d1xfuyog8wiuvf.cloudfront.net/app/?profile=me-voice
 - API: https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws ([interactive docs](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/v1/docs), [resilience report](https://bppni6dpuntpbynfydk52gexue0xulzh.lambda-url.us-east-1.on.aws/api/resilience))
