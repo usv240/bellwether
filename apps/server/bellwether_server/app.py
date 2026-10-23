@@ -242,6 +242,16 @@ def build_app(
         view = profile_view(store, profile_id)
         return {"stored": len(clean), "profile_id": profile_id, "tier": view["summary"].tier, "eligible_days": view["summary"].eligible_days}
 
+    @app.delete("/v1/profiles/{profile_id}/days/{date}")
+    def delete_day(profile_id: str, date: str, request: Request):
+        """Take a day back. Same key as posting one: a wearer who re-counts
+        a day under the right date removes the row the old date left."""
+        require_key(store, profile_id, request)
+        if not store.delete_day(profile_id, date):
+            raise HTTPException(404, f"no day {date} on profile {profile_id}")
+        view = profile_view(store, profile_id)
+        return {"deleted": date, "profile_id": profile_id, "eligible_days": view["summary"].eligible_days}
+
     @app.post("/v1/keys", status_code=201)
     def new_key():
         """A free API key, no account. It means nothing until it claims a

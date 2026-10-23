@@ -31,6 +31,8 @@ from typing import Callable, Iterable
 
 from speech_vitals import Utterance
 
+from .days import day_of_ms, remember_timezone
+
 TEXT_KEYS = ("text", "content", "transcript", "utterance")
 # spoken_at first: on the real device (bee-cli 0.7.3) each utterance
 # carries spoken_at and created_at as epoch milliseconds, and start and
@@ -113,7 +115,10 @@ def unwrap_conversation(raw) -> dict | None:
     """``bee conversations get`` answers ``{"conversation": {...}, "timezone": ...}``;
     ``now`` and ``changed`` list bare conversations. Both become the bare record."""
     if isinstance(raw, dict) and isinstance(raw.get("conversation"), dict):
+        remember_timezone(raw.get("timezone"))
         return raw["conversation"]
+    if isinstance(raw, dict):
+        remember_timezone(raw.get("timezone"))
     return raw if isinstance(raw, dict) else None
 
 
@@ -718,11 +723,11 @@ def _host_lines_near(anchor_ms: int, extra: list[str]) -> list[str]:
     script for the day before, the day, and the day after (the host and the
     device may sit on different sides of midnight), plus anything the host
     on this computer recorded saying."""
-    from datetime import datetime, timedelta, timezone
+    from datetime import date, timedelta
 
     from speech_vitals.elicitation import host_lines_for
 
-    d = datetime.fromtimestamp(anchor_ms / 1000, timezone.utc).date()
+    d = date.fromisoformat(day_of_ms(anchor_ms))
     lines: list[str] = []
     for k in (-1, 0, 1):
         lines.extend(host_lines_for(d + timedelta(days=k)))

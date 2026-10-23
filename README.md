@@ -131,17 +131,17 @@ On Windows, clone to a short path such as `C:/dev/bellwether`; spaCy's parser do
 .venv/Scripts/python.exe -m pytest -q packages/speech-vitals apps/engine apps/ingest apps/server apps/agent
 ```
 
-Run on 2026-10-22: `295 passed`.
+Run on 2026-10-23: `300 passed`.
 
 | Package | Tests |
 |---|---|
 | [`packages/speech-vitals`](packages/speech-vitals) | 35 |
 | [`apps/engine`](apps/engine) | 69 |
-| [`apps/ingest`](apps/ingest) | 82 |
-| [`apps/server`](apps/server) | 72 |
+| [`apps/ingest`](apps/ingest) | 86 |
+| [`apps/server`](apps/server) | 73 |
 | [`apps/agent`](apps/agent) | 37 |
 
-**295 tests.** They include guards that check published numbers against the files that produce them: `apps/engine/tests/test_claims.py` re-derives every persona figure, `test_published_counts.py` counts this table, `apps/server/tests/test_cost.py` recomputes `docs/cost.json`, and `apps/engine/tests/test_scotus_harness.py` pins the Supreme Court result when the corpus is present.
+**300 tests.** They include guards that check published numbers against the files that produce them: `apps/engine/tests/test_claims.py` re-derives every persona figure, `test_published_counts.py` counts this table, `apps/server/tests/test_cost.py` recomputes `docs/cost.json`, and `apps/engine/tests/test_scotus_harness.py` pins the Supreme Court result when the corpus is present.
 
 The web app (`apps/web`) has no unit tests; `npx vitest run` reports no test files. It is checked against the deployed site by the Lighthouse runs in `docs/ACCESSIBILITY.md`.
 
@@ -174,7 +174,7 @@ Reasons for each choice, and what was deliberately not used: [docs/AWS.md](docs/
 
 ## Documentation
 
-[FOR_JUDGES.md](docs/FOR_JUDGES.md) · [SUBMISSION.md](docs/SUBMISSION.md) · [EVIDENCE.md](docs/EVIDENCE.md) · [PILOT.md](docs/PILOT.md) · [DESIGN.md](docs/DESIGN.md) · [AWS.md](docs/AWS.md) · [ACCESSIBILITY.md](docs/ACCESSIBILITY.md) · [BEE_LIVE.md](docs/BEE_LIVE.md) · [VIDEO_SCRIPT.md](docs/VIDEO_SCRIPT.md) · [FEATURE_REQUESTS.md](docs/FEATURE_REQUESTS.md) · nineteen entries in [FRICTION_LOG.md](FRICTION_LOG.md) · [PRODUCT_FEEDBACK.md](PRODUCT_FEEDBACK.md)
+[FOR_JUDGES.md](docs/FOR_JUDGES.md) · [SUBMISSION.md](docs/SUBMISSION.md) · [EVIDENCE.md](docs/EVIDENCE.md) · [PILOT.md](docs/PILOT.md) · [DESIGN.md](docs/DESIGN.md) · [AWS.md](docs/AWS.md) · [ACCESSIBILITY.md](docs/ACCESSIBILITY.md) · [BEE_LIVE.md](docs/BEE_LIVE.md) · [VIDEO_SCRIPT.md](docs/VIDEO_SCRIPT.md) · [FEATURE_REQUESTS.md](docs/FEATURE_REQUESTS.md) · twenty entries in [FRICTION_LOG.md](FRICTION_LOG.md) · [PRODUCT_FEEDBACK.md](PRODUCT_FEEDBACK.md)
 
 ## Licence
 

@@ -121,9 +121,9 @@ def first_day(
             # anchored was not fetched this run, so its day would be posted
             # short and overwrite the full one already on the service.
             # Found on the first real run: Oct 15 went from 265 words to 16.
-            import datetime as _dt
+            from .days import day_of_ms
 
-            first = _dt.datetime.fromtimestamp(since_ms / 1000, _dt.timezone.utc).strftime("%Y-%m-%d")
+            first = day_of_ms(since_ms)
             voice.days = [d for d in voice.days if d["date"] >= first]
             talk.days = [d for d in talk.days if d["date"] >= first]
     except BeeNotAuthenticated:

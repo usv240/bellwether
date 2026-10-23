@@ -338,3 +338,16 @@ def test_the_weekly_note_is_phrased_once_per_change_in_its_facts():
     c.post("/v1/profiles/t/days", json=synthetic_days(n=45, seed=4))
     c.get("/v1/profiles/t/weekly-note")
     assert len(calls) == 2
+
+
+def test_a_day_can_be_taken_back_with_the_profile_key(client):
+    key = "the-wearer-s-own-key-for-this-one"
+    assert client.post("/v1/profiles/mine/claim", json={"key": key}).status_code == 200
+    rows = synthetic_days(n=3)
+    assert client.post("/v1/profiles/mine/days", json=rows, headers={"x-bellwether-key": key}).status_code == 200
+    gone = rows[-1]["date"]
+    assert client.delete(f"/v1/profiles/mine/days/{gone}").status_code == 403
+    ok = client.delete(f"/v1/profiles/mine/days/{gone}", headers={"x-bellwether-key": key})
+    assert ok.status_code == 200 and ok.json()["deleted"] == gone
+    assert gone not in [d["date"] for d in client.get("/v1/profiles/mine/days").json()["days"]]
+    assert client.delete(f"/v1/profiles/mine/days/{gone}", headers={"x-bellwether-key": key}).status_code == 404

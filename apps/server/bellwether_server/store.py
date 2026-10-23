@@ -27,6 +27,9 @@ class Store:
     def list_days(self, profile_id: str) -> list[dict]:
         raise NotImplementedError
 
+    def delete_day(self, profile_id: str, date: str) -> bool:
+        raise NotImplementedError
+
     def put_annotation(self, profile_id: str, date: str, note: str) -> None:
         raise NotImplementedError
 
@@ -61,6 +64,9 @@ class MemoryStore(Store):
 
     def list_days(self, profile_id):
         return [self._days[profile_id][d] for d in sorted(self._days[profile_id])]
+
+    def delete_day(self, profile_id, date):
+        return self._days[profile_id].pop(date, None) is not None
 
     def put_annotation(self, profile_id, date, note):
         self._ann[profile_id][date] = note
@@ -128,6 +134,10 @@ class DynamoStore(Store):
     def list_days(self, profile_id):
         rows = self._query(profile_id, "DAY#")
         return [json.loads(r["body"]) for r in sorted(rows, key=lambda r: r["sk"])]
+
+    def delete_day(self, profile_id, date):
+        res = self._table.delete_item(Key={"pk": self._pk(profile_id), "sk": f"DAY#{date}"}, ReturnValues="ALL_OLD")
+        return "Attributes" in res
 
     def put_annotation(self, profile_id, date, note):
         self._table.put_item(

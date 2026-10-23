@@ -42,6 +42,7 @@ from dataclasses import dataclass
 
 from speech_vitals import aggregate_day
 
+from .days import day_of
 from .bee import BeeCli, BeeCliError, BeeNotAuthenticated, normalize_conversation, with_utterances
 
 
@@ -128,7 +129,7 @@ def run(cli: BeeCli | None = None) -> list[Step]:
             utterances.extend(normalize_conversation(raw))
         by_day: dict[str, list] = {}
         for u in utterances:
-            by_day.setdefault(u.ts[:10], []).append(u)
+            by_day.setdefault(day_of(u.ts), []).append(u)
         days = [aggregate_day(by_day[d], d) for d in sorted(by_day)]
         usable = [d for d in days if d.token_count_day > 0]
         steps.append(

@@ -27,6 +27,7 @@ from datetime import datetime, timezone
 
 from speech_vitals import FEATURE_NAMES, aggregate_day
 
+from .days import day_of
 from .bee import BeeCli, BeeCliError, ingest_checkins, normalize_conversation, with_utterances
 
 # Anything that could carry speech. The rule is an allowlist of shapes we
@@ -122,7 +123,7 @@ def capture(cli: BeeCli | None = None) -> dict:
 
     by_day: dict[str, list] = {}
     for u in utterances:
-        by_day.setdefault(u.ts[:10], []).append(u)
+        by_day.setdefault(day_of(u.ts), []).append(u)
 
     for day in sorted(by_day):
         features = aggregate_day(by_day[day], day)
@@ -143,7 +144,7 @@ def capture(cli: BeeCli | None = None) -> dict:
     notes = attempt("check-ins", "bee journals list --json, then the anchored conversations get", lambda: ingest_checkins(cli)) or []
     note_days: dict[str, list] = {}
     for u in notes:
-        note_days.setdefault(u.ts[:10], []).append(u)
+        note_days.setdefault(day_of(u.ts), []).append(u)
     voice_words = sum(aggregate_day(note_days[d], d).to_dict()["token_count_day"] for d in note_days)
 
     out["totals"] = {

@@ -23,6 +23,7 @@ from collections import defaultdict
 
 from speech_vitals import Utterance, aggregate_day
 
+from .days import day_of
 from .bee import (
     BeeCli,
     BeeCliError,
@@ -41,7 +42,7 @@ from .bee import (
 def reduce_to_days(utterances: list[Utterance]) -> list[dict]:
     by_day: dict[str, list[Utterance]] = defaultdict(list)
     for u in utterances:
-        by_day[u.ts[:10]].append(u)
+        by_day[day_of(u.ts)].append(u)
     return [aggregate_day(by_day[d], d).to_dict() for d in sorted(by_day)]
 
 
