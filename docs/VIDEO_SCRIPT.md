@@ -15,13 +15,13 @@ this file.
 
 Three tiles over the front page: Bee captures speech, Bellwether finds changes, a doctor report supports the conversation; then the page under them.
 
-> Your Bee already captures your conversations. Bellwether looks for changes in how you speak over time, and turns them into something useful for a conversation with your doctor. Nine numbers a day, never your words, and not a diagnosis.
+> Your Bee already captures your conversations. Bellwether looks for changes in how you speak over time, and turns them into something useful for your doctor. Nine numbers a day, never your words, and not a diagnosis.
 
 **0:16, gap, the website, in a real browser**
 
 The three and a half years card, then what people say they want: 79 percent.
 
-> Most of us would never notice, and months later could not describe it to a doctor. Dementia takes three and a half years to diagnose on average, and nearly four in five of us would want to know early.
+> Most of us would never notice, and could not describe it to a doctor months later. Dementia takes three and a half years to diagnose on average, and nearly four in five of us would want to know early.
 
 **0:32, term-host, a terminal, a real run rendered**
 
@@ -35,49 +35,49 @@ The dashboard on the builder's own check-ins: the real-data badge, seven of seve
 
 > This is my own Bee data, live. Seven days counted, and every new day is compared with them. Anyone with a Bee can do the same, with one command and a key of their own.
 
-**1:01, compare, the website, in a real browser**
+**1:00, compare, the website, in a real browser**
 
 Two simulated people side by side, labelled: the stable one with nothing flagged, the changing one with a persistent change since September; then the changing person's chart with the late days ringed; then what else could explain it.
 
 > Two simulated people, labelled as such. One speaks the same way week after week: nothing is flagged. The other changes so gradually they would never notice, and Bellwether shows when it started, which measures moved, and how far. It offers everyday explanations first, like poor sleep, illness or medication. It never names a condition.
 
-**1:25, report, the website, in a real browser**
+**1:24, report, the website, in a real browser**
 
 The doctor report: the timeline, then the questions to bring.
 
 > And when something changes, Bellwether gives you a simple timeline to bring to your doctor: what changed, when it started, and which questions to ask.
 
-**1:36, mcp, the website, in a real browser**
+**1:35, mcp, the website, in a real browser**
 
 A session held against the MCP server from the page: protocol agreed, the tools listed, the answer returned.
 
-> Bellwether also connects to assistants through an MCP server, on the standard Alexa+ uses. An assistant can ask about your trends, never your conversations, because Bellwether never stored them.
+> Bellwether also connects to assistants through an MCP server, on the standard Alexa+ uses. An assistant can ask about your trends, never your conversations, which were never stored.
 
-**1:48, term-agent, a terminal, a real run rendered**
+**1:47, term-agent, a terminal, a real run rendered**
 
 A terminal: the Strands agent on Amazon Bedrock asking the deployed server how the simulated person's month went.
 
 > Here a Strands agent on Amazon Bedrock asks for a month's summary, and says the data is simulated before anything else.
 
-**1:57, aws, the website, in a real browser**
+**1:56, aws, the website, in a real browser**
 
 One line of four boxes: Bee, local analysis on the wearer's computer, AWS (Lambda, DynamoDB, Bedrock, AgentCore), the dashboard and report.
 
 > Speech is analysed on my own computer. AWS Lambda and Amazon DynamoDB hold the nine numbers a day, and Claude on Amazon Bedrock phrases the weekly note from those numbers alone.
 
-**2:10, proof, the website, in a real browser**
+**2:09, proof, the website, in a real browser**
 
 Three checked facts beside the chart: real Bee data from the wearer's own band; words that never leave the computer; three hundred tests and the Supreme Court run with zero false alarms.
 
-> Checked, not claimed: real Bee data from my own band; words that never leave my computer; and three hundred automated tests, with three hundred forty-nine Supreme Court sessions and zero false alarms. Software behaviour, not medical accuracy.
+> Checked, not claimed: real Bee data from my own band; words that never leave my computer; and three hundred automated tests, with three hundred forty-nine Supreme Court sessions, zero false alarms. Software behaviour, not medical accuracy.
 
-**2:26, close, the website, in a real browser**
+**2:24, close, the website, in a real browser**
 
 The changing person's chart, then the doctor report, then the final card with the product name and the last line.
 
-> Imagine noticing small changes in how someone you love speaks, with no way to tell whether they are becoming a pattern. Bellwether turns those moments into a clearer picture to bring to the doctor, instead of memory alone. It does not diagnose. It helps you notice a change, understand it, and start a better conversation with a clinician. Because sometimes the first step is simply noticing.
+> Imagine noticing small changes in how someone you love speaks, with no way to tell whether it is a pattern. For someone noticing changes in themselves or a loved one, Bellwether offers a clearer record to bring into a conversation with a clinician, instead of memory alone. It does not diagnose. It helps you notice a change, understand it, and start a better conversation with a clinician. Because sometimes the first step is simply noticing.
 
-Estimated 2:53 of a 3:00 ceiling. The real narration decides the
+Estimated 2:55 of a 3:00 ceiling. The real narration decides the
 final cut.
 
 ## The terminal beats

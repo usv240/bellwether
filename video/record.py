@@ -260,6 +260,8 @@ FIRST_WEEK = "#first-week"
 YOUR_OWN = "pre:has-text('--profile <your-name>')"
 WHOSE = "nav[aria-label='Whose data']"
 CONFOUNDERS = "text=What else could explain this"
+RIGHT_NOW = "div:has(> p:text-is('Right now'))"
+NOTABLE = "section:has(> h2:has-text('Notable changes'))"
 ALEXA = "#alexa"
 START = "#alexa button:has-text('Start a session')"
 
@@ -333,6 +335,18 @@ AWS_HTML = (
     + '</div>'
     '<div style="margin-top:calc(10px * __S__);font-size:calc(18px * __S__);color:#9aa7a3">apps/ingest and packages/speech-vitals on your computer; apps/server, apps/agent and infra on AWS</div>'
 )
+
+
+
+def _zoom(r: "Recorder", selector: str, factor: float = 1.25) -> None:
+    """Enlarge one block in place so a judge reads the result, not the page."""
+    r.page.locator(selector).first.evaluate("(d, f) => { d.style.transition = 'transform 400ms ease'; d.style.transformOrigin = '0 0'; d.style.transform = 'scale(' + f + ')'; d.style.position = 'relative'; d.style.zIndex = '5'; d.style.background = 'var(--surface, #fff)'; d.style.boxShadow = '0 12px 40px rgba(0,0,0,0.12)'; d.style.borderRadius = '12px'; d.style.padding = '8px 12px'; }", factor)
+    r.page.wait_for_timeout(450)
+
+
+def _unzoom(r: "Recorder", selector: str) -> None:
+    r.page.locator(selector).first.evaluate("d => { d.style.transform = ''; d.style.boxShadow = ''; d.style.padding = ''; d.style.zIndex = ''; }")
+    r.page.wait_for_timeout(300)
 
 
 def preflight() -> None:
@@ -481,8 +495,13 @@ def compare(r: Recorder):
     r.page.evaluate("([l, t, w, h]) => { const k = document.createElement('div'); k.id = '__ring'; k.style.cssText = 'position:fixed;left:' + l + 'px;top:' + t + 'px;width:' + w + 'px;height:' + h + 'px;border:4px solid #f0a36a;border-radius:14px;box-shadow:0 0 0 6px rgba(240,163,106,0.18);z-index:2147483644;opacity:0;transition:opacity 400ms ease'; document.documentElement.appendChild(k); requestAnimationFrame(() => { k.style.opacity = '1'; }); }", [left, top, w, h])
     r.page.mouse.move(box["x"] + box["width"] * 0.35, box["y"] + box["height"] * 0.7, steps=24)
     r.page.mouse.move(box["x"] + box["width"] * 0.9, box["y"] + box["height"] * 0.25, steps=60)
-    r.on_phrase("It offers everyday explanations")
+    r.on_phrase("which measures moved")
     r.page.evaluate("const k = document.getElementById('__ring'); if (k) k.remove();")
+    r.scroll_to(WHOSE, rest=URL_BAR_HEIGHT + 30 * SCALE)
+    _zoom(r, RIGHT_NOW, 1.3)
+    r.point("span:text-is('Discuss')", dx=0)
+    r.on_phrase("It offers everyday explanations")
+    _unzoom(r, RIGHT_NOW)
     r.scroll_to(CONFOUNDERS, rest=URL_BAR_HEIGHT + 60 * SCALE)
     r.point("text=Not sleeping well")
     r.hold_beat()
@@ -499,7 +518,7 @@ def close(r: Recorder):
     goto(r, "/app/", ".recharts-wrapper")
     r.scroll_to(".recharts-wrapper", rest=URL_BAR_HEIGHT + 150 * SCALE)
     yield
-    r.on_phrase("Bellwether turns those moments")
+    r.on_phrase("For someone noticing")
     goto(r, "/report/", "text=Bellwether speech report")
     r.scroll_to("text=Tier over the period", rest=URL_BAR_HEIGHT + 120 * SCALE)
     r.on_phrase("It does not diagnose")
@@ -580,9 +599,11 @@ def report(r: Recorder):
     r.scroll_to("text=Bellwether speech report", rest=URL_BAR_HEIGHT + 60 * SCALE)
     yield
     r.on_phrase("simple timeline")
-    r.scroll_to("text=Tier over the period", rest=URL_BAR_HEIGHT + 120 * SCALE)
-    r.point("text=Tier over the period")
+    r.scroll_to(NOTABLE, rest=URL_BAR_HEIGHT + 160 * SCALE)
+    _zoom(r, NOTABLE, 1.3)
+    r.point(f"{NOTABLE} h2", dx=120 * SCALE)
     r.on_phrase("which questions to ask")
+    _unzoom(r, NOTABLE)
     r.scroll_to("text=For the Annual Wellness Visit", rest=URL_BAR_HEIGHT + 120 * SCALE)
     r.point("text=Questions to bring")
     r.hold_beat()

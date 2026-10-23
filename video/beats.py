@@ -107,7 +107,7 @@ BEATS: list[Beat] = [
         say=(
             "Your Bee already captures your conversations. "
             "Bellwether looks for changes in how you speak over time, "
-            "and turns them into something useful for a conversation with your doctor. "
+            "and turns them into something useful for your doctor. "
             "Nine numbers a day, never your words, and not a diagnosis."
         ),
     ),
@@ -116,7 +116,7 @@ BEATS: list[Beat] = [
         action="stats",
         shows="The three and a half years card, then what people say they want: 79 percent.",
         say=(
-            "Most of us would never notice, and months later could not describe it to a doctor. "
+            "Most of us would never notice, and could not describe it to a doctor months later. "
             "Dementia takes three and a half years to diagnose on average, "
             "and nearly four in five of us would want to know early."
         ),
@@ -175,7 +175,7 @@ BEATS: list[Beat] = [
         min_hold=8,
         say=(
             "Bellwether also connects to assistants through an MCP server, on the standard Alexa+ uses. "
-            "An assistant can ask about your trends, never your conversations, because Bellwether never stored them."
+            "An assistant can ask about your trends, never your conversations, which were never stored."
         ),
     ),
     Beat(
@@ -207,7 +207,7 @@ BEATS: list[Beat] = [
         min_hold=14,
         say=(
             "Checked, not claimed: real Bee data from my own band; words that never leave my computer; "
-            "and three hundred automated tests, with three hundred forty-nine Supreme Court sessions and zero false alarms. "
+            "and three hundred automated tests, with three hundred forty-nine Supreme Court sessions, zero false alarms. "
             "Software behaviour, not medical accuracy."
         ),
     ),
@@ -218,8 +218,8 @@ BEATS: list[Beat] = [
         pause_before=0.3,
         min_hold=26,
         say=(
-            "Imagine noticing small changes in how someone you love speaks, with no way to tell whether they are becoming a pattern. "
-            "Bellwether turns those moments into a clearer picture to bring to the doctor, instead of memory alone. "
+            "Imagine noticing small changes in how someone you love speaks, with no way to tell whether it is a pattern. "
+            "For someone noticing changes in themselves or a loved one, Bellwether offers a clearer record to bring into a conversation with a clinician, instead of memory alone. "
             "It does not diagnose. It helps you notice a change, understand it, and start a better conversation with a clinician. "
             "Because sometimes the first step is simply noticing."
         ),
